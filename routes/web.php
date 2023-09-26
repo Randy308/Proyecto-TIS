@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
+Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
