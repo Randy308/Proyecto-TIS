@@ -17,5 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/lista-eventos', 'TarjetaController@index');//verificar
+
+
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
