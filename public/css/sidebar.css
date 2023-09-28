@@ -3,33 +3,28 @@
 */
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-:root{
-
-    --main-sidebar-color:#003153;
-    --second-sidebar-color:#1c2a3a;
-    --text-sidebar-color:#fafafa;
-    --main-sidebar-colors:#323268;
-    --second-sidebar-colors:#2d2d5e;
-    --text-sidebar-colors:#fafafa;
+:root {
+    --main-sidebar-color: #003153;
+    --second-sidebar-color: #1c2a3a;
+    --text-sidebar-color: #fafafa;
+    --main-sidebar-colors: #323268;
+    --second-sidebar-colors: #2d2d5e;
+    --text-sidebar-colors: #fafafa;
+    --icon-size: 1.1em;
+    --icon-size-phone: 0.65em;
+    --text-size: 0.75em;
+}
+#navbarDropdownMenuLink:hover {
+    background: white;
 }
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     background: #fafafa;
 }
-.caja{
 
-    background-color: var(--second-sidebar-color);
-    color: white;
-    
-}
-.caja *{
-
-    color: white;
-    padding-left: 20px;
-}
 p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
+    font-family: "Poppins", sans-serif;
+    font-size: 0.7em;
     font-weight: 300;
     line-height: 1.7em;
     color: #999;
@@ -45,14 +40,13 @@ a:focus {
 li.active a:hover {
     color: var(--second-sidebar-color);
     background-color: var(--text-sidebar-color);
-    
-
 }
 .navbar {
     padding: 15px 10px;
     background: #fff;
     border: none;
     border-radius: 0;
+    padding-right: 80px;
     margin-bottom: 40px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -90,28 +84,23 @@ span {
     background: var(--main-sidebar-color);
     color: var(--text-sidebar-color);
     transition: all 0.3s;
-    
 }
 
-#sidebar.active ul li a svg{
-
-    font-size: large;
+#sidebar.active ul li a svg {
+    font-size: small;
     color: var(--text-sidebar-color);
 }
 #sidebar.active {
     min-width: 80px;
     max-width: 120px;
     text-align: center;
-    
 }
-
-
 
 #sidebar.active .sidebar-header h3,
 #sidebar.active .CTAs {
     display: none;
 }
-.navbar-nav{
+.navbar-nav {
     padding-top: 25px;
 }
 
@@ -124,24 +113,25 @@ span {
 }
 
 #sidebar.active ul li a span {
-    
     display: none;
 }
 #sidebar.active ul li a {
     padding: 10px 7px;
     text-align: center;
-   
 }
 
 #sidebar ul li a i {
-    font-size: 1.4em;
-   
+    font-size: var(--icon-size);
+}
+
+#sidebar ul li a span {
+    font-size: var(--text-size);
 }
 
 #sidebar.active ul li a i {
     margin-right: 0;
     display: block;
-    font-size: 1.4em;
+    font-size: var(--icon-size);
     margin-bottom: 5px;
 }
 
@@ -158,15 +148,13 @@ span {
     transform: translateX(50%);
 }
 
-#sidebarCollapse{
-
+#sidebarCollapse {
     color: var(--text-sidebar-color);
     background-color: var(--main-sidebar-color);
     border-color: var(--text-sidebar-color);
 }
 
-#sidebarCollapse:hover{
-
+#sidebarCollapse:hover {
     color: var(--main-sidebar-color);
     background-color: var(--text-sidebar-color);
     border-color: var(--text-sidebar-color);
@@ -189,7 +177,7 @@ span {
 
 #sidebar ul li a {
     padding: 10px;
-    font-size: 1.1em;
+    font-size: var(--icon-size);
     display: block;
 }
 
@@ -202,7 +190,7 @@ span {
     margin-right: 10px;
 }
 
-#sidebar ul li.active>a,
+#sidebar ul li.active > a,
 a[aria-expanded="true"] {
     color: var(--text-sidebar-color);
     background: var(--second-sidebar-color);
@@ -221,9 +209,9 @@ a[data-toggle="collapse"] {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
+    font-size: 0.63em !important;
     padding-left: 30px !important;
-    background: var(--second-sidebar-color);
+    background: var(--main-sidebar-color);
 }
 
 ul.CTAs {
@@ -293,7 +281,7 @@ a.article:hover {
         padding: 20px 10px;
     }
     #sidebar ul li a span {
-        font-size: 0.75em;
+        font-size: var(--icon-size-phone);
     }
     #sidebar ul li a i {
         margin-right: 0;
@@ -303,14 +291,12 @@ a.article:hover {
         padding: 10px !important;
     }
     #sidebar ul li a i {
-        font-size: 1.3em;
+        font-size: var(--icon-size-phone);
     }
     #sidebar.active ul li a span {
-    
         display: none;
     }
     #sidebar ul li a span {
-    
         display: none;
     }
     #sidebar {
