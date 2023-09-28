@@ -18,8 +18,15 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/lista-eventos', 'TarjetaController@index');//verificar
+Route::get('/lista-eventos', [EventoControlador::class, 'crearEventoForm']);//verificar
 
+/*
+// Ruta para mostrar el formulario
+Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm']);
+
+// Ruta para procesar el formulario
+Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
+*/
 
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
