@@ -13,7 +13,7 @@ Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba')
 
 
 // Ruta para mostrar el formulario
-Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm']);
+Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crearEventoForm');
 
 // Ruta para procesar el formulario
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
