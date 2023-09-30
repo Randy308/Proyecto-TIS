@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Evento;
 
@@ -9,13 +10,13 @@ class EventoControlador extends Controller
     {
         return view('crear-evento');
     }
-    
+
     public function crearEvento(Request $request)
     {
         try {
             $request->validate([
                 'Titulo' => 'required|string|max:255',
-                'DireccionImg' => 'nullable|image|mimes:jpeg,png,gif', 
+                'DireccionImg' => 'nullable|image|mimes:jpeg,png,gif',
                 'Descripcion' => 'required|string',
                 'Estado' => 'required|string',
                 'FechaInicio' => 'required|date',
@@ -34,12 +35,13 @@ class EventoControlador extends Controller
                 'FechaFin' => $request->get('FechaFin'),
             ]);
             $evento->save();
-    
-            return redirect('/crear-evento')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+
+            //return redirect('/crear-evento')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+            return redirect()->route('crearEventoForm')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
         } catch (\Exception $e) {
             return redirect('/crear-evento')->with('failed', '¡Error no se guardo los datos');
         }
     }
-    
-    
+
+
 }
