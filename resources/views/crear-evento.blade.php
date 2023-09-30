@@ -97,7 +97,7 @@
                             </div>
 
                             <div class="text-center"> <!-- Alinea los botones al centro -->
-                                <a href="/" class="btn btn-secondary">Cancelar</a>
+                                <a href="/" class="btn btn-danger">Cancelar</a>
                                 <button type="submit" class="btn btn-primary">Crear Evento</button>
                             </div>
                         </form>

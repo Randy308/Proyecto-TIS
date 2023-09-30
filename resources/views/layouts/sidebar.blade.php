@@ -6,7 +6,7 @@
 
     <ul class="list-unstyled components">
         <li class="active">
-            <a href="#">
+            <a href="{{ route('index') }}">
                 <i class="bi bi-house"></i>
                 <span>Inicio</span>
             </a>
@@ -18,7 +18,7 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                    <a href="{{route('crearEventoForm')}}" >Crear evento</a>
+                    <a href="{{ route('crearEventoForm') }}">Crear evento</a>
                 </li>
                 <li>
                     <a href="#">Modificar evento</a>
@@ -74,7 +74,8 @@
     </ul>
 
 </nav>
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -104,11 +105,13 @@
                     <div class="row">
                         <div class="col">
                             <label for="fecha-inicio" class="col-form-label">Fecha de inico:</label>
-                            <input type="date" name="fechainicio" class="form-control" id="fecha-inicio" placeholder="First name">
+                            <input type="date" name="fechainicio" class="form-control" id="fecha-inicio"
+                                placeholder="First name">
                         </div>
                         <div class="col">
                             <label for="fecha-fin" class="col-form-label">Fecha final:</label>
-                            <input type="date" name="fechafin" class="form-control" id="fecha-fin" placeholder="Last name">
+                            <input type="date" name="fechafin" class="form-control" id="fecha-fin"
+                                placeholder="Last name">
                         </div>
                     </div>
                 </form>

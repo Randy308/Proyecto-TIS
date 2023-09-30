@@ -6,7 +6,7 @@ use App\Http\Controllers\EventoControlador;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');

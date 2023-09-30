@@ -16,21 +16,3 @@
         });
     });
 </script>
-
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: '/home',
-            method: 'POST',
-            data: {
-                id: 1,
-                _token: $('input[name=_token]').val()
-            }
-        }).done(function(res) {
-            let users = JSON.parse(res);
-            console.log(users);
-        })
-
-
-    })
-</script>
