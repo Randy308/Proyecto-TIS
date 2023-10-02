@@ -16,7 +16,7 @@ class CreateEventosTable extends Migration
         Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('Titulo');
-            $table->binary('DireccionImg')->nullable();
+            $table->string('DireccionImg')->nullable();
             $table->text('Descripcion');
             $table->enum('Estado', ['Activo', 'Finalizado', 'Cancelado']);
             $table->dateTime('FechaInicio');
