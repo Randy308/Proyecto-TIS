@@ -13,10 +13,10 @@ class CreateEventosTable extends Migration
      */
     public function up()
     {
-        Schema::create('evento', function (Blueprint $table) {
+        Schema::create('eventos', function (Blueprint $table) {
             $table->id();
             $table->string('Titulo');
-            $table->binary('DireccionImg')->nullable();
+            $table->string('DireccionImg');
             $table->text('Descripcion');
             $table->enum('Estado', ['Activo', 'Finalizado', 'Cancelado']);
             $table->dateTime('FechaInicio');
@@ -32,6 +32,6 @@ class CreateEventosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('evento');
+        Schema::dropIfExists('eventos');
     }
 }

@@ -13,7 +13,11 @@ class EventoControlador extends Controller
     {
         return view('lista-eventos');
     }
+    public function getAllEventos(){
+        $eventos = Evento::all();
 
+        return $eventos;
+    }
 
     public function crearEventoForm()
     {
