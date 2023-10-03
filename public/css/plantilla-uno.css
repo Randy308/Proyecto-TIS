@@ -1,0 +1,135 @@
+.container {
+    background-color: ghostwhite;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+  .content {
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    margin: 10px;
+    background-color: whitesmoke;
+  }
+  
+  .c2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .c1 .card {
+    height: 100%;
+  }
+  .c3 .card {
+    height: 100%;
+  }
+  .c2 .card {
+    padding: 10px;
+    margin: 10px;
+  }
+  
+  .tabContainer {
+    margin: 0 auto;
+  }
+  .tabContent {
+    padding: 10px;
+    text-align: left;
+    height: 100%;
+    max-height: 700px;
+  }
+  /* Hide all but first tab */
+  .tabContent > div:not(:first-child) {
+    display: none;
+  }
+  
+  .tabContainer > .tabs {
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+  }
+  .tabs li {
+    float: left;
+    display: flex;
+    flex: 1;
+  }
+  .tabs a {
+    position: relative;
+  
+    border-top: 3px solid rgba(0, 0, 0, 0);
+    padding: 1em 0.5em;
+    float: left;
+    text-decoration: none;
+  
+    margin: 0 0.1em 0 0;
+    font-size: 1em;
+    flex: 1;
+    transition: all 0.35s ease;
+  }
+  .tabs a.active {
+    border-top: 3px solid blue;
+  
+    background: inherit;
+  }
+  .tabs a:hover {
+    background: inherit;
+  }
+  .contenedor-banner {
+    display: grid;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+  }
+  #miBanner {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  #miTitulo {
+    color: black;
+  }
+  .div-titulo {
+    display: grid;
+    grid-template-columns: auto;
+    margin-left: 0;
+    padding: 15px;
+  }
+  #card-principal .card * {
+    margin-left: 0;
+  }
+  .c3 .card * {
+    padding: 10px;
+  }
+  #tab2 div {
+    padding: 10px;
+    margin: 10px;
+  }
+  .div-titulo {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .div-btn-registrarse {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 20px;
+    margin: 20px;
+    grid-gap: 5px;
+  }
+  #boton-registro {
+    grid-column: 3;
+    grid-row: 3;
+    
+  }
+  
+  @media screen and (max-width: 880px) {
+    .c2 {
+      background-color: gainsboro;
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+  }
+  

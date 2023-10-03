@@ -27,6 +27,7 @@
                     <div class="form-group">
                         <label for="categoria" class="col-form-label">categoria:</label>
                         <input type="text" class="form-control" name="categoria" id="categoria">
+
                     </div>
                     
                     <div class="row">
@@ -45,6 +46,9 @@
                     <button type="submit" class="btn btn-primary">Agregar Evento</button>
                 </div>
             </div>
+
         </div>
     </div>
+
 </form>
+
