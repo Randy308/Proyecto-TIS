@@ -10,6 +10,11 @@ class EventoControlador extends Controller
     {
         return view('crear-evento');
     }
+    public function show($id)
+    {   return view('plantilla-uno', [
+            'evento' => Evento::findOrFail($id)
+        ]);
+    }
 
     public function crearEvento(Request $request)
     {

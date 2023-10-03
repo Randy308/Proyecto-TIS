@@ -17,3 +17,5 @@ Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name
 
 // Ruta para procesar el formulario
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crearEventoForm-Post');
+
+Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
