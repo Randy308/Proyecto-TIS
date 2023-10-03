@@ -1,6 +1,6 @@
-<form method="POST" action="{{ route('crear-evento') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('crear-evento-form') }}" enctype="multipart/form-data">
     @csrf
-    
+
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -29,7 +29,7 @@
                         <input type="text" class="form-control" name="categoria" id="categoria">
 
                     </div>
-                    
+
                     <div class="row">
                         <div class="col">
                             <label for="fecha_inicio" class="col-form-label">Fecha de inicio:</label>

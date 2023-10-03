@@ -18,7 +18,7 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                    <a href="{{ route('crearEventoForm') }}">Crear evento</a>
+                    <a href="#"  data-toggle="modal" data-target="#exampleModal">Crear evento</a>
                 </li>
                 <li>
                     <a href="#">Modificar evento</a>
