@@ -25,7 +25,7 @@
           </div>
           <div class="div-titulo">
             <div>
-              <h5>Fecha {{$evento->FechaFin}}</h5>
+              <h5>Fecha {{date('d-m-Y H:i:s', strtotime($evento->FechaFin))}}</h5>
               
               <h1 id="miTitulo">{{$evento->Titulo}}</h1>
               <h6>Tipo de evento  {{$evento->Estado}}</h6>
