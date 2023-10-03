@@ -8,10 +8,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-// Ruta para mostrar el formulario
-Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm']);
-
-// Ruta para procesar el formulario
+Route::get('/crear-evento', [EventoControlador::class, 'crearEvento']);
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
