@@ -9,14 +9,13 @@ use DateTime;
 class EventoList extends Component
 {
     use WithPagination;
- 
 
     public function render()
     {
         $eventos = Evento::paginate(9);
         foreach ($eventos as $evento) {
-            $evento->FechaInicio = new DateTime($evento->FechaInicio);
-            $evento->FechaFin = new DateTime($evento->FechaFin);
+            $evento->fecha_inicioaInicio = new DateTime($evento->fecha_inicio);
+            $evento->fecha_fin = new DateTime($evento->fecha_fin);
         }
         return view('livewire.evento-list',  ['eventos' => $eventos]);
     }

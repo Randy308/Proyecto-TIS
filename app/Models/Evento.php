@@ -16,5 +16,6 @@ class Evento extends Model
         'categoria',
         'fecha_inicio',
         'fecha_fin',
+        'direccion_banner'
     ];
 }
