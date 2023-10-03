@@ -24,7 +24,7 @@
                     <a href="#">Modificar evento</a>
                 </li>
                 <li>
-                    <a href="#">Lista de eventos</a>
+                    <a href="{{ route('listaEventos')}}">Lista de eventos</a>
                 </li>
             </ul>
         </li>

@@ -17,12 +17,21 @@
                         <input type="text" name="nombre_evento" class="form-control" id="nombre_evento">
                     </div>
                     <div class="form-group">
+                        <label for="descripcion_evento" class="col-form-label">Imagen Banner:</label>
+                        <input type="file" name="direccion_banner">
+                    </div>
+                    <div class="form-group">
                         <label for="descripcion_evento" class="col-form-label">Descripción del Evento:</label>
                         <textarea name="descripcion_evento" class="form-control" id="descripcion_evento"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="estado" class="col-form-label">Estado:</label>
-                        <input type="text" class="form-control" name="estado" id="estado">
+                        <select class="form-control" id="exampleFormControlSelect1" name="estado">
+                            <option>activo</option>
+                            <option>finalizado</option>
+                            <option>cancelado</option>
+
+                          </select>
                     </div>
                     <div class="form-group">
                         <label for="categoria" class="col-form-label">categoria:</label>
@@ -33,11 +42,11 @@
                     <div class="row">
                         <div class="col">
                             <label for="fecha_inicio" class="col-form-label">Fecha de inicio:</label>
-                            <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio">
+                            <input type="datetime-local" name="fecha_inicio" class="form-control" id="fecha_inicio">
                         </div>
                         <div class="col">
                             <label for="fecha_fin" class="col-form-label">Fecha de finalización:</label>
-                            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin">
+                            <input type="datetime-local" name="fecha_fin" class="form-control" id="fecha_fin">
                         </div>
                     </div>
                 </div>

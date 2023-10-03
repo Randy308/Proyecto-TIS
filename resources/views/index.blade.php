@@ -26,7 +26,20 @@
                 }
                 ?>
                 <hr>
-                <div class="content" id="contenedor">
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        <strong>{{ session('status') }}</strong>
+                    </div>
+                @endif
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
             </div>
 
 
@@ -42,11 +55,11 @@
         </div>
 
 
-        </div>
+    </div>
     </div>
 
     @include('layouts/toggle')
-<script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>

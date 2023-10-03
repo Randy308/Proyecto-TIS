@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Evento extends Model
 {
     use HasFactory;
-
+    protected $primaryKey = 'idEvento';
     protected $fillable = [
         'nombre_evento',
         'descripcion_evento', // Agrega la columna DireccionImg al arreglo fillable

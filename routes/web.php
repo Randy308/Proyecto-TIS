@@ -19,5 +19,5 @@ Route::post('/agregar-evento', [EventoControlador::class, 'crearEvento'])->name(
 
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
 
-Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos']);
+Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 

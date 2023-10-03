@@ -1,7 +1,9 @@
 <?php
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use Illuminate\Support\Facades\Storage;
 
 class EventoControlador extends Controller
 {
@@ -13,12 +15,17 @@ class EventoControlador extends Controller
     {
         return view('lista-eventos');
     }
-    public function getAllEventos(){
+    public function getAllEventos()
+    {
         $eventos = Evento::all();
 
         return $eventos;
     }
-
+    public function show($id)
+    {   return view('plantilla-uno', [
+            'evento' => Evento::findOrFail($id)
+        ]);
+    }
     public function crearEventoForm()
     {
         return view('crear-evento');
@@ -26,32 +33,41 @@ class EventoControlador extends Controller
 
     public function crearEvento(Request $request)
     {
+        $request->validate([
+            'nombre_evento' => 'required|string|max:255',
+            'descripcion_evento' => 'required|string',
+            'estado' => 'required|in:activo,finalizado,cancelado',
+            // Validación con valores permitidos
+            'categoria' => 'required|string',
+            'fecha_inicio' => 'required|date',
+            'fecha_fin' => 'required|date|after:fecha_inicio',
+            'direccion_banner' => 'image|max:2048',
+        ]);
         try {
-            $request->validate([
-                'nombre_evento' => 'required|string|max:255',
-                'descripcion_evento' => 'required|string',
-                'estado' => 'required|in:activo,finalizado,cancelado', // Validación con valores permitidos
-                'categoria' => 'required|string',
-                'fecha_inicio' => 'required|date',
-                'fecha_fin' => 'required|date|after:fecha_inicio',
-            ]);
 
+            if (empty($request['direccion_banner'])) {
+                $imagen = 'imagenes/m0zg7XFKo7fQMgsjbvbYl8b71IqAZzn06bbJyo1e.png';
+            } else {
+                $imagen = $request->file('direccion_banner')->store('public/imagenes');
+            }
+
+            $url = Storage::url($imagen);
             // Crear una nueva instancia de Evento con los datos del formulario
-            $evento = new Evento([
-                'nombre_evento' => $request->input('nombre_evento'),
-                'descripcion_evento' => $request->input('descripcion_evento'),
-                'estado' => $request->input('estado'),
-                'categoria' => $request->input('categoria'),
-                'fecha_inicio' => $request->input('fecha_inicio'),
-                'fecha_fin' => $request->input('fecha_fin'),
-                'direccion_banner' => $request->input('direccion_banner'), // Añadir aquí si es necesario
-            ]);
+            $evento = new Evento();
+            $evento->nombre_evento = $request['nombre_evento'];
+            $evento->descripcion_evento = $request['descripcion_evento'];
+            $evento->estado = $request['estado'];
+            $evento->categoria = $request['categoria'];
+            $evento->fecha_inicio = $request['fecha_inicio'];
+            $evento->fecha_fin = $request['fecha_fin'];
+            $evento->direccion_banner = $url;
 
             $evento->save();
 
             return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
         } catch (\Exception $e) {
-            return redirect()->route('index')->with('failed', '¡Error no se guardo los datos');
+            return redirect()->route('index')->withErrors(['error' => '¡Error no se guardo los datos  ' . $e]);
+
         }
     }
 }

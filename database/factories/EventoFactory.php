@@ -16,13 +16,27 @@ class EventoFactory extends Factory
      */
     public function definition()
     {   $arrayValues = ['Activo', 'Finalizado', 'Cancelado'];
+        $eventTypes = [
+            'Conferencia',
+            'Seminario',
+            'Taller',
+            'Reunión de negocios',
+            'Fiesta',
+            'Concierto',
+            'Deportes',
+            'Exposición',
+            'Evento caritativo',
+            'Concurso',
+            'Otro',
+        ];
         return [
-            'Titulo'=> $this->faker->name(),
-            'DireccionImg' => $this->faker->text(25),
-            'Descripcion'=> $this->faker->text(25),
-            'Estado'=> $arrayValues[rand(0,2)],
-            'FechaInicio'=> $this->faker->dateTime(),
-            'FechaFin'=> $this->faker->dateTime(),
+            'nombre_evento'=> $this->faker->name(),
+            'direccion_banner' => '/storage/imagenes/m0zg7XFKo7fQMgsjbvbYl8b71IqAZzn06bbJyo1e.png',
+            'descripcion_evento'=> $this->faker->text($this->faker->numberBetween(55, 85)),
+            'categoria'=>$eventTypes[rand(0,10)],
+            'estado'=> $arrayValues[rand(0,2)],
+            'fecha_inicio'=> $this->faker->dateTime(),
+            'fecha_fin'=> $this->faker->dateTime(),
         ];
     }
 }
