@@ -24,11 +24,7 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-custom">
-        <div class="container">
-            <a class="navbar-brand" href="/">INICIO</a>
-        </div>
-    </nav>
+
 
     <div class="container mt-4">
         @yield('content')

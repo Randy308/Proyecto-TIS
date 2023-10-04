@@ -17,7 +17,7 @@ class CreateEventosTable extends Migration
             $table->id('idEvento');
             $table->string('nombre_evento'); // Cambiar el nombre del atributo a snake_case
             $table->text('descripcion_evento');
-            $table->enum('estado', ['activo', 'finalizado', 'cancelado']);
+            $table->enum('estado', ['borrador','activo', 'finalizado', 'cancelado']);
             $table->string('categoria');
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
