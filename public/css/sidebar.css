@@ -261,6 +261,10 @@ a.article:hover {
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
+li#navdropdown a[aria-expanded="true"] {
+    color: black;
+    background: whitesmoke;
+}
 
 @media (max-width: 768px) {
     #sidebar {

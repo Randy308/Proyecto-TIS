@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AjaxController;
+use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 
@@ -12,6 +13,8 @@ Route::get('/', function () {
 Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
 
+Route::post('/login',[AuthUser::class,'store'])->name('iniciar.sesion.store');
+Route::post('/logout',[AuthUser::class,'destroy'])->name('logout');
 
 Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento');
 

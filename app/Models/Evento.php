@@ -11,11 +11,21 @@ class Evento extends Model
     protected $primaryKey = 'idEvento';
     protected $fillable = [
         'nombre_evento',
-        'descripcion_evento', // Agrega la columna DireccionImg al arreglo fillable
+        'descripcion_evento',
+        // Agrega la columna DireccionImg al arreglo fillable
         'estado',
         'categoria',
         'fecha_inicio',
         'fecha_fin',
         'direccion_banner'
     ];
+
+    public function usuarioPropietario()
+    {
+        return $this->belongsTo(User::class);
+    }
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'asistencia_eventos');
+    }
 }

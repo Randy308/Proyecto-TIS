@@ -9,10 +9,10 @@ use DateTime;
 class EventoList extends Component
 {
     use WithPagination;
-
+    protected $paginationTheme = 'bootstrap';
     public function render()
     {
-        $eventos = Evento::paginate(9);
+        $eventos = Evento::paginate(6);
         foreach ($eventos as $evento) {
             $evento->fecha_inicioaInicio = new DateTime($evento->fecha_inicio);
             $evento->fecha_fin = new DateTime($evento->fecha_fin);

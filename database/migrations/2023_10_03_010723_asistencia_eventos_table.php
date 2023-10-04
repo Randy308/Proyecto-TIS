@@ -13,7 +13,7 @@ class CreateParticipanteTable extends Migration
      */
     public function up()
     {
-        Schema::create('participante', function (Blueprint $table) {
+        Schema::create('asistencia_eventos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('idEvento');
             $table->unsignedBigInteger('idUsuario');
@@ -23,8 +23,8 @@ class CreateParticipanteTable extends Migration
             $table->timestamps();
 
             // Definir las claves foráneas
-            $table->foreign('idEvento')->references('idEvento')->on('eventos');
-            $table->foreign('idUsuario')->references('idUsuario')->on('usuario');
+            $table->foreign('idEvento')->references('idEvento')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
