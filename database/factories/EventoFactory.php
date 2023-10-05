@@ -30,6 +30,7 @@ class EventoFactory extends Factory
             'Otro',
         ];
         return [
+            'idUsuario'=> 1,
             'nombre_evento'=> $this->faker->name(),
             'direccion_banner' => '/storage/imagenes/m0zg7XFKo7fQMgsjbvbYl8b71IqAZzn06bbJyo1e.png',
             'descripcion_evento'=> $this->faker->text($this->faker->numberBetween(55, 85)),
