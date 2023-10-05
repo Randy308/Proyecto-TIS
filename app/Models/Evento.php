@@ -10,11 +10,12 @@ class Evento extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Titulo',
-        'DireccionImg', // Agrega la columna DireccionImg al arreglo fillable
-        'Descripcion',
-        'Estado',
-        'FechaInicio',
-        'FechaFin',
+        'nombre_evento',
+        'descripcion_evento', // Agrega la columna DireccionImg al arreglo fillable
+        'estado',
+        'categoria',
+        'fecha_inicio',
+        'fecha_fin',
+        'direccion_banner'
     ];
 }

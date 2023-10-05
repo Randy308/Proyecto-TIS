@@ -1,88 +1,50 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="square-container">
-                <div class="card">
-                    <div class="cuadrado">
-                        <h3>CREAR EVENTO</h3>
+<form method="POST" action="{{ route('crear-evento') }}" enctype="multipart/form-data">
+    @csrf
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Evento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="nombre_evento" class="col-form-label">Nombre del Evento:</label>
+                        <input type="text" name="nombre_evento" class="form-control" id="nombre_evento">
                     </div>
-                    <div class="card-body">
-                        <form method="POST" action="/crear-evento" enctype="multipart/form-data">
-                            @csrf
-
-                            <div class="mb-3 borde-celeste">
-                                <div>
-                                    <label for="Titulo" class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #61758A;">
-                                        Título:
-                                    </label>
-                                </div>
-                                <input type="text" name="Titulo" class="form-control" style="font-family: 'Inter', sans-serif;" required>
-                            </div>
-
-                            <div class="mb-3 borde-celeste">
-                                <div>
-                                    <label for="DireccionImg" class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #61758A;">
-                                        Banner (JPEG/PNG/GIF):
-                                    </label>
-                                </div>
-                                <input type="file" name="DireccionImg" class="form-control-file" style="font-family: 'Inter', sans-serif;">
-                            </div>
-
-                            <div class="mb-3 borde-celeste borde-celeste">
-                                <div>
-                                    <label for="Descripcion" class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #61758A;">
-                                        Descripción:
-                                    </label>
-                                </div>
-                                <textarea name="Descripcion" class="form-control" style="font-family: 'Inter', sans-serif;" required></textarea>
-                            </div>
-
-                            <div class="mb-3 borde-celeste">
-                                <div>
-                                    <label for="Estado" class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #61758A;">
-                                        Estado:
-                                    </label>
-                                </div>
-                                <select name="Estado" class="form-select" style="font-family: 'Inter', sans-serif;" required>
-                                    <option value="Activo">Activo</option>
-                                    <option value="Finalizado">Finalizado</option>
-                                    <option value="Cancelado">Cancelado</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-3 borde-celeste">
-                                <div>
-                                    <label for="FechaInicio" class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #61758A;">
-                                        Fecha de Inicio:
-                                    </label>
-                                </div>
-                                <input type="date" name="FechaInicio" class="form-control" style="font-family: 'Inter', sans-serif;" required>
-                            </div>
-
-                            <div class="mb-3 borde-celeste">
-                                <div>
-                                    <label for="FechaFin" class="form-label" style="font-family: 'Inter', sans-serif; font-weight: 600; color: #61758A;">
-                                        Fecha de Finalización:
-                                    </label>
-                                </div>
-                                <input type="date" name="FechaFin" class="form-control" style="font-family: 'Inter', sans-serif;" required>
-                            </div>
-
-                            <div class="text-center"> <!-- Alinea los botones al centro -->
-                                <a href="/" class="btn btn-secondary">Cancelar</a>
-                                <button type="submit" class="btn btn-primary">Crear Evento</button>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="descripcion_evento" class="col-form-label">Descripción del Evento:</label>
+                        <textarea name="descripcion_evento" class="form-control" id="descripcion_evento"></textarea>
                     </div>
+                    <div class="form-group">
+                        <label for="estado" class="col-form-label">Estado:</label>
+                        <input type="text" class="form-control" name="estado" id="estado">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoria" class="col-form-label">categoria:</label>
+                        <input type="text" class="form-control" name="categoria" id="categoria">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <label for="fecha_inicio" class="col-form-label">Fecha de inicio:</label>
+                            <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio">
+                        </div>
+                        <div class="col">
+                            <label for="fecha_fin" class="col-form-label">Fecha de finalización:</label>
+                            <input type="date" name="fecha_fin" class="form-control" id="fecha_fin">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Agregar Evento</button>
                 </div>
             </div>
         </div>
     </div>
-</div>
-
-@endsection
-
-
+</form>
