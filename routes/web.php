@@ -12,3 +12,7 @@ Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm']);
 
 // Ruta para procesar el formulario
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
+
+Route::get('/editar-evento', function () {
+    return view('editar-evento');
+});
