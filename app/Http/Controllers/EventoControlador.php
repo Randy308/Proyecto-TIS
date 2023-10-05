@@ -54,6 +54,7 @@ class EventoControlador extends Controller
             $url = Storage::url($imagen);
             // Crear una nueva instancia de Evento con los datos del formulario
             $evento = new Evento();
+            $evento->idUsuario = 1;
             $evento->nombre_evento = $request['nombre_evento'];
             $evento->descripcion_evento = $request['descripcion_evento'];
             $evento->estado = $request['estado'];
