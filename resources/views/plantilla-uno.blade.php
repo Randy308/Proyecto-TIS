@@ -33,18 +33,35 @@
                     </div>
                     <div class="div-btn-registrarse">
                         @guest
-                            <button class="btn btn-primary" id="boton-registro">
+                            <button class="btn btn-primary" id="boton-registro"  role="button" data-toggle="modal" data-target="#loginModal">
                                 Iniciar Sesion
                             </button>
+
                         @endguest
                         @auth
                             @php
-                                $idEventoPagina = $evento->id;
-                                $usuario = auth()->user();
+                                $id_evento_pagina = $evento->id;
+                                $id_usuario = auth()->user()->id;
+                                $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                    ->where('evento_id', $id_evento_pagina)
+                                    ->exists();
                             @endphp
-                            <button class="btn btn-primary" id="boton-registro" onclick="mifuncion()">
-                                Registrarse
-                            </button>
+                            @if ($registroExistente)
+                            <h4>Ya se encuentra registrado en el evento</h4>
+                            @else
+                            <form method="POST"
+                                action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
+                                @method('PUT')
+                                @csrf
+
+                                <input type="hidden" name="evento" value="{{ $evento->id }}">
+                                <button type="submit" class="btn btn-primary" id="boton-registro">
+                                    Registrarse
+                                </button>
+                            </form>
+                            @endif
+
+
 
                         @endauth
                     </div>
@@ -55,13 +72,7 @@
             <div class="card">
                 <div>
                     <h5>Auspiciadores</h5>
-                    <script>
-                        function mifuncion() {
 
-                            alert('{{ $usuario->email}}');
-
-                        }
-                    </script>
                 </div>
             </div>
         </div>
@@ -118,7 +129,9 @@
         </div>
 
     </div>
+    @include('iniciar-sesion')
 </body>
+@include('layouts/toggle')
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
     crossorigin="anonymous"></script>
 <script>

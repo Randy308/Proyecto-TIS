@@ -22,7 +22,7 @@ class AsistenciasTable extends Migration
             $table->date('fechaInscripcion');
             $table->string('estado');
             $table->timestamps();
-
+            $table->unique(['user_id', 'evento_id']);
             // Definir las claves foráneas
             $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

@@ -24,3 +24,4 @@ Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento'
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 
+Route::put('/registroUsuario/{id}', [EventoControlador::class, 'update'])->name('registrar-evento-update');

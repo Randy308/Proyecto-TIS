@@ -51,7 +51,7 @@ class AuthUser extends Controller
         //return 'you are loggin';
 
         $user = User::FindOrFail(Auth::id());
-        return redirect()->route('index')->with('status', 'Inicio Exitoso! ');
+        return redirect()->back()->with('status', 'Inicio Exitoso! ');
     }
 
     /**
