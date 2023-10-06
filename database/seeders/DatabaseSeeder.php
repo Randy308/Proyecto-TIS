@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\AsistenciaEvento;
 use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -21,7 +22,9 @@ class DatabaseSeeder extends Seeder
         $usuario->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $usuario->remember_token =  Str::random(10);
         $usuario->save();
-        User::factory(10)->create();
-        Evento::factory(20)->create();
+        User::factory(30)->create();
+        Evento::factory(30)->create();
+        AsistenciaEvento::factory(20)->create();
+
     }
 }

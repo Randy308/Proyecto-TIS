@@ -17,6 +17,9 @@
 
             @include('layouts/navbar')
             <div class="container-sm mt-4">
+                @auth
+                @livewire('eventos-creados')
+                @endauth
                 <?php
                 try {
                     \DB::connection()->getPDO();

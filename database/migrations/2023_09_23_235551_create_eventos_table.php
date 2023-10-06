@@ -15,8 +15,8 @@ class CreateEventosTable extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
 
-            $table->id('idEvento');
-            $table->unsignedBigInteger('idUsuario');
+            $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->string('nombre_evento'); // Cambiar el nombre del atributo a snake_case
             $table->text('descripcion_evento');
             $table->enum('estado', ['activo', 'finalizado', 'cancelado']);
@@ -25,7 +25,7 @@ class CreateEventosTable extends Migration
             $table->dateTime('fecha_fin');
             $table->string('direccion_banner');
             $table->timestamps();
-            $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

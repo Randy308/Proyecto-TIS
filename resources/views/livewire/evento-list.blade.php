@@ -6,7 +6,7 @@
             <div class="col-md-4 mb-3">
                 <div class="card">
                     <div class="position-relative">
-                        <a href="{{ route('verEvento', $evento->idEvento) }}">
+                        <a href="{{ route('verEvento', $evento->id) }}">
                             <img src="{{ $evento->direccion_banner }}" class="card-img-top" alt="{{ $evento->Titulo }}">
                         </a>
 

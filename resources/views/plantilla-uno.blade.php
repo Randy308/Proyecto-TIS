@@ -21,6 +21,8 @@
                     <div>
                         @php
                             // Establece la configuración regional en español
+                            $idEventoPagina = $evento->id;
+
                             \Carbon\Carbon::setLocale('es');
                         @endphp
                         <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->format('d-m-Y \a \l\a\s H:i:s') }}</h5>
@@ -30,10 +32,36 @@
                         <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
                     </div>
                     <div class="div-btn-registrarse">
-                        <button class="btn btn-primary" id="boton-registro">
-                            Registrarse
-                        </button>
+                        @guest
+                            <button class="btn btn-primary" id="boton-registro">
+                                Iniciar Sesion
+                            </button>
+                        @endguest
+                        @auth
+                            @php
+                                $idEventoPagina = $evento->id;
+                                $usuario = auth()->user();
+                            @endphp
+                            <button class="btn btn-primary" id="boton-registro" onclick="mifuncion()">
+                                Registrarse
+                            </button>
+
+                        @endauth
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="content c3">
+            <div class="card">
+                <div>
+                    <h5>Auspiciadores</h5>
+                    <script>
+                        function mifuncion() {
+
+                            alert('{{ $usuario->email}}');
+
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -61,9 +89,19 @@
                             </div>
                             <div class="card"></div>
                         </div>
-                        <div class="card">
-                            <div class="card">
+                        <div class="card" id="participantesContainer">
+                            <div class="card" id="participantes">
                                 <h5>Lista de Participantes</h5>
+
+
+                                @if ($evento->users->count())
+                                    @foreach ($evento->users as $user)
+                                        <p>{{ $user->name }}</p>
+                                    @endforeach
+                                @else
+                                    <p>No existe participantes</p>
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -78,13 +116,7 @@
                 </div>
             </div>
         </div>
-        <div class="content c3">
-            <div class="card">
-                <div>
-                    <h5>Auspiciadores</h5>
-                </div>
-            </div>
-        </div>
+
     </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="

@@ -16,16 +16,16 @@ class AsistenciasTable extends Migration
         //
         Schema::create('asistencia_eventos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idEvento');
-            $table->unsignedBigInteger('idUsuario');
+            $table->unsignedBigInteger('evento_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('rol');
             $table->date('fechaInscripcion');
             $table->string('estado');
             $table->timestamps();
 
             // Definir las claves foráneas
-            $table->foreign('idEvento')->references('idEvento')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('idUsuario')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
