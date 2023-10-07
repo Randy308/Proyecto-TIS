@@ -46,7 +46,7 @@ class EventoControlador extends Controller
     }
     public function show($id)
     {
-        return view('plantilla-uno', [
+        return view('visualizar-evento', [
             'evento' => Evento::findOrFail($id)
         ]);
     }

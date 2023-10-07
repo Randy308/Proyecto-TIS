@@ -22,8 +22,8 @@ class DatabaseSeeder extends Seeder
         $usuario->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $usuario->remember_token =  Str::random(10);
         $usuario->save();
-        User::factory(30)->create();
-        Evento::factory(30)->create();
+        User::factory(40)->create();
+        Evento::factory(40)->create();
         AsistenciaEvento::factory(20)->create();
 
     }

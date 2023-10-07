@@ -3,7 +3,9 @@
 namespace Database\Factories;
 
 use App\Models\Evento;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 
 class EventoFactory extends Factory
 {
@@ -29,8 +31,9 @@ class EventoFactory extends Factory
             'Concurso',
             'Otro',
         ];
+        $user = DB::table('users')->where('id', 1)->first();
         return [
-            'user_id'=> 1,
+            'user_id'=> $user->id,
             'nombre_evento'=> $this->faker->word(),
             'direccion_banner' => '/storage/imagenes/m0zg7XFKo7fQMgsjbvbYl8b71IqAZzn06bbJyo1e.png',
             'descripcion_evento'=> $this->faker->text($this->faker->numberBetween(55, 85)),

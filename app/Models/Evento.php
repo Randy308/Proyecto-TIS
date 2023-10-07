@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\User;
 class Evento extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'nombre_evento',
         'descripcion_evento',
-        // Agrega la columna DireccionImg al arreglo fillable
+        'user_id',
         'estado',
         'categoria',
         'fecha_inicio',
@@ -20,7 +20,7 @@ class Evento extends Model
         'direccion_banner'
     ];
 
-    public function usuarioPropietario()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
