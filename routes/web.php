@@ -4,6 +4,7 @@ use App\Http\Controllers\AjaxController;
 use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
+use App\Http\Controllers\AsistenciaEventosController;
 
 Route::get('/', function () {
     return view('index');
@@ -25,3 +26,5 @@ Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento'
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 
 Route::put('/registroUsuario/{id}', [EventoControlador::class, 'update'])->name('registrar-evento-update');
+
+Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');

@@ -131,15 +131,23 @@ body {
 .div-btn-registrarse {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  margin: 20px;
-  margin: 20px;
+  grid-template-rows: auto auto auto;
+ 
   grid-gap: 5px;
 }
-#boton-registro {
+.div-btn-registrarse *{
   grid-column: 3;
   grid-row: 3;
-}
 
+}
+#boton-registro {
+  width: fit-content;
+  
+}
+a#boton-registro{
+  width: fit-content;
+  font-size: small;
+}
 #participantesContainer {
   height: 700px;
   align-items: center;
@@ -149,7 +157,11 @@ body {
   width: 90%;
   overflow: scroll;
 }
+p{
 
+  font-size: 0.9em;
+  color: black;
+}
 @media screen and (max-width: 880px) {
   .c2  {
     background-color: gainsboro;
@@ -165,7 +177,12 @@ body {
     font-size: small;
 
   }
-
+  #boton-registro{
+    font-size: x-small;
+  }
+  #lista-registro *{
+    font-size: xx-small;
+  }
   *{
     padding: 1;
     margin: 1;

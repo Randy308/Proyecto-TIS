@@ -43,7 +43,7 @@
     </div>
     </div>
 
-    @include('iniciar-sesion')
+    @include('iniciar-sesion')  
     @include('layouts/toggle')
     <script>
         $("#content").on("click", ".tabContainer .tabs a", function(e) {
