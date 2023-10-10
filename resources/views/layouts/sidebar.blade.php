@@ -6,7 +6,7 @@
 
     <ul class="list-unstyled components">
         <li class="active">
-            <a href="#">
+            <a href="{{ route('index') }}">
                 <i class="bi bi-house"></i>
                 <span>Inicio</span>
             </a>
@@ -18,13 +18,13 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#exampleModal">Crear evento</a>
+                    <a href="#"  data-toggle="modal" data-target="#exampleModal">Crear evento</a>
                 </li>
                 <li>
                     <a href="#">Modificar evento</a>
                 </li>
                 <li>
-                    <a href="{{route('lista-eventos')}}">Lista de eventos</a>
+                    <a href="{{ route('listaEventos')}}">Lista de eventos</a>
                 </li>
             </ul>
         </li>
@@ -74,4 +74,6 @@
     </ul>
 
 </nav>
+
 @include('crear-evento')
+

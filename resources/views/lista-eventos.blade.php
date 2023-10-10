@@ -4,8 +4,8 @@
 
 
 
-@livewireStyles
-@livewireScripts
+
+
 
 <div class="wrapper">
     @include('layouts/sidebar')
@@ -14,10 +14,10 @@
        
         
                 <h1>Listado de Eventos</h1>
-
+                
                 @livewire('evento-list')
 
-
+                
     </div>
 </div>
 

@@ -1,0 +1,9 @@
+Funcion busquedaPorProfundidaLimitada(nodo, meta, profundidad_limite){
+	Si (el nodo es igual a la meta){
+        Retornamos el nodo
+    }Caso contrario{
+        si(profundidad_limite es igual a 0){
+
+        }
+    }
+}

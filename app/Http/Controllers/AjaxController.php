@@ -9,11 +9,11 @@ use Illuminate\Support\Facades\DB;
 class AjaxController extends Controller
 {
     public function ajax(Request $request){
-        $users = DB::table('users')->select('name','email','id')->get();
+        $users = DB::table('eventos')->select('Titulo','Descripcion','FechaFin',)->get();
         return json_encode($users);
     }
     public function prueba(Request $request){
 
-        return "hola";
+        $users = DB::table('eventos')->select('Titulo','Descripcion','Estado','FechaFin',)->get();
     }
 }

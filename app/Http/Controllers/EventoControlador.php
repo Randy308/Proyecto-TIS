@@ -8,11 +8,19 @@ class EventoControlador extends Controller
 
 
     
-
+    public function show($id)
+    {
+        return view('visualizar-evento', [
+            'evento' => Evento::findOrFail($id)
+        ]);
+    }
+    
     public function listaEventos()
     {
         return view('lista-eventos');
     }
+
+    
     public function getAllEventos(){
         $eventos = Evento::all();
 

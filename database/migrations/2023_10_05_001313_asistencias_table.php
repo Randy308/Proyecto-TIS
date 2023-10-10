@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateParticipanteTable extends Migration
+class AsistenciasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,19 @@ class CreateParticipanteTable extends Migration
      */
     public function up()
     {
-        Schema::create('participante', function (Blueprint $table) {
+        //
+        Schema::create('asistencia_eventos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idEvento');
-            $table->unsignedBigInteger('idUsuario');
+            $table->unsignedBigInteger('evento_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('rol');
             $table->date('fechaInscripcion');
             $table->string('estado');
             $table->timestamps();
-
+            $table->unique(['user_id', 'evento_id']);
             // Definir las claves foráneas
-            $table->foreign('idEvento')->references('idEvento')->on('eventos');
-            $table->foreign('idUsuario')->references('idUsuario')->on('usuario');
+            $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
@@ -35,6 +36,7 @@ class CreateParticipanteTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('participante');
+        //
+        Schema::dropIfExists('asistencia_eventos');
     }
 }

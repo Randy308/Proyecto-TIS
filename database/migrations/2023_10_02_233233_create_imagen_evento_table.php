@@ -8,21 +8,21 @@ class CreateImagenEventoTable extends Migration
 {
     public function up()
     {
-        Schema::create('imagenEvento', function (Blueprint $table) {
+        Schema::create('imagenEventos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idEvento');
+            $table->unsignedBigInteger('evento_id');
             $table->string('direccionImagen');
             $table->float('coordX', 0, 0);
             $table->float('coordY', 8, 6);
             $table->timestamps();
 
             // Definir la clave foránea hacia la tabla "eventos"
-            $table->foreign('idEvento')->references('idEvento')->on('eventos');
+            $table->foreign('evento_id')->references('id')->on('eventos');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('imagenEvento');
+        Schema::dropIfExists('imagenEventos');
     }
 }
