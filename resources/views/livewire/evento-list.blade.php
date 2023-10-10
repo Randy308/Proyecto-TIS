@@ -35,9 +35,10 @@
                 <label for="">Filtrar por Categoría:</label>
                 <select wire:model="filtroCategoria" class="form-control">
                     <option value="">Todos</option>
-                    <option value="Categoria 1">Categoria 1</option>
-                    <option value="Categoria 2">Categoria 2</option>
-                    <option value="Categoria 3">Categoria 3</option>
+                    <option value="Diseño">Diseño</option>
+                    <option value="QA">QA</option>
+                    <option value="Desarrollo">Desarrollo</option>
+                    <option value="Ciencia de datos">Ciencia de datos</option>
                 </select>
             </div>
         </div>

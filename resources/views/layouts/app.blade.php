@@ -32,25 +32,12 @@
     </style>
     @livewireStyles
 </head>
-<<<<<<< HEAD
-<body>
-
-=======
->>>>>>> 2ab2f0e73e20775aafd5502297241cf17802fea6
 
 <body>
 
-    <div class="wrapper">
-        @include('layouts/sidebar')
-        <div id="content">
-            @include('layouts/navbar')
+
             @yield('content')
-        </div>
-
-        <div>
-
-        </div>
-    </div>
+        
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.min.js"></script>
     @include('layouts/toggle')
