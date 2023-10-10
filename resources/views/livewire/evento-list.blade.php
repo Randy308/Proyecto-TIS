@@ -51,7 +51,9 @@
                 <div class="card">
                     <div class="position-relative">
                         <div class="cintaCategoria">{{ $evento->categoria }}</div>
-                        <img src="{{ $evento->direccion_banner }}" class="card-img-top" alt="{{ $evento->Titulo }}">
+                        <a href="{{ route('verEvento', $evento->id) }}">
+                            <img src="{{ $evento->direccion_banner }}" class="card-img-top" alt="{{ $evento->Titulo }}">
+                        </a>
                         <div class="cintaEstado">{{ $evento->estado }}</div>
                     </div>
                     <div class="card-body">
@@ -60,7 +62,6 @@
                         <p class="card-text" >{{ $evento->fecha_inicio->format('Y-m-d H:i:s') }}</p>
                         <p class="card-text" >{{ $evento->fecha_fin->format('Y-m-d H:i:s') }}</p>
                         
-                       
                     </div>
                 </div>
             </div>
@@ -68,7 +69,6 @@
 
         
     </div>
-    
     
     {{ $eventos->links('livewire.custom-pagination-link') }} 
 </div>

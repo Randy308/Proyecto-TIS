@@ -7,9 +7,9 @@ class CreateCoordenadaEventoTable extends Migration
 {
     public function up()
     {
-        Schema::create('CoordenadaEvento', function (Blueprint $table) {
+        Schema::create('CoordenadaEventos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('idEvento');
+            $table->unsignedBigInteger('evento_id');
             $table->float('nombreEx', 8, 6);
             $table->float('nombreEy', 8, 6);
             $table->float('descripcionEx', 8, 6);
@@ -23,7 +23,7 @@ class CreateCoordenadaEventoTable extends Migration
             $table->timestamps();
 
             // Definir la clave foránea hacia la tabla "eventos"
-            $table->foreign('idEvento')->references('idEvento')->on('eventos');
+            $table->foreign('evento_id')->references('id')->on('eventos');
         });
     }
 

@@ -10,7 +10,7 @@ class EventoList extends Component
 
 {
     
-    
+    protected $paginationTheme = 'bootstrap';
 
     use WithPagination;
     public $search ='';
