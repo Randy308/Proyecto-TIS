@@ -27,7 +27,7 @@ Route::post('/agregar-evento', [EventoControlador::class, 'crearEvento'])->name(
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
+Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
 
-Route::put('/registroUsuario/{id}', [EventoControlador::class, 'update'])->name('registrar-evento-update');
 
 Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
