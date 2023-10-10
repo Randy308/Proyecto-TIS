@@ -53,3 +53,38 @@ header {
   text-align: center;
   color: white; 
 }
+
+#content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+  background-color: #546e7a; 
+}
+
+/* Estilo para el contenido del formulario */
+.formulario {
+  background-color: #ffff; 
+  padding: 20px;
+  border-radius: 10px; 
+  max-width: 400px; 
+  width: 100%; 
+}
+
+.formulario input[type="text"],
+.formulario input[type="date"],
+.formulario select,
+.formulario textarea {
+  width: 100%; 
+  margin-bottom: 10px;
+}
+
+
+.formulario h1 {
+  color: #333; 
+}
+
+
+.formulario button {
+  width: 100%; 
+}

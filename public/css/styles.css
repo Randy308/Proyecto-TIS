@@ -64,3 +64,70 @@ header {
     text-align: center;
     color: white;
 }
+.formulario {
+  background-color: #ffff; 
+  padding: 20px;
+  border-radius: 20px; 
+  max-width: 400px; 
+  width: 45%; 
+  border: 2px solid #3498db;
+  margin-right: 10px;
+}
+
+.formulario input[type="text"],
+.formulario input[type="date"],
+.formulario select,
+.formulario textarea {
+  width: 100%; 
+  margin-bottom: 10px;
+}
+
+
+.formulario h1 {
+  color: #4eb3ee; 
+}
+
+.formulario button {
+  width: 100%; 
+}
+
+.etiqueta-celeste {
+  color: #3498db; 
+}
+
+.etiqueta-celeste input[type="text"],
+.etiqueta-celeste input[type="date"],
+.etiqueta-celeste select,
+.etiqueta-celeste textarea {
+  border: 2px solid #3498db;
+}
+
+.formulario-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 100%;
+  border: 2px solid #3498db; /* Cambia el color del borde a celeste elegante */
+}
+
+.editar-color {
+  display: flex;
+  align-items: center;
+  margin-top: 10px; /* Espacio entre el elemento "Editar Color" y el formulario */
+}
+
+.editar-color i {
+  margin-left: 5px; /* Espacio a la izquierda del icono */
+  font-size: 20px;
+  color: #3498db;
+}
+
+.editar-color span {
+  font-size: 32px;
+  color: #3498db;
+  cursor: pointer;
+}
