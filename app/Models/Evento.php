@@ -18,4 +18,5 @@ class Evento extends Model
         'fecha_fin',
         'direccion_banner'
     ];
+
 }

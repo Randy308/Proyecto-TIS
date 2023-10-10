@@ -1,6 +1,14 @@
-.cinta{
+.cintaCategoria{
     position: relative;
     background-color: green;
     color: white;
     text-align: center;
 }
+.cintaEstado{
+    position: relative;
+    background-color: green;
+    color: white;
+    text-align: center;
+}
+
+

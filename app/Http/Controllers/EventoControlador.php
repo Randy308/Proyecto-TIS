@@ -11,6 +11,7 @@ class EventoControlador extends Controller
 
     public function listaEventos()
     {
+
         return view('lista-eventos');
     }
     public function getAllEventos(){
