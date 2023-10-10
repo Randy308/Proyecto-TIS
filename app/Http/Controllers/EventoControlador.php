@@ -1,14 +1,19 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\AsistenciaEvento;
 use Illuminate\Http\Request;
 use App\Models\Evento;
 
 class EventoControlador extends Controller
 {
 
-
-    
-
+    public function show($id)
+    {
+        return view('visualizar-evento', [
+            'evento' => Evento::findOrFail($id)
+        ]);
+    }
     public function listaEventos()
     {
         return view('lista-eventos');
