@@ -18,7 +18,7 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-                    <a href="#" data-toggle="modal" data-target="#exampleModal">Crear evento</a>
+                    <a href="{{route('crear-evento')}}">Crear Evento</a>
                 </li>
                 <li>
                     <a href="#">Modificar evento</a>
@@ -74,4 +74,3 @@
     </ul>
 
 </nav>
-@include('crear-evento')

@@ -10,10 +10,8 @@ Route::get('/', function () {
 
 //Ruta de lista de eventos
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('lista-eventos');
-
-
-Route::get('/crear-evento', [EventoControlador::class, 'crearEvento']);
-//Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
 Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento');
+Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
+

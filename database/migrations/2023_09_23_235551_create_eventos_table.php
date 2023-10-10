@@ -15,7 +15,7 @@ class CreateEventosTable extends Migration
     {
         Schema::create('eventos', function (Blueprint $table) {
             $table->id('idEvento');
-            $table->string('nombre_evento'); // Cambiar el nombre del atributo a snake_case
+            $table->string('nombre_evento'); 
             $table->text('descripcion_evento');
             $table->enum('estado', ['borrador','activo', 'finalizado', 'cancelado']);
             $table->string('categoria');

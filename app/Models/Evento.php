@@ -11,11 +11,11 @@ class Evento extends Model
 
     protected $fillable = [
         'nombre_evento',
-        'descripcion_evento', // Agrega la columna DireccionImg al arreglo fillable
+        'descripcion_evento', 
         'estado',
         'categoria',
         'fecha_inicio',
         'fecha_fin',
-        'direccion_banner'
+        'direccion_banner',
     ];
 }
