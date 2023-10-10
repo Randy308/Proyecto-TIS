@@ -44,7 +44,7 @@
                 <button type="submit" class="btn btn-primary">Crear Evento</button>
             </form>
         </div>
-        <div class="editar-color">
+        <div class="editar-color" onclick="redirigirAEditarEvento()">
             <i class="fas fa-pencil-alt"></i>
             <span>Editar Banner</span>
         </div>
@@ -53,3 +53,8 @@
 
 </div>
 
+<script>
+    function redirigirAEditarEvento() {
+        window.location.href = "{{ route('editar-evento') }}";
+    }
+</script>

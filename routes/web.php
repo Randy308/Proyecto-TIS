@@ -20,7 +20,7 @@ Route::post('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->nam
 
 Route::get('/editar-evento', function () {
     return view('editar-evento');
-});
+})->name('editar-evento');
 
 
 Route::post('/login',[AuthUser::class,'store'])->name('iniciar.sesion.store');
