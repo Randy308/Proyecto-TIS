@@ -47,6 +47,7 @@ $( function() {
          circle.css( "background", data.item.value );
        }
      });
+     
 });
 
 
