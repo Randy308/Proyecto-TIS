@@ -24,6 +24,14 @@ class EventoControlador extends Controller
         $banner->save($rutaBanner);
         return $rutaBanner;
     }
+
+    public function show($id)
+    {
+        return view('visualizar-evento', [
+            'evento' => Evento::findOrFail($id)
+        ]);
+    }
+    
     public function listaEventos()
     {
         return view('lista-eventos');
