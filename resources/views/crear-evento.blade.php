@@ -19,7 +19,7 @@
                     <label for="descripcion_evento">Descripción del Evento:</label>
                     <textarea name="descripcion_evento" class="form-control" id="descripcion_evento" required></textarea>
                 </div>
-                <div class="form-group etiqueta-celeste">
+                {{-- <div class="form-group etiqueta-celeste">
                     <label for="estado">Estado:</label>
                     <select name="estado" class="form-control" id="estado" required>
                         <option value="activo">Activo</option>
@@ -30,7 +30,7 @@
                 <div class="form-group etiqueta-celeste">
                     <label for="categoria">Categoría:</label>
                     <input type="text" name="categoria" class="form-control" id="categoria" required>
-                </div>
+                </div> --}}
                 <div class="form-group etiqueta-celeste">
                     <label for="fecha_inicio">Fecha de inicio:</label>
                     <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio" required>

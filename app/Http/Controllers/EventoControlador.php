@@ -69,14 +69,13 @@ class EventoControlador extends Controller
                 'fecha_fin' => 'required|date|after:fecha_inicio',
             ]);
     
-            // Genera el banner y obtiene su ruta
+            
             $rutaBanner = $this->generarBanner(
                 $request->input('nombre_evento'),
                 $request->input('fecha_inicio'),
                 $request->input('fecha_fin')
             );
-    
-            // Crea una nueva instancia de Evento con los datos del formulario
+            $nombreDelArchivo = basename($rutaBanner);            
             $evento = new Evento([
                 'nombre_evento' => $request->input('nombre_evento'),
                 'descripcion_evento' => $request->input('descripcion_evento'),
@@ -84,7 +83,7 @@ class EventoControlador extends Controller
                 'categoria' => $request->input('categoria'),
                 'fecha_inicio' => $request->input('fecha_inicio'),
                 'fecha_fin' => $request->input('fecha_fin'),
-                'direccion_banner' => $rutaBanner, // Asigna la ruta del banner
+                'direccion_banner' => $nombreDelArchivo,
             ]);
     
             $evento->save();
