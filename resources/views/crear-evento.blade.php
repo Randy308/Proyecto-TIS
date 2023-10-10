@@ -1,4 +1,5 @@
 
+
 @extends('layouts.app')
 
 
@@ -27,12 +28,7 @@
                         <option value="Desarrollo">Desarrollo</option>
                         <option value="Ciencia de datos">Ciencia de datos</option>
                     </select>
-                </div>
-                {{-- 
-                <div class="form-group etiqueta-celeste">
-                    <label for="categoria">Categoría:</label>
-                    <input type="text" name="categoria" class="form-control" id="categoria" required>
-                </div> --}}
+                </div>  
                 <div class="form-group etiqueta-celeste">
                     <label for="fecha_inicio">Fecha de inicio:</label>
                     <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio" required>

@@ -18,11 +18,7 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 <li>
-<<<<<<< HEAD
                     <a href="{{route('crear-evento')}}">Crear Evento</a>
-=======
-                    <a href="#"  data-toggle="modal" data-target="#exampleModal">Crear evento</a>
->>>>>>> 7f4e5e1b52dc2443aa660e0712b7e5b2d5ec32d2
                 </li>
                 <li>
                     <a href="#">Modificar evento</a>
@@ -78,9 +74,3 @@
     </ul>
 
 </nav>
-<<<<<<< HEAD
-=======
-
-@include('crear-evento')
-
->>>>>>> 7f4e5e1b52dc2443aa660e0712b7e5b2d5ec32d2

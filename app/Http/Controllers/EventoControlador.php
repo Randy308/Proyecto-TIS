@@ -19,24 +19,6 @@ class EventoControlador extends Controller
             $font->color('#fff'); 
             $font->align('center');
         });
-        // $xNombreEvento = 400; // Cambia esto según tu diseño
-        // $yNombreEvento = 100; // Cambia esto según tu diseño
-        // $xFechaInicio = 200; // Cambia esto según tu diseño
-        // $yFechaInicio = 150; // Cambia esto según tu diseño
-        // $xFechaFin = 600; // Cambia esto según tu diseño
-        // $yFechaFin = 150; // Cambia esto según tu diseño
-    
-        // CoordenadaEvento::create([
-        //     'idEvento' => $evento->idEvento, // Asigna el ID del evento relacionado
-        //     'nombreEx' => $xNombreEvento,
-        //     'nombreEy' => $yNombreEvento,
-        //     'fechaIX' => $xFechaInicio,
-        //     'fechaIY' => $yFechaInicio,
-        //     'fechaFX' => $xFechaFin,
-        //     'fechaFY' => $yFechaFin,
-        // ]);
-
-
         $nombreArchivo = "banner_$nombreEvento.png";
         $rutaBanner = public_path("storage/banners/$nombreArchivo"); // Directorio donde se guardarán los banners
         $banner->save($rutaBanner);
@@ -63,38 +45,36 @@ class EventoControlador extends Controller
             $request->validate([
                 'nombre_evento' => 'required|string|max:255',
                 'descripcion_evento' => 'required|string',
-                'estado' => 'required|in:activo,finalizado,cancelado',
-                'categoria' => 'required|string',
+                'estado' => 'required|in:Borrador,Activo,Finalizado,Cancelado',
+                'categoria' => 'required|in:Diseño,QA,Desarrollo,Ciencia de datos', 
                 'fecha_inicio' => 'required|date',
                 'fecha_fin' => 'required|date|after:fecha_inicio',
             ]);
-    
-            
             $rutaBanner = $this->generarBanner(
                 $request->input('nombre_evento'),
                 $request->input('fecha_inicio'),
                 $request->input('fecha_fin')
             );
             $nombreDelArchivo = basename($rutaBanner);
-
-    
-            
             $evento = new Evento([
                 'nombre_evento' => $request->input('nombre_evento'),
                 'descripcion_evento' => $request->input('descripcion_evento'),
+                'user_id' => auth()->user()->id,
                 'estado' => 'Borrador',
                 'categoria' => $request->input('categoria'),
                 'fecha_inicio' => $request->input('fecha_inicio'),
                 'fecha_fin' => $request->input('fecha_fin'),
                 'direccion_banner' => $nombreDelArchivo,
+                
             ]);
     
             $evento->save();
     
-            return redirect('/#')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+            return redirect('/')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
         } catch (\Exception $e) {
-            return redirect('/crear-evento')->with('failed', '¡Error no se guardo los datos');
+            return redirect()->route('index')->with('status', 'no se puedo almacenar en la base de datos');
         }
+        
     }
     
 
