@@ -75,11 +75,14 @@ class EventoControlador extends Controller
                 $request->input('fecha_inicio'),
                 $request->input('fecha_fin')
             );
-            $nombreDelArchivo = basename($rutaBanner);            
+            $nombreDelArchivo = basename($rutaBanner);
+
+    
+            
             $evento = new Evento([
                 'nombre_evento' => $request->input('nombre_evento'),
                 'descripcion_evento' => $request->input('descripcion_evento'),
-                'estado' => $request->input('estado'),
+                'estado' => 'borrador',
                 'categoria' => $request->input('categoria'),
                 'fecha_inicio' => $request->input('fecha_inicio'),
                 'fecha_fin' => $request->input('fecha_fin'),

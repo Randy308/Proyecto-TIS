@@ -19,14 +19,16 @@
                     <label for="descripcion_evento">Descripción del Evento:</label>
                     <textarea name="descripcion_evento" class="form-control" id="descripcion_evento" required></textarea>
                 </div>
-                {{-- <div class="form-group etiqueta-celeste">
-                    <label for="estado">Estado:</label>
-                    <select name="estado" class="form-control" id="estado" required>
-                        <option value="activo">Activo</option>
-                        <option value="finalizado">Finalizado</option>
-                        <option value="cancelado">Cancelado</option>
+                <div class="form-group etiqueta-celeste">
+                    <label for="categoria">Categoria:</label>
+                    <select name="categoria" class="form-control" id="categoria" required>
+                        <option value="Diseño">Diseño</option>
+                        <option value="QA">QA</option>
+                        <option value="Desarrollo">Desarrollo</option>
+                        <option value="Ciencia de datos">Ciencia de datos</option>
                     </select>
                 </div>
+                {{-- 
                 <div class="form-group etiqueta-celeste">
                     <label for="categoria">Categoría:</label>
                     <input type="text" name="categoria" class="form-control" id="categoria" required>

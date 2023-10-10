@@ -18,7 +18,7 @@ class CreateEventosTable extends Migration
             $table->string('nombre_evento'); 
             $table->text('descripcion_evento');
             $table->enum('estado', ['borrador','activo', 'finalizado', 'cancelado']);
-            $table->string('categoria');
+            $table->enum('categoria', ['diseño','QA', 'desarrollo', 'ciencia de datos']);
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
             $table->string('direccion_banner');
