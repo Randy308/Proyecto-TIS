@@ -57,4 +57,3 @@
 
 </div>
 
-<script src="{{ asset('js/color-picker.js') }}"></script>

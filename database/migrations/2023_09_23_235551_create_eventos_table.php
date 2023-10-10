@@ -14,15 +14,17 @@ class CreateEventosTable extends Migration
     public function up()
     {
         Schema::create('eventos', function (Blueprint $table) {
-            $table->id('idEvento');
-            $table->string('nombre_evento'); 
+            $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('nombre_evento'); // Cambiar el nombre del atributo a snake_case
             $table->text('descripcion_evento');
-            $table->enum('estado', ['borrador','activo', 'finalizado', 'cancelado']);
-            $table->enum('categoria', ['diseño','QA', 'desarrollo', 'ciencia de datos']);
+            $table->enum('estado', ['Borrador','Activo', 'Finalizado', 'Cancelado']);
+            $table->enum('categoria', ['Diseño','QA', 'Desarrollo', 'Ciencia de datos']);
             $table->dateTime('fecha_inicio');
             $table->dateTime('fecha_fin');
             $table->string('direccion_banner');
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
