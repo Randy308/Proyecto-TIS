@@ -15,119 +15,86 @@ header {
     color: #fff;
     border-color: #3498db;
 }
-.box {
-    height: 57px;
-    width: 545px;
+.btn-outline-info {
+  color: #3498db;
+  border: 2px solid #3498db;
+  background-color: transparent;
+  width: 50%;
+}
+.botones-juntos .btn-cancelar {
+  margin-right: 10px; /* Ajusta el margen entre los botones */
+}
+.btn-cancelar {
+  background-color: #fff; 
+  border: 2px solid #3498db; 
+  color: #000; 
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.box .rectangle {
-    height: 65px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 553px;
-}
-.label {
-    width: 387px;
-    height: 14px;
-}
-
-.label .text-wrapper {
-    position: fixed;
-    width: 387px;
-    top: 0;
-    left: 0;
-    font-family: "Inter-SemiBold", Helvetica;
-    font-weight: 600;
-    color: #91a4b7;
-    font-size: 14px;
-    letter-spacing: 0.7px;
-    line-height: 14px;
-    white-space: nowrap;
-}
-.square-container {
-    border: 2px solid #3498db;
-    padding: 20px;
-    margin: 20px 0;
-    background-color: #f0f0f0;
-}
-.borde-celeste {
-    border-color: #c3d2e1;
-}
-.custom-header {
-    background-color: #61758a;
-}
-.cuadrado {
-    background-color: #1c2a3a;
-    border-radius: 5px;
-    padding: 15px;
-    text-align: center;
-    color: white;
+.btn-cancelar:hover {
+  background-color: #ff0000; 
+  color: #fff; 
+  border: 2px solid #ff0000; 
 }
 .formulario {
-  background-color: #ffff; 
-  padding: 20px;
-  border-radius: 20px; 
-  max-width: 400px; 
-  width: 45%; 
-  border: 2px solid #3498db;
-  margin-right: 10px;
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 45%;
+    border: 2px solid #3498db;
+    display: inline-block; 
+    margin: 0 20px; 
 }
 
 .formulario input[type="text"],
 .formulario input[type="date"],
 .formulario select,
 .formulario textarea {
-  width: 100%; 
-  margin-bottom: 10px;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
-
 .formulario h1 {
-  color: #4eb3ee; 
+    color: #4eb3ee;
 }
 
 .formulario button {
-  width: 100%; 
+    width: 100%;
 }
 
 .etiqueta-celeste {
-  color: #3498db; 
+    color: #3498db;
 }
 
 .etiqueta-celeste input[type="text"],
 .etiqueta-celeste input[type="date"],
 .etiqueta-celeste select,
 .etiqueta-celeste textarea {
-  border: 2px solid #3498db;
-}
-
-.formulario-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  width: 100%;
-  border: 2px solid #3498db; /* Cambia el color del borde a celeste elegante */
+    border: 2px solid #3498db;
 }
 
 .editar-color {
-  display: flex;
-  align-items: center;
-  margin-top: 10px; /* Espacio entre el elemento "Editar Color" y el formulario */
+    text-align: center; /* Centra horizontalmente el contenido */
+    margin-right: 0; /* Sin espacio entre el "Editar Color" y el formulario */
+    display: inline-block; /* Coloca el "Editar Color" en línea con el formulario */
 }
 
 .editar-color i {
-  margin-left: 5px; /* Espacio a la izquierda del icono */
-  font-size: 20px;
-  color: #3498db;
+    font-size: 20px;
+    color: #3498db;
+    margin-right: 5px; /* Espacio a la derecha del icono */
 }
 
 .editar-color span {
-  font-size: 32px;
-  color: #3498db;
-  cursor: pointer;
+    font-size: 32px;
+    color: #3498db;
+    cursor: pointer;
 }
+
+.contenedor-flex {
+  display: flex;
+  align-items: center; /* Centra verticalmente los elementos */
+  justify-content: center; /* Centra horizontalmente los elementos */
+}
+

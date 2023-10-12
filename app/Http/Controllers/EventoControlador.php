@@ -4,6 +4,9 @@ use App\Models\CoordenadaEvento;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
+
 class EventoControlador extends Controller
 {
     public function generarBanner($nombreEvento, $fechaInicio, $fechaFin)
@@ -45,7 +48,6 @@ class EventoControlador extends Controller
             $request->validate([
                 'nombre_evento' => 'required|string|max:255',
                 'descripcion_evento' => 'required|string',
-                'estado' => 'required|in:Borrador,Activo,Finalizado,Cancelado',
                 'categoria' => 'required|in:Diseño,QA,Desarrollo,Ciencia de datos', 
                 'fecha_inicio' => 'required|date',
                 'fecha_fin' => 'required|date|after:fecha_inicio',
@@ -59,20 +61,23 @@ class EventoControlador extends Controller
             $evento = new Evento([
                 'nombre_evento' => $request->input('nombre_evento'),
                 'descripcion_evento' => $request->input('descripcion_evento'),
-                'user_id' => auth()->user()->id,
+                'user_id' => auth()->id(),
                 'estado' => 'Borrador',
                 'categoria' => $request->input('categoria'),
                 'fecha_inicio' => $request->input('fecha_inicio'),
                 'fecha_fin' => $request->input('fecha_fin'),
-                'direccion_banner' => $nombreDelArchivo,
+                'direccion_banner' => 'storage/banners/' . $nombreDelArchivo,
                 
             ]);
     
             $evento->save();
-    
-            return redirect('/')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+            
+            return redirect()->route('index')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+        } catch (ValidationException $e) {
+            return redirect()->route('crear-evento')->withInput()->withErrors($e->validator, 'warning');
         } catch (\Exception $e) {
-            return redirect()->route('index')->with('status', 'no se puedo almacenar en la base de datos');
+            log::error('Error al guardar el evento: ' . $e->getMessage());
+            return redirect()->route('crear-evento')->withInput()->with('warning', 'No se pudo almacenar en la base de datos');
         }
         
     }

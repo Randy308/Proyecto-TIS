@@ -17,12 +17,14 @@
                 <span>Eventos</span>
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
-                <li>
-                    <a href="{{route('crear-evento')}}">Crear Evento</a>
-                </li>
-                <li>
-                    <a href="#">Modificar evento</a>
-                </li>
+                @auth
+                    <li>
+                        <a href="{{route('crear-evento')}}">Crear Evento</a>
+                    </li>
+                    <li>
+                        <a href="#">Modificar evento</a>
+                    </li>
+                @endauth
                 <li>
                     <a href="{{ route('listaEventos')}}">Lista de eventos</a>
                 </li>

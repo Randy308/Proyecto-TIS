@@ -12,6 +12,9 @@ $(document).ready(function () {
 
     });
 });
+function redirigirAEditarEvento() {
+    window.location.href = "{{ route('editar-evento') }}";
+}
 function crearTabla(jsonData){
     const content = document.getElementById("contenedor");
     let table = document.createElement("table");
@@ -50,3 +53,9 @@ function crearTabla(jsonData){
 
      content.appendChild(table)
 }
+    function confirmarCancelacion() {
+        if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
+            // Redirige a la página de inicio o realiza otras acciones si el usuario confirma.
+            window.location.href = "{{ route('index') }}";
+        }
+    }
