@@ -1,7 +1,7 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <h3>Menu Lateral</h3>
-        <strong>TB</strong>
+        <strong><i class="bi bi-menu-down"></i></strong>
     </div>
 
     <ul class="list-unstyled components">
