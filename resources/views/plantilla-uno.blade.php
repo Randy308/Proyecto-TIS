@@ -6,9 +6,9 @@
         <div class="div-titulo">
             <div>
                 @php
-                    
+
                     $idEventoPagina = $evento->id;
-                    
+
                     \Carbon\Carbon::setLocale('es');
                 @endphp
                 <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->format('d-m-Y \a \l\a\s H:i:s') }}</h5>
@@ -18,49 +18,57 @@
                 <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
             </div>
             <div class="div-btn-registrarse">
-                @guest
-                    <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
-                        data-target="#loginModal">
-                        Iniciar Sesion
-                    </button>
+                @if (strtotime($evento->fecha_fin) > strtotime(now()))
+                    @guest
+                        <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
+                            data-target="#loginModal">
+                            Iniciar Sesion
+                        </button>
 
-                @endguest
-                @auth
-                    @php
-                        $id_evento_pagina = $evento->id;
-                        $id_usuario = auth()->user()->id;
-                        $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
-                            ->where('evento_id', $id_evento_pagina)
-                            ->exists();
-                    @endphp
-                    @if ($registroExistente)
-                        <div class="dropdown" id="lista-registro">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Ya se encuentra <br>registrado en el evento
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#abandonarModal">Abandonar evento</a>
-                                
+                    @endguest
+                    @auth
+                        @php
+                            $id_evento_pagina = $evento->id;
+                            $id_usuario = auth()->user()->id;
+                            $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                ->where('evento_id', $id_evento_pagina)
+                                ->exists();
+                        @endphp
+                        @if ($registroExistente)
+                            <div class="dropdown" id="lista-registro">
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                    id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Ya se encuentra <br>registrado en el evento
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                        data-target="#abandonarModal">Abandonar evento</a>
+
+                                </div>
                             </div>
-                        </div>
-                        @include('abandonar-evento', ['evento' => $evento])
-                    @else
-                        <form method="POST" action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                            @method('PUT')
-                            @csrf
+                            @include('abandonar-evento', ['evento' => $evento])
+                        @else
+                            <form method="POST"
+                                action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
+                                @method('PUT')
+                                @csrf
 
-                            <input type="hidden" name="evento" value="{{ $evento->id }}">
-                            <button type="submit" class="btn btn-primary" id="boton-registro">
-                                Registrarse
-                            </button>
-                        </form>
-                    @endif
+                                <input type="hidden" name="evento" value="{{ $evento->id }}">
+                                <button type="submit" class="btn btn-primary" id="boton-registro">
+                                    Registrarse
+                                </button>
+                            </form>
+                        @endif
 
 
 
-                @endauth
+                    @endauth
+                @else
+                    <p>El evento ya paso.</p>
+                @endif
+
+
             </div>
         </div>
     </div>
@@ -128,18 +136,7 @@
                 </div>
             </div>
             <div class="card" id="tab2">
-                <div class="card">
-                    <textarea name="publicar" id="publicar-admin" cols="30" rows="10"></textarea>
-                    <button class="btn btn-primary"  style="width: fit-content;">Publicar</button>
-                </div>
-
-
-                <div class="card">
-                    <span><b>usuario: </b>mensaje 1 ...</span>
-                </div>
-                <div class="card">
-                    <span><b>usuario: </b>mensaje 2 ...</span>
-                </div>
+                
             </div>
         </div>
     </div>

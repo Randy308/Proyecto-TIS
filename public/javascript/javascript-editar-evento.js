@@ -3,6 +3,8 @@ $('#file-select').on('click', function(e) {
     $('#file').click();
 });
 
+
+
 $('input[type=file]').change(function() {
     var file = (this.files[0].name).toString();
     $('#file-info').text('');

@@ -11,29 +11,26 @@ Route::get('/', function () {
 })->name('index');;
 
 
-
 //Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
 Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento');
 
+Route::post('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento');
 
 Route::get('/editar-evento', function () {
     return view('editar-evento');
-});
+})->name('editar-evento');
 
 
 Route::post('/login',[AuthUser::class,'store'])->name('iniciar.sesion.store');
 Route::post('/logout',[AuthUser::class,'destroy'])->name('logout');
 
 
-Route::post('/agregar-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento-form');
-
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
-
 
 Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
 
