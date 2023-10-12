@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('title', 'Crear Evento')
 <div class="wrapper">
     @include('layouts/sidebar')
     <div id="content">
