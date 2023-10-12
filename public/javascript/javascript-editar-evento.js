@@ -17,13 +17,13 @@ $('.btngrup').click(function() {
   });
 //selectores manipulables
 $( function() {
-    $( "#draggable2" ).draggable({ containment: "#containment-wrapper", scroll: false, cursor: "move" });
+    $( "#draggable2" ).draggable({ containment: "#containment-wrapper", scroll: true, cursor: "move" });
     $( "#draggable2" ).resizable({containment: "#containment-wrapper"});
-    $( "#draggable3" ).draggable({ containment: "#containment-wrapper", scroll: false, cursor: "move" });
+    $( "#draggable3" ).draggable({ containment: "#containment-wrapper", scroll: true, cursor: "move" });
     $( "#draggable3" ).resizable({containment: "#containment-wrapper"});
-    $( "#draggable4" ).draggable({ containment: "#containment-wrapper", scroll: false, cursor: "move" });
+    $( "#draggable4" ).draggable({ containment: "#containment-wrapper", scroll: true, cursor: "move" });
     $( "#draggable4" ).resizable({containment: "#containment-wrapper"});
-    $( "#draggable5" ).draggable({ containment: "#containment-wrapper", scroll: false, cursor: "move" });
+    $( "#draggable5" ).draggable({ containment: "#containment-wrapper", scroll: true, cursor: "move" });
     $( "#draggable5" ).resizable({containment: "#containment-wrapper"});
 } );
 //mostrar posiciones top y left

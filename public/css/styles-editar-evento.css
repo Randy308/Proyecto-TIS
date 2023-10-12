@@ -5,6 +5,21 @@
 } */
 /* .thumbnail {
 } */
+.contenteditor{
+    background-color: white;
+    border:1px solid #ced4da;
+    border-radius: 3px;
+}
+#containment-wrapper{
+    background-color: white;
+    border:1px solid #ced4da;
+    border-radius: 3px;
+}
+.imagescol2{
+    background-color: white;
+    border:1px solid #ced4da;
+    border-radius: 3px;
+}
 #preview {
     position: relative;
     padding:0px;
@@ -56,26 +71,32 @@ input[type=file] {
 }
 /*  */
 .btnact{
+    background-color: white;
+    border:1px solid #ced4da;
     font-size:13px;
     height:31px;
 }
 .btnfin{
+    background-color: white;
+    border:1px solid #ced4da;
     font-size:13px;
     height:31px;
 }
 .btncan{
+    background-color: white;
+    border:1px solid #ced4da;
     font-size:13px;
     height:31px;
 }
 
 .btnact.active {
-    background-color: green;
+    background-color: #2ecc71 ;
 }
 .btnfin.active {
-    background-color: yellow;
+    background-color: #f1c40f ;
 }
 .btncan.active {
-    background-color: red;
+    background-color: #c0392b ;
 }
 /* botones guardar cancealr */
 .btncancelar{
@@ -120,7 +141,4 @@ input[type=file] {
     left: 410px ;
     width: 300px;
     height: 45px;
-}
-#containment-wrapper { 
-    border:2px solid #ccc; 
 }
