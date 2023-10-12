@@ -1,0 +1,126 @@
+/* body {
+    width: 300px;
+    margin: 10px auto;
+    text-align:center;
+} */
+/* .thumbnail {
+} */
+#preview {
+    position: relative;
+    padding:0px;
+    padding-left: 15px;
+    height:45px;
+}
+#preview a {
+    position: absolute;
+    padding: 0px;
+    margin-top: 11px;
+    width:35px;
+    height: 35px;
+    border-color:gray;
+}
+#preview2{
+    padding: 0px;
+    padding-right: 15px;
+    height: 45px;
+}
+#file-info {
+    margin-top: 11px;
+    margin-bottom: 0px;
+    padding: 0px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width:100%;
+    height: 35px;
+    font-size: smaller;
+    text-align: center;
+}
+input[type=file] {
+    position: absolute;
+	visibility: hidden;
+	width: 0;
+	z-index: -9999;
+}
+#file-save {
+    text-align:center;
+    width: 100%;
+    padding: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 22px;
+}
+/* boton categoria */
+.btnselect{
+    font-size:13px;
+    height:31px;
+}
+/*  */
+.btnact{
+    font-size:13px;
+    height:31px;
+}
+.btnfin{
+    font-size:13px;
+    height:31px;
+}
+.btncan{
+    font-size:13px;
+    height:31px;
+}
+
+.btnact.active {
+    background-color: green;
+}
+.btnfin.active {
+    background-color: yellow;
+}
+.btncan.active {
+    background-color: red;
+}
+/* botones guardar cancealr */
+.btncancelar{
+    margin-right: 100px;    
+}
+.btnguardar{
+    margin-left: 100px;
+}
+.contenedorcategoria{
+    margin-left: 5px;
+}
+.draggable { 
+    width: 90px;
+    height: 90px; 
+    margin: 0 0 0 0;
+    border: 1px solid black; 
+}
+#draggable2{
+    background-color: red;
+    top: 150px ;
+    left: 50px ;
+    width: 290px;
+    height: 290px; 
+}
+#draggable3{
+    background-color: orange;
+    top: 180px ;
+    left: 400px ;
+    width: 350px;
+    height: 60px;
+}
+#draggable4{
+    background-color: green;
+    top: 270px ;
+    left: 410px ;
+    width: 300px;
+    height: 45px;
+}
+#draggable5{
+    background-color: black;
+    top: 340px ;
+    left: 410px ;
+    width: 300px;
+    height: 45px;
+}
+#containment-wrapper { 
+    border:2px solid #ccc; 
+}

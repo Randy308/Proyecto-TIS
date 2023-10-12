@@ -1,6 +1,8 @@
 @extends('layouts.app')
+
 @section('title', 'Crear Evento')
 <div class="wrapper">
+    @include('layouts/toggle')
     @include('layouts/sidebar')
     <div id="content">
         @include('layouts/navbar')
@@ -68,7 +70,7 @@
                     </form>
                 </div>
             </div>
-            <a href="{{ route('crear-evento') }}" class="editar-color">
+            <a href="{{ route('editar-evento') }}" class="editar-color">
                 <i class="fas fa-pencil-alt"></i>
                 <span>Editar Banner</span>
             </a>        

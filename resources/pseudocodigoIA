@@ -1,9 +1,20 @@
-Funcion busquedaPorProfundidaLimitada(nodo, meta, profundidad_limite){
-	Si (el nodo es igual a la meta){
-        Retornamos el nodo
-    }Caso contrario{
-        si(profundidad_limite es igual a 0){
+Funcion busquedaPorProfundidaLimitada(nodo_actual, meta, profundidad_limite){
+	Si (el nodo_actual es igual a la meta){
+        Retornar el nodo_actual
+    }
 
+    Si(profundidad_limite es igual a 0){
+        Retornar "Se llego a la profundidad limite"
+    }
+
+    Si(profundidad_limite > 0){
+        Por (cada hijo en los sucesores del nodo_actual){
+            Resultado <- busquedaPorProfundidaLimitada(hijo, meta, (profundidad_limite -1))
+            Si(Resultado es distinto a "Se llego a la profundidad limite"){
+                    Retornar Resultado
+            }
         }
     }
+
+    Retornar "No se encontro la meta";
 }
