@@ -5,6 +5,21 @@
 } */
 /* .thumbnail {
 } */
+.contenteditor{
+    background-color: white;
+    border:1px solid #ced4da;
+    border-radius: 3px;
+}
+#containment-wrapper{
+    background-color: white;
+    border:1px solid #ced4da;
+    border-radius: 3px;
+}
+.imagescol2{
+    background-color: white;
+    border:1px solid #ced4da;
+    border-radius: 3px;
+}
 #preview {
     position: relative;
     padding:0px;
@@ -56,26 +71,32 @@ input[type=file] {
 }
 /*  */
 .btnact{
+    background-color: white;
+    border:1px solid #ced4da;
     font-size:13px;
     height:31px;
 }
 .btnfin{
+    background-color: white;
+    border:1px solid #ced4da;
     font-size:13px;
     height:31px;
 }
 .btncan{
+    background-color: white;
+    border:1px solid #ced4da;
     font-size:13px;
     height:31px;
 }
 
 .btnact.active {
-    background-color: green;
+    background-color: #2ecc71 ;
 }
 .btnfin.active {
-    background-color: yellow;
+    background-color: #f1c40f ;
 }
 .btncan.active {
-    background-color: red;
+    background-color: #c0392b ;
 }
 /* botones guardar cancealr */
 .btncancelar{
@@ -94,33 +115,102 @@ input[type=file] {
     border: 1px solid black; 
 }
 #draggable2{
-    background-color: red;
+    background-color: #f6f6f6;
+    border: 1px solid #c5c5c5;
+    color: black;
     top: 150px ;
     left: 50px ;
     width: 290px;
     height: 290px; 
 }
 #draggable3{
-    background-color: orange;
+    background-color: #f6f6f6;
+    border: 1px solid #c5c5c5;
+    color: black;
     top: 180px ;
     left: 400px ;
     width: 350px;
     height: 60px;
 }
 #draggable4{
-    background-color: green;
+    background-color: #f6f6f6;
+    border: 1px solid #c5c5c5;
+    color: black;
     top: 270px ;
     left: 410px ;
     width: 300px;
     height: 45px;
 }
 #draggable5{
-    background-color: black;
+    background-color: #f6f6f6;
+    border: 1px solid #c5c5c5;
+    color: black;
     top: 340px ;
     left: 410px ;
     width: 300px;
     height: 45px;
 }
-#containment-wrapper { 
-    border:2px solid #ccc; 
+
+#undo{
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    padding: 6px 6px;
+    border-radius: 3px;
+}
+#redo{
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    padding: 6px 6px;
+    border-radius: 3px;
+}
+#zoom-button {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    padding: 6px 6px;
+    border-radius: 3px;
+    width: 73px;
+}
+#fontname-button,
+#fontsize-button {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    padding: 6px 6px;
+    width: 100px;
+    border-radius: 3px;
+    width: 88px;
+}
+#forecolor-button {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    padding: 6px 6px;
+    border-radius: 3px;
+    width: 108px;
+}
+#hilitecolor-button {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    padding: 6px 6px;
+    border-radius: 3px;
+    width: 90px;
+}
+#bold {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    font-weight: bold;
+    padding: 6px 6px;
+    border-radius: 3px;
+}
+#italic {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    font-style: italic;
+    padding: 6px 6px;
+    border-radius: 3px;
+}
+#underline {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+    text-decoration: underline;
+    padding: 6px 6px;
+    border-radius: 3px;
 }

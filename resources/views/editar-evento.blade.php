@@ -10,39 +10,101 @@
 
 
         
-            <div class="container">
+            <div class="container px-4">
                 <div class="row">
-                    <div class="col mr-2" style="height:12.9cm;">
-                        <div class="row border mb-3" style="height:2.5cm;">
+                    <div class="col mr-2" style="height:12cm;">
+                        <div class="contenteditor row mb-3 p-2" style="height:2cm;">
+                            
+                            <div class="toolbar">
+                                {{-- <button id="print">Print</button> --}}
+                                <button id="undo">Deshacer</button>
+                                <button id="redo">Rehacer</button>
+                                <select id="zoom">
+                                  <option selected disabled>Zoom</option>
+                                  <option>50%</option>
+                                  <option>75%</option>
+                                  <option>90%</option>
+                                  <option>100%</option>
+                                  <option>125%</option>
+                                  <option>150%</option>
+                                  <option>200%</option>
+                                </select>
+                                <select id="fontname">
+                                  <option selected disabled>Fuente</option>
+                                  <option>Arial</option>
+                                  <option>Comic Sans MS</option>
+                                  <option>Courier New</option>
+                                  <option>Georgia</option>
+                                  <option>Impact</option>
+                                  <option>Lucida Grande</option>
+                                  <option>Times New Roman</option>
+                                  <option>Verdana</option>
+                                </select>
+                                <select id="fontsize">
+                                  <option selected disabled>Tamaño</option>
+                                  <option value="1">8px</option>
+                                  <option value="2">9px</option>
+                                  <option value="3">10px</option>
+                                  <option value="4">11px</option>
+                                  <option value="5">12px</option>
+                                  <option value="6">14px</option>
+                                  <option value="7">18px</option>
+                                  <option value="8">24px</option>
+                                  <option value="9">30px</option>
+                                  <option value="10">36px</option>
+                                </select>
+                                <select id="hilitecolor" title="Background color">
+                                  <option selected disabled>Resaltar</option>
+                                  <option value="white">Ninguno</option>
+                                  <option value="red">Rojo</option>
+                                  <option value="yellow">Amarillo</option>
+                                  <option value="green">Verde</option>
+                                  <option value="blue">Azul</option>
+                                  <option value="grey">Gris</option>
+                                  <option value="purple">Morado</option>
+                                  <option value="orange">Naranja</option>
+                                </select>
+                                <select id="forecolor" title="Color">
+                                  <option selected disabled>Color Letra</option>
+                                  <option value="black">Negro</option>
+                                  <option value="white">Blanco</option>
+                                  <option value="red">Rojo</option>
+                                  <option value="yellow">Amarillo</option>
+                                  <option value="green">Verde</option>
+                                  <option value="blue">Azul</option>
+                                  <option value="#ccc">Gris</option>
+                                  <option value="purple">Morado</option>
+                                  <option value="orange">Naranja</option>
+                                </select>
+                                <button id="bold">B</button>
+                                <button id="italic">I</button>
+                                <button id="underline">U</button>
+                            </div>
 
-                            <form action="#">
-                                <fieldset>
-                                    <label for="color">Color Fondo</label>
-                                    <select name="color" id="color">
-                                        <option value="" selected="selected">Ninguno</option>
-                                        <option value="black">Black</option>
-                                        <option value="red">Red</option>
-                                        <option value="yellow">Yellow</option>
-                                        <option value="blue">Blue</option>
-                                        <option value="green">Green</option>
-                                    </select>
-                                </fieldset>
-                            </form>
-
+                            <fieldset>
+                                <select id="colorFondo" name="color" class="">
+                                    <option selected disabled>Color de Fondo</option>
+                                    <option value="rgba(0, 0, 0, 0.2)">Negro</option>
+                                    <option value="rgba(255, 0, 0, 0.2)">Rojo</option>
+                                    <option value="rgba(255, 255, 0, 0.2)">Amarillo</option>
+                                    <option value="rgba(0, 0, 255, 0.2)">Azul</option>
+                                    <option value="rgba(0, 128, 0, 0.2)">Verde</option>
+                                </select>
+                            </fieldset>    
 
                         </div>
-                        <div class="row border mt-3" style="height:10cm;">
+                        <div class="row mt-3" style="height:10cm;">
 
                             <div id="containment-wrapper" class="ui-widget-content" style="height: 100%; width: 100%;">
-                                <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">2</div>
-                                <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">3</div>
-                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;">4</div>
-                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;">5</div>
+                                <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">Imagen</div>
+                                <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">Nombre Evento</div>
+                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;">Fecha Inicio</div>
+                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;">Fecha Fin</div>
                             </div>
 
                         </div>
                     </div>
-                    <div class="imagescol2 col-3 border ml-2 px-3" style="height:12.9cm;">
+                    <div class="imagescol2 col-3 border ml-2 px-3" style="height:12.4cm;">
 
                         <div class="row">
                             <div id="preview" class="col-3">
@@ -72,10 +134,10 @@
                     </div>
                 </div>
 
-                <div class="row border my-3">
+                <div class="row my-2">
                     <div class="contenedorcategoria col">
                         <div class="categoria my-1 ml-5 mr-2" style="display:inline-block;">Categoria:</div>
-                        <form class="" action="" style="display:inline-block;">
+                        <form class="" action="" style="display:inline-block; margin:0;">
                             <select name="" class="btnselect custom-select">
                                 <option selected>Categoria</option>
                                 <option value="">Diseño</option>
@@ -88,14 +150,14 @@
                     <div class="col">
                         <div class="btn-group">
                             <div class="my-1 ml-5 mr-3">Estado:</div>
-                            <button type="button" class="btngrup btnact btn border">Activo</button>
-                            <button type="button" class="btngrup btnfin btn border">finalizado</button>
-                            <button type="button" class="btngrup btncan btn border">Cancelado</button>
+                            <button type="button" class="btngrup btnact btn">Activo</button>
+                            <button type="button" class="btngrup btnfin btn">finalizado</button>
+                            <button type="button" class="btngrup btncan btn">Cancelado</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="border my-3 text-center">
+                <div class="mt-3 mb-0 text-center">
                     <button type="button" class="btncancelar btn btn-secondary ">Cancelar</button>
                     <button type="button" class="btnguardar btn btn-primary">Guardar</button>
                 </div>
