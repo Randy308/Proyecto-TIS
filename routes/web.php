@@ -16,7 +16,7 @@ Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
 Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento');
 
-Route::post('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento');
+Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
 
 Route::get('/editar-evento', function () {
     return view('editar-evento');

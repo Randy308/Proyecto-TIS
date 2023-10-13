@@ -4,6 +4,7 @@
 <head>
     <title>Inicio</title>
     @include('layouts/estilos')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 
@@ -37,6 +38,30 @@
                             @endforeach
                         </ul>
                     </div>
+                @endif
+                @if (session('success'))
+                    <div class="alert alert-success" id="success-message">
+                        {{ session('success') }}
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            setTimeout(function() {
+                                $('#success-message').fadeOut();
+                            }, 2000); 
+                        });
+                    </script>
+                @endif
+                @if (session('warning'))
+                <div class="alert alert-warning" id="warning-message">
+                    {{ session('warning') }}
+                </div>
+                <script>
+                    $(document).ready(function() {
+                        setTimeout(function() {
+                            $('#warning-message').fadeOut();
+                        }, 2000); 
+                    });
+                </script>
                 @endif
             </div>
 
