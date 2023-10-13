@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('title', 'Crear Evento')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <div class="wrapper">
     @include('layouts/toggle')
     @include('layouts/sidebar')
