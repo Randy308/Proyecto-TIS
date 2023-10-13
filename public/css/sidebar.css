@@ -21,6 +21,22 @@
 #navdropdown {
     width: 100px;
 }
+
+#miNavbar{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: start;
+}
+
+#listaNavbar{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: end;
+
+
+}
 #navbarSupportedContent{
 
     display: grid;
@@ -55,7 +71,7 @@ li.active a:hover {
     background: #fff;
     border: none;
     border-radius: 10px;
-    padding-right: 70px;
+    padding-right: 90px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
