@@ -71,8 +71,6 @@ class EventoControlador extends Controller
                 $request->input('fecha_fin')
             );
             $nombreDelArchivo = basename($rutaBanner);
-            //$url = Storage::url($nombreDelArchivo);
-
             $evento = new Evento([
                 'nombre_evento' => $request->input('nombre_evento'),
                 'descripcion_evento' => $request->input('descripcion_evento'),
@@ -87,7 +85,7 @@ class EventoControlador extends Controller
 
             $evento->save();
 
-            return redirect()->back()->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+            return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
         } catch (ValidationException $e) {
             return redirect()->route('index')->withErrors(['error' => '¡Error no se guardo los datos  ' . $e]);
         }
