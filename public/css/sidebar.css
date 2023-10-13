@@ -18,10 +18,14 @@
     background: white;
     box-shadow: #003153;
 }
-#navbarDropdownMenuLink {
+#navdropdown {
     width: 100px;
 }
+#navbarSupportedContent{
 
+    display: grid;
+    grid-template-columns: auto auto;
+}
 body {
     font-family: "Poppins", sans-serif;
     background: #fafafa;
