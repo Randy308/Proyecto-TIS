@@ -5,7 +5,6 @@ body {
 }
 .container {
     background-color: white;
-    height: 100%;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
@@ -24,8 +23,7 @@ body {
 .c2 {
     display: grid;
     grid-template-columns: auto auto;
-    padding: 10px;
-    margin: 10px;
+
 }
 .c1 .card {
     height: 100%;
@@ -149,7 +147,7 @@ a#boton-registro {
     font-size: small;
 }
 #participantesContainer {
-    height: 700px;
+    max-height: 700px;
     align-items: center;
 }
 #participantes {

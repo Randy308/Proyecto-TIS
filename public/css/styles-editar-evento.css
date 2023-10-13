@@ -100,7 +100,7 @@ input[type=file] {
 }
 /* botones guardar cancealr */
 .btncancelar{
-    margin-right: 100px;    
+    margin-right: 100px;
 }
 .btnguardar{
     margin-left: 100px;
@@ -108,11 +108,11 @@ input[type=file] {
 .contenedorcategoria{
     margin-left: 5px;
 }
-.draggable { 
+.draggable {
     width: 90px;
-    height: 90px; 
+    height: 90px;
     margin: 0 0 0 0;
-    border: 1px solid black; 
+    border: 1px solid black;
 }
 #draggable2{
     background-color: #f6f6f6;
@@ -121,7 +121,7 @@ input[type=file] {
     top: 150px ;
     left: 50px ;
     width: 290px;
-    height: 290px; 
+    height: 290px;
 }
 #draggable3{
     background-color: #f6f6f6;

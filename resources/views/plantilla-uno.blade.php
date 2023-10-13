@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<div id="content" class="content">
+<div class="content">
     <div class="tabContainer">
         <ul class="tabs">
             <li>
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="card" id="tab2">
-                
+
             </div>
         </div>
     </div>

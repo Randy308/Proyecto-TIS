@@ -15,7 +15,7 @@
             @include('layouts/navbar')
 
 
-            <div class="contenedor-flex">
+            <div class="contenedor-flex mt-5">
                 <div class="formulario">
                     <div class="container">
                         <h1>Crear Evento</h1>
@@ -84,14 +84,14 @@
                 <a href="{{ route('editar-evento') }}" class="editar-color">
                     <i class="fas fa-pencil-alt"></i>
                     <span>Editar Banner</span>
-                </a>  
+                </a>
             </div>
 
 
         </div>
     </div>
 
-    @include('layouts/toggle')
+    @include('layouts/sidebar-scripts')
 </body>
 
 </html>

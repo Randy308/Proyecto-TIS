@@ -14,7 +14,7 @@
         <div id="content">
 
             @include('layouts/navbar')
-            <div class="container-sm mt-4">
+            <div class="container mt-4">
 
                 <div>
                     @if (session('status'))
@@ -43,8 +43,8 @@
     </div>
     </div>
 
-    @include('iniciar-sesion')  
-    @include('layouts/toggle')
+    @include('iniciar-sesion')
+    @include('layouts/sidebar-scripts')
     <script>
         $("#content").on("click", ".tabContainer .tabs a", function(e) {
             e.preventDefault(),

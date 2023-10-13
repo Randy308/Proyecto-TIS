@@ -6,10 +6,10 @@
     <title>Editar Evento</title>
     @include('layouts/estilos')
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles-editar-evento.css') }}">
-
     <style>
         .navbar-custom {
             background-color: #007BFF;
@@ -18,6 +18,7 @@
     </style>
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
 
 
 </head>
@@ -40,7 +41,7 @@
                     <div class="col mr-2" style="height:12cm;">
                         <div class="contenteditor row mb-3 p-2" style="height:2cm;">
 
-                            <div class="toolbar">
+                            <div class="toolbar" id="toolbar">
                                 {{-- <button id="print">Print</button> --}}
                                 <button id="undo">Deshacer</button>
                                 <button id="redo">Rehacer</button>
@@ -201,7 +202,7 @@
     </div>
 
 
-    @include('layouts/toggle')
+    @include('layouts/sidebar-scripts')
 
     <script src="{{ asset('javascript/javascript-editar-evento.js') }}"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
