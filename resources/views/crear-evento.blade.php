@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <div class="wrapper">
-    @include('layouts/toggle')
+   
     @include('layouts/sidebar')
     <div id="content">
         @include('layouts/navbar')
@@ -58,6 +58,12 @@
                             <span class="text-danger">{{ $errors->first('fecha_fin') }}</span>
                             @endif
                         </div>
+
+                        <div class="form-group text-center botones-juntos">
+                            <a href="#" class="btn btn-cancelar" style="width: 45%;" onclick="confirmarCancelacion()">Cancelar</a>
+                            <button type="submit" class="btn btn-info" style="width: 45%;">Crear Evento</button>
+                        </div> 
+
                         <script>
                             function confirmarCancelacion() {
                                 if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
@@ -65,10 +71,6 @@
                                 }
                             }
                         </script>
-                        <div class="form-group text-center botones-juntos">
-                            <a href="#" class="btn btn-cancelar" style="width: 45%;" onclick="confirmarCancelacion()">Cancelar</a>
-                            <button type="submit" class="btn btn-info" style="width: 45%;">Crear Evento</button>
-                        </div>   
                     </form>
                 </div>
             </div>
