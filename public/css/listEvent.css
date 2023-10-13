@@ -1,14 +1,40 @@
 .cintaCategoria{
     position: relative;
-    background-color: green;
+    background-color: #003153;
     color: white;
     text-align: center;
 }
-.cintaEstado{
+
+
+
+.Cancelado {
+    background-color: #FF0000;
     position: relative;
-    background-color: green;
+
     color: white;
     text-align: center;
 }
 
+.Activo {
+    background-color: #00FF00;
+    position: relative;
 
+    color: white;
+    text-align: center;
+}
+
+.Borrador {
+    background-color: #808080;
+    position: relative;
+
+    color: white;
+    text-align: center;
+}
+
+.Finalizado {
+    background-color: #558AD1;
+    position: relative;
+
+    color: white;
+    text-align: center;
+}
