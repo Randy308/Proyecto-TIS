@@ -55,7 +55,11 @@
                         <a href="{{ route('verEvento', $evento->id) }}">
                             <img src="{{ $evento->direccion_banner }}" class="card-img-top" alt="{{ $evento->Titulo }}">
                         </a>
-                        <div class="cintaEstado">{{ $evento->estado }}</div>
+                        <div class="{{$evento->estado}}">{{ $evento->estado }}</div>
+
+
+
+
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
