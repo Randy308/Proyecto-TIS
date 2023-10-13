@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\CoordenadaEvento;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Models\Evento;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class EventoControlador extends Controller
@@ -14,16 +17,23 @@ class EventoControlador extends Controller
         $textoBanner = "Evento: $nombreEvento\nFecha de inicio: $fechaInicio\nFecha de finalización: $fechaFin";
 
 
-        $banner = Image::canvas(800, 200, '#3498db'); 
+        $banner = Image::canvas(800, 200, '#3498db');
 
         $banner->text($textoBanner, 400, 100, function ($font) {
-            $font->file(public_path('fonts/InterTight-Black.ttf')); 
-            $font->size(24); 
-            $font->color('#fff'); 
+            $font->file(public_path('fonts/InterTight-Black.ttf'));
+            $font->size(24);
+            $font->color('#fff');
             $font->align('center');
         });
-        $nombreArchivo = "banner_$nombreEvento.png";
-        $rutaBanner = public_path("storage/banners/$nombreArchivo"); // Directorio donde se guardarán los banners
+
+        $folderPath = public_path('storage/banners');
+
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0755, true);
+        }
+
+        $nombreArchivo = "banner_" . $nombreEvento . ".png";
+        $rutaBanner = public_path('storage/banners/' . $nombreArchivo);
         $banner->save($rutaBanner);
         return $rutaBanner;
     }
@@ -34,12 +44,13 @@ class EventoControlador extends Controller
             'evento' => Evento::findOrFail($id)
         ]);
     }
-    
+
     public function listaEventos()
     {
         return view('lista-eventos');
     }
-    public function getAllEventos(){
+    public function getAllEventos()
+    {
         $eventos = Evento::all();
 
         return $eventos;
@@ -53,19 +64,15 @@ class EventoControlador extends Controller
     public function crearEvento(Request $request)
     {
         try {
-            $request->validate([
-                'nombre_evento' => 'required|string|max:255',
-                'descripcion_evento' => 'required|string',
-                'categoria' => 'required|in:Diseño,QA,Desarrollo,Ciencia de datos', 
-                'fecha_inicio' => 'required|date',
-                'fecha_fin' => 'required|date|after:fecha_inicio',
-            ]);
+
             $rutaBanner = $this->generarBanner(
                 $request->input('nombre_evento'),
                 $request->input('fecha_inicio'),
                 $request->input('fecha_fin')
             );
             $nombreDelArchivo = basename($rutaBanner);
+            //$url = Storage::url($nombreDelArchivo);
+
             $evento = new Evento([
                 'nombre_evento' => $request->input('nombre_evento'),
                 'descripcion_evento' => $request->input('descripcion_evento'),
@@ -74,21 +81,15 @@ class EventoControlador extends Controller
                 'categoria' => $request->input('categoria'),
                 'fecha_inicio' => $request->input('fecha_inicio'),
                 'fecha_fin' => $request->input('fecha_fin'),
-                'direccion_banner' => 'storage/banners/' . $nombreDelArchivo,
-                
-            ]);
-    
-            $evento->save();
-            
-            return redirect()->route('index')->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
-        } catch (ValidationException $e) {
-            return redirect()->route('crear-evento')->withInput()->withErrors($e->validator, 'warning');
-        } catch (\Exception $e) {
-            log::error('Error al guardar el evento: ' . $e->getMessage());
-            return redirect()->route('crear-evento')->withInput()->with('warning', 'No se pudo almacenar en la base de datos');
-        }
-        
-    }
-    
+                'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
 
+            ]);
+
+            $evento->save();
+
+            return redirect()->back()->with('success', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+        } catch (ValidationException $e) {
+            return redirect()->route('index')->withErrors(['error' => '¡Error no se guardo los datos  ' . $e]);
+        }
+    }
 }
