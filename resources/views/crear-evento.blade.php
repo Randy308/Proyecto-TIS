@@ -81,7 +81,10 @@
                         </form>
                     </div>
                 </div>
-                <
+                <a href="{{ route('editar-evento') }}" class="editar-color">
+                    <i class="fas fa-pencil-alt"></i>
+                    <span>Editar Banner</span>
+                </a>  
             </div>
 
 
