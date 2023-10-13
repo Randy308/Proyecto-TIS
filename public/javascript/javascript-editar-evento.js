@@ -53,7 +53,7 @@ $( function() {
 });
 //
 $( function() {
-  var page = $( "#draggable2" );
+  var page = $( "#noSeleccionado" );
   var basicControls = [ "#print", "#bold", "#italic", "#undo", "#redo" ];
   var valueControls = [ "#fontsize", "#forecolor", "#hilitecolor", "#backcolor", "fontname" ];
 
