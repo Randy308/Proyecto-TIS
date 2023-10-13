@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm" id="miNavbar">
+<nav class="navbar navbar-expand" id="miNavbar">
     <!-- Brand -->
     <button type="button" id="sidebarCollapse" class="btn btn-dark">
         <i class="bi bi-three-dots-vertical"></i>

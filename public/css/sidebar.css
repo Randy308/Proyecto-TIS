@@ -34,7 +34,7 @@
     display: grid;
     grid-template-columns: auto auto;
     justify-content: end;
-
+    position: relative;
 
 }
 #navbarSupportedContent{
@@ -46,7 +46,12 @@ body {
     font-family: "Poppins", sans-serif;
     background: #fafafa;
 }
-
+.dropdown-menu {
+    max-height: 200px; /* Establece la altura máxima deseada */
+    overflow-y: auto;  /* Habilita el desplazamiento vertical cuando sea necesario */
+    left: auto; /* Ajusta la posición izquierda a auto o 0 */
+    right: 0;
+}
 p {
     font-family: "Poppins", sans-serif;
     font-size: 0.7em;
@@ -71,7 +76,6 @@ li.active a:hover {
     background: #fff;
     border: none;
     border-radius: 10px;
-    padding-right: 90px;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -294,7 +298,7 @@ li#navdropdown a[aria-expanded="true"] {
         margin-left: -80px !important;
     }
     .navbar {
-        padding: 15px 10px;
+
         background: #fff;
         border: none;
         border-radius: 0;
