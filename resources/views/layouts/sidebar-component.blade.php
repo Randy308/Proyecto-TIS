@@ -11,9 +11,9 @@
         <li>
             <a href="#">Crear competencia</a>
         </li>
-        <li>
+        {{-- <li>
             <a href="#">Modificar competencia</a>
-        </li>
+        </li> --}}
         <li>
             <a href="#">Lista de competencias</a>
         </li>
