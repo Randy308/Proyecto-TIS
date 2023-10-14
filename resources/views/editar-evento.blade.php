@@ -68,16 +68,16 @@
                                 </select>
                                 <select id="fontsize">
                                     <option selected disabled>Tamaño</option>
-                                    <option value="1">8px</option>
-                                    <option value="2">9px</option>
-                                    <option value="3">10px</option>
-                                    <option value="4">11px</option>
-                                    <option value="5">12px</option>
-                                    <option value="6">14px</option>
-                                    <option value="7">18px</option>
-                                    <option value="8">24px</option>
-                                    <option value="9">30px</option>
-                                    <option value="10">36px</option>
+                                    <option value="8px">8px</option>
+                                    <option value="9px">9px</option>
+                                    <option value="10px">10px</option>
+                                    <option value="11px">11px</option>
+                                    <option value="12px">12px</option>
+                                    <option value="14px">14px</option>
+                                    <option value="18px">18px</option>
+                                    <option value="24px">24px</option>
+                                    <option value="30px">30px</option>
+                                    <option value="36px">36px</option>
                                 </select>
                                 <select id="hilitecolor" title="Background color">
                                     <option selected disabled>Resaltar</option>
@@ -137,7 +137,7 @@
 
                         </div>
                     </div>
-                    <div class="imagescol2 col-3 border ml-2 px-3" style="height:12.4cm;">
+                    <div class="imagescol2 col-3 border ml-2 px-3" style="height:12.4cm; width: 300px;">
 
                         <div class="row">
                             <div id="preview" class="col-3">
@@ -165,17 +165,11 @@
                                     d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
                                     fill="white" />
                             </svg></a>
-                        <div class="card dropzone" id="contenedorTemporal" style="height: 100px">
-                            {{-- <div class="draggable ui-widget-content" draggable="true">
-                                <p>Drag me to my target</p>
-                            </div> --}}
+                        <div class="card dropzone" id="contenedorTemporal">
+                            <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content"
+                                id="contenedorTemporal1" alt="123">
+
                         </div>
-
-
-
-
-
-
                     </div>
                 </div>
 
@@ -208,6 +202,8 @@
                     <button type="button" class=" btn btn-primary" id="btnSaveElement">Descargar</button>
                     <input type="text" id="tituloTexto">
                     <button type="button" class=" btn btn-primary" id="agregarElemento">Descargar</button>
+
+                    <button type="button" class=" btn btn-primary" id="cambiarEstadoElemento">Cambiar</button>
                 </div>
 
             </div>
@@ -218,30 +214,84 @@
         </div>
     </div>
 
-
     @include('layouts/sidebar-scripts')
-
-
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
     <script src="{{ asset('js/javascript-editar-evento.js') }}"></script>
-
-
     <script>
+        var contador = 2;
         $(document).ready(function() {
-            $("#agregarElemento").on('click', function() {
-                var div = $('<div class="draggable ui-widget-content"><p>Drag me to the target</p></div>');
-                $("#containment-wrapper").append(div);
-                div.draggable({
-                    containment: ".containment-wrapper"
+            $("#agregarElemento").on("click", function() {
+                var div = document.createElement('div');
+                div.classList.add('ui-widget-content')
+                var p = document.createElement('p');
+                p.innerHTML = document.getElementById('tituloTexto').value;
+                div.appendChild(p)
+                div.setAttribute("id", "elemntolista" + contador);
+                contador++;
+                $("#contenedorTemporal").append(div);
+            });
+
+            $("#contenedorTemporal img").resizable({
+                containment: "#contenedorTemporal"
+            });
+            $("#contenedorTemporal").on("click", ".ui-widget-content", function() {
+                var id = $(this).attr("id");
+                const childElement = document.getElementById(id);
+                const parentElement = childElement.parentElement;
+                if (childElement.tagName == "IMG") {
+                    parentElement.remove();
+                }
+
+                // Remove the child from the current parent
+                $(this).detach();
+
+                // Add 'draggable' class
+                $(this).addClass("draggable");
+
+                // Append it to the new parent
+                $("#containment-wrapper").append(this);
+
+                // Make it draggable and resizable
+                $("#" + id).css("position", "absolute");
+                $("#" + id).resizable({
+                    containment: "#containment-wrapper",
+                    handles: "n, e, s, w"
+                });
+
+                $("#" + id).draggable({
+                    containment: "#containment-wrapper",
+                    scroll: true,
+                    cursor: "move"
+                });
+
+            });
+
+            $("#containment-wrapper").on("click", "*", function() {
+                var id = $(this).attr("id");
+                const childElement = document.getElementById(id);
+                console.log("hola mundo")
+                $('#containment-wrapper *').removeClass('activo');
+                childElement.classList.toggle("activo");
+
+
+            });
+
+            $(function() {
+                $("#fontsize").selectmenu({
+                    change: function(event, data) {
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            
+                            $(element).css("font-size", data.item.value);
+                            console.log(data.item.value);
+                            console.log($(element).attr("id"));
+                        });
+                    },
                 });
             });
 
 
-            $(".containment-wrapper").on("click", ".draggable", function() {
-                var innerHTML = $(this).text();
-                alert(innerHTML.trim());
-            });
 
         });
     </script>
