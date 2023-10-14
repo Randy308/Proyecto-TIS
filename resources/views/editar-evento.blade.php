@@ -123,7 +123,8 @@
 
                         <div class="row mt-3" style="height:10cm;">
 
-                            <div id="containment-wrapper" class="ui-widget-content dropzone" style="height: 100%; width: 100%;">
+                            <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
+                                style="height: 100%; width: 100%;">
                                 <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">
                                     Imagen</div>
                                 <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">
@@ -164,52 +165,14 @@
                                     d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
                                     fill="white" />
                             </svg></a>
-                            <div class="card dropzone" style="height: 100px">
-                                <div class="draggable ui-widget-content" draggable="true">
-                                    <p>Arrastrame al banner</p>
-                                </div>
-                            </div>
-                            <div class="card dropzone" style="height: 100px" >
-                                <!-- Contenido del área de destino -->
-                            </div>
+                        <div class="card dropzone" id="contenedorTemporal" style="height: 100px">
+                            {{-- <div class="draggable ui-widget-content" draggable="true">
+                                <p>Drag me to my target</p>
+                            </div> --}}
+                        </div>
 
-                            <script>
-                                let offsetX, offsetY;
-                                let dragged = null;
 
-                                const draggableElements = document.querySelectorAll(".draggable");
 
-                                draggableElements.forEach((element) => {
-                                    element.addEventListener("dragstart", (event) => {
-                                        dragged = event.target;
-                                        // Calcula el desplazamiento entre el puntero y la esquina superior izquierda del elemento
-                                        const rect = dragged.getBoundingClientRect();
-                                        offsetX = event.clientX - rect.left;
-                                        offsetY = event.clientY - rect.top;
-                                    });
-                                });
-
-                                const dropzones = document.querySelectorAll(".dropzone");
-
-                                dropzones.forEach((dropzone) => {
-                                    dropzone.addEventListener("dragover", (event) => {
-                                        event.preventDefault();
-                                    });
-
-                                    dropzone.addEventListener("drop", (event) => {
-                                        event.preventDefault();
-                                        if (event.target.classList.contains("dropzone")) {
-                                            // Calcula la posición relativa al contenedor
-                                            const x = event.clientX - event.target.getBoundingClientRect().left - offsetX;
-                                            const y = event.clientY - event.target.getBoundingClientRect().top - offsetY;
-                                            dragged.style.left = `${x}px`;
-                                            dragged.style.top = `${y}px`;
-                                            dragged.style.position = "absolute";
-                                            event.target.appendChild(dragged);
-                                        }
-                                    });
-                                });
-                            </script>
 
 
 
@@ -243,6 +206,8 @@
                     <button type="button" class="btncancelar btn btn-secondary ">Cancelar</button>
                     <button type="button" class="btnguardar btn btn-primary">Guardar</button>
                     <button type="button" class=" btn btn-primary" id="btnSaveElement">Descargar</button>
+                    <input type="text" id="tituloTexto">
+                    <button type="button" class=" btn btn-primary" id="agregarElemento">Descargar</button>
                 </div>
 
             </div>
@@ -256,14 +221,29 @@
 
     @include('layouts/sidebar-scripts')
 
-    <script src="{{ asset('js/javascript-editar-evento.js') }}"></script>
+
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
+    <script src="{{ asset('js/javascript-editar-evento.js') }}"></script>
+
+
+    <script>
+
+        $(document).ready(function() {
+            $("#agregarElemento").on('click', function() {
+                var div = $('<div class="draggable ui-widget-content"><p>Drag me to the target</p></div>');
+                $("#containment-wrapper").append(div);
+                div.draggable({
+                    containment: ".containment-wrapper"
+                });
+            });
+
+        });
+    </script>
 
 
     <script>
         $(document).ready(function() {
-
 
             $("#btnSaveElement").on('click', function() {
                 domtoimage.toJpeg(document.getElementById('containment-wrapper'), {
