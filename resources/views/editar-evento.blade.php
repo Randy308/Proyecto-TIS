@@ -282,7 +282,7 @@
                     change: function(event, data) {
                         var elements = document.getElementsByClassName("activo");
                         Array.from(elements).forEach(function(element) {
-                            
+
                             $(element).css("font-size", data.item.value);
                             console.log(data.item.value);
                             console.log($(element).attr("id"));
@@ -291,7 +291,30 @@
                 });
             });
 
+            $(function() {
+                $("#fontsize").selectmenu({
+                    change: function(event, data) {
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
 
+                            $(element).css("font-size", data.item.value);
+                            console.log(data.item.value);
+                            console.log($(element).attr("id"));
+                        });
+                    },
+                });
+
+
+                $("#fontname").selectmenu({
+                    change: function(event, data) {
+                        var selectedFont = data.item.value;
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("font-family", selectedFont);
+                        });
+                    },
+                });
+            });
 
         });
     </script>
