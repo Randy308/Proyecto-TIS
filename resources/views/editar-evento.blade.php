@@ -228,7 +228,6 @@
 
 
     <script>
-
         $(document).ready(function() {
             $("#agregarElemento").on('click', function() {
                 var div = $('<div class="draggable ui-widget-content"><p>Drag me to the target</p></div>');
@@ -236,6 +235,12 @@
                 div.draggable({
                     containment: ".containment-wrapper"
                 });
+            });
+
+
+            $(".containment-wrapper").on("click", ".draggable", function() {
+                var innerHTML = $(this).text();
+                alert(innerHTML.trim());
             });
 
         });
