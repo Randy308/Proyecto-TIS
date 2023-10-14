@@ -29,13 +29,13 @@ $( function() {
 //mostrar posiciones top y left
 $(document).ready(function(){
     var $draggable2 = $("#draggable2");
-    
+
     // Mostrar posición top y left
     var posicion = $draggable2.position();
     var top = posicion.top;
     var left = posicion.left;
     console.log("Top: " + top + "px, Left: " + left + "px");
-    
+
     // Mostrar ancho y alto
     var ancho = $draggable2.width();
     var alto = $draggable2.height();
@@ -49,7 +49,7 @@ $( function() {
          circle.css( "background", data.item.value );
        }
      });
-     
+
 });
 //
 $( function() {
