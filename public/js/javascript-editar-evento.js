@@ -20,25 +20,25 @@ $(function () {
         scroll: true,
         cursor: "move",
     });
-    $("#draggable2").resizable({ containment: "#containment-wrapper" });
+    $("#draggable2").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
     $("#draggable3").draggable({
         containment: "#containment-wrapper",
         scroll: true,
         cursor: "move",
     });
-    $("#draggable3").resizable({ containment: "#containment-wrapper" });
+    $("#draggable3").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
     $("#draggable4").draggable({
         containment: "#containment-wrapper",
         scroll: true,
         cursor: "move",
     });
-    $("#draggable4").resizable({ containment: "#containment-wrapper" });
+    $("#draggable4").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
     $("#draggable5").draggable({
         containment: "#containment-wrapper",
         scroll: true,
         cursor: "move",
     });
-    $("#draggable5").resizable({ containment: "#containment-wrapper" });
+    $("#draggable5").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
 });
 //mostrar posiciones top y left
 $(document).ready(function () {

@@ -78,10 +78,14 @@
                                     <option value="24px">24px</option>
                                     <option value="30px">30px</option>
                                     <option value="36px">36px</option>
+                                    <option value="36px">39px</option>
+                                    <option value="36px">42px</option>
+                                    <option value="36px">45px</option>
                                 </select>
                                 <select id="hilitecolor" title="Background color">
                                     <option selected disabled>Resaltar</option>
-                                    <option value="white">Ninguno</option>
+                                    <option value="transparent">Ninguno</option>
+                                    <option value="white">Blanco</option>
                                     <option value="red">Rojo</option>
                                     <option value="yellow">Amarillo</option>
                                     <option value="green">Verde</option>
@@ -224,9 +228,9 @@
             $("#agregarElemento").on("click", function() {
                 var div = document.createElement('div');
                 div.classList.add('ui-widget-content')
-                var p = document.createElement('p');
-                p.innerHTML = document.getElementById('tituloTexto').value;
-                div.appendChild(p)
+                //var p = document.createElement('p');
+                div.innerHTML = document.getElementById('tituloTexto').value;
+                //div.appendChild(p)
                 div.setAttribute("id", "elemntolista" + contador);
                 contador++;
                 $("#contenedorTemporal").append(div);
@@ -267,12 +271,14 @@
 
             });
 
-            $("#containment-wrapper").on("click", "*", function() {
+            $("#containment-wrapper").on("click", "div", function() {
                 var id = $(this).attr("id");
                 const childElement = document.getElementById(id);
                 console.log("hola mundo")
-                $('#containment-wrapper *').removeClass('activo');
+                $('#containment-wrapper div').removeClass('activo');
+                $('#containment-wrapper div').css("border", "");
                 childElement.classList.toggle("activo");
+                $(this).css("border", "1px solid black");
 
 
             });
@@ -314,7 +320,31 @@
                         });
                     },
                 });
+
+                $("#forecolor").selectmenu({
+                    change: function(event, data) {
+                        var selectedColor = data.item.value;
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("color", selectedColor);
+                        });
+                    },
+                });
+
+
+                $("#hilitecolor").selectmenu({
+                    change: function(event, data) {
+                        var selectedBackgroundColor = data.item.value;
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("background", selectedBackgroundColor);
+                        });
+                    },
+                });
+
             });
+
+
 
         });
     </script>
