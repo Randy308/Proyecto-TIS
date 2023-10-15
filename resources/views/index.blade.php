@@ -69,10 +69,6 @@
         </div>
 
         <div>
-            <form action="POST" id="form1">
-                @csrf
-                <input type="hidden" name="id" value="1">
-            </form>
 
 
         </div>
