@@ -1,80 +1,105 @@
-@extends('layouts.app-editar')
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <title>Editar Evento</title>
+    @include('layouts/estilos')
+
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/styles-editar-evento.css') }}">
+
+    <style>
+        .navbar-custom {
+            background-color: #007BFF;
+            color: #fff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+
+</head>
+
+<body>
 
 
 
-<div class="wrapper">
-    @include('layouts/sidebar')
-    <div id="content">
-        @include('layouts/navbar')
+
+    <div class="wrapper">
+        @include('layouts/sidebar')
+        <div id="content">
+            @include('layouts/navbar')
 
 
 
-        
+
             <div class="container px-4">
                 <div class="row">
                     <div class="col mr-2" style="height:12cm;">
                         <div class="contenteditor row mb-3 p-2" style="height:2cm;">
-                            
+
                             <div class="toolbar">
                                 {{-- <button id="print">Print</button> --}}
                                 <button id="undo">Deshacer</button>
                                 <button id="redo">Rehacer</button>
                                 <select id="zoom">
-                                  <option selected disabled>Zoom</option>
-                                  <option>50%</option>
-                                  <option>75%</option>
-                                  <option>90%</option>
-                                  <option>100%</option>
-                                  <option>125%</option>
-                                  <option>150%</option>
-                                  <option>200%</option>
+                                    <option selected disabled>Zoom</option>
+                                    <option>50%</option>
+                                    <option>75%</option>
+                                    <option>90%</option>
+                                    <option>100%</option>
+                                    <option>125%</option>
+                                    <option>150%</option>
+                                    <option>200%</option>
                                 </select>
                                 <select id="fontname">
-                                  <option selected disabled>Fuente</option>
-                                  <option>Arial</option>
-                                  <option>Comic Sans MS</option>
-                                  <option>Courier New</option>
-                                  <option>Georgia</option>
-                                  <option>Impact</option>
-                                  <option>Lucida Grande</option>
-                                  <option>Times New Roman</option>
-                                  <option>Verdana</option>
+                                    <option selected disabled>Fuente</option>
+                                    <option>Arial</option>
+                                    <option>Comic Sans MS</option>
+                                    <option>Courier New</option>
+                                    <option>Georgia</option>
+                                    <option>Impact</option>
+                                    <option>Lucida Grande</option>
+                                    <option>Times New Roman</option>
+                                    <option>Verdana</option>
                                 </select>
                                 <select id="fontsize">
-                                  <option selected disabled>Tamaño</option>
-                                  <option value="1">8px</option>
-                                  <option value="2">9px</option>
-                                  <option value="3">10px</option>
-                                  <option value="4">11px</option>
-                                  <option value="5">12px</option>
-                                  <option value="6">14px</option>
-                                  <option value="7">18px</option>
-                                  <option value="8">24px</option>
-                                  <option value="9">30px</option>
-                                  <option value="10">36px</option>
+                                    <option selected disabled>Tamaño</option>
+                                    <option value="1">8px</option>
+                                    <option value="2">9px</option>
+                                    <option value="3">10px</option>
+                                    <option value="4">11px</option>
+                                    <option value="5">12px</option>
+                                    <option value="6">14px</option>
+                                    <option value="7">18px</option>
+                                    <option value="8">24px</option>
+                                    <option value="9">30px</option>
+                                    <option value="10">36px</option>
                                 </select>
                                 <select id="hilitecolor" title="Background color">
-                                  <option selected disabled>Resaltar</option>
-                                  <option value="white">Ninguno</option>
-                                  <option value="red">Rojo</option>
-                                  <option value="yellow">Amarillo</option>
-                                  <option value="green">Verde</option>
-                                  <option value="blue">Azul</option>
-                                  <option value="grey">Gris</option>
-                                  <option value="purple">Morado</option>
-                                  <option value="orange">Naranja</option>
+                                    <option selected disabled>Resaltar</option>
+                                    <option value="white">Ninguno</option>
+                                    <option value="red">Rojo</option>
+                                    <option value="yellow">Amarillo</option>
+                                    <option value="green">Verde</option>
+                                    <option value="blue">Azul</option>
+                                    <option value="grey">Gris</option>
+                                    <option value="purple">Morado</option>
+                                    <option value="orange">Naranja</option>
                                 </select>
                                 <select id="forecolor" title="Color">
-                                  <option selected disabled>Color Letra</option>
-                                  <option value="black">Negro</option>
-                                  <option value="white">Blanco</option>
-                                  <option value="red">Rojo</option>
-                                  <option value="yellow">Amarillo</option>
-                                  <option value="green">Verde</option>
-                                  <option value="blue">Azul</option>
-                                  <option value="#ccc">Gris</option>
-                                  <option value="purple">Morado</option>
-                                  <option value="orange">Naranja</option>
+                                    <option selected disabled>Color Letra</option>
+                                    <option value="black">Negro</option>
+                                    <option value="white">Blanco</option>
+                                    <option value="red">Rojo</option>
+                                    <option value="yellow">Amarillo</option>
+                                    <option value="green">Verde</option>
+                                    <option value="blue">Azul</option>
+                                    <option value="#ccc">Gris</option>
+                                    <option value="purple">Morado</option>
+                                    <option value="orange">Naranja</option>
                                 </select>
                                 <button id="bold">B</button>
                                 <button id="italic">I</button>
@@ -90,16 +115,20 @@
                                     <option value="rgba(0, 0, 255, 0.2)">Azul</option>
                                     <option value="rgba(0, 128, 0, 0.2)">Verde</option>
                                 </select>
-                            </fieldset>    
+                            </fieldset>
 
                         </div>
                         <div class="row mt-3" style="height:10cm;">
 
                             <div id="containment-wrapper" class="ui-widget-content" style="height: 100%; width: 100%;">
-                                <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">Imagen</div>
-                                <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">Nombre Evento</div>
-                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;">Fecha Inicio</div>
-                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;">Fecha Fin</div>
+                                <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">
+                                    Imagen</div>
+                                <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">
+                                    Nombre Evento</div>
+                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;">Fecha
+                                    Inicio</div>
+                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;">Fecha
+                                    Fin</div>
                             </div>
 
                         </div>
@@ -117,15 +146,17 @@
                                 </a>
                                 {{-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=" style="height: 40px; width:80px; opacity: 1;"/> --}}
                             </div>
-                            <div id="preview2" class="col"><span class="alert alert-info" id="file-info">No hay archivo
+                            <div id="preview2" class="col"><span class="alert alert-info" id="file-info">No hay
+                                    archivo
                                     aún</span></div>
                         </div>
 
                         <form id="file-submit" enctype="multipart/form-data">
                             <input id="file" name="file" type="file" />
                         </form>
-                        <a href="#" class="btn btn-primary" id="file-save"><svg xmlns="http://www.w3.org/2000/svg"
-                                height="100%" viewBox="0 -960 960 960" width="100%">
+                        <a href="#" class="btn btn-primary" id="file-save"><svg
+                                xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
+                                width="100%">
                                 <path
                                     d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
                                     fill="white" />
@@ -163,8 +194,19 @@
                 </div>
 
             </div>
-       
 
 
+
+        </div>
     </div>
-</div>
+
+
+    @include('layouts/toggle')
+
+    <script src="{{ asset('javascript/javascript-editar-evento.js') }}"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+</body>
+
+</html>
