@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
-
+use App\Http\Controllers\UsuarioController;
 Route::get('/', function () {
     return view('index');
 })->name('index');;
@@ -34,3 +34,4 @@ Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create
 
 Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
 
+Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');

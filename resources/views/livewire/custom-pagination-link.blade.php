@@ -1,5 +1,3 @@
-<!-- resources/views/livewire/custom-pagination.blade.php -->
-
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center">
         {{-- Botón "Anterior" --}}
@@ -16,12 +14,7 @@
         @endif
 
         {{-- Botones de páginas --}}
-        @php
-            $start = max(1, $paginator->currentPage() - 2);
-            $end = min($paginator->lastPage(), $paginator->currentPage() + 2);
-        @endphp
-
-        @for ($i = $start; $i <= $end; $i++)
+        @for ($i = 1; $i <= $paginator->lastPage(); $i++)
             @if ($i == $paginator->currentPage())
                 <li class="page-item active">
                     <span class="page-link">{{ $i }}</span>
