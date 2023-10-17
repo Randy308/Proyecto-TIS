@@ -25,20 +25,19 @@
 
                             <div class="form-group">
                                 <label for="nombre_evento">Nombre del Evento</label>
-                                <input type="text" name="nombre_evento" class="form-control" id="nombre_evento"
-                                    required>
-                                @if ($errors->has('nombre_evento'))
-                                    <span class="text-danger">{{ $errors->first('nombre_evento') }}</span>
-                                @endif
+                                <input type="text" name="nombre_evento" class="form-control @error('nombre_evento') is-invalid @enderror" id="nombre_evento" value="{{ old('nombre_evento') }}" required aria-describedby="nombre_evento_help">
+                                @error('nombre_evento')
+                                    <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-
                             <div class="form-group">
-                                <label for="descripcion_evento">Descripción del Evento</label>
-                                <textarea name="descripcion_evento" class="form-control" id="descripcion_evento" required></textarea>
-                                @if ($errors->has('descripcion_evento'))
-                                    <span class="text-danger">{{ $errors->first('descripcion_evento') }}</span>
-                                @endif
+                                <label for="descripcion_evento">Descripcion del Evento</label>
+                                <input type="text" name="descripcion_evento" class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento" value="{{ old('descripcion_evento') }}" required aria-describedby="descripcion_evento_help">
+                                @error('descripcion_evento')
+                                    <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
+                            
 
                             <div class="form-group">
                                 <label for="categoria">Categoría</label>
@@ -52,20 +51,20 @@
 
                             <div class="form-group">
                                 <label for="fecha_inicio">Fecha de inicio</label>
-                                <input type="date" name="fecha_inicio" class="form-control" id="fecha_inicio"
-                                    required>
-                                @if ($errors->has('fecha_inicio'))
-                                    <span class="text-danger">{{ $errors->first('fecha_inicio') }}</span>
-                                @endif
+                                <input type="date" name="fecha_inicio" class="form-control @error('fecha_inicio') is-invalid @enderror" id="fecha_inicio" value="{{ old('fecha_inicio') }}" required aria-describedby="fecha_inicio_help">
+                                @error('fecha_inicio')
+                                    <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
-
+                            
                             <div class="form-group">
                                 <label for="fecha_fin">Fecha de finalización</label>
-                                <input type="date" name="fecha_fin" class="form-control" id="fecha_fin" required>
-                                @if ($errors->has('fecha_fin'))
-                                    <span class="text-danger">{{ $errors->first('fecha_fin') }}</span>
-                                @endif
+                                <input type="date" name="fecha_fin" class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin" value="{{ old('fecha_fin') }}" required aria-describedby="fecha_fin_help">
+                                @error('fecha_fin')
+                                    <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
+                            
                             <script>
                                 function confirmarCancelacion() {
                                     if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
