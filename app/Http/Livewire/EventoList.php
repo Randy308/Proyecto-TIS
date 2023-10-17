@@ -13,11 +13,11 @@ class EventoList extends Component
     protected $paginationTheme = 'bootstrap';
 
     use WithPagination;
+
     public $search ='';
     public $orderb = 0;
     public $filtroEstado = '';
     public $filtroCategoria = '';
-
 
     public function render()
     {
@@ -53,7 +53,7 @@ class EventoList extends Component
          
 
          $eventos = $eventos->paginate(6);
-         $this->resetPage();
+         
          foreach ($eventos as $evento) {
             $evento->fecha_inicio = new DateTime($evento->fecha_inicio);
             $evento->fecha_fin = new DateTime($evento->fecha_fin);
@@ -63,7 +63,9 @@ class EventoList extends Component
             'eventos' => $eventos]);
     }
 
-    public function updatedSearch(){
-       
+    public function updatingSearch(){
+
+        $this->resetPage();
     }
+
 }

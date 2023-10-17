@@ -75,6 +75,8 @@
         
     </div>
     
-    {{ $eventos->links('livewire.custom-pagination-link') }} 
+    {{ $eventos->links() }} 
 </div>
 @livewireScripts
+
+
