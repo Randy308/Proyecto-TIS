@@ -5,10 +5,9 @@ use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
+use App\Http\Controllers\ParticipanteController;
 
-Route::get('/', function () {
-    return view('index');
-})->name('index');;
+Route::get('/', function () {return view('index');})->name('index');
 
 
 //Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
@@ -34,3 +33,6 @@ Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create
 
 Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
 
+Route::get('/registrarParticipante', [ParticipanteController::class, 'index'])->name('registrar-participante');
+
+Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])->name('registroParticipante.store');

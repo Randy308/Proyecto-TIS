@@ -17,21 +17,31 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Correo Electronico</label>
-                        <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                        <input type="email" name="email" class="form-control" id="inputEmail"
                             aria-describedby="emailHelp" placeholder="Ingrese su correo electronico">
+
+                        <div class="alert alert-danger" role="alert" id="usercheck">
+
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Contraseña</label>
-                        <input type="password" name="password" class="form-control" id="exampleInputPassword1"
-                            placeholder="contraseña">
+                    <div class="form-outline">
+                        <label class="form-label" for="form3Examplev5">Contraseña</label>
+                        <div class="input-group mb-3">
+                            <input type="password" name="password" id="password" class="form-control form-control"
+                                id="inputPassword" placeholder="Ingrese su contraseña" />
+                            <span class="input-group-text">
+                                <i class="far fa-eye" id="togglePassword" style="cursor: pointer;"></i></span>
+
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" >Acceder</button>
+                    <button type="submit" id="botonLogin" class="btn btn-primary">Acceder</button>
                 </div>
 
             </div>
         </div>
     </div>
 </form>
+<script src="{{ asset('js/login-form.js') }}"></script>

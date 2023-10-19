@@ -30,7 +30,7 @@
                 </li>
             </ul>
         </li>
-
+        @include('layouts.sidebar-component')
     </ul>
 
     <ul class="list-unstyled CTAs">
