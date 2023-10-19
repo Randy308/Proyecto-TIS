@@ -36,3 +36,10 @@ Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 
 Route::get('/registrarParticipante', [ParticipanteController::class, 'index'])->name('registrar-participante');
 
 Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])->name('registroParticipante.store');
+
+Route::get('/misEventos', function () {return view('eventos-creados');})->name('misEventos');
+
+
+Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete');
+Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
+Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBAnner'])->name('evento.banner.edit');

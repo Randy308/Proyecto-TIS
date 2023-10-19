@@ -90,4 +90,23 @@ class EventoControlador extends Controller
             return redirect()->route('index')->withErrors(['error' => '¡Error no se guardo los datos  ' . $e]);
         }
     }
+
+    public function edit($id)
+    {
+        //
+        return $id;
+    }
+    public function editBanner($id)
+    {
+        //
+        return view('editar-evento', ['evento' => Evento::findOrFail($id)]);
+        
+    }
+
+
+    public function destroy($id)
+    {
+        //
+        return $id;
+    }
 }

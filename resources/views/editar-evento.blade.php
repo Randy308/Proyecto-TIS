@@ -8,7 +8,6 @@
     <title>Editar Evento</title>
     @include('layouts/estilos')
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles-editar-evento.css') }}">
@@ -18,10 +17,7 @@
             color: #fff;
         }
     </style>
-
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-
-
+    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
 
 </head>
 
@@ -134,11 +130,9 @@
                                 <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">
                                     Imagen</div>
                                 <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">
-                                    Nombre Evento</div>
-                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;">Fecha
-                                    Inicio</div>
-                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;">Fecha
-                                    Fin</div>
+                                   {{$evento->nombre_evento}}</div>
+                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;"> {{$evento->fecha_inicio}}</div>
+                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;"> {{$evento->fecha_fin}}</div>
                             </div>
 
                         </div>
@@ -207,9 +201,9 @@
                     <button type="button" class="btnguardar btn btn-primary">Guardar</button>
                     <button type="button" class=" btn btn-primary" id="btnSaveElement">Descargar</button>
                     <input type="text" id="tituloTexto">
-                    <button type="button" class=" btn btn-primary" id="agregarElemento">Descargar</button>
+                    <button type="button" class=" btn btn-primary" id="agregarElemento">Agregar Texto</button>
 
-                    <button type="button" class=" btn btn-primary" id="cambiarEstadoElemento">Cambiar</button>
+                    {{-- <button type="button" class=" btn btn-primary" id="cambiarEstadoElemento">Cambiar</button> --}}
                 </div>
 
             </div>
@@ -221,7 +215,7 @@
     </div>
 
     @include('layouts/sidebar-scripts')
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
     <script src="{{ asset('js/javascript-editar-evento.js') }}"></script>
     <script>

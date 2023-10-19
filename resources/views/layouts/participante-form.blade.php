@@ -31,9 +31,11 @@
 
                     </div>
                     <div class="col-md-6 mb-4">
-                        <label for="exampleDatepicker1" class="form-label">Foto de perfil</label><br>
-                        <input type="file" name="foto_perfil">
+                        <label for="formFile" class="form-label">Foto de perfil</label>
+                        <input class="form-control form-control-sm hidden" name="foto_perfil" type="file" id="formFile"  ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB" hidden >
 
+                        <br>
+                        <label id="file-input-label" for="formFile" style="cursor:pointer;">Seleccione una imagen</label>
                     </div>
                 </div>
                 <div class="row">

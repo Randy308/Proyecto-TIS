@@ -21,9 +21,9 @@
                     <li>
                         <a href="{{route('crear-evento')}}">Crear Evento</a>
                     </li>
-                    <!--<li>
-                        <a href="#">Modificar evento</a>
-                    </li>-->
+                    <li>
+                        <a href="{{ route('misEventos') }}">Mis eventos</a>
+                    </li>
                 @endauth
                 <li>
                     <a href="{{ route('listaEventos') }}">Lista de eventos</a>
