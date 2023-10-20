@@ -23,6 +23,8 @@ Route::get('/editar-evento', function () {
 
 
 Route::post('/login',[AuthUser::class,'store'])->name('iniciar.sesion.store');
+
+
 Route::post('/logout',[AuthUser::class,'destroy'])->name('logout');
 
 
@@ -41,5 +43,12 @@ Route::get('/misEventos', function () {return view('eventos-creados');})->name('
 
 
 Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete');
-Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
-Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBAnner'])->name('evento.banner.edit');
+
+Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
+
+Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
+
+Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update');
+
+Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
+

@@ -19,14 +19,14 @@
         </li>
     </ul>
 </li>
-@auth
+{{-- @auth
 <li>
     <a href="{{ route('registrar-participante') }}">
         <i class="bi bi-person-fill-add"></i>
         <span>Registrar Usuarios</span>
     </a>
 </li>
-@endauth
+@endauth --}}
 <li>
     <a href="#">
         <i class="bi bi-door-open"></i>

@@ -35,7 +35,7 @@
                         <input class="form-control form-control-sm hidden" name="foto_perfil" type="file" id="formFile"  ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB" hidden >
 
                         <br>
-                        <label id="file-input-label" for="formFile" style="cursor:pointer;">Seleccione una imagen</label>
+                        <label id="file-input-label"  class="form-control form-control" for="formFile" style="cursor:pointer;">Seleccione una imagen</label>
                     </div>
                 </div>
                 <div class="row">
@@ -57,7 +57,7 @@
                     <div class="col-md-6 mb-4">
 
                         <label class="form-label" for="form3Example1q">Seleccione Carrera</label><br>
-                        <select class="form-select" class="form-select" name="carrera">
+                        <select class="form-control form-control" class="form-select" name="carrera">
                             <option value="1" disabled>Carrera</option>
                             <option value="Sistemas">Sistemas</option>
                             <option value="Informatica">Informatica</option>
@@ -85,7 +85,7 @@
                 <div class="form-outline">
                     <label class="form-label" for="form3Example1w">Contraseña</label>
                     <div class="input-group mb-3">
-                        <input type="password" name="password" id="password" class="form-control form-control-lg"
+                        <input type="password" name="password" id="password" class="form-control form-control"
                             class="@error('password') is-invalid @enderror" />
                         <span class="input-group-text">
                             <i class="far fa-eye" id="firstToggle" style="cursor: pointer;"></i></span>
@@ -102,7 +102,7 @@
                     <div class="input-group mb-3">
 
                         <input type="password" name="password_confirmation" id="password_confirmation"
-                            class="form-control form-control-lg"
+                            class="form-control form-control"
                             class="@error('password_confirmation') is-invalid @enderror" />
                         <span class="input-group-text">
                             <i class="far fa-eye" id="secondToggle" style="cursor: pointer;"></i></span>
@@ -113,8 +113,8 @@
                     @enderror
                 </div><br>
 
-
-                <button type="submit" class="btn btn-success btn-lg mb-1">Crear usuario</button>
+                <a type="button" href="{{ route('index') }}" class="btn btn-secondary btn-lg mb-1">Regresar</a>
+                <button type="submit" class="btn btn-primary btn-lg mb-1">Crear usuario</button>
 
             </form>
 

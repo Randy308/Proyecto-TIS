@@ -34,6 +34,9 @@
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
 }
+.ui-widget-content1{
+    border: 1px solid #c5c5c5;
+}
 #toolbar * {
     width: fit-content;
 
@@ -253,6 +256,7 @@ input[type="file"] {
     overflow: hidden;
     height: 100%;
     width: auto;
+    overflow: auto;
 }
 img {
     max-width: 100%;

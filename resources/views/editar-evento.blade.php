@@ -126,8 +126,10 @@
                                 <input type="text" id="tituloTexto">
                                 <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
                                     Texto</button>
-                                <button type="button" class=" btn btn-light"><i class="bi bi-floppy-fill"></i></button>
-                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i class="bi bi-download"></i></button>
+                                <button type="button" class=" btn btn-light" data-toggle="modal"
+                                    data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button>
+                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i
+                                        class="bi bi-download"></i></button>
                             </div>
 
                         </div>
@@ -148,7 +150,7 @@
                     <div class="subcontent-c2">
                         <div class="cont-c1">
                             <div id="preview">
-                                <a href="#" id="file-select" class="btn btn-default">
+                                <a href="#" id="file-select-auspiciadores" class="btn btn-default">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
                                         width="100%">
                                         <path
@@ -156,11 +158,12 @@
                                     </svg>
                                 </a>
                             </div>
-                            <div id="preview2"><span class="alert alert-info" id="file-info">No hay archivo aún</span></div>
+                            <div id="preview2"><p class="alert alert-info" id="file-info">No hay archivo
+                                    aún</p></div>
                         </div>
                         <div class="c2">
                             <form id="file-submit" enctype="multipart/form-data">
-                                <input id="file" name="file" type="file" />
+                                <input id="file-auspiciadores" name="file" type="file" />
                                 <a href="#" class="btn btn-primary" id="file-save"><svg
                                         xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
                                         width="100%">
@@ -172,7 +175,7 @@
                         </div>
                         <div class="c3">
                             <div class="card dropzone" id="contenedorTemporal">
-                                <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content"
+                                <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
                                     id="contenedorTemporal1" alt="123" width="100%" height="100%">
 
                             </div>
@@ -182,7 +185,7 @@
                 <div class="content-c3">
                     <div class="subcontent">
                         <div class="m-3 text-center">
-
+                            @include('layouts.actualizar-imagen-banner', ['evento' => $evento])
                         </div>
                     </div>
 
@@ -207,7 +210,7 @@
         $(document).ready(function() {
             $("#agregarElemento").on("click", function() {
                 var div = document.createElement('div');
-                div.classList.add('ui-widget-content')
+                div.classList.add('ui-widget-content1')
                 //var p = document.createElement('p');
                 div.innerHTML = document.getElementById('tituloTexto').value;
                 //div.appendChild(p)
@@ -219,7 +222,7 @@
             $("#contenedorTemporal img").resizable({
                 containment: "#contenedorTemporal"
             });
-            $("#contenedorTemporal").on("click", ".ui-widget-content", function() {
+            $("#contenedorTemporal").on("click", ".ui-widget-content1", function() {
                 var id = $(this).attr("id");
                 const childElement = document.getElementById(id);
                 const parentElement = childElement.parentElement;
@@ -230,7 +233,7 @@
                 // Remove the child from the current parent
                 $(this).detach();
                 $(this).addClass("draggable");
-                $(this).css("background", 'transparent');
+                $(this).css("background", 'whitesmoke');
                 $(this).css("border", 'none');
                 // Add 'draggable' class
 
@@ -249,7 +252,7 @@
                 $("#" + id).draggable({
                     containment: "#containment-wrapper",
                     scroll: true,
-                    cursor: "move"
+                    cursor: "pointer"
                 });
 
             });

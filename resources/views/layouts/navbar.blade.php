@@ -23,7 +23,7 @@
                         width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <p class="dropdown-item">{{ auth()->user()->email }}</p>
+                    <button class="dropdown-item" disabled>{{ auth()->user()->email }}</button>
 
                     <!--
                                  <a class="dropdown-item"  disabled >Configuracion</a>
@@ -40,7 +40,7 @@
         @endauth
         @guest
             <li class="nav-item dropdown">
-                <a class="nav-item" href="#" role="button" data-toggle="modal" data-target="#loginModal">
+                <a class="nav-item" href="#" role="button" data-toggle="modal" data-target="#loginModal"  class="btn btn-link">
                     Iniciar Sesión
                 </a>
 

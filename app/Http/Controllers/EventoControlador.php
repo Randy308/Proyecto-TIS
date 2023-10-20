@@ -91,22 +91,42 @@ class EventoControlador extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit($user,$evento)
     {
         //
-        return $id;
+        return $user;
     }
-    public function editBanner($id)
+    public function editBanner($user,$evento)
     {
         //
-        return view('editar-evento', ['evento' => Evento::findOrFail($id)]);
-        
+        return view('editar-evento', ['evento' => Evento::findOrFail($evento)]);
+
+    }
+    public function update($user,$evento ,Request $request)
+    {
+        //
+        return redirect()->back()->with('status', '¡Banner actualizado exitosamente!.');
+
     }
 
+    public function updateBanner($user,$evento ,Request $request)
+    {
+        $this->validate($request, [
+            'foto_banner' => 'required|image|max:2048',
 
-    public function destroy($id)
+        ]);
+        $eventoActual = Evento::FindOrFail($evento);
+        $imagen = $request->file('foto_banner')->store('public/banners');
+        $url = Storage::url($imagen);
+        $eventoActual->direccion_banner = $url;
+        $eventoActual->update();
+        return redirect()->route('misEventos')->with('status', '¡Banner actualizado exitosamente!.');
+
+    }
+
+    public function destroy($user,$evento)
     {
         //
-        return $id;
+        return $evento;
     }
 }

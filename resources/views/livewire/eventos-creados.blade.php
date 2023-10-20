@@ -24,9 +24,7 @@
                             <td>{{ $evento->estado }}</td>
                             <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
                             <td width="10px">
-                                <form action="{{ route('evento.banner.edit', ['user' => auth()->user() , 'evento' => $evento]) }}" method="post">
-                                    @csrf
-                                    @method('PUT')
+                                <form action="{{ route('evento.banner.edit', ['user' => auth()->user() , 'evento' => $evento]) }}" method="get">
                                     <button class="btn btn-info" type="submit">Editar Banner</button>
 
                                 </form>
@@ -44,9 +42,7 @@
 
                             </td>
                             <td width="10px">
-                                <form action="{{ route('evento.edit',['user' => auth()->user() , 'evento' => $evento]) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
+                                <form action="{{ route('evento.edit',['user' => auth()->user() , 'evento' => $evento]) }}" method="get">
                                     <button class="btn btn-info">Editar</button>
                                 </form>
 

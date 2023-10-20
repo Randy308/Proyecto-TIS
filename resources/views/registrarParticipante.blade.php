@@ -13,10 +13,10 @@
 
 <body>
     <div class="wrapper">
-        @include('layouts/sidebar')
+       
         <div id="content">
 
-            @include('layouts/navbar')
+
             <div class="container-sm mt-4">
 
 

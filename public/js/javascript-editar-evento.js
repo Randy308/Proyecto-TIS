@@ -1,13 +1,23 @@
-$("#file-select").on("click", function (e) {
+$("#file-select-auspiciadores").on("click", function (e) {
     e.preventDefault();
-    $("#file").click();
+    $("#file-auspiciadores").click();
 });
 
-$("input[type=file]").change(function () {
+$("input#file-auspiciadores[type=file]").change(function () {
     var file = this.files[0].name.toString();
     $("#file-info").text("");
     $("#file-info").text(file);
 });
+
+
+
+
+$("input#fileBanner[type=file]").change(function () {
+    var file = this.files[0].name.toString();
+    $("#file-banner-info").text("");
+    $("#file-banner-info").text(file);
+});
+
 //Cambiar colores de los botones de Estado
 $(".btngrup").click(function () {
     $(".btngrup").removeClass("active");
@@ -99,7 +109,7 @@ $(function () {
             document.execCommand(this.id, false, $(this).val());
         },
     );
-    $("form").on("submit", function (event) {
+    $("#file-select-auspiciadores").on("submit", function (event) {
         event.preventDefault();
     });
 });

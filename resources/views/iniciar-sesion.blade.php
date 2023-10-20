@@ -34,6 +34,7 @@
 
                         </div>
                     </div>
+                    <a href="{{ route('registrar-participante') }}" class="btn btn-link">No tienes cuenta ? Registrate</a>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
