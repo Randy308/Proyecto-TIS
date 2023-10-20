@@ -80,14 +80,14 @@ $(function () {
         icon: "ui-icon-print",
         showLabel: false,
     });
-    $("#redo").button({
-        icon: "ui-icon-arrowreturnthick-1-e",
-        showLabel: false,
-    });
-    $("#undo").button({
-        icon: "ui-icon-arrowreturnthick-1-w",
-        showLabel: false,
-    });
+    // $("#redo").button({
+    //     icon: "ui-icon-arrowreturnthick-1-e",
+    //     showLabel: false,
+    // });
+    // $("#undo").button({
+    //     icon: "ui-icon-arrowreturnthick-1-w",
+    //     showLabel: false,
+    // });
 
     $(".toolbar").controlgroup();
     $("#zoom").on("selectmenuchange", function () {

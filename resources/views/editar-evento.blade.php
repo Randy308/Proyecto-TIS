@@ -41,8 +41,11 @@
 
                             <div class="toolbar" id="toolbar">
                                 {{-- <button id="print">Print</button> --}}
-                                <button id="undo">Deshacer</button>
-                                <button id="redo">Rehacer</button>
+                                <button id="expand-h"> <i class="bi bi-arrows-expand"></i></button>
+                                <button id="contract-h"><i class="bi bi-arrows-collapse"></i></button>
+                                <button id="expand-w"> <i class="bi bi-arrows-expand-vertical"></i></button>
+                                <button id="contract-w"><i class="bi bi-arrows-collapse-vertical"></i></button>
+                                <button id="trash-delete"><i class="bi bi-trash3"></i></button>
                                 <select id="zoom">
                                     <option selected disabled>Zoom</option>
                                     <option>50%</option>
@@ -107,9 +110,6 @@
                                 <button id="bold">B</button>
                                 <button id="italic">I</button>
                                 <button id="underline">U</button>
-                            </div>
-
-                            <fieldset>
                                 <select id="colorFondo" name="color" class="">
                                     <option selected disabled>Color de Fondo</option>
                                     <option value="#d3d3d3">Negro</option>
@@ -118,8 +118,12 @@
                                     <option value="#ADD8E6">Azul</option>
                                     <option value="#90ee90 ">Verde</option>
                                 </select>
-
-                            </fieldset>
+                                
+                            </div>
+                            <div>
+                                
+                            </div>
+                            
 
                         </div>
 
@@ -130,9 +134,11 @@
                                 <div id="draggable2" class="draggable ui-state-active" style="position: absolute;">
                                     Imagen</div>
                                 <div id="draggable3" class="draggable ui-state-active" style="position: absolute;">
-                                   {{$evento->nombre_evento}}</div>
-                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;"> {{$evento->fecha_inicio}}</div>
-                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;"> {{$evento->fecha_fin}}</div>
+                                    {{ $evento->nombre_evento }}</div>
+                                <div id="draggable4" class="draggable ui-state-active" style="position: absolute;">
+                                    {{ $evento->fecha_inicio }}</div>
+                                <div id="draggable5" class="draggable ui-state-active" style="position: absolute;">
+                                    {{ $evento->fecha_fin }}</div>
                             </div>
 
                         </div>
@@ -267,12 +273,12 @@
 
             });
 
-            $("#containment-wrapper").on("click", "div", function() {
+            $("#containment-wrapper").on("click", "*", function() {
                 var id = $(this).attr("id");
                 const childElement = document.getElementById(id);
                 console.log("hola mundo")
-                $('#containment-wrapper div').removeClass('activo');
-                $('#containment-wrapper div').css("border", "");
+                $('#containment-wrapper *').removeClass('activo');
+                $('#containment-wrapper *').css("border", "");
                 childElement.classList.toggle("activo");
                 $(this).css("border", "1px solid black");
 
@@ -337,7 +343,79 @@
                         });
                     },
                 });
+                //
 
+                $("#zoom").selectmenu({
+                    change: function(event, data) {
+                        var selectedBackgroundColor = data.item.value;
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("width", selectedBackgroundColor);
+                        });
+                    },
+                });
+                $('#expand-w').on("click", function() {
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("width", element.offsetWidth + 10);
+                            $(element).css("height", "auto");
+                        });
+                });
+                $('#expand-h').on("click", function() {
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("height", element.offsetHeight + 10);
+                            $(element).css("width", "auto");
+                        });
+                });
+                $('#contract-w').on("click", function() {
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("width", element.offsetWidth - 10);
+                            $(element).css("height", "auto");
+                        });
+                });
+                $('#contract-h').on("click", function() {
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("height", element.offsetHeight - 10);
+                            $(element).css("width", "auto");
+                        });
+                });
+                var boldflag = false;
+                var italicflag = false;
+                var underlineflag = false;
+                $('#bold').on("click", function() {
+                    boldflag = boldflag ? false : true ;
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                           var option = boldflag ? 'bold' : 'normal'
+                            $(element).css("font-weight", option);
+                        });
+                });
+                $('#italic').on("click", function() {
+                    italicflag = italicflag ? false : true ;
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            var option = italicflag ? 'italic' : 'normal'
+                            $(element).css("font-style", option);
+                        });
+                });
+                $('#underline').on("click", function() {
+                    underlineflag = underlineflag ? false : true ;
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                            var option = underlineflag ? 'underline' : 'none'
+                            $(element).css("text-decoration", option);
+                        });
+                });
+                $('#trash-delete').on("click", function() {
+                   
+                    var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
+                           element.remove();
+                        });
+                });
             });
 
 
