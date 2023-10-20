@@ -6,21 +6,53 @@
 /* .thumbnail {
 } */
 
-#toolbar span {
+.container{
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+}
+.content{
+
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+.subcontent{
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 25px;
+}
+.subcontent-c2{
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    background-color: white;
+}
+.cont-c1{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+#toolbar button {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+}
+#toolbar * {
     width: fit-content;
+
+
 }
 
+#toolbar{
+    background-color: white;
+}
+/* #toolbar{
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    align-items: center;
+} */
 .contenteditor {
     background-color: white;
     border: 1px solid #ced4da;
-    border-radius: 3px;
 }
 
-.imagescol2 {
-    background-color: white;
-    border: 1px solid #ced4da;
-    border-radius: 3px;
-}
 #preview {
     position: relative;
     padding: 0px;
@@ -113,10 +145,10 @@ input[type="file"] {
     width: 90px;
     height: 90px;
     margin: 0 0 0 0;
-    border: 1px solid black;
+    border : none
 }
 #draggable2 {
-    background-color: #f6f6f6;
+    background-color: whitesmoke;
 
     color: black;
     top: 33px;
@@ -125,7 +157,7 @@ input[type="file"] {
     height: 290px;
 }
 #draggable3 {
-    background-color: #f6f6f6;
+    background-color: whitesmoke;
 
     color: black;
     top: 39px;
@@ -134,7 +166,7 @@ input[type="file"] {
     height: 60px;
 }
 #draggable4 {
-    background-color: #f6f6f6;
+    background-color: whitesmoke;
 
     color: black;
     top: 120px;
@@ -143,7 +175,7 @@ input[type="file"] {
     height: 45px;
 }
 #draggable5 {
-    background-color: #f6f6f6;
+    background-color: whitesmoke;
 
     color: black;
     top: 193px;
@@ -176,23 +208,19 @@ input[type="file"] {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
-    width: 100px;
     border-radius: 3px;
-    width: 88px;
 }
 #forecolor-button {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
     border-radius: 3px;
-    width: 108px;
 }
 #hilitecolor-button {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
     border-radius: 3px;
-    width: 90px;
 }
 #bold {
     border: 1px solid #c5c5c5;
@@ -224,7 +252,7 @@ input[type="file"] {
     position: relative;
     overflow: hidden;
     height: 100%;
-    width: 100%;
+    width: auto;
 }
 img {
     max-width: 100%;
@@ -233,4 +261,26 @@ img {
 .activo{
 
     border: 1px solid red;
+}
+
+@media screen and (max-width: 1000px) {
+    .subcontent,.container{
+        padding: 0px;
+        margin: 0px;
+    }
+    .container{
+        display: flex;
+        flex-direction: column-reverse;
+
+
+    }
+    .content {
+
+        display: grid;
+        grid-template-columns: auto;
+    }
+    #containment-wrapper{
+        overflow: auto;
+    }
+
 }
