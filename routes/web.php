@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\ParticipanteController;
+use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {return view('index');})->name('index');
 
