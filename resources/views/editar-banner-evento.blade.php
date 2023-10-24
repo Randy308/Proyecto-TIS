@@ -34,22 +34,18 @@
 
 
 
-            <div class="container pt-4">
+            <div class="container p-4">
+                <div class="row">
+                    <div class="col mr-2" style="height:12cm;">
+                        <div class="contenteditor row ">
 
-                <div class="content ">
-                    <div class="subcontent ">
-                        <div class="c1 pb-4">
-                            <div id="toolbar">
-
-                                <button id="expand-h" class="btn btn-light "> <i
-                                        class="bi bi-arrows-expand"></i></button>
-                                <button id="contract-h" class="btn btn-light "><i
-                                        class="bi bi-arrows-collapse"></i></button>
-                                <button id="expand-w" class="btn btn-light "> <i
-                                        class="bi bi-arrows-expand-vertical"></i></button>
-                                <button id="contract-w" class="btn btn-light "><i
-                                        class="bi bi-arrows-collapse-vertical"></i></button>
-                                <button id="trash-delete" class="btn btn-light"><i class="bi bi-trash3"></i></button>
+                            <div class="toolbar" id="toolbar">
+                                {{-- <button id="print">Print</button> --}}
+                                <button id="expand-h"> <i class="bi bi-arrows-expand"></i></button>
+                                <button id="contract-h"><i class="bi bi-arrows-collapse"></i></button>
+                                <button id="expand-w"> <i class="bi bi-arrows-expand-vertical"></i></button>
+                                <button id="contract-w"><i class="bi bi-arrows-collapse-vertical"></i></button>
+                                <button id="trash-delete"><i class="bi bi-trash3"></i></button>
                                 <select id="zoom">
                                     <option selected disabled>Zoom</option>
                                     <option>50%</option>
@@ -60,7 +56,7 @@
                                     <option>150%</option>
                                     <option>200%</option>
                                 </select>
-                                <select id="fontname" style="width: 300px">
+                                <select id="fontname">
                                     <option selected disabled>Fuente</option>
                                     <option>Arial</option>
                                     <option>Comic Sans MS</option>
@@ -123,19 +119,14 @@
                                     <option value="#90ee90 ">Verde</option>
                                 </select>
 
-                                <input type="text" id="tituloTexto">
-                                <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
-                                    Texto</button>
-                                <button type="button" class=" btn btn-light" data-toggle="modal"
-                                    data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button>
-                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i
-                                        class="bi bi-download"></i></button>
                             </div>
 
                         </div>
-                        <div class="c2" style="height:400px">
+
+                        <div class="row mt-3" style="height:10cm;">
+
                             <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
-                                style="height: 100%;">
+                                style="height: 100%; width: 100%;">
                                 <div id="draggable2" class="draggable" style="position: absolute;">
                                     Imagen</div>
                                 <div id="draggable3" class="draggable" style="position: absolute;">
@@ -145,54 +136,78 @@
                                 <div id="draggable5" class="draggable" style="position: absolute;">
                                     {{ $evento->fecha_fin }}</div>
                             </div>
+
                         </div>
                     </div>
-                    <div class="subcontent-c2">
-                        <div class="cont-c1">
-                            <div id="preview">
-                                <a href="#" id="file-select-auspiciadores" class="btn btn-default">
+                    <div class="imagescol2 col-3 border ml-2 px-3" style="height:12.4cm; width: 300px;">
+
+                        <div class="row">
+                            <div id="preview" class="col-3">
+                                <a href="#" id="file-select" class="btn btn-default">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
                                         width="100%">
                                         <path
                                             d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h360v80H200v560h560v-360h80v360q0 33-23.5 56.5T760-120H200Zm480-480v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80ZM240-280h480L570-480 450-320l-90-120-120 160Zm-40-480v560-560Z" />
                                     </svg>
                                 </a>
+                                {{-- <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNzEiIGhlaWdodD0iMTgwIj48cmVjdCB3aWR0aD0iMTcxIiBoZWlnaHQ9IjE4MCIgZmlsbD0iI2VlZSI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9Ijg1LjUiIHk9IjkwIiBzdHlsZT0iZmlsbDojYWFhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEycHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTcxeDE4MDwvdGV4dD48L3N2Zz4=" style="height: 40px; width:80px; opacity: 1;"/> --}}
                             </div>
-                            <div id="preview2"><p class="alert alert-info" id="file-info">No hay archivo
-                                    aún</p></div>
+                            <div id="preview2" class="col"><span class="alert alert-info" id="file-info">No hay
+                                    archivo
+                                    aún</span></div>
                         </div>
-                        <div class="c2">
-                            <form id="file-submit" enctype="multipart/form-data">
-                                <input id="file-auspiciadores" name="file" type="file" />
-                                <a href="#" class="btn btn-primary" id="file-save"><svg
-                                        xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
-                                        width="100%">
-                                        <path
-                                            d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
-                                            fill="white" />
-                                    </svg></a>
-                            </form>
-                        </div>
-                        <div class="c3">
-                            <div class="card dropzone" id="contenedorTemporal">
-                                <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
-                                    id="contenedorTemporal1" alt="123" width="100%" height="100%">
 
-                            </div>
+                        <form id="file-submit" enctype="multipart/form-data">
+                            <input id="file" name="file" type="file" />
+                        </form>
+                        <a href="#" class="btn btn-primary" id="file-save"><svg
+                                xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
+                                width="100%">
+                                <path
+                                    d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
+                                    fill="white" />
+                            </svg></a>
+                        <div class="card dropzone" id="contenedorTemporal">
+                            <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content"
+                                id="contenedorTemporal1" alt="123">
+
                         </div>
                     </div>
                 </div>
-                <div class="content-c3">
-                    <div class="subcontent">
-                        <div class="m-3 text-center">
-                            @include('layouts.actualizar-imagen-banner', ['evento' => $evento])
+
+                <div class="row my-2">
+                    <div class="contenedorcategoria col">
+                        <div class="categoria my-1 ml-5 mr-2" style="display:inline-block;">Categoria:</div>
+                        <form class="" action="" style="display:inline-block; margin:0;">
+                            <select name="" class="btnselect custom-select">
+                                <option selected>Categoria</option>
+                                <option value="">Diseño</option>
+                                <option value="">Desarrollo</option>
+                                <option value="">QA</option>
+                                <option value="">Ciencia de datos</option>
+                            </select>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <div class="btn-group">
+                            <div class="my-1 ml-5 mr-3">Estado:</div>
+                            <button type="button" class="btngrup btnact btn">Activo</button>
+                            <button type="button" class="btngrup btnfin btn">finalizado</button>
+                            <button type="button" class="btngrup btncan btn">Cancelado</button>
                         </div>
                     </div>
-
-
-
-
                 </div>
+
+                <div class="mt-3 mb-0 text-center">
+                    <button type="button" class="btncancelar btn btn-secondary ">Cancelar</button>
+                    <button type="button" class="btnguardar btn btn-primary">Guardar</button>
+                    <button type="button" class=" btn btn-primary" id="btnSaveElement">Descargar</button>
+                    <input type="text" id="tituloTexto">
+                    <button type="button" class=" btn btn-primary" id="agregarElemento">Agregar Texto</button>
+
+                    {{-- <button type="button" class=" btn btn-primary" id="cambiarEstadoElemento">Cambiar</button> --}}
+                </div>
+
             </div>
 
 
@@ -210,7 +225,7 @@
         $(document).ready(function() {
             $("#agregarElemento").on("click", function() {
                 var div = document.createElement('div');
-                div.classList.add('ui-widget-content1')
+                div.classList.add('ui-widget-content')
                 //var p = document.createElement('p');
                 div.innerHTML = document.getElementById('tituloTexto').value;
                 //div.appendChild(p)
@@ -222,7 +237,7 @@
             $("#contenedorTemporal img").resizable({
                 containment: "#contenedorTemporal"
             });
-            $("#contenedorTemporal").on("click", ".ui-widget-content1", function() {
+            $("#contenedorTemporal").on("click", ".ui-widget-content", function() {
                 var id = $(this).attr("id");
                 const childElement = document.getElementById(id);
                 const parentElement = childElement.parentElement;
@@ -232,12 +247,9 @@
 
                 // Remove the child from the current parent
                 $(this).detach();
-                $(this).addClass("draggable");
-                $(this).css("background", 'whitesmoke');
-                $(this).css("border", 'none');
+
                 // Add 'draggable' class
-
-
+                $(this).addClass("draggable");
 
                 // Append it to the new parent
                 $("#containment-wrapper").append(this);
@@ -252,7 +264,7 @@
                 $("#" + id).draggable({
                     containment: "#containment-wrapper",
                     scroll: true,
-                    cursor: "pointer"
+                    cursor: "move"
                 });
 
             });
@@ -269,7 +281,19 @@
 
             });
 
+            $(function() {
+                $("#fontsize").selectmenu({
+                    change: function(event, data) {
+                        var elements = document.getElementsByClassName("activo");
+                        Array.from(elements).forEach(function(element) {
 
+                            $(element).css("font-size", data.item.value);
+                            console.log(data.item.value);
+                            console.log($(element).attr("id"));
+                        });
+                    },
+                });
+            });
 
             $(function() {
                 $("#fontsize").selectmenu({
@@ -278,8 +302,8 @@
                         Array.from(elements).forEach(function(element) {
 
                             $(element).css("font-size", data.item.value);
-                            var selectElement = document.getElementById("fontsize");
-                            selectElement.selectedIndex = 0;
+                            console.log(data.item.value);
+                            console.log($(element).attr("id"));
                         });
                     },
                 });
@@ -291,8 +315,6 @@
                         var elements = document.getElementsByClassName("activo");
                         Array.from(elements).forEach(function(element) {
                             $(element).css("font-family", selectedFont);
-                            var selectElement = document.getElementById("fontname");
-                            selectElement.selectedIndex = 0;
                         });
                     },
                 });
@@ -303,8 +325,6 @@
                         var elements = document.getElementsByClassName("activo");
                         Array.from(elements).forEach(function(element) {
                             $(element).css("color", selectedColor);
-                            var selectElement = document.getElementById("forecolor");
-                            selectElement.selectedIndex = 0;
                         });
                     },
                 });
@@ -316,8 +336,6 @@
                         var elements = document.getElementsByClassName("activo");
                         Array.from(elements).forEach(function(element) {
                             $(element).css("background", selectedBackgroundColor);
-                            var selectElement = document.getElementById("hilitecolor");
-                            selectElement.selectedIndex = 0;
                         });
                     },
                 });
@@ -329,72 +347,70 @@
                         var elements = document.getElementsByClassName("activo");
                         Array.from(elements).forEach(function(element) {
                             $(element).css("width", selectedBackgroundColor);
-                            var selectElement = document.getElementById("zoom");
-                            selectElement.selectedIndex = 0;
                         });
                     },
                 });
                 $('#expand-w').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("width", element.offsetWidth + 10);
-                        $(element).css("height", "auto");
-                    });
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("width", element.offsetWidth + 10);
+                            $(element).css("height", "auto");
+                        });
                 });
                 $('#expand-h').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("height", element.offsetHeight + 10);
-                        $(element).css("width", "auto");
-                    });
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("height", element.offsetHeight + 10);
+                            $(element).css("width", "auto");
+                        });
                 });
                 $('#contract-w').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("width", element.offsetWidth - 10);
-                        $(element).css("height", "auto");
-                    });
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("width", element.offsetWidth - 10);
+                            $(element).css("height", "auto");
+                        });
                 });
                 $('#contract-h').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("height", element.offsetHeight - 10);
-                        $(element).css("width", "auto");
-                    });
+                        Array.from(elements).forEach(function(element) {
+                            $(element).css("height", element.offsetHeight - 10);
+                            $(element).css("width", "auto");
+                        });
                 });
                 var boldflag = false;
                 var italicflag = false;
                 var underlineflag = false;
                 $('#bold').on("click", function() {
-                    boldflag = boldflag ? false : true;
+                    boldflag = boldflag ? false : true ;
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        var option = boldflag ? 'bold' : 'normal'
-                        $(element).css("font-weight", option);
-                    });
+                        Array.from(elements).forEach(function(element) {
+                           var option = boldflag ? 'bold' : 'normal'
+                            $(element).css("font-weight", option);
+                        });
                 });
                 $('#italic').on("click", function() {
-                    italicflag = italicflag ? false : true;
+                    italicflag = italicflag ? false : true ;
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        var option = italicflag ? 'italic' : 'normal'
-                        $(element).css("font-style", option);
-                    });
+                        Array.from(elements).forEach(function(element) {
+                            var option = italicflag ? 'italic' : 'normal'
+                            $(element).css("font-style", option);
+                        });
                 });
                 $('#underline').on("click", function() {
-                    underlineflag = underlineflag ? false : true;
+                    underlineflag = underlineflag ? false : true ;
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        var option = underlineflag ? 'underline' : 'none'
-                        $(element).css("text-decoration", option);
-                    });
+                        Array.from(elements).forEach(function(element) {
+                            var option = underlineflag ? 'underline' : 'none'
+                            $(element).css("text-decoration", option);
+                        });
                 });
                 $('#trash-delete').on("click", function() {
 
                     var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        element.remove();
-                    });
+                        Array.from(elements).forEach(function(element) {
+                           element.remove();
+                        });
                 });
             });
 
@@ -406,12 +422,9 @@
 
     <script>
         $(document).ready(function() {
-            var contenedor = document.getElementById('containment-wrapper');
 
             $("#btnSaveElement").on('click', function() {
-                $('#containment-wrapper').css("overflow", "visible");
-                $('#containment-wrapper').css("width", "900px");
-                domtoimage.toJpeg(contenedor, {
+                domtoimage.toJpeg(document.getElementById('containment-wrapper'), {
                         quality: 0.97
                     })
                     .then(function(dataUrl) {
@@ -419,10 +432,7 @@
                         link.download = 'my-image-name.jpeg';
                         link.href = dataUrl;
                         link.click();
-                        $('#containment-wrapper').css("overflow", "auto");
-                        $('#containment-wrapper').css("width", "auto");
                     });
-
             });
 
 

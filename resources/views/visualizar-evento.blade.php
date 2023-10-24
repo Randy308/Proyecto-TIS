@@ -2,6 +2,9 @@
 <html lang="es">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Evento</title>
     @include('layouts/estilos')
 
@@ -14,7 +17,7 @@
         <div id="content">
 
             @include('layouts/navbar')
-            <div class="container-sm mt-4">
+            <div class="container mt-4">
 
                 <div>
                     @if (session('status'))
@@ -43,8 +46,8 @@
     </div>
     </div>
 
-    @include('iniciar-sesion')  
-    @include('layouts/toggle')
+    @include('iniciar-sesion')
+    @include('layouts/sidebar-scripts')
     <script>
         $("#content").on("click", ".tabContainer .tabs a", function(e) {
             e.preventDefault(),

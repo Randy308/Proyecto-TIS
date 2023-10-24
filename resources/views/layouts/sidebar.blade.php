@@ -21,15 +21,16 @@
                     <li>
                         <a href="{{route('crear-evento')}}">Crear Evento</a>
                     </li>
-                    <!--<li>
-                        <a href="#">Modificar evento</a>
-                    </li>-->
+                    <li>
+                        <a href="{{ route('misEventos') }}">Mis eventos</a>
+                    </li>
                 @endauth
                 <li>
                     <a href="{{ route('listaEventos') }}">Lista de Eventos</a>
                 </li>
             </ul>
         </li>
+        @include('layouts.sidebar-component')
         @auth
         <li>
             <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">

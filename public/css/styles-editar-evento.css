@@ -5,36 +5,72 @@
 } */
 /* .thumbnail {
 } */
-.contenteditor{
-    background-color: white;
-    border:1px solid #ced4da;
-    border-radius: 3px;
+
+.container{
+    display: grid;
+    grid-template-rows: repeat(2, auto);
 }
-#containment-wrapper{
-    background-color: white;
-    border:1px solid #ced4da;
-    border-radius: 3px;
+.content{
+
+    display: grid;
+    grid-template-columns: 3fr 1fr;
 }
-.imagescol2{
-    background-color: white;
-    border:1px solid #ced4da;
-    border-radius: 3px;
+.subcontent{
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 25px;
 }
+.subcontent-c2{
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+    background-color: white;
+}
+.cont-c1{
+    display: grid;
+    grid-template-columns: auto auto;
+}
+#toolbar button {
+    border: 1px solid #c5c5c5;
+    background: #f6f6f6;
+}
+.ui-widget-content1{
+    border: 1px solid #c5c5c5;
+}
+#toolbar * {
+    width: fit-content;
+
+
+}
+
+#toolbar{
+    background-color: white;
+}
+/* #toolbar{
+    display: grid;
+    grid-template-columns: repeat(7, auto);
+    align-items: center;
+} */
+.contenteditor {
+    background-color: white;
+    border: 1px solid #ced4da;
+}
+
 #preview {
     position: relative;
-    padding:0px;
+    padding: 0px;
     padding-left: 15px;
-    height:45px;
+    height: 45px;
 }
 #preview a {
     position: absolute;
     padding: 0px;
     margin-top: 11px;
-    width:35px;
+    width: 35px;
     height: 35px;
-    border-color:gray;
+    border-color: gray;
 }
-#preview2{
+#preview2 {
     padding: 0px;
     padding-right: 15px;
     height: 45px;
@@ -45,19 +81,19 @@
     padding: 0px;
     padding-top: 8px;
     padding-bottom: 8px;
-    width:100%;
+    width: 100%;
     height: 35px;
     font-size: smaller;
     text-align: center;
 }
-input[type=file] {
+input[type="file"] {
     position: absolute;
-	visibility: hidden;
-	width: 0;
-	z-index: -9999;
+    visibility: hidden;
+    width: 0;
+    z-index: -9999;
 }
 #file-save {
-    text-align:center;
+    text-align: center;
     width: 100%;
     padding: 0px;
     margin-top: 8px;
@@ -65,99 +101,99 @@ input[type=file] {
     height: 22px;
 }
 /* boton categoria */
-.btnselect{
-    font-size:13px;
-    height:31px;
+.btnselect {
+    font-size: 13px;
+    height: 31px;
 }
 /*  */
-.btnact{
+.btnact {
     background-color: white;
-    border:1px solid #ced4da;
-    font-size:13px;
-    height:31px;
+    border: 1px solid #ced4da;
+    font-size: 13px;
+    height: 31px;
 }
-.btnfin{
+.btnfin {
     background-color: white;
-    border:1px solid #ced4da;
-    font-size:13px;
-    height:31px;
+    border: 1px solid #ced4da;
+    font-size: 13px;
+    height: 31px;
 }
-.btncan{
+.btncan {
     background-color: white;
-    border:1px solid #ced4da;
-    font-size:13px;
-    height:31px;
+    border: 1px solid #ced4da;
+    font-size: 13px;
+    height: 31px;
 }
 
 .btnact.active {
-    background-color: #2ecc71 ;
+    background-color: #2ecc71;
 }
 .btnfin.active {
-    background-color: #f1c40f ;
+    background-color: #f1c40f;
 }
 .btncan.active {
-    background-color: #c0392b ;
+    background-color: #c0392b;
 }
 /* botones guardar cancealr */
-.btncancelar{
-    margin-right: 100px;    
+.btncancelar {
+    margin-right: 100px;
 }
-.btnguardar{
+.btnguardar {
     margin-left: 100px;
 }
-.contenedorcategoria{
+.contenedorcategoria {
     margin-left: 5px;
 }
-.draggable { 
+.draggable {
     width: 90px;
-    height: 90px; 
+    height: 90px;
     margin: 0 0 0 0;
-    border: 1px solid black; 
+    border : none
 }
-#draggable2{
-    background-color: #f6f6f6;
-    border: 1px solid #c5c5c5;
+#draggable2 {
+    background-color: whitesmoke;
+
     color: black;
-    top: 150px ;
-    left: 50px ;
+    top: 33px;
+    left: 24px;
     width: 290px;
-    height: 290px; 
+    height: 290px;
 }
-#draggable3{
-    background-color: #f6f6f6;
-    border: 1px solid #c5c5c5;
+#draggable3 {
+    background-color: whitesmoke;
+
     color: black;
-    top: 180px ;
-    left: 400px ;
+    top: 39px;
+    left: 356px;
     width: 350px;
     height: 60px;
 }
-#draggable4{
-    background-color: #f6f6f6;
-    border: 1px solid #c5c5c5;
+#draggable4 {
+    background-color: whitesmoke;
+
     color: black;
-    top: 270px ;
-    left: 410px ;
+    top: 120px;
+    left: 356px;
     width: 300px;
     height: 45px;
 }
-#draggable5{
-    background-color: #f6f6f6;
-    border: 1px solid #c5c5c5;
+#draggable5 {
+    background-color: whitesmoke;
+
     color: black;
-    top: 340px ;
-    left: 410px ;
+    top: 193px;
+    left: 356px;
     width: 300px;
     height: 45px;
 }
 
-#undo{
+#undo {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
     border-radius: 3px;
 }
-#redo{
+#redo {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
@@ -175,23 +211,19 @@ input[type=file] {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
-    width: 100px;
     border-radius: 3px;
-    width: 88px;
 }
 #forecolor-button {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
     border-radius: 3px;
-    width: 108px;
 }
 #hilitecolor-button {
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
     padding: 6px 6px;
     border-radius: 3px;
-    width: 90px;
 }
 #bold {
     border: 1px solid #c5c5c5;
@@ -213,4 +245,46 @@ input[type=file] {
     text-decoration: underline;
     padding: 6px 6px;
     border-radius: 3px;
+}
+
+
+#containment-wrapper {
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+    width: auto;
+    overflow: auto;
+}
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+.activo{
+
+    border: 1px solid red;
+}
+
+@media screen and (max-width: 1000px) {
+    .subcontent,.container{
+        padding: 0px;
+        margin: 0px;
+    }
+    .container{
+        display: flex;
+        flex-direction: column-reverse;
+
+
+    }
+    .content {
+
+        display: grid;
+        grid-template-columns: auto;
+    }
+    #containment-wrapper{
+        overflow: auto;
+    }
+
 }
