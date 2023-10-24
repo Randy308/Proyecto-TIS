@@ -110,7 +110,6 @@ class EventoControlador extends Controller
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
 
-<<<<<<< HEAD
     public function edit($user,$evento)
     {
         //
@@ -149,7 +148,5 @@ class EventoControlador extends Controller
         //
         return $evento;
     }
-=======
     
->>>>>>> origin/merge-develop
 }
