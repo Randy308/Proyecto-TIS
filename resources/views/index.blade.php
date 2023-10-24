@@ -47,7 +47,7 @@
                         $(document).ready(function() {
                             setTimeout(function() {
                                 $('#success-message').fadeOut();
-                            }, 2000); 
+                            }, 2000);
                         });
                     </script>
                 @endif
@@ -59,7 +59,7 @@
                     $(document).ready(function() {
                         setTimeout(function() {
                             $('#warning-message').fadeOut();
-                        }, 2000); 
+                        }, 2000);
                     });
                 </script>
                 @endif
@@ -77,8 +77,7 @@
     </div>
     </div>
 
-    @include('layouts/toggle')
-    <script src="{{ asset('js/app.js') }}"></script>
+    @include('layouts/sidebar-scripts')
 </body>
 
 </html>

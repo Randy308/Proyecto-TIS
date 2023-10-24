@@ -1,37 +1,61 @@
 <div>
-    {{-- In work, do what you enjoy. --}}
-    <div>
-        <p>{{ $user->email }}</p>
-        @if ($eventos->count())
 
-            <div class="card-body">
-                <table class="table table-striped">
-                    <thead>
+    @if ($eventos->count())
+        <h3 class="p-3">Lista de Eventos Creados</h3>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre del Evento</th>
+                        <th>Estado del Evento</th>
+                        <th>Banner del Evento</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($eventos as $evento)
                         <tr>
-                            <th>ID</th>
-                            <th>Nombre Evento</th>
-                            <th></th>
+
+                            <td>{{ $evento->id }}</td>
+                            <td>{{ $evento->nombre_evento }}</td>
+                            <td>{{ $evento->estado }}</td>
+                            <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
+                            <td width="10px">
+                                <form action="{{ route('evento.banner.edit', ['user' => auth()->user() , 'evento' => $evento]) }}" method="get">
+                                    <button class="btn btn-info" type="submit">Editar Banner</button>
+
+                                </form>
+
+
+                            </td>
+                            <td width="10px">
+                                <form action="{{ route('evento.delete', ['user' => auth()->user() , 'evento' => $evento]) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+
+                                </form>
+
+
+                            </td>
+                            <td width="10px">
+                                <form action="{{ route('evento.edit',['user' => auth()->user() , 'evento' => $evento]) }}" method="get">
+                                    <button class="btn btn-info">Editar</button>
+                                </form>
+
+                            </td>
+
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($eventos as $evento)
-                            <tr>
-
-                                <td>{{ $evento->id }}</td>
-                                <td>{{ $evento->nombre_evento }}</td>
-
-
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-        @else
-            <div class="card-body">
-                <strong>No hay registros</strong>
-            </div>
-        @endif
-    </div>
-
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @else
+        <div class="card-body">
+            <strong>No hay registros</strong>
+        </div>
+    @endif
 </div>

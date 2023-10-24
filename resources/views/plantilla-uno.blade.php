@@ -74,7 +74,7 @@
     </div>
 </div>
 
-<div id="content" class="content">
+<div class="content">
     <div class="tabContainer">
         <ul class="tabs">
             <li>
@@ -116,13 +116,22 @@
 
                                     </tr>
                                 </thead>
+                                
                                 <tbody>
                                     @foreach ($evento->users as $user)
                                         <tr>
 
                                             <td>{{ $user->id }}</td>
                                             <td>{{ $user->name }}</td>
+                                            @include('eliminar-participante')
 
+                                            @if (auth()->check())
+                                                @if (auth()->user()->id === 1)
+                                                    <td>
+                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#eliminarParticipanteModal">Eliminar</button>
+                                                    </td>
+                                                @endif
+                                            @endif
 
                                         </tr>
                                     @endforeach
@@ -132,11 +141,12 @@
                             <p>No existe participantes</p>
                         @endif
 
+                               
                     </div>
                 </div>
             </div>
             <div class="card" id="tab2">
-                
+
             </div>
         </div>
     </div>
@@ -149,3 +159,4 @@
         </div>
     </div>
 </div>
+
