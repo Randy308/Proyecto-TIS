@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use app\Models\Evento;
-
+//esto no se usa se puede borrar creo
 class ListadoEventosController extends Controller
 {
     public function index()
