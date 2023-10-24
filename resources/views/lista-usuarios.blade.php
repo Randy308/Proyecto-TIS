@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    @include('layouts/toggle')
+    @include('layouts.sidebar-scripts')
 
 
 </body>
