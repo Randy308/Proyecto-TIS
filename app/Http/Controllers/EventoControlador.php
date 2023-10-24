@@ -9,6 +9,8 @@ use App\Models\Evento;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class EventoControlador extends Controller
 {
@@ -61,36 +63,54 @@ class EventoControlador extends Controller
         return view('crear-evento');
     }
 
+
     public function crearEvento(Request $request)
     {
-        try {
+        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
+        $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
+        $validator = $request->validate([
+            'nombre_evento' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
+                    return $query->where('categoria', $request->input('categoria'));
+                })->ignore($request->input('id'), 'id'), 
+            ],
+            'descripcion_evento' => 'required|string',
+            'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+        ], [
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
+            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
+        ]);
 
-            $rutaBanner = $this->generarBanner(
-                $request->input('nombre_evento'),
-                $request->input('fecha_inicio'),
-                $request->input('fecha_fin')
-            );
-            $nombreDelArchivo = basename($rutaBanner);
-            $evento = new Evento([
-                'nombre_evento' => $request->input('nombre_evento'),
-                'descripcion_evento' => $request->input('descripcion_evento'),
-                'user_id' => auth()->id(),
-                'estado' => 'Borrador',
-                'categoria' => $request->input('categoria'),
-                'fecha_inicio' => $request->input('fecha_inicio'),
-                'fecha_fin' => $request->input('fecha_fin'),
-                'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+        $rutaBanner = $this->generarBanner(
+            $request->input('$nombreEvento'),
+            $request->input('fecha_inicio'),
+            $request->input('fecha_fin')
+        );
+        $nombreDelArchivo = basename($rutaBanner);
+        
+        $evento = new Evento([
+            'nombre_evento' => $nombreEvento,
+            'descripcion_evento' => $descripcionEvento,
+            'user_id' => auth()->id(),
+            'estado' => 'Borrador',
+            'categoria' => $request->input('categoria'),
+            'fecha_inicio' => $request->input('fecha_inicio'),
+            'fecha_fin' => $request->input('fecha_fin'),
+            'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+        ]);
 
-            ]);
+        $evento->save();
 
-            $evento->save();
-
-            return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
-        } catch (ValidationException $e) {
-            return redirect()->route('index')->withErrors(['error' => '¡Error no se guardo los datos  ' . $e]);
-        }
+        return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
 
+<<<<<<< HEAD
     public function edit($user,$evento)
     {
         //
@@ -129,4 +149,7 @@ class EventoControlador extends Controller
         //
         return $evento;
     }
+=======
+    
+>>>>>>> origin/merge-develop
 }

@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Rol;
 
 class User extends Authenticatable
 {
@@ -20,8 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'rol',
+        'telefono',
+        'direccion',
+        'carrera',
+        'foto_perfil',
+        'fecha_nac',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -49,5 +55,10 @@ class User extends Authenticatable
     public function eventos()
     {
         return $this->hasMany(Evento::class);
+    }
+
+    public function rol()
+    {
+        return $this->belongsTo(Rol::class);
     }
 }
