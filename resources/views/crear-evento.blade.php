@@ -2,6 +2,9 @@
 <html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Crear Evento</title>
     @include('layouts/estilos')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
@@ -15,7 +18,7 @@
             @include('layouts/navbar')
 
 
-            <div class="contenedor-flex">
+            <div class="contenedor-flex mt-5">
                 <div class="formulario">
                     <div class="container">
                         <h1>Crear Evento</h1>
@@ -80,17 +83,13 @@
                         </form>
                     </div>
                 </div>
-                <a href="{{ route('editar-evento') }}" class="editar-color">
-                    <i class="fas fa-pencil-alt"></i>
-                    <span>Editar Banner</span>
-                </a>  
             </div>
 
 
         </div>
     </div>
 
-    @include('layouts/toggle')
+    @include('layouts/sidebar-scripts')
 </body>
 
 </html>

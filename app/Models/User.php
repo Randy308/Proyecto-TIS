@@ -21,9 +21,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'rol'
+        'rol',
+        'telefono',
+        'direccion',
+        'carrera',
+        'foto_perfil',
+        'fecha_nac',
     ];
-
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -48,7 +52,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Evento::class, 'asistencia_eventos');
     }
 
-    public function eventosCreados()
+    public function eventos()
     {
         return $this->hasMany(Evento::class);
     }
