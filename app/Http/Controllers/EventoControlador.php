@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use App\Models\AsistenciaEvento;
+
 
 class EventoControlador extends Controller
 {
@@ -148,5 +150,6 @@ class EventoControlador extends Controller
         //
         return $evento;
     }
+    
     
 }
