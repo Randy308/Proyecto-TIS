@@ -133,7 +133,7 @@
                             </div>
 
                         </div>
-                        <div class="c2" style="height:400px">
+                        <div class="c2" style="height:400px ">
                             <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
                                 style="height: 100%;">
                                 <div id="draggable2" class="draggable" style="position: absolute;">
