@@ -56,195 +56,201 @@ $(document).ready(function () {
         $(this).css("border", "1px solid black");
     });
 
+    $("#fontsize").selectmenu({
+        change: function (event, data) {
+            var elements = document.getElementsByClassName("activo");
+            Array.from(elements).forEach(function (element) {
+                $(element).css("font-size", data.item.value);
+                var selectElement = document.getElementById("fontsize");
+                selectElement.selectedIndex = 0;
+            });
+        },
+    });
+
+    $("#colorFondo").selectmenu({
+        change: function (event, data) {
+            var circle = $("#containment-wrapper");
+            circle.css("background", data.item.value);
+        },
+    });
+    $("#fontname").selectmenu({
+        change: function (event, data) {
+            var selectedFont = data.item.value;
+            var elements = document.getElementsByClassName("activo");
+            Array.from(elements).forEach(function (element) {
+                $(element).css("font-family", selectedFont);
+                var selectElement = document.getElementById("fontname");
+                selectElement.selectedIndex = 0;
+            });
+        },
+    });
+
+    $("#forecolor").selectmenu({
+        change: function (event, data) {
+            var selectedColor = data.item.value;
+            var elements = document.getElementsByClassName("activo");
+            Array.from(elements).forEach(function (element) {
+                $(element).css("color", selectedColor);
+                var selectElement = document.getElementById("forecolor");
+                selectElement.selectedIndex = 0;
+            });
+        },
+    });
+
+    $("#hilitecolor").selectmenu({
+        change: function (event, data) {
+            var selectedBackgroundColor = data.item.value;
+            var elements = document.getElementsByClassName("activo");
+            Array.from(elements).forEach(function (element) {
+                $(element).css("background", selectedBackgroundColor);
+                var selectElement = document.getElementById("hilitecolor");
+                selectElement.selectedIndex = 0;
+            });
+        },
+    });
+    //
+
+    $("#zoom").selectmenu({
+        change: function (event, data) {
+            var selectedBackgroundColor = data.item.value;
+            var elements = document.getElementsByClassName("activo");
+            Array.from(elements).forEach(function (element) {
+                $(element).css("width", selectedBackgroundColor);
+                var selectElement = document.getElementById("zoom");
+                selectElement.selectedIndex = 0;
+            });
+        },
+    });
+    $("#expand-w").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            $(element).css("width", element.offsetWidth + 10);
+            $(element).css("height", "auto");
+        });
+    });
+    $("#expand-h").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            $(element).css("height", element.offsetHeight + 10);
+            $(element).css("width", "auto");
+        });
+    });
+    $("#contract-w").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            $(element).css("width", element.offsetWidth - 10);
+            $(element).css("height", "auto");
+        });
+    });
+    $("#contract-h").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            $(element).css("height", element.offsetHeight - 10);
+            $(element).css("width", "auto");
+        });
+    });
+    var boldflag = false;
+    var italicflag = false;
+    var underlineflag = false;
+    $("#Negrita").on("click", function () {
+        boldflag = boldflag ? false : true;
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            var selectedOption = $(element).css("font-weight");
+            console.log(selectedOption);
+            var option =
+                selectedOption === "400" || !selectedOption
+                    ? "bold"
+                    : "normal";
+            $(element).css("font-weight", option);
+        });
+    });
+    $("#Italica").on("click", function () {
+        italicflag = italicflag ? false : true;
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            var selectedOption = $(element).css("font-style");
+            var option =
+                selectedOption === "normal" || !selectedOption
+                    ? "italic"
+                    : "normal";
+            $(element).css("font-style", option);
+        });
+    });
+    $("#Underline").on("click", function () {
+        underlineflag = underlineflag ? false : true;
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            var selectedOption = $(element).css("text-decoration-line");
+            var option =
+                selectedOption === "none" || !selectedOption
+                    ? "underline"
+                    : "none";
+            $(element).css("text-decoration", option);
+        });
+    });
+    $("#trash-delete").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            element.remove();
+        });
+    });
+
     $(function () {
-        $("#fontsize").selectmenu({
-            change: function (event, data) {
-                var elements = document.getElementsByClassName("activo");
-                Array.from(elements).forEach(function (element) {
-                    $(element).css("font-size", data.item.value);
-                    var selectElement = document.getElementById("fontsize");
-                    selectElement.selectedIndex = 0;
-                });
-            },
-        });
 
-        $("#fontname").selectmenu({
-            change: function (event, data) {
-                var selectedFont = data.item.value;
-                var elements = document.getElementsByClassName("activo");
-                Array.from(elements).forEach(function (element) {
-                    $(element).css("font-family", selectedFont);
-                    var selectElement = document.getElementById("fontname");
-                    selectElement.selectedIndex = 0;
-                });
-            },
-        });
+        var contenedor = document.getElementById("containment-wrapper");
+        const contForm = document.getElementById("GuardarElementos");
+        var numeroElemento = 1;
+        var numeroImagen = 1;
+        $("#btnSaveElement").on("click", function () {
+            var elements = document.querySelectorAll(
+                "#containment-wrapper .draggable",
+            );
 
-        $("#forecolor").selectmenu({
-            change: function (event, data) {
-                var selectedColor = data.item.value;
-                var elements = document.getElementsByClassName("activo");
-                Array.from(elements).forEach(function (element) {
-                    $(element).css("color", selectedColor);
-                    var selectElement = document.getElementById("forecolor");
-                    selectElement.selectedIndex = 0;
-                });
-            },
-        });
-
-        $("#hilitecolor").selectmenu({
-            change: function (event, data) {
-                var selectedBackgroundColor = data.item.value;
-                var elements = document.getElementsByClassName("activo");
-                Array.from(elements).forEach(function (element) {
-                    $(element).css("background", selectedBackgroundColor);
-                    var selectElement = document.getElementById("hilitecolor");
-                    selectElement.selectedIndex = 0;
-                });
-            },
-        });
-        //
-
-        $("#zoom").selectmenu({
-            change: function (event, data) {
-                var selectedBackgroundColor = data.item.value;
-                var elements = document.getElementsByClassName("activo");
-                Array.from(elements).forEach(function (element) {
-                    $(element).css("width", selectedBackgroundColor);
-                    var selectElement = document.getElementById("zoom");
-                    selectElement.selectedIndex = 0;
-                });
-            },
-        });
-        $("#expand-w").on("click", function () {
-            var elements = document.getElementsByClassName("activo");
             Array.from(elements).forEach(function (element) {
-                $(element).css("width", element.offsetWidth + 10);
-                $(element).css("height", "auto");
-            });
-        });
-        $("#expand-h").on("click", function () {
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                $(element).css("height", element.offsetHeight + 10);
-                $(element).css("width", "auto");
-            });
-        });
-        $("#contract-w").on("click", function () {
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                $(element).css("width", element.offsetWidth - 10);
-                $(element).css("height", "auto");
-            });
-        });
-        $("#contract-h").on("click", function () {
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                $(element).css("height", element.offsetHeight - 10);
-                $(element).css("width", "auto");
-            });
-        });
-        var boldflag = false;
-        var italicflag = false;
-        var underlineflag = false;
-        $("#Negrita").on("click", function () {
-            boldflag = boldflag ? false : true;
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                var selectedOption = $(element).css("font-weight");
-                console.log(selectedOption);
-                var option =
-                    selectedOption === "400" || !selectedOption
-                        ? "bold"
-                        : "normal";
-                $(element).css("font-weight", option);
-            });
-        });
-        $("#Italica").on("click", function () {
-            italicflag = italicflag ? false : true;
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                var selectedOption = $(element).css("font-style");
-                var option =
-                    selectedOption === "normal" || !selectedOption
-                        ? "italic"
-                        : "normal";
-                $(element).css("font-style", option);
-            });
-        });
-        $("#Underline").on("click", function () {
-            underlineflag = underlineflag ? false : true;
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                var selectedOption = $(element).css("text-decoration-line");
-                var option =
-                    selectedOption === "none" || !selectedOption
-                        ? "underline"
-                        : "none";
-                $(element).css("text-decoration", option);
-            });
-        });
-        $("#trash-delete").on("click", function () {
-            var elements = document.getElementsByClassName("activo");
-            Array.from(elements).forEach(function (element) {
-                element.remove();
-            });
-        });
+                const $element = $(element); // Convert the DOM element to a jQuery object
+                var myJSON;
+                if ($element.prop("nodeName").toLowerCase() === 'img') {
+                    const elementoBanner = {
+                        'left': $element.css("left"),
+                        'top': $element.css("top"),
+                        'width': $element.css("width"),
+                        'height': $element.css("height"),
+                        'href': "/storage"+$element.attr("src").split('/storage').pop(),
+                    };
+                    myJSON = JSON.stringify(elementoBanner);
+                    let input = document.createElement("input");
+                    input.type ='hidden';
+                    input.name = 'imagen'+numeroImagen;
+                    numeroImagen++;
+                    input.value = encodeURI(myJSON);
+                    contForm.appendChild(input);
+                } else {
+                    const elementoBanner = {
+                        'text': $element.text().trim(),
+                        'left': $element.css("left"),
+                        'top': $element.css("top"),
+                        'text-decoration': $element.css("text-decoration"),
+                        'font-style': $element.css("font-style"),
+                        'background': $element.css("background"),
+                        'width': $element.css("width"),
+                        'height': $element.css("height"),
+                        'color': $element.css("color"),
+                        'font-family': $element.css("font-family"),
+                        'font-size': $element.css("font-size"),
+                    };
+                    myJSON = JSON.stringify(elementoBanner);
+                    let input = document.createElement("input");
+                    input.type ='hidden';
+                    input.name = 'elemento'+numeroElemento;
+                    numeroElemento++;
+                    input.value = encodeURI(myJSON);
+                    contForm.appendChild(input);
 
-        $(function () {
-
-            var contenedor = document.getElementById("containment-wrapper");
-            const contForm = document.getElementById("GuardarElementos");
-            var numeroElemento = 1;
-            var numeroImagen = 1;
-            $("#btnSaveElement").on("click", function () {
-                var elements = document.querySelectorAll(
-                    "#containment-wrapper .draggable",
-                );
-
-                Array.from(elements).forEach(function (element) {
-                    const $element = $(element); // Convert the DOM element to a jQuery object
-                    var myJSON;
-                    if ($element.prop("nodeName").toLowerCase() === 'img') {
-                        const elementoBanner = {
-                            'left': $element.css("left"),
-                            'top': $element.css("top"),
-                            'width': $element.css("width"),
-                            'height': $element.css("height"),
-                            'href': "/storage"+$element.attr("src").split('/storage').pop(),
-                        };
-                        myJSON = JSON.stringify(elementoBanner);
-                        let input = document.createElement("input");
-                        input.type ='hidden';
-                        input.name = 'imagen'+numeroImagen;
-                        numeroImagen++;
-                        input.value = encodeURI(myJSON);
-                        contForm.appendChild(input);
-                    } else {
-                        const elementoBanner = {
-                            'text': $element.text().trim(),
-                            'left': $element.css("left"),
-                            'top': $element.css("top"),
-                            'text-decoration': $element.css("text-decoration"),
-                            'font-style': $element.css("font-style"),
-                            'background': $element.css("background"),
-                            'color': $element.css("color"),
-                            'font-family': $element.css("font-family"),
-                            'font-size': $element.css("font-size"),
-                        };
-                        myJSON = JSON.stringify(elementoBanner);
-                        let input = document.createElement("input");
-                        input.type ='hidden';
-                        input.name = 'elemento'+numeroElemento;
-                        numeroElemento++;
-                        input.value = encodeURI(myJSON);
-                        contForm.appendChild(input);
-
-                    }
-                    //console.log(myJSON);
-                });
-
+                }
+                //console.log(myJSON);
             });
+
         });
     });
 });

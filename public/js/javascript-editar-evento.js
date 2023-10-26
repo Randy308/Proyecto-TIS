@@ -24,55 +24,50 @@ $(".btngrup").click(function () {
     $(this).addClass("active");
 });
 //selectores manipulables
-$(function () {
-    $("#draggable2").draggable({
-        containment: "#containment-wrapper",
-        scroll: true,
-        cursor: "move",
-    });
-    $("#draggable2").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
-    $("#draggable3").draggable({
-        containment: "#containment-wrapper",
-        scroll: true,
-        cursor: "move",
-    });
-    $("#draggable3").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
-    $("#draggable4").draggable({
-        containment: "#containment-wrapper",
-        scroll: true,
-        cursor: "move",
-    });
-    $("#draggable4").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
-    $("#draggable5").draggable({
-        containment: "#containment-wrapper",
-        scroll: true,
-        cursor: "move",
-    });
-    $("#draggable5").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
-});
+// $(function () {
+//     $("#draggable2").draggable({
+//         containment: "#containment-wrapper",
+//         scroll: true,
+//         cursor: "move",
+//     });
+//     $("#draggable2").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
+//     $("#draggable3").draggable({
+//         containment: "#containment-wrapper",
+//         scroll: true,
+//         cursor: "move",
+//     });
+//     $("#draggable3").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
+//     $("#draggable4").draggable({
+//         containment: "#containment-wrapper",
+//         scroll: true,
+//         cursor: "move",
+//     });
+//     $("#draggable4").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
+//     $("#draggable5").draggable({
+//         containment: "#containment-wrapper",
+//         scroll: true,
+//         cursor: "move",
+//     });
+//     $("#draggable5").resizable({ containment: "#containment-wrapper" , handles: "n, e, s, w"});
+// });
 //mostrar posiciones top y left
-$(document).ready(function () {
-    var $draggable2 = $("#draggable2");
+// $(document).ready(function () {
+//     var $draggable2 = $("#draggable2");
 
-    // Mostrar posición top y left
-    var posicion = $draggable2.position();
-    var top = posicion.top;
-    var left = posicion.left;
-    console.log("Top: " + top + "px, Left: " + left + "px");
+//     // Mostrar posición top y left
+//     var posicion = $draggable2.position();
+//     var top = posicion.top;
+//     var left = posicion.left;
+//     console.log("Top: " + top + "px, Left: " + left + "px");
 
-    // Mostrar ancho y alto
-    var ancho = $draggable2.width();
-    var alto = $draggable2.height();
-    console.log("Ancho: " + ancho + "px, Alto: " + alto + "px");
-});
+//     // Mostrar ancho y alto
+//     var ancho = $draggable2.width();
+//     var alto = $draggable2.height();
+//     console.log("Ancho: " + ancho + "px, Alto: " + alto + "px");
+// });
 //cambiar color de fondo
 $(function () {
-    var circle = $("#containment-wrapper");
-    $("#colorFondo").selectmenu({
-        change: function (event, data) {
-            circle.css("background", data.item.value);
-        },
-    });
+    
 });
 //
 // $(function () {

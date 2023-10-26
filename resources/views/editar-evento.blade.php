@@ -133,25 +133,56 @@
                                 {{-- <button type="button" class=" btn btn-light" data-toggle="modal"
                                     data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button> --}}
                                 <button type="button" class=" btn btn-light" id="btnStoreElement" disabled><i
-                                        class="bi bi-floppy-fill"></i></button>
+                                        class="bi bi-floppy-fill"></i> Aplicar cambios</button>
 
-                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i
-                                        class="bi bi-download"></i></button>
-                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement"><i
-                                        class="bi bi-cloud-arrow-up-fill"></i></button>
+                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i class="bi bi-arrow-repeat"></i> Sincronizar</button>
+                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement" disabled><i
+                                        class="bi bi-cloud-arrow-up-fill"></i> Guardar</button>
                             </div>
 
                         </div>
                         <div class="c2" style="height:400px ">
                             <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
                                 style="height: 100%;">
-                                <div id="draggable2" class="draggable" style="position: absolute;">Imagen</div>
-                                <div id="draggable3" class="draggable" style="position: absolute;">
-                                    {{ $evento->nombre_evento }}</div>
-                                <div id="draggable4" class="draggable " style="position: absolute;">
-                                    {{ $evento->fecha_inicio }}</div>
-                                <div id="draggable5" class="draggable" style="position: absolute;">
-                                    {{ $evento->fecha_fin }}</div>
+                                {{--
+
+
+
+                                    "id":1,
+                                    "evento_id":41,
+                                    "text":"Mollit ut necessitat",
+                                    "top":"39px",
+                                    "left":"356px",
+                                    "text_decoration":"none solid rgb(0, 0, 0)",
+                                    "font_style":"normal",
+                                    "background":"rgb(245, 245, 245) none repeat scroll 0% 0% \/ auto padding-box border-box",
+                                    "color":"rgb(0, 0, 0)","font_family":"Poppins, sans-serif",
+                                    "font_size":"16px",
+                                    "created_at":"2023-10-26T20:00:35.000000Z"
+                                    ,"updated_at":"2023-10-26T20:00:35.000000Z"}
+
+
+
+                                    --}}
+                                @if ($evento->elementosBanners->count())
+                                    @foreach ($evento->elementosBanners as $items)
+                                        <div class="draggable" id="itemDrag{{ $items->id }}"
+                                            style="position: absolute;top :{{ $items->top }};left:{{ $items->left }};text-decoration :{{ $items->text_decoration }};font-style:{{ $items->font_style }};background :{{ $items->background }};color:{{ $items->color }};font-size :{{ $items->font_size }};left:{{ $items->left }};width :{{ $items->width }};height:{{ $items->height }};
+
+                                ">
+                                            {{ $items->text }}</div>
+                                    @endforeach
+                                @else
+                                    <div id="draggable2" class="draggable" style="position: absolute;">Imagen</div>
+                                    <div id="draggable3" class="draggable" style="position: absolute;">
+                                        {{ $evento->nombre_evento }}</div>
+                                    <div id="draggable4" class="draggable " style="position: absolute;">
+                                        {{ $evento->fecha_inicio }}</div>
+                                    <div id="draggable5" class="draggable" style="position: absolute;">
+                                        {{ $evento->fecha_fin }}</div>
+                                @endif
+
+
                             </div>
                         </div>
                     </div>
@@ -228,7 +259,7 @@
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
-    <script src="{{ asset('js/javascript-editar-evento.js') }}"></script>
+
     <script src="{{ asset('js/toolbar.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
         integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
@@ -237,6 +268,16 @@
         $(document).ready(function() {
             const domNode = document.getElementById('containment-wrapper');
             var contForm = document.getElementById('nueva-imagen-banner');
+            $(".containment-wrapper .draggable").draggable({
+                containment: "#containment-wrapper",
+                scroll: true,
+                cursor: "move",
+            });
+            $(".containment-wrapper .draggable").resizable({
+                containment: "#containment-wrapper",
+                handles: "n, e, s, w"
+            });
+
             $("#btnSaveElement").on('click', function() {
                 $('#containment-wrapper').css("overflow", "visible");
                 $('#containment-wrapper').css("width", "900px");
@@ -262,6 +303,7 @@
                         $('#containment-wrapper').css("overflow", "auto");
                         $('#containment-wrapper').css("width", "auto");
                         $('#btnStoreElement').removeAttr('disabled');
+                        $('#btnCloudSaveElement').removeAttr('disabled');
                     });
 
             });

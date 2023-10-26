@@ -13,6 +13,8 @@ class ElementosBanner extends Model
         'text',
         'top',
         'left',
+        'width',
+        'height',
         'text_decoration',
         'font_style',
         'background',

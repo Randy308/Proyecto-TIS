@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ElementoImagenBanner;
 use App\Models\ElementosBanner;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ElementosBannerController extends Controller
 {
@@ -26,8 +27,9 @@ class ElementosBannerController extends Controller
         //
         $elementos = [];
         $imagenes = [];
-        $n = 1; // Empieza con el primer índice
-
+        $n = 1; // Empieza con el primer índice elementos_banners elemento_imagen_banners
+        $deleted = DB::table('elementos_banners')->where('evento_id', '=', $id)->delete();
+        $deleted = DB::table('elemento_imagen_banners')->where('evento_id', '=', $id)->delete();
         while ($request->has("elemento$n")) {
             $elemento = urldecode($request->input("elemento$n"));
             $elementos[] = json_decode($elemento, true); // Añade true para convertirlo a un array asociativo
@@ -41,18 +43,20 @@ class ElementosBannerController extends Controller
             $n++; // Incrementa el índice
         }
         foreach ($elementos as $elementoBanners) {
-            $elemento = new ElementosBanner();
-            $elemento->evento_id = $id;
-            $elemento->text = $elementoBanners['text'];
-            $elemento->left = $elementoBanners['left'];
-            $elemento->top = $elementoBanners['top'];
-            $elemento->text_decoration = $elementoBanners['text-decoration'];
-            $elemento->font_style = $elementoBanners['font-style'];
-            $elemento->background = $elementoBanners['background'];
-            $elemento->color = $elementoBanners['color'];
-            $elemento->font_family = $elementoBanners['font-family'];
-            $elemento->font_size = $elementoBanners['font-size'];
-            $elemento->save();
+            $miElemento = new ElementosBanner();
+            $miElemento->evento_id = $id;
+            $miElemento->text = $elementoBanners['text'];
+            $miElemento->left = $elementoBanners['left'];
+            $miElemento->top = $elementoBanners['top'];
+            $miElemento->text_decoration = $elementoBanners['text-decoration'];
+            $miElemento->font_style = $elementoBanners['font-style'];
+            $miElemento->background = $elementoBanners['background'];
+            $miElemento->color = $elementoBanners['color'];
+            $miElemento->width = $elementoBanners['width'];
+            $miElemento->height = $elementoBanners['height'];
+            $miElemento->font_family = $elementoBanners['font-family'];
+            $miElemento->font_size = $elementoBanners['font-size'];
+            $miElemento->save();
             // Itera a través de los elementos de $elementoBanners
 
         }

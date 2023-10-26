@@ -21,6 +21,8 @@ class CreateElementosBannersTable extends Migration
             $table->string('left');
             $table->string('text_decoration');
             $table->string('font_style');
+            $table->string('width');
+            $table->string('height');
             $table->string('background');
             $table->string('color');
             $table->string('font_family');

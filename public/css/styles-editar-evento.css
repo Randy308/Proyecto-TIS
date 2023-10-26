@@ -255,8 +255,6 @@ input[type="file"] {
     position: relative;
     width: 900px;
     height: 400px;
-
-
 }
 img {
     max-width: 100%;
@@ -294,11 +292,16 @@ img {
     }
     #containment-wrapper{
 
-        width: auto;
         max-width: 900px;
         max-height: 400px;
+
+    }
+
+}
+@media screen and (max-width: 800px) {
+    #containment-wrapper{
+
         overflow-x: auto;
         overflow-y: hidden;
     }
-
 }
