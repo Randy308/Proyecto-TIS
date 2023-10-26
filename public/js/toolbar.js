@@ -170,8 +170,8 @@ $(document).ready(function () {
             underlineflag = underlineflag ? false : true;
             var elements = document.getElementsByClassName("activo");
             Array.from(elements).forEach(function (element) {
-                var selectedOption = $(element).css("text-decoration");
-                var option = (selectedOption === "none solid rgb(0, 0, 0)" || !selectedOption) ? "underline" : "none";
+                var selectedOption = $(element).css("text-decoration-line");
+                var option = (selectedOption === "none" || !selectedOption) ? "underline" : "none";
                 $(element).css("text-decoration", option);
             });
         });
