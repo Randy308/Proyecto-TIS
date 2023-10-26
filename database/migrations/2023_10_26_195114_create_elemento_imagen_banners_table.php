@@ -20,7 +20,7 @@ class CreateElementoImagenBannersTable extends Migration
             $table->string('left');
             $table->string('width');
             $table->string('height');
-            $table->string('href');
+            $table->string('src');
             $table->timestamps();
             $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
         });

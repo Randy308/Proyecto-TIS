@@ -13,7 +13,7 @@ class ElementoImagenBanner extends Model
         'left',
         'width',
         'height',
-        'href',
+        'src',
     ];
     public function evento()
     {

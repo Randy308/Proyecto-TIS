@@ -68,7 +68,7 @@ class ElementosBannerController extends Controller
             $imagen->top = $elementoImagen['top'];
             $imagen->width = $elementoImagen['width'];
             $imagen->height = $elementoImagen['height'];
-            $imagen->href = $elementoImagen['href'];
+            $imagen->src = $elementoImagen['src'];
             $imagen->save();
             // Itera a través de los elementos de $elementoBanners
         }

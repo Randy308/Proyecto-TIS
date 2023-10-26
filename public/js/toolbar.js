@@ -216,7 +216,7 @@ $(document).ready(function () {
                         'top': $element.css("top"),
                         'width': $element.css("width"),
                         'height': $element.css("height"),
-                        'href': "/storage"+$element.attr("src").split('/storage').pop(),
+                        'src': "/storage"+$element.attr("src").split('/storage').pop(),
                     };
                     myJSON = JSON.stringify(elementoBanner);
                     let input = document.createElement("input");

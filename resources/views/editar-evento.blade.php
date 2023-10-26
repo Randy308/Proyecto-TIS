@@ -135,7 +135,8 @@
                                 <button type="button" class=" btn btn-light" id="btnStoreElement" disabled><i
                                         class="bi bi-floppy-fill"></i> Aplicar cambios</button>
 
-                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i class="bi bi-arrow-repeat"></i> Sincronizar</button>
+                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i
+                                        class="bi bi-arrow-repeat"></i> Sincronizar</button>
                                 <button type="button" class=" btn btn-light" id="btnCloudSaveElement" disabled><i
                                         class="bi bi-cloud-arrow-up-fill"></i> Guardar</button>
                             </div>
@@ -164,12 +165,17 @@
 
 
                                     --}}
+                                @if ($evento->elementoImagenBanners->count())
+                                    @foreach ($evento->elementoImagenBanners as $item)
+                                        <img id="imagenBanner{{ $item->id }}" class="imgDrag"
+                                            src="{{ $item->href }}"
+                                            alt="imagenBanner{{ $item->id }}"style="position: absolute;top :{{ $item->top }};left:{{ $item->left }};width :{{ $item->width }};height:{{ $item->height }};">
+                                    @endforeach
+                                @endif
                                 @if ($evento->elementosBanners->count())
                                     @foreach ($evento->elementosBanners as $items)
                                         <div class="draggable" id="itemDrag{{ $items->id }}"
-                                            style="position: absolute;top :{{ $items->top }};left:{{ $items->left }};text-decoration :{{ $items->text_decoration }};font-style:{{ $items->font_style }};background :{{ $items->background }};color:{{ $items->color }};font-size :{{ $items->font_size }};left:{{ $items->left }};width :{{ $items->width }};height:{{ $items->height }};
-
-                                ">
+                                            style="position: absolute;top :{{ $items->top }};left:{{ $items->left }};text-decoration :{{ $items->text_decoration }};font-style:{{ $items->font_style }};background :{{ $items->background }};color:{{ $items->color }};font-size :{{ $items->font_size }};left:{{ $items->left }};width :{{ $items->width }};height:{{ $items->height }};">
                                             {{ $items->text }}</div>
                                     @endforeach
                                 @else
@@ -269,6 +275,11 @@
             const domNode = document.getElementById('containment-wrapper');
             var contForm = document.getElementById('nueva-imagen-banner');
             $(".containment-wrapper .draggable").draggable({
+                containment: "#containment-wrapper",
+                scroll: true,
+                cursor: "move",
+            });
+            $(".containment-wrapper .imgDrag").draggable({
                 containment: "#containment-wrapper",
                 scroll: true,
                 cursor: "move",
