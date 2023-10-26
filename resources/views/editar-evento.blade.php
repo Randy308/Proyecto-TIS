@@ -52,7 +52,8 @@
                                         class="bi bi-arrows-expand-vertical"></i></button>
                                 <button type="button" id="contract-w" class="btn btn-light "><i
                                         class="bi bi-arrows-collapse-vertical"></i></button>
-                                <button type="button" id="trash-delete" class="btn btn-light"><i class="bi bi-trash3"></i></button>
+                                <button type="button" id="trash-delete" class="btn btn-light"><i
+                                        class="bi bi-trash3"></i></button>
                                 <select id="zoom">
                                     <option selected disabled>Zoom</option>
                                     <option>50%</option>
@@ -136,14 +137,15 @@
 
                                 <button type="button" class=" btn btn-light" id="btnSaveElement"><i
                                         class="bi bi-download"></i></button>
+                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement"><i
+                                        class="bi bi-cloud-arrow-up-fill"></i></button>
                             </div>
 
                         </div>
                         <div class="c2" style="height:400px ">
                             <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
                                 style="height: 100%;">
-                                <div id="draggable2" class="draggable" style="position: absolute;">
-                                    Imagen</div>
+                                <div id="draggable2" class="draggable" style="position: absolute;">Imagen</div>
                                 <div id="draggable3" class="draggable" style="position: absolute;">
                                     {{ $evento->nombre_evento }}</div>
                                 <div id="draggable4" class="draggable " style="position: absolute;">
@@ -191,6 +193,8 @@
                 </div>
                 <div class="content-c3">
                     <div class="subcontent">
+                        <p>{{ $evento->elementosBanners }}</p>
+                        <p>{{ $evento->elementoImagenBanners }}</p>
                         <div class="m-3 text-center">
                             @include('layouts.actualizar-imagen-banner', ['evento' => $evento])
                         </div>
@@ -215,6 +219,10 @@
             @method('PUT')
             <input type="hidden" name="imagen-banner" id="nueva-imagen-banner">
 
+        </form>
+        <form action="{{ route('crear-elementos-banner', ['evento' => $evento]) }}" id="GuardarElementos"
+            method="POST">
+            @csrf
         </form>
     </div>
     @include('layouts/sidebar-scripts')
@@ -261,9 +269,15 @@
 
                 document.getElementById('FormUpdateBanner').submit();
             });
+            $("#btnCloudSaveElement").on('click', function() {
+
+                document.getElementById('GuardarElementos').submit();
+            });
+
 
         });
     </script>
+
     {{-- <script>
         $(document).ready(function() {
             var contenedor = document.getElementById('containment-wrapper');
