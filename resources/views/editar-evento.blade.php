@@ -433,7 +433,6 @@
                         link.download = 'my-image-name.jpeg';
                         link.href = imgData;
                         link.click();
-
                         $('#containment-wrapper').css("overflow", "auto");
                         $('#containment-wrapper').css("width", "auto");
                     });
