@@ -215,7 +215,9 @@
 
         </div>
     </div>
+    <div id="formulario-imagen">
 
+    </div>
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
@@ -352,65 +354,65 @@
                 });
                 $('#expand-w').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("width", element.offsetWidth + 10);
-                            $(element).css("height", "auto");
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        $(element).css("width", element.offsetWidth + 10);
+                        $(element).css("height", "auto");
+                    });
                 });
                 $('#expand-h').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("height", element.offsetHeight + 10);
-                            $(element).css("width", "auto");
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        $(element).css("height", element.offsetHeight + 10);
+                        $(element).css("width", "auto");
+                    });
                 });
                 $('#contract-w').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("width", element.offsetWidth - 10);
-                            $(element).css("height", "auto");
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        $(element).css("width", element.offsetWidth - 10);
+                        $(element).css("height", "auto");
+                    });
                 });
                 $('#contract-h').on("click", function() {
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("height", element.offsetHeight - 10);
-                            $(element).css("width", "auto");
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        $(element).css("height", element.offsetHeight - 10);
+                        $(element).css("width", "auto");
+                    });
                 });
                 var boldflag = false;
                 var italicflag = false;
                 var underlineflag = false;
                 $('#bold').on("click", function() {
-                    boldflag = boldflag ? false : true ;
+                    boldflag = boldflag ? false : true;
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                           var option = boldflag ? 'bold' : 'normal'
-                            $(element).css("font-weight", option);
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        var option = boldflag ? 'bold' : 'normal'
+                        $(element).css("font-weight", option);
+                    });
                 });
                 $('#italic').on("click", function() {
-                    italicflag = italicflag ? false : true ;
+                    italicflag = italicflag ? false : true;
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            var option = italicflag ? 'italic' : 'normal'
-                            $(element).css("font-style", option);
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        var option = italicflag ? 'italic' : 'normal'
+                        $(element).css("font-style", option);
+                    });
                 });
                 $('#underline').on("click", function() {
-                    underlineflag = underlineflag ? false : true ;
+                    underlineflag = underlineflag ? false : true;
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            var option = underlineflag ? 'underline' : 'none'
-                            $(element).css("text-decoration", option);
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        var option = underlineflag ? 'underline' : 'none'
+                        $(element).css("text-decoration", option);
+                    });
                 });
                 $('#trash-delete').on("click", function() {
 
                     var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                           element.remove();
-                        });
+                    Array.from(elements).forEach(function(element) {
+                        element.remove();
+                    });
                 });
             });
 
@@ -421,6 +423,7 @@
 
 
     <script>
+        const contenedor = document.getElementById('formulario-imagen');
         $(document).ready(function() {
 
             $("#btnSaveElement").on('click', function() {
@@ -429,9 +432,11 @@
                     })
                     .then(function(dataUrl) {
                         var link = document.createElement('a');
-                        link.download = 'my-image-name.jpeg';
+                        //link.download = 'my-image-name.jpeg';
                         link.href = dataUrl;
-                        link.click();
+                        //link.click();
+                        contenedor.appenChild(link);
+                        console.log(link.href);
                     });
             });
 

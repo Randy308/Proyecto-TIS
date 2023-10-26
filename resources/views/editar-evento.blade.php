@@ -158,8 +158,10 @@
                                     </svg>
                                 </a>
                             </div>
-                            <div id="preview2"><p class="alert alert-info" id="file-info">No hay archivo
-                                    aún</p></div>
+                            <div id="preview2">
+                                <p class="alert alert-info" id="file-info">No hay archivo
+                                    aún</p>
+                            </div>
                         </div>
                         <div class="c2">
                             <form id="file-submit" enctype="multipart/form-data">
@@ -200,7 +202,9 @@
 
         </div>
     </div>
+    <div id="contenedor-imagen">
 
+    </div>
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
@@ -402,23 +406,34 @@
 
         });
     </script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
+        integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <script>
         $(document).ready(function() {
-            var contenedor = document.getElementById('containment-wrapper');
-
+            const domNode = document.getElementById('containment-wrapper');
+            var contForm = document.getElementById('contenedor-imagen');
             $("#btnSaveElement").on('click', function() {
                 $('#containment-wrapper').css("overflow", "visible");
                 $('#containment-wrapper').css("width", "900px");
-                domtoimage.toJpeg(contenedor, {
-                        quality: 0.97
+                var scale = 2;
+                var fileName = 'Test File';
+
+                domtoimage.toPng(domNode, {
+                        width: domNode.clientWidth * scale,
+                        height: domNode.clientHeight * scale,
+                        style: {
+                            transform: "scale(" + scale + ")",
+                            transformOrigin: "top left"
+                        }
                     })
-                    .then(function(dataUrl) {
+                    .then(function(imgData) {
+
                         var link = document.createElement('a');
                         link.download = 'my-image-name.jpeg';
-                        link.href = dataUrl;
+                        link.href = imgData;
                         link.click();
+
                         $('#containment-wrapper').css("overflow", "auto");
                         $('#containment-wrapper').css("width", "auto");
                     });
@@ -428,6 +443,31 @@
 
         });
     </script>
+    {{-- <script>
+        $(document).ready(function() {
+            var contenedor = document.getElementById('containment-wrapper');
+            var contForm = document.getElementById('contenedor-imagen');
+            $("#btnSaveElement").on('click', function() {
+                $('#containment-wrapper').css("overflow", "visible");
+                $('#containment-wrapper').css("width", "900px");
+                domtoimage.toJpeg(contenedor, {
+                        quality: 0.97
+                    })
+                    .then(function(dataUrl) {
+                        var link = document.createElement('a');
+                        //link.download = 'my-image-name.jpeg';
+                        link.href = dataUrl;
+                        //link.click();
+                        contForm.appendChild(link);
+                        $('#containment-wrapper').css("overflow", "auto");
+                        $('#containment-wrapper').css("width", "auto");
+                    });
+
+            });
+
+
+        });
+    </script> --}}
 </body>
 
 </html>
