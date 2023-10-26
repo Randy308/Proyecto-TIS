@@ -253,9 +253,9 @@ input[type="file"] {
     border: 1px solid #ced4da;
     border-radius: 3px;
     position: relative;
-
-    height: 100%;
     width: 900px;
+    height: 400px;
+
 
 }
 img {

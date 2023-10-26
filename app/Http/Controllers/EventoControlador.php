@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 
 class EventoControlador extends Controller
 {
@@ -75,7 +76,7 @@ class EventoControlador extends Controller
                 'max:255',
                 Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
                     return $query->where('categoria', $request->input('categoria'));
-                })->ignore($request->input('id'), 'id'), 
+                })->ignore($request->input('id'), 'id'),
             ],
             'descripcion_evento' => 'required|string',
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
@@ -93,7 +94,7 @@ class EventoControlador extends Controller
             $request->input('fecha_fin')
         );
         $nombreDelArchivo = basename($rutaBanner);
-        
+
         $evento = new Evento([
             'nombre_evento' => $nombreEvento,
             'descripcion_evento' => $descripcionEvento,
@@ -110,43 +111,46 @@ class EventoControlador extends Controller
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
 
-    public function edit($user,$evento)
+    public function edit($user, $evento)
     {
         //
         return $user;
     }
-    public function editBanner($user,$evento)
+    public function editBanner($user, $evento)
     {
         //
         return view('editar-evento', ['evento' => Evento::findOrFail($evento)]);
 
     }
-    public function update($user,$evento ,Request $request)
+    public function update($user, $evento, Request $request)
     {
         //
         return redirect()->back()->with('status', '¡Banner actualizado exitosamente!.');
 
     }
 
-    public function updateBanner($user,$evento ,Request $request)
+    public function updateBanner($user, $evento, Request $request)
     {
-        $this->validate($request, [
-            'foto_banner' => 'required|image|max:2048',
-
+        $request->validate([
+            'imagen-banner' => 'required|string',
         ]);
         $eventoActual = Evento::FindOrFail($evento);
-        $imagen = $request->file('foto_banner')->store('public/banners');
-        $url = Storage::url($imagen);
-        $eventoActual->direccion_banner = $url;
+
+        $png_url = "banner-" . time() . ".png";
+        $path = public_path() . '/storage/banners/' . $png_url;
+
+        Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+
+        $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', '¡Banner actualizado exitosamente!.');
 
     }
 
-    public function destroy($user,$evento)
+    public function destroy($user, $evento)
     {
         //
         return $evento;
     }
-    
+
 }

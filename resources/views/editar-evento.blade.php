@@ -17,7 +17,10 @@
             color: #fff;
         }
     </style>
-    <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
+        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}"> --}}
 
 </head>
 
@@ -41,15 +44,15 @@
                         <div class="c1 pb-4">
                             <div id="toolbar">
 
-                                <button id="expand-h" class="btn btn-light "> <i
+                                <button type="button" id="expand-h" class="btn btn-light "> <i
                                         class="bi bi-arrows-expand"></i></button>
-                                <button id="contract-h" class="btn btn-light "><i
+                                <button type="button" id="contract-h" class="btn btn-light "><i
                                         class="bi bi-arrows-collapse"></i></button>
-                                <button id="expand-w" class="btn btn-light "> <i
+                                <button type="button" id="expand-w" class="btn btn-light "> <i
                                         class="bi bi-arrows-expand-vertical"></i></button>
-                                <button id="contract-w" class="btn btn-light "><i
+                                <button type="button" id="contract-w" class="btn btn-light "><i
                                         class="bi bi-arrows-collapse-vertical"></i></button>
-                                <button id="trash-delete" class="btn btn-light"><i class="bi bi-trash3"></i></button>
+                                <button type="button" id="trash-delete" class="btn btn-light"><i class="bi bi-trash3"></i></button>
                                 <select id="zoom">
                                     <option selected disabled>Zoom</option>
                                     <option>50%</option>
@@ -111,10 +114,10 @@
                                     <option value="purple">Morado</option>
                                     <option value="orange">Naranja</option>
                                 </select>
-                                <button id="bold">B</button>
-                                <button id="italic">I</button>
-                                <button id="underline">U</button>
-                                <select id="colorFondo" name="color" class="">
+                                <button type="button" id="Negrita">B</button>
+                                <button type="button" id="Italica">I</button>
+                                <button type="button" id="Underline">U</button>
+                                <select type="button" id="colorFondo" name="color" class="">
                                     <option selected disabled>Color de Fondo</option>
                                     <option value="#d3d3d3">Negro</option>
                                     <option value="#FF7F7F">Rojo</option>
@@ -126,8 +129,11 @@
                                 <input type="text" id="tituloTexto">
                                 <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
                                     Texto</button>
-                                <button type="button" class=" btn btn-light" data-toggle="modal"
-                                    data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button>
+                                {{-- <button type="button" class=" btn btn-light" data-toggle="modal"
+                                    data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button> --}}
+                                <button type="button" class=" btn btn-light" id="btnStoreElement" disabled><i
+                                        class="bi bi-floppy-fill"></i></button>
+
                                 <button type="button" class=" btn btn-light" id="btnSaveElement"><i
                                         class="bi bi-download"></i></button>
                             </div>
@@ -159,8 +165,7 @@
                                 </a>
                             </div>
                             <div id="preview2">
-                                <p class="alert alert-info" id="file-info">No hay archivo
-                                    aún</p>
+                                <p class="alert alert-info" id="file-info">No existe archivos</p>
                             </div>
                         </div>
                         <div class="c2">
@@ -203,219 +208,31 @@
         </div>
     </div>
     <div id="contenedor-imagen">
+        <form id="FormUpdateBanner"
+            action="{{ route('evento.banner.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
+            method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="imagen-banner" id="nueva-imagen-banner">
 
+        </form>
     </div>
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
     <script src="{{ asset('js/javascript-editar-evento.js') }}"></script>
-    <script>
-        var contador = 2;
-        $(document).ready(function() {
-            $("#agregarElemento").on("click", function() {
-                var div = document.createElement('div');
-                div.classList.add('ui-widget-content1')
-                //var p = document.createElement('p');
-                div.innerHTML = document.getElementById('tituloTexto').value;
-                //div.appendChild(p)
-                div.setAttribute("id", "elemntolista" + contador);
-                contador++;
-                $("#contenedorTemporal").append(div);
-            });
-
-            $("#contenedorTemporal img").resizable({
-                containment: "#contenedorTemporal"
-            });
-            $("#contenedorTemporal").on("click", ".ui-widget-content1", function() {
-                var id = $(this).attr("id");
-                const childElement = document.getElementById(id);
-                const parentElement = childElement.parentElement;
-                if (childElement.tagName == "IMG") {
-                    parentElement.remove();
-                }
-
-                // Remove the child from the current parent
-                $(this).detach();
-                $(this).addClass("draggable");
-                $(this).css("background", 'whitesmoke');
-                $(this).css("border", 'none');
-                // Add 'draggable' class
-
-
-
-                // Append it to the new parent
-                $("#containment-wrapper").append(this);
-
-                // Make it draggable and resizable
-                $("#" + id).css("position", "absolute");
-                $("#" + id).resizable({
-                    containment: "#containment-wrapper",
-                    handles: "n, e, s, w"
-                });
-
-                $("#" + id).draggable({
-                    containment: "#containment-wrapper",
-                    scroll: true,
-                    cursor: "pointer"
-                });
-
-            });
-
-            $("#containment-wrapper").on("click", "*", function() {
-                var id = $(this).attr("id");
-                const childElement = document.getElementById(id);
-                console.log("hola mundo")
-                $('#containment-wrapper *').removeClass('activo');
-                $('#containment-wrapper *').css("border", "");
-                childElement.classList.toggle("activo");
-                $(this).css("border", "1px solid black");
-
-
-            });
-
-
-
-            $(function() {
-                $("#fontsize").selectmenu({
-                    change: function(event, data) {
-                        var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-
-                            $(element).css("font-size", data.item.value);
-                            var selectElement = document.getElementById("fontsize");
-                            selectElement.selectedIndex = 0;
-                        });
-                    },
-                });
-
-
-                $("#fontname").selectmenu({
-                    change: function(event, data) {
-                        var selectedFont = data.item.value;
-                        var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("font-family", selectedFont);
-                            var selectElement = document.getElementById("fontname");
-                            selectElement.selectedIndex = 0;
-                        });
-                    },
-                });
-
-                $("#forecolor").selectmenu({
-                    change: function(event, data) {
-                        var selectedColor = data.item.value;
-                        var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("color", selectedColor);
-                            var selectElement = document.getElementById("forecolor");
-                            selectElement.selectedIndex = 0;
-                        });
-                    },
-                });
-
-
-                $("#hilitecolor").selectmenu({
-                    change: function(event, data) {
-                        var selectedBackgroundColor = data.item.value;
-                        var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("background", selectedBackgroundColor);
-                            var selectElement = document.getElementById("hilitecolor");
-                            selectElement.selectedIndex = 0;
-                        });
-                    },
-                });
-                //
-
-                $("#zoom").selectmenu({
-                    change: function(event, data) {
-                        var selectedBackgroundColor = data.item.value;
-                        var elements = document.getElementsByClassName("activo");
-                        Array.from(elements).forEach(function(element) {
-                            $(element).css("width", selectedBackgroundColor);
-                            var selectElement = document.getElementById("zoom");
-                            selectElement.selectedIndex = 0;
-                        });
-                    },
-                });
-                $('#expand-w').on("click", function() {
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("width", element.offsetWidth + 10);
-                        $(element).css("height", "auto");
-                    });
-                });
-                $('#expand-h').on("click", function() {
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("height", element.offsetHeight + 10);
-                        $(element).css("width", "auto");
-                    });
-                });
-                $('#contract-w').on("click", function() {
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("width", element.offsetWidth - 10);
-                        $(element).css("height", "auto");
-                    });
-                });
-                $('#contract-h').on("click", function() {
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        $(element).css("height", element.offsetHeight - 10);
-                        $(element).css("width", "auto");
-                    });
-                });
-                var boldflag = false;
-                var italicflag = false;
-                var underlineflag = false;
-                $('#bold').on("click", function() {
-                    boldflag = boldflag ? false : true;
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        var option = boldflag ? 'bold' : 'normal'
-                        $(element).css("font-weight", option);
-                    });
-                });
-                $('#italic').on("click", function() {
-                    italicflag = italicflag ? false : true;
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        var option = italicflag ? 'italic' : 'normal'
-                        $(element).css("font-style", option);
-                    });
-                });
-                $('#underline').on("click", function() {
-                    underlineflag = underlineflag ? false : true;
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        var option = underlineflag ? 'underline' : 'none'
-                        $(element).css("text-decoration", option);
-                    });
-                });
-                $('#trash-delete').on("click", function() {
-
-                    var elements = document.getElementsByClassName("activo");
-                    Array.from(elements).forEach(function(element) {
-                        element.remove();
-                    });
-                });
-            });
-
-
-
-        });
-    </script>
+    <script src="{{ asset('js/toolbar.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"
         integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <script>
         $(document).ready(function() {
             const domNode = document.getElementById('containment-wrapper');
-            var contForm = document.getElementById('contenedor-imagen');
+            var contForm = document.getElementById('nueva-imagen-banner');
             $("#btnSaveElement").on('click', function() {
                 $('#containment-wrapper').css("overflow", "visible");
                 $('#containment-wrapper').css("width", "900px");
+                $('#containment-wrapper').css("height", "400px");
                 var scale = 2;
                 var fileName = 'Test File';
 
@@ -430,15 +247,20 @@
                     .then(function(imgData) {
 
                         var link = document.createElement('a');
-                        link.download = 'my-image-name.jpeg';
+                        //link.download = 'my-image-name.jpeg';
                         link.href = imgData;
-                        link.click();
+                        //link.click();
+                        contForm.value = imgData;
                         $('#containment-wrapper').css("overflow", "auto");
                         $('#containment-wrapper').css("width", "auto");
+                        $('#btnStoreElement').removeAttr('disabled');
                     });
 
             });
+            $("#btnStoreElement").on('click', function() {
 
+                document.getElementById('FormUpdateBanner').submit();
+            });
 
         });
     </script>
