@@ -1,5 +1,6 @@
 var contador = 2;
 $(document).ready(function () {
+
     $("#agregarElemento").on("click", function () {
         var div = document.createElement("div");
         div.classList.add("ui-widget-content1");
@@ -66,13 +67,19 @@ $(document).ready(function () {
             });
         },
     });
+    $("#highlightColorPicker").on("input", function () {
+        var circle = $("#containment-wrapper");
+        const color = $('#highlightColorPicker').val();
+        circle.css("background", color);
 
-    $("#colorFondo").selectmenu({
-        change: function (event, data) {
-            var circle = $("#containment-wrapper");
-            circle.css("background", data.item.value);
-        },
     });
+    // $("#highlightColorPicker").selectmenu({
+    //     change: function (event, data) {
+    //         var circle = $("#containment-wrapper");
+    //         circle.css("background", data.item.value);
+    //     },
+    // });
+
     $("#fontname").selectmenu({
         change: function (event, data) {
             var selectedFont = data.item.value;
@@ -159,9 +166,7 @@ $(document).ready(function () {
             var selectedOption = $(element).css("font-weight");
             console.log(selectedOption);
             var option =
-                selectedOption === "400" || !selectedOption
-                    ? "bold"
-                    : "normal";
+                selectedOption === "400" || !selectedOption ? "bold" : "normal";
             $(element).css("font-weight", option);
         });
     });
@@ -195,62 +200,77 @@ $(document).ready(function () {
             element.remove();
         });
     });
+    $("#btnEditText").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            const $element = $(element);
+            if (!($element.prop("nodeName").toLowerCase() === "img")) {
+                var str = $(element).text().trim();
+                let person = prompt("Modifique el nuevo contenido:", str);
+                if (!(person == null || person == "")) {
+                    str = person;
+                }
+                $(element).html(str);
+            }
+        });
+    });
 
     $(function () {
-
         var contenedor = document.getElementById("containment-wrapper");
         const contForm = document.getElementById("GuardarElementos");
+        const firstElementChild = contForm.firstElementChild;
         var numeroElemento = 1;
         var numeroImagen = 1;
         $("#btnSaveElement").on("click", function () {
             var elements = document.querySelectorAll(
                 "#containment-wrapper .draggable",
             );
-
+            contForm.innerHTML = "";
+            contForm.appendChild(firstElementChild);
             Array.from(elements).forEach(function (element) {
                 const $element = $(element); // Convert the DOM element to a jQuery object
                 var myJSON;
-                if ($element.prop("nodeName").toLowerCase() === 'img') {
+                if ($element.prop("nodeName").toLowerCase() === "img") {
                     const elementoBanner = {
-                        'left': $element.css("left"),
-                        'top': $element.css("top"),
-                        'width': $element.css("width"),
-                        'height': $element.css("height"),
-                        'src': "/storage"+$element.attr("src").split('/storage').pop(),
+                        left: $element.css("left"),
+                        top: $element.css("top"),
+                        width: $element.css("width"),
+                        height: $element.css("height"),
+                        src:
+                            "/storage" +
+                            $element.attr("src").split("/storage").pop(),
                     };
                     myJSON = JSON.stringify(elementoBanner);
                     let input = document.createElement("input");
-                    input.type ='hidden';
-                    input.name = 'imagen'+numeroImagen;
+                    input.type = "hidden";
+                    input.name = "imagen" + numeroImagen;
                     numeroImagen++;
                     input.value = encodeURI(myJSON);
                     contForm.appendChild(input);
                 } else {
                     const elementoBanner = {
-                        'text': $element.text().trim(),
-                        'left': $element.css("left"),
-                        'top': $element.css("top"),
-                        'text-decoration': $element.css("text-decoration"),
-                        'font-style': $element.css("font-style"),
-                        'background': $element.css("background"),
-                        'width': $element.css("width"),
-                        'height': $element.css("height"),
-                        'color': $element.css("color"),
-                        'font-family': $element.css("font-family"),
-                        'font-size': $element.css("font-size"),
+                        text: $element.text().trim(),
+                        left: $element.css("left"),
+                        top: $element.css("top"),
+                        "text-decoration": $element.css("text-decoration"),
+                        "font-style": $element.css("font-style"),
+                        background: $element.css("background"),
+                        width: $element.css("width"),
+                        height: $element.css("height"),
+                        color: $element.css("color"),
+                        "font-family": $element.css("font-family"),
+                        "font-size": $element.css("font-size"),
                     };
                     myJSON = JSON.stringify(elementoBanner);
                     let input = document.createElement("input");
-                    input.type ='hidden';
-                    input.name = 'elemento'+numeroElemento;
+                    input.type = "hidden";
+                    input.name = "elemento" + numeroElemento;
                     numeroElemento++;
                     input.value = encodeURI(myJSON);
                     contForm.appendChild(input);
-
                 }
                 //console.log(myJSON);
             });
-
         });
     });
 });

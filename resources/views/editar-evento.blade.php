@@ -118,18 +118,29 @@
                                 <button type="button" id="Negrita">B</button>
                                 <button type="button" id="Italica">I</button>
                                 <button type="button" id="Underline">U</button>
-                                <select type="button" id="colorFondo" name="color" class="">
-                                    <option selected disabled>Color de Fondo</option>
-                                    <option value="#d3d3d3">Negro</option>
-                                    <option value="#FF7F7F">Rojo</option>
-                                    <option value="#FFFFED">Amarillo</option>
-                                    <option value="#ADD8E6">Azul</option>
-                                    <option value="#90ee90 ">Verde</option>
-                                </select>
+                                {{-- <div class="input-group">
+                                    <select type="button" id="colorFondo" name="color" class="">
+                                        <option selected disabled>Color de Fondo</option>
+                                        <option value="#d3d3d3">Negro</option>
+                                        <option value="#FF7F7F">Rojo</option>
+                                        <option value="#FFFFED">Amarillo</option>
+                                        <option value="#ADD8E6">Azul</option>
+                                        <option value="#90ee90 ">Verde</option>
 
+
+                                </select></div> --}}
                                 <input type="text" id="tituloTexto">
                                 <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
                                     Texto</button>
+                                <button type="button" class=" btn btn-light" id="btnEditText"><i
+                                        class="bi bi-pencil-fill"></i> Modificar</button>
+
+                                <div class="input-group">
+                                    <div  class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
+                                    <input type="color"class="form-control" id="highlightColorPicker" value="#FFFF">
+                                  </div>
+
+
                                 {{-- <button type="button" class=" btn btn-light" data-toggle="modal"
                                     data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button> --}}
                                 <button type="button" class=" btn btn-light" id="btnStoreElement" disabled><i
@@ -168,7 +179,7 @@
                                 @if ($evento->elementoImagenBanners->count())
                                     @foreach ($evento->elementoImagenBanners as $item)
                                         <img id="imagenBanner{{ $item->id }}" class="imgDrag"
-                                            src="{{ $item->href }}"
+                                            src="{{ $item->src }}"
                                             alt="imagenBanner{{ $item->id }}"style="position: absolute;top :{{ $item->top }};left:{{ $item->left }};width :{{ $item->width }};height:{{ $item->height }};">
                                     @endforeach
                                 @endif
@@ -230,8 +241,7 @@
                 </div>
                 <div class="content-c3">
                     <div class="subcontent">
-                        <p>{{ $evento->elementosBanners }}</p>
-                        <p>{{ $evento->elementoImagenBanners }}</p>
+
                         <div class="m-3 text-center">
                             @include('layouts.actualizar-imagen-banner', ['evento' => $evento])
                         </div>
