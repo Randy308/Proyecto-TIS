@@ -52,30 +52,31 @@
                     </script>
                 @endif
                 @if (session('warning'))
-                <div class="alert alert-warning" id="warning-message">
-                    {{ session('warning') }}
-                </div>
-                <script>
-                    $(document).ready(function() {
-                        setTimeout(function() {
-                            $('#warning-message').fadeOut();
-                        }, 2000);
-                    });
-                </script>
+                    <div class="alert alert-warning" id="warning-message">
+                        {{ session('warning') }}
+                    </div>
+                    <script>
+                        $(document).ready(function() {
+                            setTimeout(function() {
+                                $('#warning-message').fadeOut();
+                            }, 2000);
+                        });
+                    </script>
                 @endif
             </div>
-
-
+            <h4>Laravel {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</h4>
         </div>
 
-        <div>
-            <form action="POST" id="form1">
-                @csrf
-                <input type="hidden" name="id" value="1">
-            </form>
+    </div>
+
+    <div>
+        <form action="POST" id="form1">
+            @csrf
+            <input type="hidden" name="id" value="1">
+        </form>
 
 
-        </div>
+    </div>
 
 
     </div>

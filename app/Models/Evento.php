@@ -28,4 +28,12 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'asistencia_eventos');
     }
+    public function elementosBanners()
+    {
+        return $this->hasMany(ElementosBanner::class);
+    }
+    public function elementoImagenBanners()
+    {
+        return $this->hasMany(ElementoImagenBanner::class);
+    }
 }

@@ -13,13 +13,13 @@
 .content{
 
     display: grid;
-    grid-template-columns: 3fr 1fr;
+    grid-template-columns: auto auto;
 }
 .subcontent{
 
     display: grid;
     grid-template-rows: auto 1fr;
-    padding: 25px;
+    padding: 5px;
 }
 .subcontent-c2{
     display: grid;
@@ -253,10 +253,8 @@ input[type="file"] {
     border: 1px solid #ced4da;
     border-radius: 3px;
     position: relative;
-    overflow: hidden;
-    height: 100%;
-    width: auto;
-    overflow: auto;
+    width: 900px;
+    height: 400px;
 }
 img {
     max-width: 100%;
@@ -266,10 +264,15 @@ img {
 
     border: 1px solid red;
 }
+.c3{
+    max-width: 300px;
+    width: 250px;
+    max-height: 300px;
 
-@media screen and (max-width: 1000px) {
+}
+@media screen and (max-width: 1300px) {
     .subcontent,.container{
-        padding: 0px;
+        padding: 10px;
         margin: 0px;
     }
     .container{
@@ -278,13 +281,27 @@ img {
 
 
     }
+    .c3{
+        max-width: 200px;
+        max-height: 200px;
+    }
     .content {
 
         display: grid;
         grid-template-columns: auto;
     }
     #containment-wrapper{
-        overflow: auto;
+
+        max-width: 900px;
+        max-height: 400px;
+
     }
 
+}
+@media screen and (max-width: 800px) {
+    #containment-wrapper{
+
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
 }
