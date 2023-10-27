@@ -6,27 +6,25 @@
 /* .thumbnail {
 } */
 
-.container{
+.container {
     display: grid;
     grid-template-rows: repeat(2, auto);
 }
-.content{
-
+.content {
     display: grid;
     grid-template-columns: auto auto;
 }
-.subcontent{
-
+.subcontent {
     display: grid;
     grid-template-rows: auto 1fr;
     padding: 5px;
 }
-.subcontent-c2{
+.subcontent-c2 {
     display: grid;
     grid-template-rows: auto auto 1fr;
     background-color: white;
 }
-.cont-c1{
+.cont-c1 {
     display: grid;
     grid-template-columns: auto auto;
 }
@@ -34,30 +32,30 @@
     border: 1px solid #c5c5c5;
     background: #f6f6f6;
 }
-.ui-widget-content1{
+.ui-widget-content1 {
     border: 1px solid #c5c5c5;
 }
-#toolbar *{
+#toolbar * {
     width: fit-content;
-
-
+    margin: 2px;
 }
-#highlightColorPicker{
+#highlightColorPicker {
     width: 70px;
     height: 38px;
 }
 #toolbar button:hover {
     background-color: #212529;
     color: #f6f6f6;
-
-
 }
-div.draggable, img.imgDrag{
+div.draggable,
+img.imgDrag {
     cursor: pointer;
 }
-#toolbar{
+#toolbar {
     background-color: white;
-
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 /* #toolbar{
     display: grid;
@@ -164,7 +162,7 @@ input[type="file"] {
     width: 90px;
     height: 90px;
     margin: 0 0 0 0;
-    border : none
+    border: none;
 }
 #draggable2 {
     background-color: whitesmoke;
@@ -263,7 +261,6 @@ input[type="file"] {
     border-radius: 3px;
 }
 
-
 #containment-wrapper {
     background-color: white;
     border: 1px solid #ced4da;
@@ -276,47 +273,39 @@ img {
     max-width: 100%;
     max-height: 100%;
 }
-.activo{
-
+.activo {
     border: 1px solid red;
 }
-.c3{
+.c3 {
     max-width: 300px;
     width: 250px;
     max-height: 300px;
-
 }
 @media screen and (max-width: 1300px) {
-    .subcontent,.container{
+    .subcontent,
+    .container {
         padding: 10px;
         margin: 0px;
     }
-    .container{
+    .container {
         display: flex;
         flex-direction: column-reverse;
-
-
     }
-    .c3{
+    .c3 {
         max-width: 200px;
         max-height: 200px;
     }
     .content {
-
         display: grid;
         grid-template-columns: auto;
     }
-    #containment-wrapper{
-
+    #containment-wrapper {
         max-width: 900px;
         max-height: 400px;
-
     }
-
 }
 @media screen and (max-width: 800px) {
-    #containment-wrapper{
-
+    #containment-wrapper {
         overflow-x: auto;
         overflow-y: hidden;
     }

@@ -211,7 +211,12 @@ $(document).ready(function () {
                     str = person;
                 }
                 $(element).html(str);
+                $(element).resizable({
+                    containment: "#containment-wrapper",
+                    handles: "n, e, s, w"
+                });
             }
+
         });
     });
 

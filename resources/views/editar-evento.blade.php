@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
         integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     {{-- <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}"> --}}
 
 </head>
@@ -84,12 +85,17 @@
                                     <option value="12px">12px</option>
                                     <option value="14px">14px</option>
                                     <option value="18px">18px</option>
+                                    <option value="20px">20px</option>
+                                    <option value="22px">22px</option>
                                     <option value="24px">24px</option>
+                                    <option value="26px">26px</option>
+                                    <option value="28px">28px</option>
                                     <option value="30px">30px</option>
                                     <option value="36px">36px</option>
-                                    <option value="36px">39px</option>
-                                    <option value="36px">42px</option>
-                                    <option value="36px">45px</option>
+                                    <option value="39px">39px</option>
+                                    <option value="42px">42px</option>
+                                    <option value="45px">45px</option>
+                                    <option value="50px">50px</option>
                                 </select>
                                 <select id="hilitecolor" title="Background color">
                                     <option selected disabled>Resaltar</option>
@@ -118,6 +124,7 @@
                                 <button type="button" id="Negrita">B</button>
                                 <button type="button" id="Italica">I</button>
                                 <button type="button" id="Underline">U</button>
+
                                 {{-- <div class="input-group">
                                     <select type="button" id="colorFondo" name="color" class="">
                                         <option selected disabled>Color de Fondo</option>
@@ -129,15 +136,16 @@
 
 
                                 </select></div> --}}
+                                <button type="button" class=" btn btn-light" id="btnEditText"><i
+                                        class="bi bi-pencil-fill"></i> Modificar</button>
                                 <input type="text" id="tituloTexto">
                                 <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
                                     Texto</button>
-                                <button type="button" class=" btn btn-light" id="btnEditText"><i
-                                        class="bi bi-pencil-fill"></i> Modificar</button>
+
 
                                 <div class="input-group">
                                     <div  class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
-                                    <input type="color"class="form-control" id="highlightColorPicker" value="#FFFF">
+                                    <input type="color"class="form-control" id="highlightColorPicker" value="#0000">
                                   </div>
 
 
