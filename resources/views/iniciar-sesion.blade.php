@@ -34,7 +34,11 @@
 
                         </div>
                     </div>
-                    <a href="{{ route('registrar-participante') }}" class="btn btn-link">No tienes cuenta ? Registrate</a>
+                    <div class="d-flex flex-column">
+                        <a href="{{ route('registrar-participante') }}" class="btn btn-link">No tienes cuenta ?
+                            Registrate</a>
+                        <a href="#" class="btn btn-link">¿Olvidaste la cuenta?</a>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

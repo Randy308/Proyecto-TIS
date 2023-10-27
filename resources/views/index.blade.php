@@ -64,7 +64,7 @@
                     </script>
                 @endif
             </div>
-            <h4>Laravel {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</h4>
+            <h5>Laravel {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</h5>
         </div>
 
     </div>

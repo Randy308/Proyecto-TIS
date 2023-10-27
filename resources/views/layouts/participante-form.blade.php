@@ -1,11 +1,12 @@
 <div class="col-lg-8 col-xl-6">
     <div class="card rounded-3">
         <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Formulario de registro de participante</h3>
+
 
             <form action='{{ route('registroParticipante.store') }}' method="POST" class="px-md-2"
                 enctype="multipart/form-data">
                 @csrf
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Formulario de registro de participante</h3>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example1q">Nombre completo</label>
                     <input type="text" id="form3Example1q" class="form-control" name="name"
