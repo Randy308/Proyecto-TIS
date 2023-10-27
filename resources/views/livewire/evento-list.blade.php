@@ -41,10 +41,51 @@
                     <option value="Ciencia de datos">Ciencia de datos</option>
                 </select>
             </div>
+
+            @php
+                $mes = date('n');
+                $anio = date('Y');
+
+                $gesActual = "";
+                if($mes <= 6){
+                    $gesActual = "I";
+                }else{
+                    $gesActual = "II";
+                }
+            @endphp
+
+            <div class="col-md-3 mb-3">
+                <label for="">Filtrar por Gestion:</label>
+                <select wire:model="filtroGestion" class="form-control">
+                    
+                    <option value="{{ json_encode(['anio' => $anio , 'gestion' => $gesActual]) }}">{{$anio}} - {{$gesActual}}</option>
+                    
+                    <option value="">Todo</option>
+
+                    @foreach ($gestiones as $gestion)
+
+                        @if($anio != $gestion->anio || $gesActual != $gestion->gestion)
+                        <option value="{{ json_encode(['anio' => $gestion->anio , 'gestion' => $gestion->gestion]) }}">{{$gestion->anio}} - {{$gestion->gestion}}</option>
+                        @endif
+
+                        
+                    @endforeach
+
+                </select>
+                
+
+            </div>
+
         </div>
     
     <div class="row">
-        
+        @if($eventos->count() == 0)
+        <div class="col-12">
+            <div class="alert alert-info">
+                No hay eventos disponibles.
+            </div>
+        </div>
+        @endif
 
 
         @foreach ($eventos as $evento)

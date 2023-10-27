@@ -20,7 +20,6 @@ class AsistenciaEventosController extends Controller
           }
         
     }
-
     public function create($id, Request $request)
     {
         $evento_id = $request['evento'];
@@ -43,4 +42,19 @@ class AsistenciaEventosController extends Controller
         }
 
     }
+    public function eliminarParticipante($user, $evento)
+{
+    if (auth()->user()->id === 1) {
+        $asistencia = AsistenciaEvento::where('user_id', $user)->where('evento_id', $evento)->first();
+
+        if ($asistencia) {
+            $asistencia->delete();
+            return redirect()->back()->with('status', 'Participante eliminado por conducta indebida.');
+        } else {
+            return redirect()->back()->with('error', 'El usuario no está registrado en el evento.');
+        }
+    } else {
+        return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
+    }
+}
 }
