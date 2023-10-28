@@ -37,7 +37,7 @@
                     <div class="d-flex flex-column">
                         <a href="{{ route('registrar-participante') }}" class="btn btn-link">No tienes cuenta ?
                             Registrate</a>
-                        <a href="#" class="btn btn-link">¿Olvidaste la cuenta?</a>
+                        <a href="{{ route('recuperar-cuenta') }}" class="btn btn-link">¿Olvidaste la cuenta?</a>
                     </div>
                 </div>
                 <div class="modal-footer">

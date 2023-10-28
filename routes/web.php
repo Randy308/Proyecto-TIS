@@ -7,6 +7,7 @@ use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\ParticipanteController;
+use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {return view('index');})->name('index');
@@ -60,3 +61,5 @@ Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBa
 Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
 
 Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
+
+Route::get('/recuperar-cuenta',[RecuperarCuentaController::class,'index'])->name('recuperar-cuenta');

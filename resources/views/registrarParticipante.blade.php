@@ -12,7 +12,7 @@
 </head>
 
 
-<body>
+<body style="background-color: #003153;">
     <div class="wrapper">
 
         <div id="content">
