@@ -7,6 +7,11 @@ $(function () {
     $("#inputEmail").on("input", function () {
         let regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         let s = $(this).val();
+        lastchar = s.charAt(s.length-1);
+
+        if(lastchar == '@'){
+            console.log(lastchar)
+        }
         if (regex.test(s)) {
             $("#usercheck").hide();
             emailError = false;
