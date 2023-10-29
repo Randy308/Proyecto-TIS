@@ -32,6 +32,7 @@ h1 {
     text-align: center;
 }
 
+
 input {
     padding: 10px;
     width: 100%;
@@ -103,7 +104,11 @@ button:focus {
 .step.active {
     opacity: 1;
 }
-
+.step-completed{
+    color: white;
+    opacity: 1;
+    background-color: var(--main-sidebar-color);
+}
 .step.finish {
     color: #fff;
     background: var(--main-sidebar-color);

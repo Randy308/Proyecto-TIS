@@ -16,9 +16,13 @@ class EnviarMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $token;
+    public $name;
+    public function __construct($token, $name)
     {
         //
+        $this->token = $token;
+        $this->name = $name;
     }
 
     /**

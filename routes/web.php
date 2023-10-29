@@ -63,3 +63,8 @@ Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name
 Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
 
 Route::get('/recuperar-cuenta',[RecuperarCuentaController::class,'index'])->name('recuperar-cuenta');
+
+Route::post('/recuperar-cuenta',[RecuperarCuentaController::class,'enviarEmail'])->name('enviar-email');
+
+Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
+

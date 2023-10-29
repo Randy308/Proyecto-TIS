@@ -20,7 +20,6 @@ function showTab(n) {
     fixStepIndicator(n);
 }
 var form0 = true;
-var form1 = true;
 var form2 = true;
 function nextPrev(n) {
     var x = document.getElementsByClassName("tab");
@@ -28,7 +27,9 @@ function nextPrev(n) {
     x[currentTab].style.display = "none";
 
     if (currentTab == 1  && form1) {
+        document.getElementById('FormularioEnviarEmail').submit();
         alert("tab 1");
+        currentTab = currentTab - n;
         form1 = false;
     } else if (currentTab == 2  && form2) {
         alert("tab 2");
