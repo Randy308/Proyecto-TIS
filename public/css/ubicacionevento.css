@@ -1,0 +1,28 @@
+#fondotransparente{
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: gray; 
+    opacity:0.2;
+}
+#mostrarMap{
+    top:10px; 
+    left:10px;
+}
+#contenedormap{
+    z-index: 2; 
+    display:none; 
+    width:100%; 
+    height:100%; 
+    background-color: white;
+}
+#mapa{
+    width: 100%;
+    height: 300px;
+    background-color: aqua;
+}

@@ -1,7 +1,33 @@
 <div class="content c1">
     <div class="card">
-        <div class="contenedor-banner">
+        <div class="contenedor-banner position-relative">
+            <div id="fondotransparente"></div>
+            <button id="mostrarMap" class="btn btn-success position-absolute"><span>Ubicacion</span></button>
+            <div id="contenedormap" class="position-absolute p-5">
+                <h3 class="mt-2 ">Ubicacion del Evento</h3>
+                <div class="row">
+                    <div class="col-4 mt-5">
+                        <div class="mb-4 mt-2">
+                            <label for="latitud" class="form-label">Latitud</label>
+                            <input type="text" class="form-control" id="latitud">
+                        </div>
+                        <div class="mb-4">
+                            <label for="longitud" class="form-label">Longitud</label>
+                            <input type="text" class="form-control" id="longitud">
+                        </div>
+                        <button id="cargarcoordenadas" class="btn btn-success" type="button">Cargar</button>
+                    </div>
+                    <div class="col-8 px-3 py-2 pl-5">
+                        <div id="mapa"></div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <button id="adiosMap" type="button" class="btn btn-secondar mr-5">Cerrar</button>
+                    <button type="button" class="btn btn-primary ml-5">Guardar</button>
+                </div>
+            </div>
             <img src="{{ asset($evento->direccion_banner) }}" alt="logo-banner" id="miBanner" />
+
         </div>
         <div class="div-titulo">
             <div>
@@ -116,7 +142,7 @@
 
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
                                     @foreach ($evento->users as $user)
                                         <tr>
@@ -128,7 +154,8 @@
                                             @if (auth()->check())
                                                 @if (auth()->user()->id === 1)
                                                     <td>
-                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#eliminarParticipanteModal">Eliminar</button>
+                                                        <button class="btn btn-danger" data-toggle="modal"
+                                                            data-target="#eliminarParticipanteModal">Eliminar</button>
                                                     </td>
                                                 @endif
                                             @endif
@@ -141,7 +168,7 @@
                             <p>No existe participantes</p>
                         @endif
 
-                               
+
                     </div>
                 </div>
             </div>
@@ -159,4 +186,3 @@
         </div>
     </div>
 </div>
-
