@@ -5,7 +5,9 @@ use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
+use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\ParticipanteController;
+use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {return view('index');})->name('index');
@@ -57,3 +59,12 @@ Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update']
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
 
 Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+
+Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
+
+Route::get('/recuperar-cuenta',[RecuperarCuentaController::class,'index'])->name('recuperar-cuenta');
+
+Route::post('/recuperar-cuenta',[RecuperarCuentaController::class,'enviarEmail'])->name('enviar-email');
+
+Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
+

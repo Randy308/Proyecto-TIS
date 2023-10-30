@@ -22,19 +22,22 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-
-        $rol = DB::table('rols')->where('id', 1)->first();
+        $arrayValues = ['Bolivia','Argentina', 'Colombia', 'Brazil'];
+        //$rol = DB::table('rols')->where('id', 1)->first();
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'rol_id' =>  $rol->id,
+            'institucion_id' =>  rand(1,5),
+            'pais'=>$arrayValues[rand(0,3)],
+            'historial_academico' => $this->faker->text(),
             'remember_token' => Str::random(10),
+            
         ];
     }
 
-
+    
     /**
      * Indicate that the model's email address should be unverified.
      *

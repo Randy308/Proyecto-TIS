@@ -46,7 +46,7 @@
     </div>
     </div>
 
-    @include('iniciar-sesion')
+
     @include('layouts/sidebar-scripts')
     <script>
         $("#content").on("click", ".tabContainer .tabs a", function(e) {
