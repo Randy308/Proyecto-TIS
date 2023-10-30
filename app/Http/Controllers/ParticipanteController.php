@@ -39,7 +39,7 @@ class ParticipanteController extends Controller
 
         ]);
         $user = new User();
-        $rol = Rol::where('nombre_rol', 'usuario_comun')->first();
+        //$rol = Rol::where('nombre_rol', 'usuario_comun')->first();
         $user->name = $request['name'];
         $user->institucion_id = $request['institucion'];
         $user->historial_academico = $request['historial'];
