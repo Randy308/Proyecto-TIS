@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         $usuario->email = 'admin@gmail.com';
         $usuario->email_verified_at = now();
         $usuario->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
-        $usuario->rol_id = $adminrol->id;
+        $usuario->institucion_id = 1;
         $usuario->remember_token = Str::random(10);
         $usuario->save();
 
