@@ -27,6 +27,9 @@ class User extends Authenticatable
         'carrera',
         'foto_perfil',
         'fecha_nac',
+        'institucion_id',
+        'pais',
+        'historial_academico',
     ];
     /**
      * The attributes that should be hidden for arrays.
