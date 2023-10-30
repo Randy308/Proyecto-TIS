@@ -35,6 +35,11 @@ Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create
 
 Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
 
+
+Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+Route::delete('/eliminar-participante/{user_id}/{evento_id}', [AsistenciaEventosController::class, 'eliminarParticipante'])
+    ->name('eliminar-participante');
+
 Route::get('/registrarParticipante', [ParticipanteController::class, 'index'])->name('registrar-participante');
 
 Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])->name('registroParticipante.store');

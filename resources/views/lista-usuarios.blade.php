@@ -37,10 +37,7 @@
 
         </div>
     </div>
-
     @include('layouts.sidebar-scripts')
-
-
 </body>
 
 </html>
