@@ -72,9 +72,10 @@ class ElementosBannerController extends Controller
             $imagen->save();
             // Itera a través de los elementos de $elementoBanners
         }
+        //$status ='¡Se ha guardado la edicon del banner exitosamente!.';
+        //return redirect()->back()->with(compact('status'));
 
-        return $elementos;
-
+        return redirect()->back()->with('message','¡Se ha guardado la edición del banner exitosamente!.');
 
 
 

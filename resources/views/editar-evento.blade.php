@@ -21,6 +21,7 @@
         integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+
     {{-- <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}"> --}}
 
 </head>
@@ -39,7 +40,6 @@
 
 
             <div class="container pt-4">
-
                 <div class="content ">
                     <div class="subcontent ">
                         <div class="c1 pb-4">
@@ -110,7 +110,7 @@
                                     <option value="orange">Naranja</option>
                                 </select>
                                 <select id="forecolor" title="Color">
-                                    <option selected disabled>Color Letra</option>
+                                    <option selected disabled>Color Letra </option>
                                     <option value="black">Negro</option>
                                     <option value="white">Blanco</option>
                                     <option value="red">Rojo</option>
@@ -144,9 +144,10 @@
 
 
                                 <div class="input-group">
-                                    <div  class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
-                                    <input type="color"class="form-control" id="highlightColorPicker" value="#0000">
-                                  </div>
+                                    <div class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
+                                    <input type="color"class="form-control" id="highlightColorPicker"
+                                        value="#0000">
+                                </div>
 
 
                                 {{-- <button type="button" class=" btn btn-light" data-toggle="modal"
@@ -157,7 +158,7 @@
                                 <button type="button" class=" btn btn-light" id="btnSaveElement"><i
                                         class="bi bi-arrow-repeat"></i> Sincronizar</button>
                                 <button type="button" class=" btn btn-light" id="btnCloudSaveElement" disabled><i
-                                        class="bi bi-cloud-arrow-up-fill"></i> Guardar</button>
+                                        class="bi bi-cloud-arrow-up-fill"></i> Guardar progreso</button>
                             </div>
 
                         </div>
@@ -186,9 +187,10 @@
                                     --}}
                                 @if ($evento->elementoImagenBanners->count())
                                     @foreach ($evento->elementoImagenBanners as $item)
-                                        <img id="imagenBanner{{ $item->id }}" class="imgDrag"
-                                            src="{{ $item->src }}"
-                                            alt="imagenBanner{{ $item->id }}"style="position: absolute;top :{{ $item->top }};left:{{ $item->left }};width :{{ $item->width }};height:{{ $item->height }};">
+                                        <img id="imagenBanner{{ $item->id }}" class="draggable imgDrag"
+                                            src="{{ $item->src }}" alt="imagenBanner{{ $item->id }}"
+                                            style="position: absolute;top :{{ $item->top }};left:{{ $item->left }};width :{{ $item->width }};
+                                            height:{{ $item->height }};">
                                     @endforeach
                                 @endif
                                 @if ($evento->elementosBanners->count())
@@ -279,8 +281,14 @@
             method="POST">
             @csrf
         </form>
+        {{-- <div id="dialog" title="Basic dialog" style="display:none;">
+            <p>This is the default dialog which is useful for displaying information. The dialog window can be moved,
+                resized and closed with the &apos;x&apos; icon.</p>
+        </div> --}}
     </div>
+
     @include('layouts/sidebar-scripts')
+    @include('layouts.mensajes-alerta')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
 
@@ -292,7 +300,7 @@
         $(document).ready(function() {
             const domNode = document.getElementById('containment-wrapper');
             var contForm = document.getElementById('nueva-imagen-banner');
-            $(".containment-wrapper .draggable").draggable({
+            $(".containment-wrapper div.draggable").draggable({
                 containment: "#containment-wrapper",
                 scroll: true,
                 cursor: "move",
@@ -302,7 +310,7 @@
                 scroll: true,
                 cursor: "move",
             });
-            $(".containment-wrapper .draggable").resizable({
+            $(".containment-wrapper div.draggable").resizable({
                 containment: "#containment-wrapper",
                 handles: "n, e, s, w"
             });
@@ -337,12 +345,39 @@
 
             });
             $("#btnStoreElement").on('click', function() {
+                // $('#dialog').css('display', 'block')
+                // $(function() {
+                //     $("#dialog").dialog({
+                //         dialogClass: "no-close",
+                //         buttons: [{
+                //             text: "Cancelar",
+                //             click: function() {
+                //                 $(this).dialog("close");
+                //             },
+                //             text: "Guardar",
+                //             click: function() {
+                //                 document.getElementById('FormUpdateBanner').submit();
+                //             }
+                //         }]
+                //     });
 
-                document.getElementById('FormUpdateBanner').submit();
+                // });
+                if (confirm(
+                        "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
+                    )) {
+                    document.getElementById('FormUpdateBanner').submit();
+                } else {
+                    console.log("presionaste Cancel!");
+                }
+                // document.getElementById('FormUpdateBanner').submit();
             });
             $("#btnCloudSaveElement").on('click', function() {
+                if (confirm('¿Estás seguro de guardar su progreso de edicionr? ')) {
+                    document.getElementById('GuardarElementos').submit();
+                } else {
+                    console.log("presionaste Cancel!");
+                }
 
-                document.getElementById('GuardarElementos').submit();
             });
 
 
