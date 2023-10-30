@@ -162,9 +162,8 @@
                             </div>
 
                         </div>
-                        <div class="c2" style="height:400px ">
-                            <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
-                                style="height: 100%;">
+                        <div class="c2" style="height:400px ;width:900px;">
+                            <div id="containment-wrapper" class="ui-widget-content containment-wrapper">
                                 {{--
 
 
