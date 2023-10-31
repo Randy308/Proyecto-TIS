@@ -182,7 +182,16 @@
     <div class="card">
         <div>
             <h5>Auspiciadores</h5>
-
+            <form action="{{route('guardarAuspiciador')}}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <input type="file" name="url" id="" accept="image/*">
+                    @error('url')
+                        <small class="text-danger">{{$message}}</small>
+                    @enderror    
+                </div>
+                <button type="submit" class="btn btn-primary">Subir Imagen</button>
+            </form>
         </div>
     </div>
 </div>

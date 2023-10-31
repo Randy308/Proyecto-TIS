@@ -7,6 +7,7 @@ use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ImagenAuspiciadorController;
 
 Route::get('/', function () {return view('index');})->name('index');
 
@@ -57,3 +58,5 @@ Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update']
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
 
 Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+
+Route::post('/evento', [ImagenAuspiciadorController::class, 'store'])->name('guardarAuspiciador');
