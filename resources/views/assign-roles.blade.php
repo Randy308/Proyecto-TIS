@@ -35,6 +35,7 @@
                             <option value="administrador">Administrador</option>
                             <option value="organizador">Organizador</option>
                             <option value="colaborador">Colaborador</option>
+                            <option value="usuario común">usuario común</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Asignar Rol</button>

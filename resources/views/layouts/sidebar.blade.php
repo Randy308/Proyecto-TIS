@@ -18,12 +18,14 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 @auth
+                    @if(auth()->user()->hasRole('administrador') || auth()->user()->hasRole('organizador'))
                     <li>
-                        <a href="{{route('crear-evento')}}">Crear Evento</a>
+                        <a href="{{ route('crear-evento') }}">Crear Evento</a>
                     </li>
                     <li>
                         <a href="{{ route('misEventos') }}">Mis eventos</a>
                     </li>
+                    @endif
                 @endauth
                 <li>
                     <a href="{{ route('listaEventos') }}">Lista de Eventos</a>
