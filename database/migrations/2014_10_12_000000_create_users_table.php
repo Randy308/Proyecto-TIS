@@ -24,10 +24,9 @@ class CreateUsersTable extends Migration
             $table->string('carrera')->nullable();
             $table->string('foto_perfil')->nullable();
             $table->date('fecha_nac')->nullable();
-            $table->unsignedBigInteger('rol_id');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('rol_id')->references('id')->on('rols');
+                
         });
     }
 

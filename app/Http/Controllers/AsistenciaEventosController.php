@@ -43,18 +43,24 @@ class AsistenciaEventosController extends Controller
 
     }
     public function eliminarParticipante($user, $evento)
-{
-    if (auth()->user()->id === 1) {
-        $asistencia = AsistenciaEvento::where('user_id', $user)->where('evento_id', $evento)->first();
+    {
+        if (auth()->user()->id === 1) {
 
-        if ($asistencia) {
-            $asistencia->delete();
-            return redirect()->back()->with('status', 'Participante eliminado por conducta indebida.');
+            $asistencia = AsistenciaEvento::where('user_id', $user)
+                ->where('evento_id', $evento)
+                ->first(); // Busca solo el primer registro que cumple con las condiciones
+            
+
+            if ($asistencia) {
+                $mensaje = 'Participante eliminado por conducta indebida.';
+                $asistencia->delete();
+            return redirect()->back()->with('status', $mensaje);
+            } else {
+                return redirect()->back()->with('error', 'El usuario no está registrado en el evento.');
+            }
         } else {
-            return redirect()->back()->with('error', 'El usuario no está registrado en el evento.');
+            return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
         }
-    } else {
-        return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
     }
-}
+
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rol;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -37,9 +36,7 @@ class ParticipanteController extends Controller
 
         ]);
         $user = new User();
-        $rol = Rol::where('nombre_rol', 'usuario_comun')->first();
         $user->name = $request['name'];
-        $user->rol_id = $rol->id;
         $user->telefono = $request['telefono'];
         $user->direccion = $request['direccion'];
         $user->password = Hash::make($request['password']);
