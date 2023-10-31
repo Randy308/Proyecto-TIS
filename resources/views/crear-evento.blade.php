@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-@extends('layouts.app-crear')
-=======
 <!DOCTYPE html>
 <html lang="en">
->>>>>>> c2954947ad052677f39a8ec417f37c6059870bb5
 
 <head>
     <meta charset="UTF-8">
