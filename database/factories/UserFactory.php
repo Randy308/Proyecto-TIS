@@ -22,7 +22,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-        $arrayValues = ['Habilitado','Deshabilitado'];
+        $estados = ['Habilitado','Deshabilitado'];
         $arrayValues = ['Bolivia','Argentina', 'Colombia', 'Brazil'];
         return [
             'name' => $this->faker->name(),
@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'direccion' => $this->faker->address, 
             'foto_perfil' => '/storage/image/default_user_image.png', 
             'fecha_nac' => $this->faker->date,
-            'estado'=> $arrayValues[rand(0,1)],
+            'estado'=> $estados[rand(0,1)],
             'institucion_id' =>  rand(1,5),
             'pais'=>$arrayValues[rand(0,3)],
             'historial_academico' => $this->faker->text(),

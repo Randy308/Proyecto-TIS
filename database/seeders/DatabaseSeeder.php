@@ -59,6 +59,5 @@ class DatabaseSeeder extends Seeder
         User::factory(40)->create();
         Evento::factory(40)->create();
         AsistenciaEvento::factory(20)->create();
-        $this->call(RolesTableSeeder::class);
     }
 }
