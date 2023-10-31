@@ -42,9 +42,19 @@ class DatabaseSeeder extends Seeder
         $usuario->email = 'admin@gmail.com';
         $usuario->email_verified_at = now();
         $usuario->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
+        $usuario->telefono = '77777777';
+        $usuario->direccion= 'Av. Sucre';
+        $usuario->direccion_foto = "/storage/image/default_user_image.png";
+        $usuario->instituto = "Universidad Mayor de San Simon";
+        $usuario->historial_Academico = 'Usuario administrador del sistema';
+        $usuario->fecha_nac = now();
+        $usuario->estado = "Habilitado";
         $usuario->rol_id = $adminrol->id;
         $usuario->remember_token =  Str::random(10);
         $usuario->save();
+
+
+        
 
         User::factory(40)->create();
         Evento::factory(40)->create();

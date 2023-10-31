@@ -22,6 +22,8 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $arrayValues = ['Habilitado','Deshabilitado'];
+       
 
         $rol = DB::table('rols')->where('id', 1)->first();
         return [
@@ -29,6 +31,13 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'telefono' => $this->faker->phoneNumber, 
+            'direccion' => $this->faker->address, 
+            'instituto' => $this->faker->company, 
+            'direccion_foto' => '/storage/image/default_user_image.png', 
+            'historial_Academico' => '', 
+            'fecha_nac' => $this->faker->date,
+            'estado'=> $arrayValues[rand(0,1)],
             'rol_id' =>  $rol->id,
             'remember_token' => Str::random(10),
         ];

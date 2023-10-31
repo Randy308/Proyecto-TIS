@@ -20,16 +20,26 @@
     @foreach ($usuarios as $usuario)
         <div class="col-md-4 mb-3">
             <div class="card">
-              
+                <div class="position-relative">
+                    <div class="cintaRol">{{$usuario->rol->nombre_rol}}</div>
+                    <a href="{{ route('verUsuario', $usuario->id) }}">
+                        <img src="{{$usuario->direccion_foto}}" class="card-img-top" alt="aea">
+                    </a>
+                    <div class="{{$usuario->estado}}">{{$usuario->estado}}</div>
+
+
+
+
+                </div>
                 <div class="card-body">
                     <h5 class="card-title">{{ $usuario->name }}</h5>
                     <p class="card-text">{{ $usuario->email }}</p>
-                    
+                    <p class="card-text">{{ $usuario->instituto }}</p>
                 </div>
             </div>
         </div>
     @endforeach
-
+ 
     
 </div>
 
