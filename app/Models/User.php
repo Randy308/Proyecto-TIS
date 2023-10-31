@@ -26,7 +26,7 @@ class User extends Authenticatable
         'carrera',
         'foto_perfil',
         'fecha_nac',
-        'institucion_id',
+        'institucion_id',//observacion
         'pais',
         'historial_academico',
     ];

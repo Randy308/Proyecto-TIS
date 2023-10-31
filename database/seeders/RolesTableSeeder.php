@@ -24,7 +24,8 @@ class RolesTableSeeder extends Seeder
         $admin = User::create([
             'name' => 'Administrador',
             'email' => 'admin@example.com',
-            'password' => bcrypt('  '),
+            'password' => bcrypt('password'),
+            'institucion_id'=>1,
         ]);
         $admin->assignRole('administrador');
 
@@ -32,6 +33,7 @@ class RolesTableSeeder extends Seeder
             'name' => 'Organizador',
             'email' => 'organizador@example.com',
             'password' => bcrypt('contraseña'),
+            'institucion_id'=>1,
         ]);
         $organizador->assignRole('organizador');
 
@@ -39,6 +41,7 @@ class RolesTableSeeder extends Seeder
             'name' => 'Colaborador',
             'email' => 'colaborador@example.com',
             'password' => bcrypt('contraseña'),
+            'institucion_id'=>1,
         ]);
         $colaborador->assignRole('colaborador');
     }

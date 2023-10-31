@@ -35,13 +35,14 @@ class DatabaseSeeder extends Seeder
         $insti = new Institucion();
         $insti->nombre_institucion = 'EMI';
         $insti->save();
+        $inst = DB::table('institucions')->where('nombre_institucion','UMSS')->first();
 
         $usuario = new User();
         $usuario->name = 'admin';
         $usuario->email = 'admin@gmail.com';
         $usuario->email_verified_at = now();
         $usuario->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
-        $usuario->institucion_id = 1;
+        $usuario->institucion_id = $inst->id;
         $usuario->remember_token = Str::random(10);
         $usuario->save();
 
