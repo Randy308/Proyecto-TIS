@@ -23,7 +23,6 @@ class UserFactory extends Factory
     public function definition()
     {
         $arrayValues = ['Bolivia','Argentina', 'Colombia', 'Brazil'];
-        //$rol = DB::table('rols')->where('id', 1)->first();
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),

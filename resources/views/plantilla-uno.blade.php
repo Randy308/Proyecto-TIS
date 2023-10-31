@@ -125,12 +125,10 @@
                                             <td>{{ $user->name }}</td>
                                             @include('eliminar-participante')
 
-                                            @if (auth()->check())
-                                                @if (auth()->user()->id === 1)
-                                                    <td>
-                                                        <button class="btn btn-danger" data-toggle="modal" data-target="#eliminarParticipanteModal">Eliminar</button>
-                                                    </td>
-                                                @endif
+                                            @if (auth()->check() && (auth()->user()->hasRole('administrador') || auth()->user()->hasRole('organizador')))
+                                            <td>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#eliminarParticipanteModal_{{ $user->id }}">Eliminar</button>
+                                            </td>
                                             @endif
 
                                         </tr>

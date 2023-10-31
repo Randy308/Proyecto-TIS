@@ -6,7 +6,6 @@ use App\Models\AsistenciaEvento;
 use App\Models\Evento;
 use App\Models\Institucion;
 use App\Models\User;
-use App\Models\Rol;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -20,21 +19,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //'administrador', 'usuario_comun', 'organizador'
-        $rol1 = new Rol();
-        $rol1->nombre_rol = 'administrador';
-        $rol1->descripcion_rol = 'Todas las funcionalidades';
-        $rol1->save();
-
-        $rol1 = new Rol();
-        $rol1->nombre_rol = 'usuario_comun';
-        $rol1->descripcion_rol = 'solo participacion y vizualizacion de eventos';
-        $rol1->save();
-
-        $rol1 = new Rol();
-        $rol1->nombre_rol = 'organizador';
-        $rol1->descripcion_rol = 'Puede crear eventos y modificar eventos creados por el mismo';
-        $rol1->save();
+ 
         $insti = new Institucion();
         $insti->nombre_institucion = 'UMSS';
         $insti->save();
@@ -51,8 +36,6 @@ class DatabaseSeeder extends Seeder
         $insti->nombre_institucion = 'EMI';
         $insti->save();
 
-        $adminrol = DB::table('rols')->where('nombre_rol', 'administrador')->first();
-
         $usuario = new User();
         $usuario->name = 'admin';
         $usuario->email = 'admin@gmail.com';
@@ -65,6 +48,6 @@ class DatabaseSeeder extends Seeder
         User::factory(40)->create();
         Evento::factory(40)->create();
         AsistenciaEvento::factory(20)->create();
-
+        $this->call(RolesTableSeeder::class);
     }
 }

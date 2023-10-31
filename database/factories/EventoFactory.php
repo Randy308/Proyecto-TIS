@@ -1,39 +1,41 @@
 <?php
 
 namespace Database\Factories;
-
 use App\Models\Evento;
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class EventoFactory extends Factory
 {
-
     protected $model = Evento::class;
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
+
     public function definition()
-    {   $arrayValues = ['Borrador','Activo', 'Finalizado', 'Cancelado'];
-        $eventTypes = [
-            'Diseño',
-            'QA',
-            'Desarrollo',
-            'Ciencia de datos'
-        ];
+    {
+        $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
+        $eventTypes = ['Diseño', 'QA', 'Desarrollo', 'Ciencia de datos'];
+
         $user = DB::table('users')->where('id', 1)->first();
+
+        $nombreEvento = $this->faker->unique()->sentence(3);
+        $descripcionEvento = $this->faker->text($this->faker->numberBetween(55, 85));
+        $categoria = $eventTypes[rand(0, 3)];
+        $fechaInicio = $this->faker->dateTimeBetween('now', '+30 days');
+        $fechaFin = $this->faker->dateTimeBetween($fechaInicio, '+60 days');
+        $estado = $arrayValues[rand(0, 3)];
+
+        // Define los atributos del evento según las restricciones de validación
         return [
-            'user_id'=> $user->id,
-            'nombre_evento'=> $this->faker->word(),
+            'user_id' => $user->id,
             'direccion_banner' => '/storage/image/img-default.jpeg',
-            'descripcion_evento'=> $this->faker->text($this->faker->numberBetween(55, 85)),
-            'categoria'=>$eventTypes[rand(0,3)],
-            'estado'=> $arrayValues[rand(0,3)],
-            'fecha_inicio'=> $this->faker->dateTime(),
-            'fecha_fin'=> $this->faker->dateTime(),
+            'nombre_evento' => $nombreEvento,
+            'descripcion_evento' => $descripcionEvento,
+            'categoria' => $categoria,
+            'fecha_inicio' => $fechaInicio,
+            'fecha_fin' => $fechaFin,
+            'estado' => $estado,
         ];
     }
 }
+
+
