@@ -103,10 +103,13 @@
 
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
-                        <p class="card-text">{{ $evento->descripcion_evento }}</p>
-                        <p class="card-text" >{{ $evento->fecha_inicio->format('Y-m-d H:i:s') }}</p>
-                        <p class="card-text" >{{ $evento->fecha_fin->format('Y-m-d H:i:s') }}</p>
+                        <a href="{{ route('verEvento', $evento->id) }}">
+                            <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
+                            <p class="card-text">{{ $evento->descripcion_evento }}</p>
+                            <p class="card-text" >{{ $evento->fecha_inicio->format('Y-m-d H:i:s') }}</p>
+                            <p class="card-text" >{{ $evento->fecha_fin->format('Y-m-d H:i:s') }}</p>
+                        </a>
+                        
                         
                     </div>
                 </div>

@@ -43,7 +43,9 @@
                     <li>
                         <a href="{{ route('listaUsuarios') }}">Lista de Usuarios</a>
                     </li>
-                
+                    <li>
+                        <a href="{{ route('crearUsuario') }}">Crear Usuario</a>
+                    </li>
                 
             </ul>
         </li>

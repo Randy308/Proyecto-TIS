@@ -21,10 +21,12 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('telefono')->nullable();
             $table->string('direccion')->nullable();
-            $table->string('carrera')->nullable();
-            $table->string('foto_perfil')->nullable();
+            $table->string('instituto')->nullable();
+            $table->string('direccion_foto')->nullable();
+            $table->string('historial_Academico')->nullable();
             $table->date('fecha_nac')->nullable();
             $table->unsignedBigInteger('rol_id');
+            $table->enum('estado', ['Habilitado','Deshabilitado']);
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('rol_id')->references('id')->on('rols');
