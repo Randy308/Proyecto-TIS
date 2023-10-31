@@ -19,13 +19,13 @@ Route::get('/', function () {return view('index');})->name('index');
 
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
-Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento')->middleware('checkRole:admin,organizador');;
+Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->middleware('checkRole:administrador,Organizador')->name('crear-evento');
 
-Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento')->middleware('checkRole:admin,organizador');
+Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento')->middleware('checkRole:administrador,Organizador');
 
 Route::get('/editar-evento', function () {
     return view('editar-evento');
-})->name('editar-evento')->middleware('checkRole:admin,organizador');
+})->name('editar-evento')->middleware('checkRole:administrador,Organizador');
 
 
 Route::post('/login',[AuthUser::class,'store'])->name('iniciar.sesion.store');
@@ -53,16 +53,16 @@ Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])-
 Route::get('/misEventos', function () {return view('eventos-creados');})->name('misEventos');
 
 
-Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete')->middleware('checkRole:admin,organizador');
+Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete')->middleware('checkRole:administrador,Organizador');
 
 Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])
     ->name('evento.edit')
-    ->middleware('checkRole:admin,organizador');
-Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:admin,organizador');
+    ->middleware('checkRole:administrador,Organizador');
+Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
 
-Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update')->middleware('checkRole:admin,organizador');
+Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update')->middleware('checkRole:administrador,Organizador');
 
-Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:admin,organizador');
+Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');
 
 
 Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
