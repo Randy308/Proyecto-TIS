@@ -1,28 +1,29 @@
 <div class="col-lg-8 col-xl-6">
     <div class="card rounded-3">
         <div class="card-body p-4 p-md-5">
-            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Formulario de registro de participante</h3>
+
 
             <form action='{{ route('registroParticipante.store') }}' method="POST" class="px-md-2"
                 enctype="multipart/form-data">
                 @csrf
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Formulario de registro de participante</h3>
                 <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example1q">Nombre completo</label>
-                    <input type="text" id="form3Example1q" class="form-control" name="name"
-                        class="@error('name') is-invalid @enderror" />
+                    <label class="form-label" for="formName">Nombre completo</label>
+                    <input type="text" id="formName" class="form-control" name="name"
+                        class="@error('name') is-invalid @enderror" value="{{ old('name') }}" />
                     @error('name')
                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                     @enderror
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6 mb-2">
 
                         <div class="form-outline datepicker">
-                            <label for="exampleDatepicker1" class="form-label">Fecha de
+                            <label for="formBirthDate" class="form-label">Fecha de
                                 nacimiento</label>
-                            <input type="date" class="form-control" id="exampleDatepicker1" name="fecha_nac"
-                                class="@error('fecha_nac') is-invalid @enderror" />
+                            <input type="date" class="form-control" id="formBirthDate" name="fecha_nac"
+                                class="@error('fecha_nac') is-invalid @enderror"  value="{{ old('fecha_nac') }}" />
 
                             @error('fecha_nac')
                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
@@ -30,21 +31,57 @@
                         </div>
 
                     </div>
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6 mb-2">
                         <label for="formFile" class="form-label">Foto de perfil</label>
-                        <input class="form-control form-control-sm hidden" name="foto_perfil" type="file" id="formFile"  ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB" hidden >
+                        <input class="form-control form-control-sm" name="foto_perfil" type="file" id="formFile"
+                            ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB"
+                            class="@error('foto_perfil') is-invalid @enderror">
+                        @error('foto_perfil')
+                            <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                        @enderror
 
-                        <br>
-                        <label id="file-input-label"  class="form-control form-control" for="formFile" style="cursor:pointer;">Seleccione una imagen</label>
+
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6">
+                        <div class="mb-2">
+
+                            <label for="formEmail" class="form-label">Correo electronico</label>
+                            <input type="email" id="formEmail" class="form-control" name="email"
+                                class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
+                            @error('email')
+                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-2">
+
+                        <label class="form-label" for="formInstitucion">Seleccione su Pais de origen</label><br>
+                        <select class="form-control form-control" class="form-select" name="pais"
+                            id="formInstitucion">
+                            <option value="1" disabled>Pais</option>
+                            <option value="Bolivia">Bolivia</option>
+                            <option value="Argentina">Argentina</option>
+                            <option value="Chile">Chile</option>
+                            <option value="Peru">Peru</option>
+                            <option value="Uruguay">Uruguay</option>
+                            <option value="Ecuador">Ecuador</option>
+                            <option value="Colombia">Colombia</option>
+                            <option value="Paraguay">Paraguay</option>
+                            <option value="Brasil">Brasil</option>
+                            <option value="Venezuela">Venezuela</option>
+                            <option value="Otra">Otra</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
 
                         <div class="form-outline datepicker">
-                            <label for="exampleDatepicker1" class="form-label">Telefono</label>
-                            <input type="tel" id="form3Example1q" name="telefono" class="form-control"
-                                class="@error('telefono') is-invalid @enderror" />
+                            <label for="formPhoneNumber" class="form-label">Telefono</label>
+                            <input type="tel" id="formPhoneNumber" name="telefono" class="form-control"
+                                class="@error('telefono') is-invalid @enderror" value="{{ old('telefono') }}" />
 
 
                             @error('telefono')
@@ -54,37 +91,47 @@
                         </div>
 
                     </div>
-                    <div class="col-md-6 mb-4">
+                    <div class="col-md-6 mb-2">
 
-                        <label class="form-label" for="form3Example1q">Seleccione Carrera</label><br>
-                        <select class="form-control form-control" class="form-select" name="carrera">
-                            <option value="1" disabled>Carrera</option>
-                            <option value="Sistemas">Sistemas</option>
-                            <option value="Informatica">Informatica</option>
+                        <label class="form-label" for="formInstitucion">Seleccione su Institucion</label><br>
+                        <select class="form-control form-control" class="form-select" name="institucion"
+                            id="formInstitucion">
+                            <option value="1" disabled>Instituciones</option>
+                            @if ($instituciones)
+                                @foreach ($instituciones as $item)
+                                    <option value="{{ $item->id }}">{{ $item->nombre_institucion }}</option>
+                                @endforeach
+                            @else
+                                <option value="Otros" disabled>No existen instituciones</option>
+
+
+                            @endif
                         </select>
                     </div>
                 </div>
-                <div class="mb-4">
 
-                    <label for="exampleDatepicker1" class="form-label">Correo electronico</label>
-                    <input type="email" id="form3Example1q" class="form-control" name="email"
-                        class="@error('email') is-invalid @enderror" />
-                    @error('email')
-                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                    @enderror
-                </div>
-                <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example1q">Direccion de domicilio</label>
-                    <input type="text" id="form3Example1q" class="form-control" name="direccion"
-                        class="@error('direccion') is-invalid @enderror" />
+                <div class="form-outline mb-2">
+                    <label class="form-label" for="formAddressLocation">Direccion de domicilio</label>
+                    <input type="text" id="formAddressLocation" class="form-control" name="direccion"
+                        class="@error('direccion') is-invalid @enderror"  value="{{ old('direccion') }}"/>
                     @error('direccion')
                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                     @enderror
 
                 </div>
+                <div class="form-outline mb-2">
+                    <label class="form-label" for="textAreaHistorial">Historial Academico</label>
+                    <textarea id="textAreaHistorial" class="form-control" name="historial"
+                        class="@error('historial') is-invalid @enderror" cols="30" rows="3" >{{ old('historial') }}</textarea>
+
+                    @error('historial')
+                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                    @enderror
+
+                </div>
                 <div class="form-outline">
-                    <label class="form-label" for="form3Example1w">Contraseña</label>
-                    <div class="input-group mb-3">
+                    <label class="form-label" for="password">Contraseña</label>
+                    <div class="input-group mb-2">
                         <input type="password" name="password" id="password" class="form-control form-control"
                             class="@error('password') is-invalid @enderror" />
                         <span class="input-group-text">
@@ -98,8 +145,8 @@
                 </div>
 
                 <div class="form-outline">
-                    <label class="form-label" for="form3Example1w">Confirmar Contraseña</label>
-                    <div class="input-group mb-3">
+                    <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
+                    <div class="input-group mb-2">
 
                         <input type="password" name="password_confirmation" id="password_confirmation"
                             class="form-control form-control"

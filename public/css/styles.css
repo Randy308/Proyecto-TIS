@@ -1,10 +1,43 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 body {
-    background-color: #f0f0f0;
+    background-color: lightgray;
     color: #333;
 }
+.contact-form {
+    background: #fff;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 90%;
+    border-radius: 1rem;
+}
+.contact-image{
+    text-align: center;
+}
+.contact-image span{
+    font-size: 68px;
+    background-color: white;
+    color: #3498db;
+    border-radius: 7rem;
+    width: 11%;
+    margin-top: -3%;
 
+}
+.contact-form .form-control {
+    border-radius: 1rem;
+}
+.contact-form h2 {
+    margin-bottom: 8%;
+    margin-top: -10%;
+    text-align: center;
+    color: #3498db;
+}
+.contact-form form {
+    padding: 10%;
+}
+.contact-form form .row {
+    margin-bottom: -7%;
+}
 header {
     background-color: #3498db;
     color: #fff;
@@ -16,25 +49,27 @@ header {
     border-color: #3498db;
 }
 .btn-outline-info {
-  color: #3498db;
-  border: 2px solid #3498db;
-  background-color: transparent;
-  width: 50%;
+    color: #3498db;
+    border: 2px solid #3498db;
+    background-color: transparent;
+    width: 50%;
 }
 .botones-juntos .btn-cancelar {
-  margin-right: 10px; /* Ajusta el margen entre los botones */
+    margin-right: 10px; /* Ajusta el margen entre los botones */
 }
 .btn-cancelar {
-  background-color: #fff; 
-  border: 2px solid #3498db; 
-  color: #000; 
-  transition: background-color 0.3s, color 0.3s;
+    background-color: #fff;
+    border: 2px solid #3498db;
+    color: #000;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
 }
 
 .btn-cancelar:hover {
-  background-color: #ff0000; 
-  color: #fff; 
-  border: 2px solid #ff0000; 
+    background-color: #ff0000;
+    color: #fff;
+    border: 2px solid #ff0000;
 }
 .formulario {
     background-color: #ffff;
@@ -43,8 +78,8 @@ header {
     max-width: 600px;
     width: 45%;
     border: 2px solid #3498db;
-    display: inline-block; 
-    margin: 0 20px; 
+    display: inline-block;
+    margin: 0 20px;
 }
 
 .formulario input[type="text"],
@@ -93,8 +128,7 @@ header {
 }
 
 .contenedor-flex {
-  display: flex;
-  align-items: center; /* Centra verticalmente los elementos */
-  justify-content: center; /* Centra horizontalmente los elementos */
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: center; /* Centra horizontalmente los elementos */
 }
-

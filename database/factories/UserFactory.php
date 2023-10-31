@@ -23,9 +23,7 @@ class UserFactory extends Factory
     public function definition()
     {
         $arrayValues = ['Habilitado','Deshabilitado'];
-       
-
-        $rol = DB::table('rols')->where('id', 1)->first();
+        $arrayValues = ['Bolivia','Argentina', 'Colombia', 'Brazil'];
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
@@ -33,17 +31,18 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'telefono' => $this->faker->phoneNumber, 
             'direccion' => $this->faker->address, 
-            'instituto' => $this->faker->company, 
-            'direccion_foto' => '/storage/image/default_user_image.png', 
-            'historial_Academico' => '', 
+            'foto_perfil' => '/storage/image/default_user_image.png', 
             'fecha_nac' => $this->faker->date,
             'estado'=> $arrayValues[rand(0,1)],
-            'rol_id' =>  $rol->id,
+            'institucion_id' =>  rand(1,5),
+            'pais'=>$arrayValues[rand(0,3)],
+            'historial_academico' => $this->faker->text(),
             'remember_token' => Str::random(10),
+            
         ];
     }
 
-
+    
     /**
      * Indicate that the model's email address should be unverified.
      *
