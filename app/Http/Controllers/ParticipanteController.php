@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 class ParticipanteController extends Controller
 {
 

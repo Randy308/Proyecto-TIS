@@ -26,12 +26,12 @@
                             <div class="card-header text-center display-4">Detalle del Usuario</div>
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="{{$usuario->direccion_foto}}" class="img-fluid" alt="Imagen de Perfil">
+                                    <img src="{{$usuario->foto_perfil}}" class="img-fluid" alt="Imagen de Perfil">
                                 </div>
                       
 
                                 <ul class="list-group mt-3">
-                                    <li class="list-group-item"><strong>Rol:</strong> {{ $usuario->rol->nombre_rol }}</li>
+                                    <li class="list-group-item"><strong>Rol:</strong> {{ $usuario->getRoleNames()->first() }}</li>
                                     <li class="list-group-item"><strong>Estado:</strong> <span class="{{ $usuario->estado == 'Habilitado' ? 'text-success' : 'text-danger' }}">{{ $usuario->estado }}</span></li>
                                     
                                 </ul>

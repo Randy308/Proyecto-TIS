@@ -21,9 +21,9 @@
         <div class="col-md-4 mb-3">
             <div class="card">
                 <div class="position-relative">
-                    <div class="cintaRol">{{$usuario->rol->nombre_rol}}</div>
+                    <div class="cintaRol">{{$usuario->getRoleNames()->first()}}</div>
                     <a href="{{ route('verUsuario', $usuario->id) }}">
-                        <img src="{{$usuario->direccion_foto}}" class="card-img-top" alt="aea">
+                        <img src="{{$usuario->foto_perfil}}" class="card-img-top" alt="imagen no encontrada">
                     </a>
                     <div class="{{$usuario->estado}}">{{$usuario->estado}}</div>
 
