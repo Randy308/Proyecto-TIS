@@ -54,6 +54,7 @@ class ParticipanteController extends Controller
         $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
         $url = Storage::url($imagen);
         $user->foto_perfil = $url;
+        $user->assignRole('usuario común');
         $user->save();
         return redirect()->route('index')->with('status', 'Usuario creado exitosamente!.');
     }

@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,7 +20,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
- 
+        
+
         $insti = new Institucion();
         $insti->nombre_institucion = 'UMSS';
         $insti->save();
@@ -37,6 +39,9 @@ class DatabaseSeeder extends Seeder
         $insti->save();
         $inst = DB::table('institucions')->where('nombre_institucion','UMSS')->first();
 
+
+        $this->call(RolesTableSeeder::class);
+
         $usuario = new User();
         $usuario->name = 'admin';
         $usuario->email = 'admin@gmail.com';
@@ -51,13 +56,21 @@ class DatabaseSeeder extends Seeder
         $usuario->remember_token =  Str::random(10);
         $usuario->institucion_id = $inst->id;
         $usuario->remember_token = Str::random(10);
+        $usuario->assignRole('administrador');
         $usuario->save();
 
 
         
 
-        User::factory(40)->create();
+        $us = User::factory(40)->create();
+
+        foreach($us as $u){
+                
+                $u->assignRole('usuario común');
+        }
+
         Evento::factory(40)->create();
         AsistenciaEvento::factory(20)->create();
+        
     }
 }
