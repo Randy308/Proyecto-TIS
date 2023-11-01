@@ -105,9 +105,18 @@
                     <div class="card-body">
                         <a href="{{ route('verEvento', $evento->id) }}">
                             <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
-                            <p class="card-text">{{ $evento->descripcion_evento }}</p>
-                            <p class="card-text" >{{ $evento->fecha_inicio->format('Y-m-d') }}</p>
-                            <p class="card-text" >{{ $evento->fecha_fin->format('Y-m-d') }}</p>
+                            <p class="card-text"><b class=" font-weight-bold">Descripción: </b>{{ $evento->descripcion_evento }}</p>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-text" >{{ \Carbon\Carbon::parse($evento->fecha_inicio)->formatLocalized('%d %b %Y') }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-text" >{{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}</p>
+                                </div>
+
+
+                            </div>
+
                         </a>
 
 

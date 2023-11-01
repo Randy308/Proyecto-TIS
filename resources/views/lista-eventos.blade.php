@@ -14,6 +14,10 @@
             background-color: #007BFF;
             color: #fff;
         }
+        p{
+            color: black;
+            font-size: 13px;
+        }
     </style>
 
 
