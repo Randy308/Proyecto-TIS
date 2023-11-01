@@ -17,12 +17,12 @@ use Illuminate\Support\Facades\DB;
 
 class EventoControlador extends Controller
 {
-    public function generarBanner($nombreEvento, $fechaInicio, $fechaFin)
+    public function generarBanner($nombreEvento, $fechaInicio, $fechaFin, $background_color)
     {
         $textoBanner = "Evento: $nombreEvento\nFecha de inicio: $fechaInicio\nFecha de finalización: $fechaFin";
 
 
-        $banner = Image::canvas(800, 200, '#3498db');
+        $banner = Image::canvas(800, 200, $background_color);
 
         $banner->text($textoBanner, 400, 100, function ($font) {
             $font->file(public_path('fonts/InterTight-Black.ttf'));
@@ -89,11 +89,14 @@ class EventoControlador extends Controller
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
             'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
-
+        $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
-            $request->input('$nombreEvento'),
+            $nombreEvento,
             $request->input('fecha_inicio'),
-            $request->input('fecha_fin')
+            $request->input('fecha_fin'),
+            $background_color,
+
+
         );
         $nombreDelArchivo = basename($rutaBanner);
 
@@ -106,6 +109,7 @@ class EventoControlador extends Controller
             'fecha_inicio' => $request->input('fecha_inicio'),
             'fecha_fin' => $request->input('fecha_fin'),
             'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+            'background_color'=> '#21618C'
         ]);
 
         $evento->save();

@@ -23,6 +23,7 @@ class CreateEventosTable extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->string('direccion_banner');
+            $table->string('background_color');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });

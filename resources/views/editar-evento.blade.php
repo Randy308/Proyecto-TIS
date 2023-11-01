@@ -163,33 +163,14 @@
 
                         </div>
                         <div class="c2" style="height:400px ;width:900px;">
-                            <div id="containment-wrapper" class="ui-widget-content containment-wrapper">
-                                {{--
-
-
-
-                                    "id":1,
-                                    "evento_id":41,
-                                    "text":"Mollit ut necessitat",
-                                    "top":"39px",
-                                    "left":"356px",
-                                    "text_decoration":"none solid rgb(0, 0, 0)",
-                                    "font_style":"normal",
-                                    "background":"rgb(245, 245, 245) none repeat scroll 0% 0% \/ auto padding-box border-box",
-                                    "color":"rgb(0, 0, 0)","font_family":"Poppins, sans-serif",
-                                    "font_size":"16px",
-                                    "created_at":"2023-10-26T20:00:35.000000Z"
-                                    ,"updated_at":"2023-10-26T20:00:35.000000Z"}
-
-
-
-                                    --}}
+                            <div id="containment-wrapper" class="ui-widget-content containment-wrapper"
+                                style="background-color: {{ $evento->background_color }}">
                                 @if ($evento->elementoImagenBanners->count())
                                     @foreach ($evento->elementoImagenBanners as $item)
                                         <img id="imagenBanner{{ $item->id }}" class="draggable imgDrag"
                                             src="{{ $item->src }}" alt="imagenBanner{{ $item->id }}"
                                             style="position: absolute;top :{{ $item->top }};left:{{ $item->left }};width :{{ $item->width }};
-                                            height:{{ $item->height }};">
+                                    height:{{ $item->height }};">
                                     @endforeach
                                 @endif
                                 @if ($evento->elementosBanners->count())
@@ -268,7 +249,8 @@
         </div>
     </div>
     <div id="contenedor-imagen">
-        <form id="FormUpdateBanner" action="{{ route('evento.banner.update', ['user' => auth()->user(), 'evento' => $evento->id]) }}"
+        <form id="FormUpdateBanner"
+            action="{{ route('evento.banner.update', ['user' => auth()->user(), 'evento' => $evento->id]) }}"
             method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -278,6 +260,7 @@
         <form action="{{ route('crear-elementos-banner', ['evento' => $evento->id]) }}" id="GuardarElementos"
             method="POST">
             @csrf
+            <input type="hidden" id="miBackgroundColor" name="background_color">
         </form>
         {{-- <div id="dialog" title="Basic dialog" style="display:none;">
             <p>This is the default dialog which is useful for displaying information. The dialog window can be moved,
@@ -335,8 +318,8 @@
                         link.href = imgData;
                         //link.click();
                         contForm.value = imgData;
-                        $('#containment-wrapper').css("overflow", "auto");
-                        $('#containment-wrapper').css("width", "auto");
+
+
                         $('#btnStoreElement').removeAttr('disabled');
                         $('#btnCloudSaveElement').removeAttr('disabled');
                     });
