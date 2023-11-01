@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,6 +15,19 @@ class UsuarioController extends Controller
         return view('lista-usuarios');
     }
 
+    public function show($id)
+    {
+        return view('visualizar-usuario', [
+            'usuario' => User::findOrFail($id)
+        ]);
+    }
+
+    public function createForm()
+    {
+        return view('crear-usuario');
+
+    }
+    
     public function resetPassword(Request $request)
     {
         $this->validate($request, [

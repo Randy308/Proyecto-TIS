@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 class ParticipanteController extends Controller
 {
 
@@ -50,9 +51,11 @@ class ParticipanteController extends Controller
         $user->fecha_nac = $request['fecha_nac'];
         $user->email_verified_at = now();
         $user->remember_token = Str::random(10);
-        $imagen = $request->file('foto_perfil')->store('public/imagenes');
+        $user->estado = "Habilitado";
+        $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
         $url = Storage::url($imagen);
         $user->foto_perfil = $url;
+        $user->assignRole('usuario común');
         $user->save();
         return redirect()->route('index')->with('status', 'Usuario creado exitosamente!.');
     }

@@ -26,6 +26,7 @@ class RolesTableSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
             'institucion_id'=>1,
+            'estado'=>"Habilitado",
         ]);
         $admin->assignRole('administrador');
 
@@ -34,6 +35,7 @@ class RolesTableSeeder extends Seeder
             'email' => 'organizador@example.com',
             'password' => bcrypt('contraseña'),
             'institucion_id'=>1,
+            'estado'=>"Habilitado",
         ]);
         $organizador->assignRole('organizador');
 
@@ -42,6 +44,7 @@ class RolesTableSeeder extends Seeder
             'email' => 'colaborador@example.com',
             'password' => bcrypt('contraseña'),
             'institucion_id'=>1,
+            'estado'=>"Habilitado",
         ]);
         $colaborador->assignRole('colaborador');
     }

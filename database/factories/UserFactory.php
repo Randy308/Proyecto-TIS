@@ -22,12 +22,18 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $estados = ['Habilitado','Deshabilitado'];
         $arrayValues = ['Bolivia','Argentina', 'Colombia', 'Brazil'];
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'telefono' => $this->faker->phoneNumber, 
+            'direccion' => $this->faker->address, 
+            'foto_perfil' => '/storage/image/default_user_image.png', 
+            'fecha_nac' => $this->faker->date,
+            'estado'=> $estados[rand(0,1)],
             'institucion_id' =>  rand(1,5),
             'pais'=>$arrayValues[rand(0,3)],
             'historial_academico' => $this->faker->text(),

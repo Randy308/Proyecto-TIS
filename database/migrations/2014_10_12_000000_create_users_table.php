@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
+    
     /**
      * Run the migrations.
      *
@@ -21,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('telefono')->nullable();
             $table->string('direccion')->nullable();
+            $table->enum('estado', ['Habilitado','Deshabilitado']);
             $table->string('pais')->nullable();
             $table->string('historial_academico')->nullable();
             $table->string('foto_perfil')->nullable();

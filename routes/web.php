@@ -64,6 +64,10 @@ Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update']
 
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,organizador');
 
+
+Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario');
+Route::get('/usuario/{id}', [UsuarioController::class, 'show'])->name('verUsuario');
 Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
 
 Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
