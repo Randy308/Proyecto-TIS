@@ -9,9 +9,9 @@
 
                     $idEventoPagina = $evento->id;
 
-                    \Carbon\Carbon::setLocale('es');
+                    \Carbon\Carbon::setlocale(config('app.locale'));
                 @endphp
-                <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->format('d-m-Y \a \l\a\s H:i:s') }}</h5>
+                <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}</h5>
 
 
                 <h1 id="miTitulo">{{ $evento->nombre_evento }}</h1>
@@ -116,7 +116,7 @@
 
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
                                     @foreach ($evento->users as $user)
                                         <tr>
@@ -139,7 +139,7 @@
                             <p>No existe participantes</p>
                         @endif
 
-                               
+
                     </div>
                 </div>
             </div>

@@ -14,33 +14,34 @@
         <div id="content">
 
             @include('layouts/navbar')
-            <div class="container-sm mt-4">                
-                @if (session('status'))
-                    <div class="alert alert-success">
-                        <strong>{{ session('status') }}</strong>
-                    </div>
-                @endif
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+            <div class="container-sm mt-4">
+
                 @livewire('eventos-creados')
             </div>
 
 
         </div>
 
-        
+
 
 
     </div>
 
     @include('layouts/sidebar-scripts')
+    @include('layouts.mensajes-alerta')
+    <script>
+        $(document).ready(function() {
+        $('#BotonPublicarEvento').on('click', function() {
+            //"¿Estás seguro de que deseas Publicar el evento? Una vez publicado los usuario podran interactuar con el evento ."
+            if (confirm("¿Estás seguro de que deseas Publicar el evento?."
+                )) {
+               $('#FormPublicar').submit();
+            } else {
+                console.log("presionaste Cancel!");
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>

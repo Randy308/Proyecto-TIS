@@ -55,15 +55,9 @@ Route::get('/misEventos', function () {return view('eventos-creados');})->name('
 
 Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete')->middleware('checkRole:administrador,Organizador');
 
-Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])
-    ->name('evento.edit')
-    ->middleware('checkRole:administrador,Organizador');
-Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
+Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit')->middleware('checkRole:administrador,Organizador');
 
 Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update')->middleware('checkRole:administrador,Organizador');
-
-Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');
-
 
 Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
 Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario');
@@ -81,3 +75,8 @@ Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->
 Route::get('/assign-roles', [RoleController::class, 'assignRolesView'])->name('assign-roles');
 
 Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign-role');
+
+Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update')->middleware('checkRole:administrador,Organizador');
+
+Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
+Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');

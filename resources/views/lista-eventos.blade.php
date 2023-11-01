@@ -8,7 +8,6 @@
     <title>Lista de Evento</title>
     @include('layouts/estilos')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
     <style>
         .navbar-custom {
@@ -29,11 +28,14 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
+            <div class="container mt-5">
+                <div class="d-flex  justify-content-center">
+                    <h3>Listado de Eventos</h2>
+                </div>
 
+                @livewire('evento-list')
+            </div>
 
-            <h1>Listado de Eventos</h1>
-
-            @livewire('evento-list')
 
 
         </div>

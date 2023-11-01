@@ -252,7 +252,7 @@
                     <div class="subcontent">
 
                         <div class="m-3 text-center">
-                            @include('layouts.actualizar-imagen-banner', ['evento' => $evento])
+
                         </div>
                     </div>
 
@@ -268,15 +268,14 @@
         </div>
     </div>
     <div id="contenedor-imagen">
-        <form id="FormUpdateBanner"
-            action="{{ route('evento.banner.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
-            method="POST" enctype="multipart/form-data">
+        <form id="FormUpdateBanner" action="{{ route('evento.banner.update', ['user' => auth()->user(), 'evento' => $evento->id]) }}"
+            method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <input type="hidden" name="imagen-banner" id="nueva-imagen-banner">
 
         </form>
-        <form action="{{ route('crear-elementos-banner', ['evento' => $evento]) }}" id="GuardarElementos"
+        <form action="{{ route('crear-elementos-banner', ['evento' => $evento->id]) }}" id="GuardarElementos"
             method="POST">
             @csrf
         </form>
