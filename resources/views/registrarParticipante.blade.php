@@ -11,8 +11,18 @@
 
 </head>
 
+<style>
+    body {
+        background-color: #003153;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom right,#003153, #0086ff);
 
-<body style="background-color: #003153;">
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to bottom right, #003153,#0086ff)
+    }
+</style>
+
+<body>
     <div class="wrapper">
 
         <div id="content">

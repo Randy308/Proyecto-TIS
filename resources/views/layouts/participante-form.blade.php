@@ -6,7 +6,7 @@
             <form action='{{ route('registroParticipante.store') }}' method="POST" class="px-md-2"
                 enctype="multipart/form-data">
                 @csrf
-                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Formulario de registro de participante</h3>
+                <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Crear cuenta de participante</h3>
                 <div class="form-outline mb-4">
                     <label class="form-label" for="formName">Nombre completo</label>
                     <input type="text" id="formName" class="form-control" name="name"
@@ -158,10 +158,13 @@
                     @error('password_confirmation')
                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                     @enderror
-                </div><br>
+                </div>
+                <div class="pt-4 d-flex justify-content-around">
+                    <a type="button" href="{{ route('index') }}" class="btn btn-secondary btn-lg mb-1">Regresar</a>
+                    <button type="submit" class="btn btn-primary btn-lg mb-1">Crear usuario</button>
+                </div>
 
-                <a type="button" href="{{ route('index') }}" class="btn btn-secondary btn-lg mb-1">Regresar</a>
-                <button type="submit" class="btn btn-primary btn-lg mb-1">Crear usuario</button>
+
 
             </form>
 
