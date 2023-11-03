@@ -20,15 +20,16 @@ class CreateEventosTable extends Migration
             $table->text('descripcion_evento');
             $table->enum('estado', ['Borrador','Activo', 'Finalizado', 'Cancelado']);
             $table->enum('categoria', ['Diseño','QA', 'Desarrollo', 'Ciencia de datos']);
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
             $table->string('direccion_banner');
+            $table->string('background_color');
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 
-    
+
 
     /**
      * Reverse the migrations.
