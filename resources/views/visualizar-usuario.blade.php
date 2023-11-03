@@ -26,7 +26,7 @@
                             <div class="card-header text-center display-4">Detalle del Usuario</div>
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="{{$usuario->foto_perfil}}" class="img-fluid" alt="Imagen de Perfil">
+                                    <img src="{{$usuario->foto_perfil}}" onerror="this.onerror=null; this.src='/storage/image/default_user_image.png'"   class="img-fluid" alt="Imagen de Perfil">
                                 </div>
                       
 
