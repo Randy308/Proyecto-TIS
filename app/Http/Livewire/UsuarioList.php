@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use Livewire\WithPagination;
+use Spatie\Permission\Models\Role;
 use DateTime;
 
 
@@ -50,11 +51,11 @@ class UsuarioList extends Component
          } 
 
          $usuarios = $usuarios->paginate(6);
-
+         $roles = Role::all();
          
 
         return view('livewire.usuario-list',  [
-            'usuarios' => $usuarios]);
+            'usuarios' => $usuarios, 'roles' => $roles]);
     }
 
     public function updatingSearch(){

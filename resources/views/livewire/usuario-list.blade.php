@@ -23,10 +23,9 @@
             <label for="">Filtrar por Rol:</label>
             <select wire:model="filtroRol" class="form-control">
                 <option value="">Todos</option>
-                <option value="administrador">administrador</option>
-                <option value="organizador">organizador</option>
-                <option value="colaborador">colaborador</option>
-                <option value="usuario común">usuario común</option>
+                @foreach ($roles as $rol)
+                <option value="{{$rol->name}}">{{$rol->name}}</option>
+                @endforeach
             </select>
         </div>
 
