@@ -61,7 +61,10 @@ Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update']
 
 Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
 Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario');
+Route::post('/usuario/crear', [UsuarioController::class, 'store'])->name('crearUsuario.store');
 Route::get('/usuario/{id}', [UsuarioController::class, 'show'])->name('verUsuario');
+Route::get('/usuario/{id}/editar', [UsuarioController::class, 'editForm'])->name('editarUsuario');
+Route::put('/usuario/{id}/editar', [UsuarioController::class, 'edit'])->name('editarUsuario.edit');
 Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
 
 Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');

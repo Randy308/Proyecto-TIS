@@ -28,15 +28,15 @@ class ParticipanteController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|string',
-            'telefono' => 'required',
-            'direccion' => 'required|string',
-            'email' => 'required',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'fecha_nac' => 'required',
-            'institucion' => 'required',
-            'pais' => 'required',
-            'historial' => 'required|string',
-            'foto_perfil' => 'required|image|max:2048',
+                'telefono' => 'required',
+                'direccion' => 'required|string',
+                'email' => 'required',
+                'fecha_nac' => 'required',
+                'institucion' => 'required',
+                'pais' => 'required',
+                'historial' => '',
+                'foto_perfil' => 'image|max:2048',
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
         ]);
         $user = new User();
@@ -52,9 +52,16 @@ class ParticipanteController extends Controller
         $user->email_verified_at = now();
         $user->remember_token = Str::random(10);
         $user->estado = "Habilitado";
-        $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
-        $url = Storage::url($imagen);
+
+
+        if($request->hasFile('foto_perfil')){
+            $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
+            $url = Storage::url($imagen);
+        }else{
+            $url = "/storage/image/default_user_image.png";
+        }
         $user->foto_perfil = $url;
+
         $user->assignRole('usuario común');
         $user->save();
         return redirect()->route('index')->with('status', 'Usuario creado exitosamente!.');

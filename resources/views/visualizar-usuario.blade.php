@@ -41,13 +41,14 @@
                                     <li class="list-group-item"><strong>Correo Electrónico:</strong> {{ $usuario->email }}</li>
                                     <li class="list-group-item"><strong>Teléfono:</strong> {{ $usuario->telefono }}</li>
                                     <li class="list-group-item"><strong>Dirección:</strong> {{ $usuario->direccion }}</li>
-                                    <li class="list-group-item"><strong>Instituto:</strong> {{ $usuario->instituto }}</li>
+                                    <li class="list-group-item"><strong>Instituto:</strong> {{ $institucion }}</li>
                                     <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> {{ $usuario->fecha_nac }}</li>
+                                    <li class="list-group-item"><strong>Historial Academico:</strong> {{ $usuario->historial_academico }}</li>
                                 </ul>
 
                                 <div class="text-center mt-4">
                                     <a href="{{ route('listaUsuarios') }}" class="btn btn-danger mr-2">Volver</a>
-                                    <a href="#" class="btn btn-primary">Editar</a>
+                                    <a href="{{route('editarUsuario', $usuario->id)}}" class="btn btn-primary">Editar</a>
                                 </div>
 
                             </div>
