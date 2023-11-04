@@ -7,7 +7,11 @@
                 enctype="multipart/form-data">
                 @csrf
                 <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Crear cuenta de participante</h3>
+                <div class="mb-4 d-flex justify-content-center">
+                    <img class="img-prewiew" id="image-preview" src="/storage/image/default_user_image.png" alt="Previsualización de la imagen" style="height: 200px;margin: 0 auto;">
+                </div>
                 <div class="form-outline mb-4">
+
                     <label class="form-label" for="formName">Nombre completo</label>
                     <input type="text" id="formName" class="form-control" name="name"
                         class="@error('name') is-invalid @enderror" value="{{ old('name') }}" />

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AsistenciaEvento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\Permission\Models\Role;
 class AsistenciaEventosController extends Controller
 {
     //
@@ -44,7 +44,7 @@ class AsistenciaEventosController extends Controller
     }
     public function eliminarParticipante($user, $evento)
     {
-        if (auth()->user()->id === 1) {
+        if (auth()->user()->hasRole('administrador') || auth()->user()->hasRole('organizador')){
 
             $asistencia = AsistenciaEvento::where('user_id', $user)
                 ->where('evento_id', $evento)

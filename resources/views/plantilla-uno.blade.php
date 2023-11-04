@@ -157,4 +157,5 @@
         </div>
     </div>
 </div>
+@include('layouts.mensajes-alerta')
 

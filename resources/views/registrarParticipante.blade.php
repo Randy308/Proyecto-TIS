@@ -47,6 +47,27 @@
 
 
     @include('layouts/sidebar-scripts')
+    <script>
+        document.getElementById("formFile").addEventListener("change", function() {
+            const fileInput = this;
+            const imagePreview = document.getElementById("image-preview");
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                // Cuando no se selecciona un archivo, muestra la imagen predeterminada
+                imagePreview.src = "/storage/image/default_user_image.png"; 
+                imagePreview.style.display = "block";
+            }
+        });
+    </script>
 </body>
 
 </html>
