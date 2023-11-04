@@ -27,7 +27,8 @@
     @if (Session::has('info'))
         toastr.options = {
             "closeButton": true,
-            "progressBar": true
+            "progressBar": true,
+            "positionClass": "toast-bottom-right"
         }
         toastr.info("{{ session('info') }}");
     @endif
