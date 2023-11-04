@@ -20,6 +20,7 @@ class CheckRole
             return $next($request);
         }
     
-        return redirect('/acceso-denegado');
+        return redirect()->route('acceso-denegado'); // Renderiza la vista personalizada y la devuelve como respuesta
     }
+    
 }

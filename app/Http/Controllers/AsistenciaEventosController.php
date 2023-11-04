@@ -42,19 +42,17 @@ class AsistenciaEventosController extends Controller
         }
 
     }
-    public function eliminarParticipante($user, $evento)
+    public function eliminarParticipante(Request $request, $user, $evento)
     {
-        if (auth()->user()->id === 1) {
-
+        if ($request->user() && ($request->user()->hasRole('administrador') || $request->user()->hasRole('colaborador'))) {
             $asistencia = AsistenciaEvento::where('user_id', $user)
                 ->where('evento_id', $evento)
-                ->first(); // Busca solo el primer registro que cumple con las condiciones
-            
-
+                ->first();
+    
             if ($asistencia) {
                 $mensaje = 'Participante eliminado por conducta indebida.';
                 $asistencia->delete();
-            return redirect()->back()->with('status', $mensaje);
+                return redirect()->back()->with('status', $mensaje);
             } else {
                 return redirect()->back()->with('error', 'El usuario no está registrado en el evento.');
             }

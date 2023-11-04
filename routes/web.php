@@ -81,3 +81,6 @@ Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->
 Route::get('/assign-roles', [RoleController::class, 'assignRolesView'])->name('assign-roles');
 
 Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign-role');
+Route::get('/acceso-denegado', function () {
+    return view('acceso-denegado');
+})->name('acceso-denegado');
