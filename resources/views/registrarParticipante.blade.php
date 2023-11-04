@@ -11,8 +11,18 @@
 
 </head>
 
+<style>
+    body {
+        background-color: #003153;
+        /* fallback for old browsers */
+        background: -webkit-linear-gradient(to bottom right,#003153, #0086ff);
 
-<body style="background-color: #003153;">
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to bottom right, #003153,#0086ff)
+    }
+</style>
+
+<body>
     <div class="wrapper">
 
         <div id="content">
@@ -37,6 +47,27 @@
 
 
     @include('layouts/sidebar-scripts')
+    <script>
+        document.getElementById("formFile").addEventListener("change", function() {
+            const fileInput = this;
+            const imagePreview = document.getElementById("image-preview");
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.style.display = "block";
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                // Cuando no se selecciona un archivo, muestra la imagen predeterminada
+                imagePreview.src = "/storage/image/default_user_image.png"; 
+                imagePreview.style.display = "block";
+            }
+        });
+    </script>
 </body>
 
 </html>

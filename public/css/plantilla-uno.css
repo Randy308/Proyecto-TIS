@@ -58,6 +58,17 @@ body {
     display: flex;
     flex: 1;
 }
+
+.img-prewiew{
+    display: block;
+    max-width: 400px;
+    max-height: 400px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(0%);
+}
+
 .tabs a {
     position: relative;
 

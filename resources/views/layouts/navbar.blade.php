@@ -19,7 +19,7 @@
             <li class="nav-item dropdown" id="navdropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ asset('storage/image/images.jpg') }}"
+                    <img src="{{ auth()->user()->foto_perfil}}"
                         width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">

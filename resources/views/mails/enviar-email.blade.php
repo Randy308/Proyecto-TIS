@@ -1,8 +1,8 @@
 <h1>Correo enviado desde laravel Framework</h1>
 <p>Hi {{ $name }},
-    There was a request to change your password!
+    ¡Hubo una solicitud para cambiar su contraseña!
 
-    If you did not make this request then please ignore this email.
+    Si no realizó esta solicitud, ignore este correo electrónico.
 
-    Otherwise, please uses this token to change your password: {{ $token }}
+    De lo contrario, utilice este token para cambiar su contraseña: {{ $token }}
 </p>

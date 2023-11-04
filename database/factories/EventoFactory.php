@@ -34,6 +34,7 @@ class EventoFactory extends Factory
             'fecha_inicio' => $fechaInicio,
             'fecha_fin' => $fechaFin,
             'estado' => $estado,
+            'background_color' => '#FFFF'
         ];
     }
 }

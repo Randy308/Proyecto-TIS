@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use App\Models\AsistenciaEvento;
-
+use Illuminate\Support\Facades\DB;
 
 class EventoControlador extends Controller
 {
-    public function generarBanner($nombreEvento, $fechaInicio, $fechaFin)
+    public function generarBanner($nombreEvento, $fechaInicio, $fechaFin, $background_color)
     {
         $textoBanner = "Evento: $nombreEvento\nFecha de inicio: $fechaInicio\nFecha de finalización: $fechaFin";
 
 
-        $banner = Image::canvas(800, 200, '#3498db');
+        $banner = Image::canvas(800, 200, $background_color);
 
         $banner->text($textoBanner, 400, 100, function ($font) {
             $font->file(public_path('fonts/InterTight-Black.ttf'));
@@ -89,11 +89,14 @@ class EventoControlador extends Controller
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
             'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
-
+        $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
-            $request->input('$nombreEvento'),
+            $nombreEvento,
             $request->input('fecha_inicio'),
-            $request->input('fecha_fin')
+            $request->input('fecha_fin'),
+            $background_color,
+
+
         );
         $nombreDelArchivo = basename($rutaBanner);
 
@@ -106,6 +109,7 @@ class EventoControlador extends Controller
             'fecha_inicio' => $request->input('fecha_inicio'),
             'fecha_fin' => $request->input('fecha_fin'),
             'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+            'background_color'=> '#21618C'
         ]);
 
         $evento->save();
@@ -116,7 +120,18 @@ class EventoControlador extends Controller
     public function edit($user, $evento)
     {
         //
-        return $user;
+        $categorias = ['Diseño', 'QA', 'Desarrollo', 'Ciencia de datos'];
+        $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+        return view('actualizar-evento', compact('miEvento', 'categorias'));
+    }
+    public function updateEstado($user, $evento, Request $request)
+    {
+        //
+        $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+        $evento->estado = 'Activo';
+        $evento->save();
+        return redirect()->route('listaEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+
     }
     public function editBanner($user, $evento)
     {
@@ -127,7 +142,33 @@ class EventoControlador extends Controller
     public function update($user, $evento, Request $request)
     {
         //
-        return redirect()->back()->with('status', '¡Banner actualizado exitosamente!.');
+        $request->validate([
+            'nombre_evento' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
+                    return $query->where('categoria', $request->input('categoria'));
+                })->ignore($evento, 'id'),
+            ],
+            'descripcion_evento' => 'required|string',
+            'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+        ], [
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
+            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
+        ]);
+        $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+        $evento->nombre_evento = $request->input('nombre_evento');
+        $evento->descripcion_evento = $request->input('descripcion_evento');
+        $evento->categoria = $request->input('categoria');
+        $evento->fecha_inicio = $request->input('fecha_inicio');
+        $evento->fecha_fin = $request->input('fecha_fin');
+        $evento->save();
+        session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
+        return redirect()->route('misEventos');
 
     }
 

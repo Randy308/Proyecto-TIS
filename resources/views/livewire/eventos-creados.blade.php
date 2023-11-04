@@ -13,6 +13,7 @@
                         <th></th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -24,7 +25,9 @@
                             <td>{{ $evento->estado }}</td>
                             <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
                             <td width="10px">
-                                <form action="{{ route('evento.banner.edit', ['user' => auth()->user() , 'evento' => $evento]) }}" method="get">
+                                <form
+                                    action="{{ route('evento.banner.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                    method="get">
                                     <button class="btn btn-info" type="submit">Editar Banner</button>
 
                                 </form>
@@ -32,7 +35,9 @@
 
                             </td>
                             <td width="10px">
-                                <form action="{{ route('evento.delete', ['user' => auth()->user() , 'evento' => $evento]) }}" method="post">
+                                <form
+                                    action="{{ route('evento.delete', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                    method="post">
                                     @csrf
                                     @method('DELETE')
                                     <button class="btn btn-danger" type="submit">Eliminar</button>
@@ -42,8 +47,27 @@
 
                             </td>
                             <td width="10px">
-                                <form action="{{ route('evento.edit',['user' => auth()->user() , 'evento' => $evento]) }}" method="get">
-                                    <button class="btn btn-info">Editar</button>
+                                @if ($evento->estado == 'Activo')
+                                <button class="btn btn-secondary" disabled>Ya se ha Publicado</button>
+                                @else
+                                    <form id="FormPublicar"
+                                        action="{{ route('evento.state.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                        method="post">
+                                        @csrf
+                                        @method('PUT')
+
+                                    </form>
+                                    <button id="BotonPublicarEvento" class="btn btn-warning"
+                                        type="button">Publicar</button>
+                                @endif
+
+
+                            </td>
+                            <td width="10px">
+                                <form
+                                    action="{{ route('evento.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                    method="get">
+                                    <button type="submit" class="btn btn-success">Editar</button>
                                 </form>
 
                             </td>

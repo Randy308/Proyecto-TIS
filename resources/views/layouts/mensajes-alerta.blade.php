@@ -8,7 +8,14 @@
         }
         toastr.success("{{ session('message') }}");
     @endif
-
+    @if (Session::has('success'))
+        toastr.options = {
+            "closeButton": true,
+            "progressBar": true,
+            "positionClass": "toast-bottom-right"
+        }
+        toastr.success("{{ session('success') }}");
+    @endif
     @if (Session::has('error'))
         toastr.options = {
             "closeButton": true,
@@ -20,7 +27,8 @@
     @if (Session::has('info'))
         toastr.options = {
             "closeButton": true,
-            "progressBar": true
+            "progressBar": true,
+            "positionClass": "toast-bottom-right"
         }
         toastr.info("{{ session('info') }}");
     @endif
@@ -36,7 +44,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-top-right"
+            "positionClass": "toast-bottom-right"
         }
         toastr.success("{{ session('status') }}");
     @endif

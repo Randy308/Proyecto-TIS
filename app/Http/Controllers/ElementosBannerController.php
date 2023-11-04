@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ElementoImagenBanner;
 use App\Models\ElementosBanner;
+use App\Models\Evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -28,6 +29,8 @@ class ElementosBannerController extends Controller
         $elementos = [];
         $imagenes = [];
         $n = 1; // Empieza con el primer índice elementos_banners elemento_imagen_banners
+        $miEvento = Evento::where('id', '=', $id)->first();
+        $miEvento->background_color = $request->input('background_color');
         $deleted = DB::table('elementos_banners')->where('evento_id', '=', $id)->delete();
         $deleted = DB::table('elemento_imagen_banners')->where('evento_id', '=', $id)->delete();
         while ($request->has("elemento$n")) {
@@ -57,6 +60,7 @@ class ElementosBannerController extends Controller
             $miElemento->font_family = $elementoBanners['font-family'];
             $miElemento->font_size = $elementoBanners['font-size'];
             $miElemento->save();
+
             // Itera a través de los elementos de $elementoBanners
 
         }
@@ -72,6 +76,7 @@ class ElementosBannerController extends Controller
             $imagen->save();
             // Itera a través de los elementos de $elementoBanners
         }
+        $miEvento->save();
         //$status ='¡Se ha guardado la edicon del banner exitosamente!.';
         //return redirect()->back()->with(compact('status'));
 

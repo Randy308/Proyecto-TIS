@@ -17,6 +17,7 @@ class Evento extends Model
         'categoria',
         'fecha_inicio',
         'fecha_fin',
+        'background_color',
         'direccion_banner',
     ];
 

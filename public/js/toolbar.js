@@ -1,6 +1,5 @@
 var contador = 2;
 $(document).ready(function () {
-
     $("#agregarElemento").on("click", function () {
         var div = document.createElement("div");
         div.classList.add("ui-widget-content1");
@@ -69,9 +68,8 @@ $(document).ready(function () {
     });
     $("#highlightColorPicker").on("input", function () {
         var circle = $("#containment-wrapper");
-        const color = $('#highlightColorPicker').val();
+        const color = $("#highlightColorPicker").val();
         circle.css("background", color);
-
     });
     // $("#highlightColorPicker").selectmenu({
     //     change: function (event, data) {
@@ -213,17 +211,29 @@ $(document).ready(function () {
                 $(element).html(str);
                 $(element).resizable({
                     containment: "#containment-wrapper",
-                    handles: "n, e, s, w"
+                    handles: "n, e, s, w",
                 });
             }
-
         });
     });
 
     $(function () {
+        function rgb2hex(rgb) {
+            rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            function hex(x) {
+                return ("0" + parseInt(x).toString(16)).slice(-2);
+            }
+            return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+        }
         var contenedor = document.getElementById("containment-wrapper");
         const contForm = document.getElementById("GuardarElementos");
-        const firstElementChild = contForm.firstElementChild;
+        var firstElementChild = document.querySelector(
+            "form#GuardarElementos [name='_token']",
+        );
+        var secondElementChild = document.querySelector(
+            "form#GuardarElementos #miBackgroundColor",
+        );
+
         var numeroElemento = 1;
         var numeroImagen = 1;
         $("#btnSaveElement").on("click", function () {
@@ -231,7 +241,11 @@ $(document).ready(function () {
                 "#containment-wrapper .draggable",
             );
             contForm.innerHTML = "";
-            contForm.appendChild(firstElementChild);
+            contForm.append(firstElementChild);
+            var Mibackground = rgb2hex($("#containment-wrapper").css("background-color"));
+
+            secondElementChild.value = Mibackground;
+            contForm.append(secondElementChild);
             Array.from(elements).forEach(function (element) {
                 const $element = $(element); // Convert the DOM element to a jQuery object
                 var myJSON;
