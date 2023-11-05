@@ -97,7 +97,11 @@ class ImagenAuspiciadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    { 
+        $imgAus = ImagenAuspiciador::where('id',$id)->first(); 
+        $url = str_replace('storage', 'public', $imgAus->url);
+        Storage::delete($url); 
+        $imgAus->delete();
+        return redirect()->route('verEvento', ['id' => $imgAus->evento_id]);
     }
 }

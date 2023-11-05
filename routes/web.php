@@ -62,3 +62,4 @@ Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name
 Route::put('/evento/{id}', [EventoControlador::class, 'guardarMap'])->name('updateMap');
 
 Route::post('/evento/{id}', [ImagenAuspiciadorController::class, 'store'])->name('guardarAus');
+Route::delete('/evento/{id}', [ImagenAuspiciadorController::class, 'destroy'])->name('eliminarAus');
