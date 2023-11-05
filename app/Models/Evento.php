@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\ImagenAuspiciador;
 class Evento extends Model
 {
     use HasFactory;
@@ -18,6 +19,8 @@ class Evento extends Model
         'fecha_inicio',
         'fecha_fin',
         'direccion_banner',
+        'latitud',
+        'longitud',
     ];
 
     public function user()
@@ -27,5 +30,8 @@ class Evento extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'asistencia_eventos');
+    }
+    public function imagen_auspiciadors(){
+        return $this->hasMany(ImagenAuspiciador::class);
     }
 }

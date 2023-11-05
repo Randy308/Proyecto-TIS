@@ -26,3 +26,52 @@
     height: 300px;
     background-color: aqua;
 }
+/* ------- */
+
+#preview {
+    position: relative;
+    padding: 0px;
+    padding-left: 15px;
+    height: 45px;
+    width: 30px;
+}
+#preview a {
+    position: absolute;
+    padding: 0px;
+    margin-top: 11px;
+    width: 35px;
+    height: 35px;
+    border-color: gray;
+}
+#preview2 {
+    padding: 0px;
+    padding-left: 6px;
+    padding-right: 15px;
+    height: 45px;
+}
+#file-info {
+    margin-top: 11px;
+    margin-bottom: 0px;
+    padding: 0px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    width: 100%;
+    height: 35px;
+    font-size: smaller;
+    text-align: center;
+    overflow: hidden;
+}
+#file-save {
+    text-align: center;
+    width: 100%;
+    padding: 0px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    height: 22px;
+}
+input[type="file"] {
+    position: absolute;
+    visibility: hidden;
+    width: 0;
+    z-index: -9999;
+}

@@ -15,7 +15,9 @@ class CreateImagenAuspiciadorsTable extends Migration
     {
         Schema::create('imagen_auspiciadors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('evento_id');
             $table->string('url');
+            $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

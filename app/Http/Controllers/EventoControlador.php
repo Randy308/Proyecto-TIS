@@ -12,6 +12,8 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\AsistenciaEvento;
+use App\Models\ImagenAuspiciador;
+
 
 
 class EventoControlador extends Controller
@@ -42,11 +44,12 @@ class EventoControlador extends Controller
         return $rutaBanner;
     }
 
-    public function show($id)
+    public function show($id)//id de evento
     {
-        return view('visualizar-evento', [
-            'evento' => Evento::findOrFail($id)
-        ]);
+        $evento = Evento::find($id);
+        $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
+
+    return view('visualizar-evento', compact('evento', 'imgAuspiciadores'));
     }
 
     public function listaEventos()
@@ -105,6 +108,8 @@ class EventoControlador extends Controller
             'fecha_inicio' => $request->input('fecha_inicio'),
             'fecha_fin' => $request->input('fecha_fin'),
             'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+            'latitud' => -17.39359989348116,
+            'longitud' => -66.14596353915297,
         ]);
 
         $evento->save();
@@ -150,6 +155,13 @@ class EventoControlador extends Controller
         //
         return $evento;
     }
-    
-    
+
+    public function guardarMap(Request $request, $id){
+        $evento = Evento::find($id);
+        $evento->latitud=$request->latitud;
+        $evento->longitud=$request->longitud;
+        $evento->save();
+        return redirect()->route('verEvento', ['id' => $id]);
+    }
+   
 }

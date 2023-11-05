@@ -9,8 +9,15 @@
 {{-- <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/jquery-3.7.1.js') }}"></script> --}}
-<script src="{{ asset('js/ubicacionevento.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ypxeEUA4RwaDv8orMu2RxAqu-OLH_cY&callback=iniciarMapa"></script>
+
+
+
+
+{{-- js de ubicacion y API googleMaps --}}
+<script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ypxeEUA4RwaDv8orMu2RxAqu-OLH_cY&callback=iniciarMapa">
+</script>
+
 
 <script type="text/javascript">
     $(document).ready(function() {

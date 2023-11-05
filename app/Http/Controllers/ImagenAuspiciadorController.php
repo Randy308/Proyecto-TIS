@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Evento;
+use Intervention\Image\Facades\Image;
 use App\Models\ImagenAuspiciador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use illuminate\Support\Str;
 
 class ImagenAuspiciadorController extends Controller
 {
@@ -34,18 +37,23 @@ class ImagenAuspiciadorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $request->validate([
-            'url'=>'required|image|max:1024'
-        ]);
-        $imagenes= $request->file('url')->store('public/imgAuspiciadores');
-        $url=Storage::url($imagenes);
-        
-        ImagenAuspiciador::create([
-            'url'=>$url
-        ]);
-        return redirect()->route('listaEventos');
+         $request->validate([
+             'url'=>'required|image'
+         ]);
+         $nombre = Str::random(10) . $request->file('url')->getClientOriginalName();
+         $ruta=storage_path() . '\app\public\imgAuspiciadores/' . $nombre;
+         Image::make($request->file('url'))
+                    ->resize(1200, null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })
+                    ->save($ruta);
+         ImagenAuspiciador::create([
+            'evento_id' =>$id,
+            'url'=>'/storage/imgAuspiciadores/' . $nombre
+         ]);           
+        return redirect()->route('verEvento', ['id' => $id]);
     }
 
     /**

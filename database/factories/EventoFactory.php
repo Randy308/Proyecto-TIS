@@ -34,6 +34,8 @@ class EventoFactory extends Factory
             'estado'=> $arrayValues[rand(0,3)],
             'fecha_inicio'=> $this->faker->dateTime(),
             'fecha_fin'=> $this->faker->dateTime(),
+            'latitud'=>-17.39359989348116,
+            'longitud'=>-66.14596353915297,
         ];
     }
 }

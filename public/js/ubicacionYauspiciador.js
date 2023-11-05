@@ -1,7 +1,6 @@
 function iniciarMapa(){
-    var latitud = -17.393610;
-    var longitud = -66.145224;  
-    
+    var latitud = $("#latitud").val();
+    var longitud = $("#longitud").val();
     coordenadas={
         lng: longitud,
         lat: latitud
@@ -12,7 +11,7 @@ function iniciarMapa(){
 function generarMapa(){
     var mapa= new google.maps.Map(document.getElementById('mapa'),
     {
-        zoom: 13,
+        zoom: 14,
         center: new google.maps.LatLng(coordenadas.lat, coordenadas.lng)
     });
 
@@ -57,13 +56,27 @@ $("#adiosMap").click(function() {
     $('#fondotransparente').css("display", "none");
 });
 
-$("#cargarcoordenadas").click(function(){
+$("#latitud, #longitud").on("input", function() {
     var latitud = $("#latitud").val();
-    var longitud =$("#longitud").val();
+    var longitud = $("#longitud").val();
 
-    coordenadas={
+    coordenadas = {
         lng: longitud,
         lat: latitud
     }
+
     generarMapa(coordenadas);
 });
+//-----------------botones imgauspiciadores
+$("#file-select-auspiciadores").on("click", function (e) {
+    e.preventDefault();
+    $("#file-auspiciadores").click();
+});
+
+$("input#file-auspiciadores[type=file]").change(function () {
+    var file = this.files[0].name.toString();
+    $("#file-info").text("");
+    $("#file-info").text(file);
+});
+
+

@@ -59,4 +59,6 @@ Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBa
 
 Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
 
-Route::post('/evento', [ImagenAuspiciadorController::class, 'store'])->name('guardarAuspiciador');
+Route::put('/evento/{id}', [EventoControlador::class, 'guardarMap'])->name('updateMap');
+
+Route::post('/evento/{id}', [ImagenAuspiciadorController::class, 'store'])->name('guardarAus');
