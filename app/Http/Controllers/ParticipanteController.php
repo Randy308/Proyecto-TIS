@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
+
 class ParticipanteController extends Controller
 {
 
     public function index()
-    {   $instituciones = Institucion::all();
-        return view('registrarParticipante',compact('instituciones'));
+    {
+        $instituciones = Institucion::all();
+        return view('registrarParticipante', compact('instituciones'));
     }
 
     public function create()
@@ -28,16 +30,16 @@ class ParticipanteController extends Controller
     {
         $this->validate($request, [
 
-            'name' => 'required|string',
-                'telefono' => 'required',
-                'direccion' => 'required|string',
-                'email' => ['required','unique:users,email'],
-                'fecha_nac' => 'required',
-                'institucion' => 'required',
-                'pais' => 'required',
-                'historial' => '',
-                'foto_perfil' => 'image|max:2048',
-                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'name' => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'telefono' => 'required|regex:/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/',
+            'direccion' => 'required|string',
+            'email' => ['required', 'unique:users,email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
+            'fecha_nac' => 'required',
+            'institucion' => 'required',
+            'pais' => 'required',
+            'historial' => '',
+            'foto_perfil' => 'image|max:2048',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
         ]);
         $user = new User();
@@ -55,10 +57,10 @@ class ParticipanteController extends Controller
         $user->estado = "Habilitado";
 
 
-        if($request->hasFile('foto_perfil')){
+        if ($request->hasFile('foto_perfil')) {
             $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
             $url = Storage::url($imagen);
-        }else{
+        } else {
             $url = "/storage/image/default_user_image.png";
         }
         $user->foto_perfil = $url;
