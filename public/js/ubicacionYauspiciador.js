@@ -6,6 +6,15 @@ function iniciarMapa(){
         lat: latitud
     }
     generarMapa(coordenadas);
+
+    let autocomplete;
+    autocomplete= new google.maps.places.Autocomplete(
+        document.getElementById('autocomplete'),
+        {
+            types:['establishment'],
+            componentRestrictions:{'country':['AU']},
+            fields:['place_id','geometry','name']
+        });
 }
 
 function generarMapa(){
@@ -30,7 +39,7 @@ function generarMapa(){
     mapa.addListener('mousedown', function(event) {
         mousedown = true;
         temporizador = setTimeout(function() {
-            // Si se mantiene presionado durante 2 segundos
+            // Si se mantiene presionado durante 1 segundos
             var nuevaLatitud = event.latLng.lat();
             var nuevaLongitud = event.latLng.lng();
         
@@ -38,7 +47,7 @@ function generarMapa(){
         
             document.getElementById("latitud").value = nuevaLatitud;
             document.getElementById("longitud").value = nuevaLongitud;
-        }, 1000); // 2 segundos
+        }, 1000); // 1 segundos
     });
 
     mapa.addListener('mouseup', function(event) {
@@ -78,5 +87,4 @@ $("input#file-auspiciadores[type=file]").change(function () {
     $("#file-info").text("");
     $("#file-info").text(file);
 });
-
 

@@ -15,8 +15,7 @@
 
 {{-- js de ubicacion y API googleMaps --}}
 <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ypxeEUA4RwaDv8orMu2RxAqu-OLH_cY&callback=iniciarMapa">
-</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa"></script>
 
 
 <script type="text/javascript">

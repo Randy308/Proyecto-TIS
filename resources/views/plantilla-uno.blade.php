@@ -2,29 +2,33 @@
     <div class="content c1">
         <div class="card">
             {{--  --}}
-            <div class="contenedor-banner position-relative">
+            <div id="contenedor_bannerM" class="contenedor-banner position-relative">
                 <div id="fondotransparente"></div>
                 <button id="mostrarMap" class="btn btn-success position-absolute"><span>Ubicacion</span></button>
-                <div id="contenedormap" class="position-absolute p-5">
+                <div id="contenedormap" class="position-absolute">
                     <form action="{{ route('updateMap', ['id' => $evento->id]) }}" method="POST">
                         @method('PUT')
                         @csrf
-                        <h3 class="mt-2 ">Ubicacion del Evento</h3>
+                        
                         <div class="row">
-                            <div class="col-4 mt-5">
-                                <div class="mb-4 mt-2">
+                            <div class="col-4 mt-0">
+                                <p id="titleUbicacion" class="mt-2">Ubicacion del Evento</p>
+                                <div class="mb-4 mt-2 ml-3">
+                                    <input type="text" id="autocomplete">
+                                </div>
+                                <div class="mb-4 mt-2  ml-3">
                                     <label for="latitud" class="form-label">Latitud</label>
                                     <input type="text" class="form-control" name="latitud" id="latitud"
                                         value="{{ $evento->latitud }}">
                                 </div>
-                                <div class="mb-4">
+                                <div class="mb-4 ml-3">
                                     <label for="longitud" class="form-label">Longitud</label>
                                     <input type="text" class="form-control" name="longitud" id="longitud"
                                         value="{{ $evento->longitud }}">
                                 </div>
 
                             </div>
-                            <div class="col-8 px-3 py-2 pl-5">
+                            <div class="col-8 pt-5 pr-5 pl-5">
                                 <div id="mapa"></div>
                             </div>
                         </div>
@@ -195,8 +199,13 @@
                         <div class="d-flex flex-row">
                             @foreach ($imgAuspiciadores as $imgAusp)
                                 <div class="p-2">
-                                    <div class="rounded-circle" style="width: 105px; height: 105px; border: 2px solid #ccc;">
+                                    <div class="rounded-circle position-relative overflow-hidden" style="width: 105px; height: 105px; border: 2px solid #ccc;">
                                         <img src="{{asset($imgAusp->url)}}" class="rounded-circle overflow-hidden" alt="Imagen" class="" width="100%" height="100%">
+                                        <form action="{{route('eliminarAus', ['id' => $imgAusp->id])}}" method="POST" class="overflow-hidden">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button class="btnDel btn btn-danger position-absolute" type="submit">-</button>
+                                        </form>
                                     </div>
                                 </div>
                             @endforeach
