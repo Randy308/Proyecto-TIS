@@ -27,10 +27,11 @@ class ParticipanteController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+
             'name' => 'required|string',
                 'telefono' => 'required',
                 'direccion' => 'required|string',
-                'email' => 'required',
+                'email' => ['required','unique:users,email'],
                 'fecha_nac' => 'required',
                 'institucion' => 'required',
                 'pais' => 'required',

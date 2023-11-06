@@ -141,8 +141,9 @@
         </script>
     @endif
 
-    <script src="{{ asset('js/recupera-cuenta.js') }}"></script>
+
     @include('layouts/sidebar-scripts')
+    <script src="{{ asset('js/recupera-cuenta.js') }}"></script>
     <script>
         $(document).ready(function() {
             $('#EmailVinculado').on('input', function() {

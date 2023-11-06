@@ -19,7 +19,8 @@
     @if (Session::has('error'))
         toastr.options = {
             "closeButton": true,
-            "progressBar": true
+            "progressBar": true,
+            "positionClass": "toast-bottom-right"
         }
         toastr.error("{{ session('error') }}");
     @endif
@@ -36,7 +37,8 @@
     @if (Session::has('warning'))
         toastr.options = {
             "closeButton": true,
-            "progressBar": true
+            "progressBar": true,
+            "positionClass": "toast-bottom-right"
         }
         toastr.warning("{{ session('warning') }}");
     @endif

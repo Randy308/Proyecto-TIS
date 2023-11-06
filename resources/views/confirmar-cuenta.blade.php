@@ -18,15 +18,7 @@
             <strong>{{ session('status') }}</strong>
         </div>
     @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+
     <div class="container mt-5">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8">
@@ -49,15 +41,17 @@
                             <label class="form-label" for="form3Example1w">Código de confirmación</label>
                             <div class="input-group mb-3">
                                 <input placeholder="ingrese el codigo de confirmacion..."
-                                    class="form-control form-control" name="token">
+                                    class="form-control form-control" name="token" class="@error('token') is-invalid @enderror">
 
                             </div>
+                            @error('token')
+                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                            @enderror
                         </div>
-                        @if ($email)
-                            <input type="hidden" name="email" id="emailConfirmation" value="{{ $email }}">
-                        @else
-                            <input type="hidden" name="email" id="emailConfirmation" value= 'empty'>
-                        @endif
+
+
+                        <input type="hidden" name="email" id="emailConfirmation" value="{{ base64_decode(Request::get('email')) }}">
+
 
                         <div class="form-outline">
                             <label class="form-label" for="form3Example1w">Contraseña</label>
@@ -108,6 +102,29 @@
         </div>
     </div>
     @include('layouts/sidebar-scripts')
+    <script>
+        const firstToggle = document.querySelector('#firstToggle');
+        const secondToggle = document.querySelector('#secondToggle');
+        const password = document.querySelector('#password');
+        const password_confirmation = document.querySelector('#password_confirmation');
+        firstToggle.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        secondToggle.addEventListener('click', function(e) {
+            // toggle the type attribute
+            const type = password_confirmation.getAttribute('type') === 'password' ? 'text' : 'password';
+            password_confirmation.setAttribute('type', type);
+
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
 </body>
 
 </html>

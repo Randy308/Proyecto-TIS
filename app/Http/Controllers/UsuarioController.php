@@ -15,7 +15,7 @@ class UsuarioController extends Controller
 {
     private function validacionesCE(Request $request,bool $nuevaContra){
         if($nuevaContra){
-            $this->validate($request, [   
+            $this->validate($request, [
                 'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z0-9_]+$/', 'max:30'],
                 'telefono' => 'required',
                 'direccion' => 'required|string',
@@ -39,12 +39,12 @@ class UsuarioController extends Controller
                 'pais' => 'required',
                 'historial' => '',
                 'foto_perfil' => 'image|max:2048',
-    
+
             ]);
     }
 
     private function guardarUsuario(User $user, Request $request, bool $nuevaContra){
-        
+
         $user->name = $request['nombre'];
         $user->institucion_id = $request['institucion'];
         $user->historial_academico = $request['historial'];
@@ -54,7 +54,7 @@ class UsuarioController extends Controller
         if($nuevaContra){
             $user->password = Hash::make($request['password']);
         }
-        
+
         $user->email = $request['email'];
         $user->fecha_nac = $request['fecha_nac'];
         $user->email_verified_at = now();
@@ -67,7 +67,7 @@ class UsuarioController extends Controller
             $url = "/storage/image/default_user_image.png";
         }
         $user->foto_perfil = $url;
-        
+
         $user->assignRole($request['rol']);
         $user->save();
     }
@@ -91,7 +91,7 @@ class UsuarioController extends Controller
             $this->guardarUsuario($user, $request,$boolaux);
             return redirect()->route('verUsuario', ['id' => $id])->with('status', 'Usuario editado exitosamente!.');
         }
-       
+
     }
 
     public function listaUsuarios()
@@ -109,7 +109,7 @@ class UsuarioController extends Controller
     }
 
     public function createForm()
-    {  
+    {
         $instituciones = Institucion::all();
         $roles = Role::all();
         return view('crear-usuario', compact ('instituciones','roles'));
@@ -122,7 +122,7 @@ class UsuarioController extends Controller
         $roles = Role::all();
         return view('editar-usuario', compact ('usuario','instituciones','roles'));
     }
-    
+
     public function resetPassword(Request $request)
     {
         $this->validate($request, [
@@ -130,20 +130,21 @@ class UsuarioController extends Controller
             'email' => 'required|email',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+        $email = $request->email;
         $password = $request->password;
 
         $tokenData = DB::table('password_resets')
             ->where('token', $request->token)->first();
 
         if (!$tokenData) {
-            return redirect()->back()->withErrors(['email' => 'Token incorrecto']);
+            return redirect()->route('actualizar-password', compact('email'))->withErrors(['email' => 'Token incorrecto']);
         }
 
 
         $user = User::where('email', $tokenData->email)->first();
 
         if (!$user) {
-            return redirect()->back()->withErrors(['email' => 'EL email no existe']);
+            return redirect()->route('actualizar-password', compact('email'))->withErrors(['email' => 'EL email no existe']);
         }
 
         $user->password = Hash::make($password);

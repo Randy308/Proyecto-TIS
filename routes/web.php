@@ -77,6 +77,8 @@ Route::get('/recuperar-cuenta',[RecuperarCuentaController::class,'index'])->name
 
 Route::post('/recuperar-cuenta',[RecuperarCuentaController::class,'enviarEmail'])->name('enviar-email');
 
+Route::get('/actualizar-cuenta', function () {return view('confirmar-cuenta');})->name('actualizar-password');
+
 Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
 
 Route::get('/assign-roles', [RoleController::class, 'assignRolesView'])->name('assign-roles');
