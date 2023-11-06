@@ -40,7 +40,7 @@
                                     method="post">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                                    <button class="btn btn-danger" type="submit" {{$evento->estado != 'Borrador' ? 'disabled' : ''}}>Cancelar</button>
 
                                 </form>
 

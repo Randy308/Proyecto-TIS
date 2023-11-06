@@ -23,7 +23,7 @@
 
 <body>
 
-
+    @include('layouts.mensajes-alerta')
     <div class="wrapper">
         @include('layouts/sidebar')
         <div id="content">

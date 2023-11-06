@@ -16,7 +16,7 @@ class UsuarioController extends Controller
     private function validacionesCE(Request $request,bool $nuevaContra){
         if($nuevaContra){
             $this->validate($request, [   
-                'name' => 'required|string',
+                'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z0-9_]+$/', 'max:30'],
                 'telefono' => 'required',
                 'direccion' => 'required|string',
                 'email' => 'required',
@@ -29,7 +29,7 @@ class UsuarioController extends Controller
             ]);
         }
         $this->validate($request, [
-                'name' => 'required|string',
+                'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z0-9_]+$/', 'max:30'],
                 'telefono' => 'required',
                 'direccion' => 'required|string',
                 'email' => 'required',
@@ -45,7 +45,7 @@ class UsuarioController extends Controller
 
     private function guardarUsuario(User $user, Request $request, bool $nuevaContra){
         
-        $user->name = $request['name'];
+        $user->name = $request['nombre'];
         $user->institucion_id = $request['institucion'];
         $user->historial_academico = $request['historial'];
         $user->pais = $request['pais'];

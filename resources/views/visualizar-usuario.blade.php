@@ -17,7 +17,7 @@
     <div class="wrapper"> 
         @include('layouts/sidebar')
         <div id="content">
-
+            @include('layouts.mensajes-alerta')
             @include('layouts/navbar')
             <div class="container">
                 <div class="row justify-content-center">
