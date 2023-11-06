@@ -192,7 +192,9 @@ class EventoControlador extends Controller
 
     public function destroy($user, $evento)
     {
-        //
-        return $evento;
+        $eventoActual = Evento::FindOrFail($evento);
+        $eventoActual->estado = 'Cancelado';
+        $eventoActual->update();
+        return redirect()->route('misEventos')->with('status', 'Se cancelo el evento exitosamente');
     }
 }
