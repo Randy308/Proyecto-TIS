@@ -47,7 +47,13 @@
     </div>
 
 <div class="row">
-    
+    @if($usuarios->count() == 0)
+        <div class="col-12">
+            <div class="alert alert-info">
+                No se encontro Usuarios.
+            </div>
+        </div>
+        @endif
 
 
     @foreach ($usuarios as $usuario)
