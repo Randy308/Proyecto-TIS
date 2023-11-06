@@ -12,6 +12,7 @@
 </head>
 
 
+
 <body>
     <div class="wrapper">
         @include('layouts/sidebar')
@@ -19,10 +20,8 @@
             @include('layouts/navbar')
             <div>
                 <h1>Acceso Denegado</h1>
-                <p>{{ session('info') }}</p>
+                <p>No tienes permisos para acceder a esta página.</p>
                 <p><a href="/">Volver al inicio</a></p>
             </div>
-        </div>
-    </div>
 </body>
 </html>

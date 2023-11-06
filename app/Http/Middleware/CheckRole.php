@@ -20,7 +20,7 @@ class CheckRole
             return $next($request);
         }
     
-        return view('acceso-denegado')->with('info', 'No se permite el acceso a esta página');
+        return redirect()->back()->with('error', 'No tienes permisos para acceder aqui.');
     }
     
 }
