@@ -34,7 +34,10 @@ class EventoFactory extends Factory
             'fecha_inicio' => $fechaInicio,
             'fecha_fin' => $fechaFin,
             'estado' => $estado,
+            'latitud'=>-17.39359989348116,
+            'longitud'=>-66.14596353915297,
             'background_color' => '#FFFF'
+
         ];
     }
 }

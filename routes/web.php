@@ -9,7 +9,9 @@ use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\RoleController;
+
 
 
 
@@ -63,6 +65,12 @@ Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update']
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,organizador');
 
 
+
+Route::put('/evento/{id}', [EventoControlador::class, 'guardarMap'])->name('updateMap');
+
+Route::post('/evento/{id}', [ImagenAuspiciadorController::class, 'store'])->name('guardarAus');
+Route::delete('/evento/{id}', [ImagenAuspiciadorController::class, 'destroy'])->name('eliminarAus');
+
 Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios')->middleware('checkRole:administrador');
 Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario')->middleware('checkRole:administrador');
 Route::post('/usuario/crear', [UsuarioController::class, 'store'])->name('crearUsuario.store');
@@ -92,3 +100,4 @@ Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEs
 
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');
+

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use App\Models\ImagenAuspiciador;
 class Evento extends Model
 {
     use HasFactory;
@@ -19,6 +20,8 @@ class Evento extends Model
         'fecha_fin',
         'background_color',
         'direccion_banner',
+        'latitud',
+        'longitud',
     ];
 
     public function user()
@@ -29,6 +32,10 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'asistencia_eventos');
     }
+
+    public function imagen_auspiciadors(){
+        return $this->hasMany(ImagenAuspiciador::class);
+    }
     public function elementosBanners()
     {
         return $this->hasMany(ElementosBanner::class);
@@ -36,5 +43,6 @@ class Evento extends Model
     public function elementoImagenBanners()
     {
         return $this->hasMany(ElementoImagenBanner::class);
+
     }
 }
