@@ -11,8 +11,6 @@ use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\RoleController;
 
-
-
 Route::get('/', function () {return view('index');})->name('index');
 
 //Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
