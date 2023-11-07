@@ -39,20 +39,26 @@ class ImagenAuspiciadorController extends Controller
      */
     public function store(Request $request, $id)
     {
-         $request->validate([
-             'url'=>'required|image'
-         ]);
-         $nombre = Str::random(10) . $request->file('url')->getClientOriginalName();
-         $ruta=storage_path() . '\app\public\imgAuspiciadores/' . $nombre;
-         Image::make($request->file('url'))
-                    ->resize(1200, null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })
-                    ->save($ruta);
-         ImagenAuspiciador::create([
-            'evento_id' =>$id,
-            'url'=>'/storage/imgAuspiciadores/' . $nombre
-         ]);           
+        //se ah superado el limite de 6 auspiciadores por evento?
+        $numeroAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->count();
+        if ($numeroAuspiciadores >= 6) {
+            return redirect()->route('verEvento', ['id' => $id])->with('error', 'Se ha superado el límite de 6 auspiciadores.');
+        }
+        // continuar
+        $request->validate([
+            'url' => 'required|image'
+        ]);
+        $nombre = Str::random(10) . $request->file('url')->getClientOriginalName();
+        $ruta = storage_path() . '\app\public\imgAuspiciadores/' . $nombre;
+        Image::make($request->file('url'))
+            ->resize(1200, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })
+            ->save($ruta);
+        ImagenAuspiciador::create([
+            'evento_id' => $id,
+            'url' => '/storage/imgAuspiciadores/' . $nombre
+        ]);
         return redirect()->route('verEvento', ['id' => $id]);
     }
 
@@ -97,10 +103,10 @@ class ImagenAuspiciadorController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    { 
-        $imgAus = ImagenAuspiciador::where('id',$id)->first(); 
+    {
+        $imgAus = ImagenAuspiciador::where('id', $id)->first();
         $url = str_replace('storage', 'public', $imgAus->url);
-        Storage::delete($url); 
+        Storage::delete($url);
         $imgAus->delete();
         return redirect()->route('verEvento', ['id' => $imgAus->evento_id]);
     }

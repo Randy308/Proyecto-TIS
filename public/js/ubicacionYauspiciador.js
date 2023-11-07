@@ -20,7 +20,7 @@ function iniciarMapa(){
 function generarMapa(){
     var mapa= new google.maps.Map(document.getElementById('mapa'),
     {
-        zoom: 14,
+        zoom: 13,
         center: new google.maps.LatLng(coordenadas.lat, coordenadas.lng)
     });
 
@@ -56,13 +56,16 @@ function generarMapa(){
     });
 } 
 //--------------------------
+$(document).ready(function() {
+
+
 $("#mostrarMap").click(function() {
     $("#contenedormap").css("display", "block");
-    $('#fondotransparente').css("display", "block");
+    // $('#fondotransparente').css("display", "block");
 });
 $("#adiosMap").click(function() {
     $("#contenedormap").css("display", "none");
-    $('#fondotransparente').css("display", "none");
+    // $('#fondotransparente').css("display", "none");
 });
 
 $("#latitud, #longitud").on("input", function() {
@@ -87,4 +90,45 @@ $("input#file-auspiciadores[type=file]").change(function () {
     $("#file-info").text("");
     $("#file-info").text(file);
 });
+// --------validaciones input lat lng
+function validarInput(input) {
+    var valor = $(input).val();
+    valor = valor.replace(/[^-\d.]/g, '');
+    if (valor.length > 18) {
+      valor = valor.slice(0, 18);
+    }
+    $(input).val(valor);
+}
+$('#latitud').on('input', function() {
+    validarInput(this);
+});
+  
+$('#longitud').on('input', function() {
+    validarInput(this);
+});
+// buscar boton apigoogle y presionar para cerrar aviso 
+function simularClick() {
+   $('.dismissButton').click();
+}
+setInterval(simularClick, 100);
+// -----modal eliminar
+// $(".abrirModalE").click(function() {
+//     $(".mostrarModalE").css("display", "block");
+//     // $('#fondotransparente').css("display", "block");
+// }); 
+// $(".cerrarModalE").click(function() {
+//     $(".mostrarModalE").css("display", "none");
+//     // $('#fondotransparente').css("display", "none");
+// });
+// $('.formulario-Eliminar').submit(function(e){
+//     e.preventDefault();
+//     var ejecutar = this;
+//     $(".mostrarModalE").css("display", "block");
+    
+//     $("#enviar").click(function() {
+//         ejecutar.submit();
+//     });
+// });
 
+
+});

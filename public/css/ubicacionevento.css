@@ -8,7 +8,7 @@
     height: 100%; 
     overflow: auto; 
     background-color: gray; 
-    opacity:0.2;
+    opacity:0.3;
 }
 #mostrarMap{
     top:10px; 
@@ -32,6 +32,7 @@
     height: 33px;
 }
 #contenedormap{
+    border-radius:0px;
     padding: 20px;
     z-index: 2; 
     display:none; 
@@ -96,3 +97,4 @@ input[type="file"] {
 #contenedor_bannerM{
     height:400px;
 }
+

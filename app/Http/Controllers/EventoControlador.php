@@ -152,16 +152,26 @@ class EventoControlador extends Controller
 
     public function destroy($user,$evento)
     {
-        //
+        // 
         return $evento;
     }
 
     public function guardarMap(Request $request, $id){
+        $request->validate([
+            'latitud' => ['required', 'numeric', 'between:-85.05,85.05'],
+            'longitud' => ['required', 'numeric', 'between:-179.99,179.99'],
+        ], [
+            'latitud.required' => 'El campo latitud debe ser un número.',
+            'latitud.between' => 'La latitud esta fuera del limite.',
+            'longitud.required' => 'El campo longitud debe ser un número.', 
+            'longitud.between' => 'La longitud esta fuera del limite.',
+        ]);
         $evento = Evento::find($id);
         $evento->latitud=$request->latitud;
         $evento->longitud=$request->longitud;
         $evento->save();
         return redirect()->route('verEvento', ['id' => $id]);
+        // return back();
     }
    
 }
