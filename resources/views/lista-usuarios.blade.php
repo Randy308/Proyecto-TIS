@@ -29,11 +29,10 @@
         <div id="content">
             @include('layouts/navbar')
 
-
-            <h1>Listado de Usuarios</h1>
-
+            <div class="d-flex justify-content-center mt-5">
+                <h3>Listado de Usuarios</h3>
+            </div>
             @livewire('usuario-list')
-
 
         </div>
     </div>
