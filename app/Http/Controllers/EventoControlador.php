@@ -13,7 +13,13 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use App\Models\AsistenciaEvento;
+
+use App\Models\ImagenAuspiciador;
+
+
+
 use Illuminate\Support\Facades\DB;
+
 
 class EventoControlador extends Controller
 {
@@ -43,11 +49,12 @@ class EventoControlador extends Controller
         return $rutaBanner;
     }
 
-    public function show($id)
+    public function show($id)//id de evento
     {
-        return view('visualizar-evento', [
-            'evento' => Evento::findOrFail($id)
-        ]);
+        $evento = Evento::find($id);
+        $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
+
+    return view('visualizar-evento', compact('evento', 'imgAuspiciadores'));
     }
 
     public function listaEventos()
@@ -109,7 +116,12 @@ class EventoControlador extends Controller
             'fecha_inicio' => $request->input('fecha_inicio'),
             'fecha_fin' => $request->input('fecha_fin'),
             'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+
+            'latitud' => -17.39359989348116,
+            'longitud' => -66.14596353915297,
+
             'background_color'=> '#21618C'
+
         ]);
 
         $evento->save();
@@ -192,9 +204,32 @@ class EventoControlador extends Controller
 
     public function destroy($user, $evento)
     {
+      
         $eventoActual = Evento::FindOrFail($evento);
         $eventoActual->estado = 'Cancelado';
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', 'Se cancelo el evento exitosamente');
+   
     }
+
+    public function guardarMap(Request $request, $id){
+        $request->validate([
+            'latitud' => ['required', 'numeric', 'between:-85.05,85.05'],
+            'longitud' => ['required', 'numeric', 'between:-179.99,179.99'],
+        ], [
+            'latitud.required' => 'El campo latitud debe ser un número.',
+            'latitud.between' => 'La latitud esta fuera del limite.',
+            'longitud.required' => 'El campo longitud debe ser un número.', 
+            'longitud.between' => 'La longitud esta fuera del limite.',
+        ]);
+        $evento = Evento::find($id);
+        $evento->latitud=$request->latitud;
+        $evento->longitud=$request->longitud;
+        $evento->save();
+        return redirect()->route('verEvento', ['id' => $id]);
+        // return back();
+    }
+   
+
+
 }
