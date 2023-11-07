@@ -9,7 +9,7 @@
                     <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
                 </div>
             </div>
-    
+
             <div class="col-md-3 mb-3">
                 <label for="">Ordenar por:</label>
                 <select wire:model="orderb" class="form-control">
@@ -19,7 +19,7 @@
                     <option value="3">Nombre Z-A</option>
                 </select>
             </div>
-    
+
             <div class="col-md-3 mb-3">
                 <label for="">Filtrar por Estado:</label>
                 <select wire:model="filtroEstado" class="form-control">
@@ -30,7 +30,7 @@
                     <option value="cancelado">Cancelado</option>
                 </select>
             </div>
-    
+
             <div class="col-md-3 mb-3">
                 <label for="">Filtrar por Categoría:</label>
                 <select wire:model="filtroCategoria" class="form-control">
@@ -57,9 +57,9 @@
             <div class="col-md-3 mb-3">
                 <label for="">Filtrar por Gestion:</label>
                 <select wire:model="filtroGestion" class="form-control">
-                    
+
                     <option value="{{ json_encode(['anio' => $anio , 'gestion' => $gesActual]) }}">{{$anio}} - {{$gesActual}}</option>
-                    
+
                     <option value="">Todo</option>
 
                     @foreach ($gestiones as $gestion)
@@ -68,16 +68,16 @@
                         <option value="{{ json_encode(['anio' => $gestion->anio , 'gestion' => $gestion->gestion]) }}">{{$gestion->anio}} - {{$gestion->gestion}}</option>
                         @endif
 
-                        
+
                     @endforeach
 
                 </select>
-                
+
 
             </div>
 
         </div>
-    
+
     <div class="row">
         @if($eventos->count() == 0)
         <div class="col-12">
@@ -103,20 +103,32 @@
 
                     </div>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
-                        <p class="card-text">{{ $evento->descripcion_evento }}</p>
-                        <p class="card-text" >{{ $evento->fecha_inicio->format('Y-m-d H:i:s') }}</p>
-                        <p class="card-text" >{{ $evento->fecha_fin->format('Y-m-d H:i:s') }}</p>
-                        
+                        <a href="{{ route('verEvento', $evento->id) }}">
+                            <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
+                            <p class="card-text"><b class=" font-weight-bold">Descripción: </b>{{ $evento->descripcion_evento }}</p>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-text" >{{ \Carbon\Carbon::parse($evento->fecha_inicio)->formatLocalized('%d %b %Y') }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-text" >{{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}</p>
+                                </div>
+
+
+                            </div>
+
+                        </a>
+
+
                     </div>
                 </div>
             </div>
         @endforeach
 
-        
+
     </div>
-    
-    {{ $eventos->links() }} 
+
+    {{ $eventos->links() }}
 </div>
 @livewireScripts
 

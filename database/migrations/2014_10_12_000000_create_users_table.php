@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
+    
     /**
      * Run the migrations.
      *
@@ -21,13 +22,15 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('telefono')->nullable();
             $table->string('direccion')->nullable();
-            $table->string('carrera')->nullable();
+            $table->enum('estado', ['Habilitado','Deshabilitado']);
+            $table->string('pais')->nullable();
+            $table->string('historial_academico')->nullable();
             $table->string('foto_perfil')->nullable();
             $table->date('fecha_nac')->nullable();
-            $table->unsignedBigInteger('rol_id');
+            $table->unsignedBigInteger('institucion_id');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('rol_id')->references('id')->on('rols');
+            $table->foreign('institucion_id')->references('id')->on('institucions');
         });
     }
 

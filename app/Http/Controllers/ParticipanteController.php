@@ -2,19 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Rol;
+use App\Models\Institucion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class ParticipanteController extends Controller
 {
 
     public function index()
     {
-        return view('registrarParticipante');
+        $instituciones = Institucion::all();
+        return view('registrarParticipante', compact('instituciones'));
     }
 
     public function create()
@@ -26,29 +29,43 @@ class ParticipanteController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|string',
-            'telefono' => 'required',
+
+            'name' => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'telefono' => 'required|regex:/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/',
             'direccion' => 'required|string',
-            'email' => 'required',
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'email' => ['required', 'unique:users,email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
             'fecha_nac' => 'required',
-            'carrera' => 'required',
-            'foto_perfil' => 'required|image|max:2048',
+            'institucion' => 'required',
+            'pais' => 'required',
+            'historial' => '',
+            'foto_perfil' => 'image|max:2048',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
         ]);
         $user = new User();
-        $rol = Rol::where('nombre_rol', 'usuario_comun')->first();
         $user->name = $request['name'];
-        $user->rol_id = $rol->id;
+        $user->institucion_id = $request['institucion'];
+        $user->historial_academico = $request['historial'];
+        $user->pais = $request['pais'];
         $user->telefono = $request['telefono'];
         $user->direccion = $request['direccion'];
         $user->password = Hash::make($request['password']);
         $user->email = $request['email'];
-        $user->carrera = $request['carrera'];
         $user->fecha_nac = $request['fecha_nac'];
-        $imagen = $request->file('foto_perfil')->store('public/imagenes');
-        $url = Storage::url($imagen);
+        $user->email_verified_at = now();
+        $user->remember_token = Str::random(10);
+        $user->estado = "Habilitado";
+
+
+        if ($request->hasFile('foto_perfil')) {
+            $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
+            $url = Storage::url($imagen);
+        } else {
+            $url = "/storage/image/default_user_image.png";
+        }
         $user->foto_perfil = $url;
+
+        $user->assignRole('usuario común');
         $user->save();
         return redirect()->route('index')->with('status', 'Usuario creado exitosamente!.');
     }

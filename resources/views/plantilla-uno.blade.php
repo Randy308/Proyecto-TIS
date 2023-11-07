@@ -50,11 +50,16 @@
                 <div>
                     @php
 
+
                         $idEventoPagina = $evento->id;
 
-                        \Carbon\Carbon::setLocale('es');
-                    @endphp
-                    <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->format('d-m-Y \a \l\a\s H:i:s') }}</h5>
+                    \Carbon\Carbon::setlocale(config('app.locale'));
+                @endphp
+                <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}</h5>
+
+
+                      
+
 
 
                     <h1 id="miTitulo">{{ $evento->nombre_evento }}</h1>
@@ -147,18 +152,23 @@
                     <div class="card" id="participantesContainer">
                         <h5>Lista de Participantes</h5>
                         <div class="card" id="participantes">
-
-
+                        
 
                             @if ($evento->users->count())
                                 <table class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
+                                  <thead>
+                                    <tr>
                                             <th>ID</th>
                                             <th>Nombre</th>
+                                    </tr>
+                                </thead>
 
-                                        </tr>
-                                    </thead>
+                                
+
+                                        
+
+                                       
+                                    
 
                                     <tbody>
                                         @foreach ($evento->users as $user)
@@ -168,25 +178,22 @@
                                                 <td>{{ $user->name }}</td>
                                                 @include('eliminar-participante')
 
-                                                @if (auth()->check())
-                                                    @if (auth()->user()->id === 1)
-                                                        <td>
-                                                            <button class="btn btn-danger" data-toggle="modal"
-                                                                data-target="#eliminarParticipanteModal">Eliminar</button>
-                                                        </td>
-                                                    @endif
-                                                @endif
 
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <p>No existe participantes</p>
-                            @endif
+                                            @if (auth()->check() && (auth()->user()->hasRole('administrador') || auth()->user()->hasRole('organizador')))
+                                            <td>
+                                                <button class="btn btn-danger" data-toggle="modal" data-target="#eliminarParticipanteModal_{{ $user->id }}">Eliminar</button>
+                                            </td>
+                                            @endif
+
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p>No existe participantes</p>
+                        @endif
 
 
-                        </div>
                     </div>
                 </div>
                 <div class="card" id="tab2">
@@ -261,4 +268,6 @@
         </div>
     </div>
 
+
+@include('layouts.mensajes-alerta')
 </div>

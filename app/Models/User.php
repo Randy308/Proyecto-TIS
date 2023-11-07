@@ -6,27 +6,33 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\Rol;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
-
+    use HasFactory, Notifiable, HasRoles;
+    
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
+
+
     protected $fillable = [
         'name',
         'email',
         'password',
-        'rol',
         'telefono',
         'direccion',
-        'carrera',
-        'foto_perfil',
+        'instituto',
+        'direccion_foto',
+        'historial_Academico',
         'fecha_nac',
+        'estado',
+        'institucion_id',//observacion
+        'pais',
+        'historial_academico',
     ];
     /**
      * The attributes that should be hidden for arrays.
@@ -56,9 +62,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Evento::class);
     }
-
-    public function rol()
+    public function hasRole($role)
     {
-        return $this->belongsTo(Rol::class);
+        return $this->roles->contains('name', $role);
+    }
+    public function institucions()
+    {
+        return $this->belongsTo(Institucion::class);
     }
 }

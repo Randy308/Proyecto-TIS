@@ -18,6 +18,7 @@ class Evento extends Model
         'categoria',
         'fecha_inicio',
         'fecha_fin',
+        'background_color',
         'direccion_banner',
         'latitud',
         'longitud',
@@ -31,7 +32,17 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'asistencia_eventos');
     }
+
     public function imagen_auspiciadors(){
         return $this->hasMany(ImagenAuspiciador::class);
+    }
+    public function elementosBanners()
+    {
+        return $this->hasMany(ElementosBanner::class);
+    }
+    public function elementoImagenBanners()
+    {
+        return $this->hasMany(ElementoImagenBanner::class);
+
     }
 }

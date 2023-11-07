@@ -34,11 +34,15 @@
 
                         </div>
                     </div>
-                    <a href="{{ route('registrar-participante') }}" class="btn btn-link">No tienes cuenta ? Registrate</a>
+                    <div class="d-flex flex-column">
+                        <button type="submit" id="botonLogin" class="btn btn-primary" disabled>Acceder</button>
+
+                        <a href="{{ route('recuperar-cuenta') }}" class="btn btn-link">¿Olvidaste tu contraseña?</a>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" id="botonLogin" class="btn btn-primary">Acceder</button>
+                <div class="modal-footer d-flex align-self-center">
+                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button> --}}
+                    <a href="{{ route('registrar-participante') }}"class="btn btn-success">Crear cuenta nueva</a>
                 </div>
 
             </div>

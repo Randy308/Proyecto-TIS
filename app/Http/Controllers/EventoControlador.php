@@ -11,19 +11,24 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Str;
 use App\Models\AsistenciaEvento;
+
 use App\Models\ImagenAuspiciador;
 
 
 
+use Illuminate\Support\Facades\DB;
+
+
 class EventoControlador extends Controller
 {
-    public function generarBanner($nombreEvento, $fechaInicio, $fechaFin)
+    public function generarBanner($nombreEvento, $fechaInicio, $fechaFin, $background_color)
     {
         $textoBanner = "Evento: $nombreEvento\nFecha de inicio: $fechaInicio\nFecha de finalización: $fechaFin";
 
 
-        $banner = Image::canvas(800, 200, '#3498db');
+        $banner = Image::canvas(800, 200, $background_color);
 
         $banner->text($textoBanner, 400, 100, function ($font) {
             $font->file(public_path('fonts/InterTight-Black.ttf'));
@@ -80,7 +85,7 @@ class EventoControlador extends Controller
                 'max:255',
                 Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
                     return $query->where('categoria', $request->input('categoria'));
-                })->ignore($request->input('id'), 'id'), 
+                })->ignore($request->input('id'), 'id'),
             ],
             'descripcion_evento' => 'required|string',
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
@@ -91,14 +96,17 @@ class EventoControlador extends Controller
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
             'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
-
+        $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
-            $request->input('$nombreEvento'),
+            $nombreEvento,
             $request->input('fecha_inicio'),
-            $request->input('fecha_fin')
+            $request->input('fecha_fin'),
+            $background_color,
+
+
         );
         $nombreDelArchivo = basename($rutaBanner);
-        
+
         $evento = new Evento([
             'nombre_evento' => $nombreEvento,
             'descripcion_evento' => $descripcionEvento,
@@ -108,8 +116,12 @@ class EventoControlador extends Controller
             'fecha_inicio' => $request->input('fecha_inicio'),
             'fecha_fin' => $request->input('fecha_fin'),
             'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
+
             'latitud' => -17.39359989348116,
             'longitud' => -66.14596353915297,
+
+            'background_color'=> '#21618C'
+
         ]);
 
         $evento->save();
@@ -117,43 +129,87 @@ class EventoControlador extends Controller
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
 
-    public function edit($user,$evento)
+    public function edit($user, $evento)
     {
         //
-        return $user;
+        $categorias = ['Diseño', 'QA', 'Desarrollo', 'Ciencia de datos'];
+        $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+        return view('actualizar-evento', compact('miEvento', 'categorias'));
     }
-    public function editBanner($user,$evento)
+    public function updateEstado($user, $evento, Request $request)
+    {
+        //
+        $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+        $evento->estado = 'Activo';
+        $evento->save();
+        return redirect()->route('listaEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+
+    }
+    public function editBanner($user, $evento)
     {
         //
         return view('editar-evento', ['evento' => Evento::findOrFail($evento)]);
 
     }
-    public function update($user,$evento ,Request $request)
+    public function update($user, $evento, Request $request)
     {
         //
-        return redirect()->back()->with('status', '¡Banner actualizado exitosamente!.');
+        $request->validate([
+            'nombre_evento' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
+                    return $query->where('categoria', $request->input('categoria'));
+                })->ignore($evento, 'id'),
+            ],
+            'descripcion_evento' => 'required|string',
+            'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
+            'fecha_inicio' => 'required|date|after_or_equal:today',
+            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+        ], [
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
+            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
+        ]);
+        $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+        $evento->nombre_evento = $request->input('nombre_evento');
+        $evento->descripcion_evento = $request->input('descripcion_evento');
+        $evento->categoria = $request->input('categoria');
+        $evento->fecha_inicio = $request->input('fecha_inicio');
+        $evento->fecha_fin = $request->input('fecha_fin');
+        $evento->save();
+        session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
+        return redirect()->route('misEventos');
 
     }
 
-    public function updateBanner($user,$evento ,Request $request)
+    public function updateBanner($user, $evento, Request $request)
     {
-        $this->validate($request, [
-            'foto_banner' => 'required|image|max:2048',
-
+        $request->validate([
+            'imagen-banner' => 'required|string',
         ]);
         $eventoActual = Evento::FindOrFail($evento);
-        $imagen = $request->file('foto_banner')->store('public/banners');
-        $url = Storage::url($imagen);
-        $eventoActual->direccion_banner = $url;
+
+        $png_url = "banner-" . time() . ".png";
+        $path = public_path() . '/storage/banners/' . $png_url;
+
+        Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+
+        $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', '¡Banner actualizado exitosamente!.');
 
     }
 
-    public function destroy($user,$evento)
+    public function destroy($user, $evento)
     {
-        // 
-        return $evento;
+      
+        $eventoActual = Evento::FindOrFail($evento);
+        $eventoActual->estado = 'Cancelado';
+        $eventoActual->update();
+        return redirect()->route('misEventos')->with('status', 'Se cancelo el evento exitosamente');
+   
     }
 
     public function guardarMap(Request $request, $id){
@@ -174,4 +230,6 @@ class EventoControlador extends Controller
         // return back();
     }
    
+
+
 }

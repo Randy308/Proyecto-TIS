@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AsistenciaEvento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Spatie\Permission\Models\Role;
 class AsistenciaEventosController extends Controller
 {
     //
@@ -42,19 +42,23 @@ class AsistenciaEventosController extends Controller
         }
 
     }
-    public function eliminarParticipante($user, $evento)
-{
-    if (auth()->user()->id === 1) {
-        $asistencia = AsistenciaEvento::where('user_id', $user)->where('evento_id', $evento)->first();
-
-        if ($asistencia) {
-            $asistencia->delete();
-            return redirect()->back()->with('status', 'Participante eliminado por conducta indebida.');
+    public function eliminarParticipante(Request $request, $user, $evento)
+    {
+        if ($request->user() && ($request->user()->hasRole('administrador') || $request->user()->hasRole('colaborador'))) {
+            $asistencia = AsistenciaEvento::where('user_id', $user)
+                ->where('evento_id', $evento)
+                ->first();
+    
+            if ($asistencia) {
+                $mensaje = 'Participante eliminado por conducta indebida.';
+                $asistencia->delete();
+                return redirect()->back()->with('status', $mensaje);
+            } else {
+                return redirect()->back()->with('error', 'El usuario no está registrado en el evento.');
+            }
         } else {
-            return redirect()->back()->with('error', 'El usuario no está registrado en el evento.');
+            return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
         }
-    } else {
-        return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
     }
-}
+
 }

@@ -8,7 +8,7 @@
     @include('layouts/estilos')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/listUser.css') }}">
     <style>
         .navbar-custom {
             background-color: #007BFF;
@@ -23,7 +23,7 @@
 
 <body>
 
-
+    @include('layouts.mensajes-alerta')
     <div class="wrapper">
         @include('layouts/sidebar')
         <div id="content">
@@ -37,10 +37,7 @@
 
         </div>
     </div>
-
-    @include('layouts/sidebar-scripts')
-
-
+    @include('layouts.sidebar-scripts')
 </body>
 
 </html>

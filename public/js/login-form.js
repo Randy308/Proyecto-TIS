@@ -1,40 +1,55 @@
-
-$(document).ready(function() {
-
+$(function () {
     // Validate Username
     $("#usercheck").hide();
-    let usernameError = true;
     let emailError = true;
-    $('#botonLogin').attr("disabled", emailError);
+    let passError = true;
 
-    const email = document.getElementById("inputEmail");
-    email.addEventListener("blur", () => {
-        let regex =/^([_\-\.0-9a-zA-Z]+)@([_\-\.0-9a-zA-Z]+)\.([a-zA-Z]){2,7}$/;
-        let s = email.value;
+    $("#inputEmail").on("input", function () {
+        let regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        let s = $(this).val();
+        lastchar = s.charAt(s.length-1);
+
+        if(lastchar == '@'){
+            console.log(lastchar)
+        }
         if (regex.test(s)) {
             $("#usercheck").hide();
             emailError = false;
-            $('#botonLogin').attr("disabled", emailError);
         } else {
-
             $("#usercheck").show();
-            $("#usercheck").html("email incorrecto");
+            $("#usercheck").html("Email incorrecto");
             emailError = true;
-            $('#botonLogin').attr("disabled", emailError);
         }
+        comprobar(emailError, passError);
+    });
+
+    $("#password").on("input", function () {
+        var s = $(this).val().length;
+        passError = s < 4;
+        comprobar(emailError, passError);
+        console.log("El tamaño es igual a " + s);
     });
 });
 
+function comprobar(emailError, passError) {
+    console.log(emailError + '   ' + passError);
+    if (emailError === false && passError === false) {
+        $("#botonLogin").prop("disabled", false);
+    } else {
+        $("#botonLogin").prop("disabled", true);
+    }
+}
 
-const togglePassword = document.querySelector('#togglePassword');
 
-const password = document.querySelector('#password');
-togglePassword.addEventListener('click', function(e) {
+const togglePassword = document.querySelector("#togglePassword");
+
+const password = document.querySelector("#password");
+togglePassword.addEventListener("click", function (e) {
     // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
+    const type =
+        password.getAttribute("type") === "password" ? "text" : "password";
+    password.setAttribute("type", type);
 
     // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
+    this.classList.toggle("fa-eye-slash");
 });
-

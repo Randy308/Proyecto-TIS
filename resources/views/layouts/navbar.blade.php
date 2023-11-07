@@ -19,7 +19,7 @@
             <li class="nav-item dropdown" id="navdropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/fox.jpg"
+                    <img src="{{ auth()->user()->foto_perfil}}"
                         width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -29,6 +29,15 @@
                                  <a class="dropdown-item"  disabled >Configuracion</a>
                                 <a class="dropdown-item" href="#">Editar Perfil</a>
                             -->
+                    @if(auth()->user()->hasRole('administrador'))
+                        <button class="dropdown-item" disabled>Administrador</button>
+                    @elseif(auth()->user()->hasRole('organizador'))
+                        <button class="dropdown-item" disabled>Organizador</button>
+                    @elseif(auth()->user()->hasRole('colaborador'))
+                        <button class="dropdown-item" disabled>Colaborador</button>
+                    @elseif(auth()->user()->hasRole('usuario común'))
+                        <button class="dropdown-item" disabled>Usuario Común</button>
+                    @endif
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">Cerrar sesión</button>
