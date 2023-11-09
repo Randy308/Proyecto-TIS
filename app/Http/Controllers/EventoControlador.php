@@ -199,9 +199,9 @@ class EventoControlador extends Controller
         $png_url = "banner-" . time() . ".png";
         $path = public_path() . '/storage/banners/' . $png_url;
 
-        //Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
-        $banner = Image::make(file_get_contents($request->input('imagen-banner')));
-        $banner->save(storage_path("app/public_html/banners/" . $png_url));
+        Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+        //$banner = Image::make(file_get_contents($request->input('imagen-banner')));
+        //$banner->save(storage_path("app/public_html/banners/" . $png_url));
 
         $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();

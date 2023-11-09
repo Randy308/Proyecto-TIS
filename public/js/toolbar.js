@@ -44,6 +44,7 @@ $(document).ready(function () {
             scroll: true,
             cursor: "pointer",
         });
+        
     });
 
     $("#containment-wrapper").on("click", "*", function () {
