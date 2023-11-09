@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
+use App\Http\Controllers\AuspiciadorController;
 use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\RecuperarCuentaController;
@@ -99,3 +100,6 @@ Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEs
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');
 
+Route::get('/auspiciadores', [AuspiciadorController::class, 'index'])->name('auspiciadores-index');
+
+Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');

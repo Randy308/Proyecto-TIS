@@ -52,9 +52,14 @@
             </ul>
         </li>
         @endauth
-
+        <li>
+            <a href="{{ route('auspiciadores-index') }}">
+                <i class="bi bi-cup-hot"></i>
+                <span>Auspiciadores</span>
+            </a>
+        </li>
     </ul>
-
+    
     <ul class="list-unstyled CTAs">
 
     </ul>
