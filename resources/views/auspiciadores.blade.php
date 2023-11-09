@@ -29,18 +29,14 @@
                                 <input type="name" name="nombre" class="form-control" id="exampleFormControlInput1"
                                     placeholder="ingrese el nombre de su auspiciador">
                             </div>
-                            <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Nombres</label>
-                                <input type="name" class="form-control" id="recipient-input"
-                                    placeholder="ingrese el nombre de su auspiciador">
-                                <button type="button" onclick="addRecipient()">Agregar</button>
-                            </div>
-                            <div id="recipient-list" class="d-flex">
-                                
-                            </div>
+
+
                             <div class="mb-3">
                                 <label for="file-auspiciadores" class="form-label">Imagen del auspiciador</label>
-                                <input id="file-auspiciadores" name="url" type="file" accept="image/*" />
+                                <div class="fileUpload btn btn-danger">
+                                    <span>Subir imagen</span>
+                                    <input id="file-auspiciadores" name="url" type="file" class="upload" accept="image/*" />
+                                </div>
 
                             </div>
                             <div class="mb-4 d-flex justify-content-center">
@@ -49,7 +45,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <button class="btn btn-danger">Guardar</button>
+                            <button class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
 
@@ -83,35 +79,6 @@
                 imagePreview.style.display = "block";
             }
         });
-    </script>
-    <script>
-        function addRecipient() {
-            const input = document.getElementById("recipient-input");
-            const recipientList = document.getElementById("recipient-list");
-
-            if (input.value.trim() === "") {
-                return;
-            }
-
-            const recipient = document.createElement("div");
-            recipient.classList.add("recipient");
-
-            const recipientName = document.createElement("span");
-            recipientName.textContent = input.value;
-
-            const closeButton = document.createElement("span");
-            closeButton.classList.add("close-button");
-            closeButton.textContent = "x";
-            closeButton.addEventListener("click", function() {
-                recipientList.removeChild(recipient);
-            });
-
-            recipient.appendChild(recipientName);
-            recipient.appendChild(closeButton);
-            recipientList.appendChild(recipient);
-
-            input.value = "";
-        }
     </script>
 </body>
 

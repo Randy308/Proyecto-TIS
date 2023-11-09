@@ -39,14 +39,18 @@ class EventoControlador extends Controller
 
         $folderPath = public_path('storage/banners');
 
-        if (!file_exists($folderPath)) {
-            mkdir($folderPath, 0755, true);
-        }
+        // if (!file_exists($folderPath)) {
+        //     mkdir($folderPath, 0755, true);
+        // }
 
-        $nombreArchivo = "banner_" . $nombreEvento . ".png";
-        $rutaBanner = public_path('storage/banners/' . $nombreArchivo);
-        $banner->save($rutaBanner);
+        $nombreArchivo = "/banner_" . $nombreEvento . ".png";
+        //$rutaBanner = public_path('storage/banners/' . $nombreArchivo);
+        //$banner->save($rutaBanner);
+        $rutaBanner = $banner->save(storage_path("app/public/banners/" . $nombreArchivo));
+        //$rutaBanner = $banner->save(storage_path("app/public_html/banners/" . $nombreArchivo));
         return $rutaBanner;
+        //$rutaBanner =  Storage::disk('local')->put('images/prueba-banners'.'/'.$nombreArchivo,$banner);
+
     }
 
     public function show($id)//id de evento
@@ -76,6 +80,7 @@ class EventoControlador extends Controller
 
     public function crearEvento(Request $request)
     {
+        //return $request;
         $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
         $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
         $validator = $request->validate([
@@ -194,7 +199,9 @@ class EventoControlador extends Controller
         $png_url = "banner-" . time() . ".png";
         $path = public_path() . '/storage/banners/' . $png_url;
 
-        Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+        //Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+        $banner = Image::make(file_get_contents($request->input('imagen-banner')));
+        $banner->save(storage_path("app/public_html/banners/" . $png_url));
 
         $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();
@@ -204,12 +211,12 @@ class EventoControlador extends Controller
 
     public function destroy($user, $evento)
     {
-      
+
         $eventoActual = Evento::FindOrFail($evento);
         $eventoActual->estado = 'Cancelado';
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', 'Se cancelo el evento exitosamente');
-   
+
     }
 
     public function guardarMap(Request $request, $id){
@@ -219,7 +226,7 @@ class EventoControlador extends Controller
         ], [
             'latitud.required' => 'El campo latitud debe ser un número.',
             'latitud.between' => 'La latitud esta fuera del limite.',
-            'longitud.required' => 'El campo longitud debe ser un número.', 
+            'longitud.required' => 'El campo longitud debe ser un número.',
             'longitud.between' => 'La longitud esta fuera del limite.',
         ]);
         $evento = Evento::find($id);
@@ -229,7 +236,7 @@ class EventoControlador extends Controller
         return redirect()->route('verEvento', ['id' => $id]);
         // return back();
     }
-   
+
 
 
 }

@@ -1,13 +1,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
 body {
-<<<<<<< Updated upstream
-    background-color: #f5f5f5;
-=======
     background-color: #eee;
->>>>>>> Stashed changes
     color: #333;
 }
+
+.close-button {
+    cursor: pointer;
+    padding-left: 10px;
+    font-weight: bold;
+}
+.recipient{
+    display: flex;
+
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#recipient-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
 .contact-form {
     background: #fff;
     margin-top: 5%;
@@ -136,3 +153,5 @@ header {
     align-items: center; /* Centra verticalmente los elementos */
     justify-content: center; /* Centra horizontalmente los elementos */
 }
+
+
