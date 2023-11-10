@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Auspiciador;
+use App\Models\AuspiciadorEventos;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
-class AuspiciadorController extends Controller
+class AuspiciadorEventosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,6 @@ class AuspiciadorController extends Controller
     public function index()
     {
         //
-        return view('auspiciadores');
     }
 
     /**
@@ -38,29 +36,15 @@ class AuspiciadorController extends Controller
     public function store(Request $request)
     {
         //
-        $this->validate($request, [
-
-            'nombre' => ['required','string','regex:/^[a-zA-Z\s]*$/','unique:auspiciadors,nombre'],
-            'url' => 'image|max:2048',
-
-        ]);
-        $auspiciador = new Auspiciador();
-        $auspiciador->nombre = $request->input('nombre');
-        $imagen = $request->file('url')->store('public/fotos_usuarios');
-        $url = Storage::url($imagen);
-        $auspiciador->url = $url;
-        $auspiciador->save();
-        return redirect()->route('index')->with('status', 'Se agrego un auspiciador exitosamente!.');
-        //return $request;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Auspiciador  $auspiciador
+     * @param  \App\Models\AuspiciadorEventos  $auspiciadorEventos
      * @return \Illuminate\Http\Response
      */
-    public function show(Auspiciador $auspiciador)
+    public function show(AuspiciadorEventos $auspiciadorEventos)
     {
         //
     }
@@ -68,10 +52,10 @@ class AuspiciadorController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Auspiciador  $auspiciador
+     * @param  \App\Models\AuspiciadorEventos  $auspiciadorEventos
      * @return \Illuminate\Http\Response
      */
-    public function edit(Auspiciador $auspiciador)
+    public function edit(AuspiciadorEventos $auspiciadorEventos)
     {
         //
     }
@@ -80,10 +64,10 @@ class AuspiciadorController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Auspiciador  $auspiciador
+     * @param  \App\Models\AuspiciadorEventos  $auspiciadorEventos
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Auspiciador $auspiciador)
+    public function update(Request $request, AuspiciadorEventos $auspiciadorEventos)
     {
         //
     }
@@ -91,10 +75,10 @@ class AuspiciadorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Auspiciador  $auspiciador
+     * @param  \App\Models\AuspiciadorEventos  $auspiciadorEventos
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Auspiciador $auspiciador)
+    public function destroy(AuspiciadorEventos $auspiciadorEventos)
     {
         //
     }

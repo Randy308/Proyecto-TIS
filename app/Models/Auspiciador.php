@@ -10,6 +10,12 @@ class Auspiciador extends Model
     use HasFactory;
     protected $fillable = [
         'nombre',
-        'url'
+        'url',
     ];
+
+
+    public function eventosAuspicia()
+    {
+        return $this->belongsToMany(Evento::class, 'auspiciador_eventos');
+    }
 }

@@ -35,9 +35,9 @@ function addRecipient(input) {
             return;
         }
     }
-
+    
     misAuspiciadores.push(input.value);
-
+    var index = misAuspiciadores.length - 1;
     const recipient = document.createElement("div");
     recipient.classList.add("recipient");
     //background-color: #ff8880;
@@ -63,6 +63,7 @@ function addRecipient(input) {
     closeButton.addEventListener("click", function () {
         recipientList.removeChild(recipient);
         formulario.removeChild(inputHidden);
+        delete misAuspiciadores[index];
     });
 
     recipient.appendChild(recipientName);

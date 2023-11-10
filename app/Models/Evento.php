@@ -32,7 +32,7 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'asistencia_eventos');
     }
-
+    
     public function imagen_auspiciadors(){
         return $this->hasMany(ImagenAuspiciador::class);
     }
@@ -44,5 +44,9 @@ class Evento extends Model
     {
         return $this->hasMany(ElementoImagenBanner::class);
 
+    }
+    public function auspiciadors()
+    {
+        return $this->belongsToMany(Auspiciador::class, 'auspiciador_eventos');
     }
 }

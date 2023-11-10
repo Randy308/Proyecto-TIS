@@ -15,7 +15,7 @@ class CreateAuspiciadorsTable extends Migration
     {
         Schema::create('auspiciadors', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
+            $table->string('nombre')->unique();
             $table->string('url');
             $table->timestamps();
         });

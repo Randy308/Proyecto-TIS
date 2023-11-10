@@ -40,7 +40,7 @@
 
                             </div>
                             <div class="mb-4 d-flex justify-content-center">
-                                <img class="img-prewiew" id="image-preview" src="/storage/image/default_user_image.png"
+                                <img class="img-prewiew" id="image-preview" src="/storage/image/auspiciadores.png"
                                     alt="Previsualización de la imagen" style="height: 150px;margin: 0 auto;">
                             </div>
                         </div>

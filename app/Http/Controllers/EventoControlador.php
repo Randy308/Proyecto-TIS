@@ -13,11 +13,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use App\Models\AsistenciaEvento;
-
+use App\Models\Auspiciador;
+use App\Models\AuspiciadorEventos;
 use App\Models\ImagenAuspiciador;
-
-
-
 use Illuminate\Support\Facades\DB;
 
 
@@ -52,13 +50,17 @@ class EventoControlador extends Controller
         //$rutaBanner =  Storage::disk('local')->put('images/prueba-banners'.'/'.$nombreArchivo,$banner);
 
     }
-
-    public function show($id)//id de evento
+    public function index()
+    {
+        $auspiciadores = Auspiciador::get();
+        return view('crear-evento', compact('auspiciadores'));
+    }
+    public function show($id) //id de evento
     {
         $evento = Evento::find($id);
         $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
 
-    return view('visualizar-evento', compact('evento', 'imgAuspiciadores'));
+        return view('visualizar-evento', compact('evento', 'imgAuspiciadores'));
     }
 
     public function listaEventos()
@@ -96,11 +98,15 @@ class EventoControlador extends Controller
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            "Auspiciadores"    => "array",
+            "Auspiciadores.*"  => "string|distinct",
         ], [
             'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
             'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
+
+        //return $request;
         $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
             $nombreEvento,
@@ -130,6 +136,25 @@ class EventoControlador extends Controller
         ]);
 
         $evento->save();
+        
+
+        $inputArray = $request->input('Auspiciadores');
+
+        if ($request->filled('Auspiciadores') && is_array($inputArray)) {
+            foreach ($inputArray as $value) {
+                $miAuspiciador = Auspiciador::where('nombre', $value)->first();
+
+                if ($miAuspiciador) {
+                    $auspiciadorEvento = new AuspiciadorEventos();
+                    $auspiciadorEvento->evento_id = $evento->id;
+                    $auspiciadorEvento->auspiciador_id = $miAuspiciador->id;
+                    $auspiciadorEvento->save();
+                } else {
+                }
+            }
+        } else {
+        }
+
 
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
@@ -148,13 +173,11 @@ class EventoControlador extends Controller
         $evento->estado = 'Activo';
         $evento->save();
         return redirect()->route('listaEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
-
     }
     public function editBanner($user, $evento)
     {
         //
         return view('editar-evento', ['evento' => Evento::findOrFail($evento)]);
-
     }
     public function update($user, $evento, Request $request)
     {
@@ -186,7 +209,6 @@ class EventoControlador extends Controller
         $evento->save();
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
         return redirect()->route('misEventos');
-
     }
 
     public function updateBanner($user, $evento, Request $request)
@@ -206,7 +228,6 @@ class EventoControlador extends Controller
         $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', '¡Banner actualizado exitosamente!.');
-
     }
 
     public function destroy($user, $evento)
@@ -216,10 +237,10 @@ class EventoControlador extends Controller
         $eventoActual->estado = 'Cancelado';
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', 'Se cancelo el evento exitosamente');
-
     }
 
-    public function guardarMap(Request $request, $id){
+    public function guardarMap(Request $request, $id)
+    {
         $request->validate([
             'latitud' => ['required', 'numeric', 'between:-85.05,85.05'],
             'longitud' => ['required', 'numeric', 'between:-179.99,179.99'],
@@ -230,13 +251,10 @@ class EventoControlador extends Controller
             'longitud.between' => 'La longitud esta fuera del limite.',
         ]);
         $evento = Evento::find($id);
-        $evento->latitud=$request->latitud;
-        $evento->longitud=$request->longitud;
+        $evento->latitud = $request->latitud;
+        $evento->longitud = $request->longitud;
         $evento->save();
         return redirect()->route('verEvento', ['id' => $id]);
         // return back();
     }
-
-
-
 }

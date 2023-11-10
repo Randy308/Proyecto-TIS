@@ -85,9 +85,16 @@
                                     <select id="auspiciadoresSelect" class="form-select"
                                         aria-label="Default select example">
                                         <option selected disabled>Lista de auspiciadores</option>
-                                        <option value="Jala soft">Jala soft</option>
-                                        <option value="ICPC Internationals">ICPC Internationals</option>
-                                        <option value="Intel">Intel</option>
+                                        
+                                        @if ($auspiciadores)
+                                        @foreach ($auspiciadores as $auspiciador)
+                                        <option value="{{$auspiciador->nombre}}">{{$auspiciador->nombre}}</option>
+                                        @endforeach
+                                        
+                                        @else
+                                        <option selected disabled>No existen auspiciadores</option>
+                                            
+                                        @endif
                                     </select>
                                     <div id="recipient-list" class="d-flex">
 
@@ -98,7 +105,7 @@
                                     <textarea type="text" name="descripcion_evento"
                                         class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento"
                                         value="{{ old('descripcion_evento') }}" required aria-describedby="descripcion_evento_help"
-                                        placeholder="Ingrese la descripcion del evento" style="width: 100%; height: 180px;"></textarea>
+                                        placeholder="Ingrese la descripcion del evento" style="width: 100%; max-height: 190px;height: 180px;"></textarea>
                                     @error('descripcion_evento')
                                         <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
