@@ -16,6 +16,9 @@ use App\Models\AsistenciaEvento;
 use App\Models\Auspiciador;
 use App\Models\AuspiciadorEventos;
 use App\Models\ImagenAuspiciador;
+
+
+
 use Illuminate\Support\Facades\DB;
 
 
@@ -37,24 +40,16 @@ class EventoControlador extends Controller
 
         $folderPath = public_path('storage/banners');
 
-        // if (!file_exists($folderPath)) {
-        //     mkdir($folderPath, 0755, true);
-        // }
+        if (!file_exists($folderPath)) {
+            mkdir($folderPath, 0755, true);
+        }
 
-        $nombreArchivo = "/banner_" . $nombreEvento . ".png";
-        //$rutaBanner = public_path('storage/banners/' . $nombreArchivo);
-        //$banner->save($rutaBanner);
-        $rutaBanner = $banner->save(storage_path("app/public/banners/" . $nombreArchivo));
-        //$rutaBanner = $banner->save(storage_path("app/public_html/banners/" . $nombreArchivo));
+        $nombreArchivo = "banner_" . $nombreEvento . ".png";
+        $rutaBanner = public_path('storage/banners/' . $nombreArchivo);
+        $banner->save($rutaBanner);
         return $rutaBanner;
-        //$rutaBanner =  Storage::disk('local')->put('images/prueba-banners'.'/'.$nombreArchivo,$banner);
+    }
 
-    }
-    public function index()
-    {
-        $auspiciadores = Auspiciador::get();
-        return view('crear-evento', compact('auspiciadores'));
-    }
     public function show($id) //id de evento
     {
         $evento = Evento::find($id);
@@ -82,7 +77,6 @@ class EventoControlador extends Controller
 
     public function crearEvento(Request $request)
     {
-        //return $request;
         $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
         $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
         $validator = $request->validate([
@@ -105,8 +99,6 @@ class EventoControlador extends Controller
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
             'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
-
-        //return $request;
         $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
             $nombreEvento,
@@ -131,13 +123,11 @@ class EventoControlador extends Controller
             'latitud' => -17.39359989348116,
             'longitud' => -66.14596353915297,
 
-            'background_color'=> '#21618C'
+            'background_color' => '#21618C'
 
         ]);
 
         $evento->save();
-        
-
         $inputArray = $request->input('Auspiciadores');
 
         if ($request->filled('Auspiciadores') && is_array($inputArray)) {
@@ -155,10 +145,13 @@ class EventoControlador extends Controller
         } else {
         }
 
-
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
-
+    public function index()
+    {
+        $auspiciadores = Auspiciador::get();
+        return view('crear-evento', compact('auspiciadores'));
+    }
     public function edit($user, $evento)
     {
         //
@@ -222,8 +215,6 @@ class EventoControlador extends Controller
         $path = public_path() . '/storage/banners/' . $png_url;
 
         Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
-        //$banner = Image::make(file_get_contents($request->input('imagen-banner')));
-        //$banner->save(storage_path("app/public_html/banners/" . $png_url));
 
         $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();

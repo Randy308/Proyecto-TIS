@@ -202,65 +202,23 @@
             <div class="container p-3 ">
                 <div class="row">
                     <div class="col border p-0 ml-3">
-                        <div class="d-flex">
-                            <div class="d-flex flex-row">
-                                @foreach ($imgAuspiciadores as $imgAusp)
-                                    <div class="p-2">
-                                        <div class="rounded-circle position-relative overflow-hidden"
-                                            style="width: 105px; height: 105px; border: 2px solid #ccc;">
-                                            <img src="{{ asset($imgAusp->url) }}"
-                                                class="rounded-circle overflow-hidden" alt="Imagen" class=""
-                                                width="100%" height="100%">
-                                            <form action="{{ route('eliminarAus', ['id' => $imgAusp->id]) }}"
-                                                method="POST" class="overflow-hidden formulario-Eliminar">
-                                                @method('DELETE')
-                                                @csrf
-                                                <button class="btnDel btn btn-danger position-absolute"
-                                                    type="submit">-</button>
-                                            </form>
-                                        </div>
-                                    </div>
+
+                        <div style="display: flex; margin: 0 -5px">
+
+                            @if ($evento->auspiciadors->count())
+                                @foreach ($evento->auspiciadors as $item)
+                                <div style="margin: 0 5px">
+                                    <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}"
+                                        style="width: 100%;height: 200px;" />
+                                </div>
+                                
+                                    
                                 @endforeach
-                            </div>
+                            @endif
                         </div>
-                    </div>
-                    <div class="col-3 p-0 mx-3">
-                        <div class="row">
-                            <div id="preview" class="col-2">
-                                <a href="#" id="file-select-auspiciadores" class="btn btn-default"
-                                    title="Seleccionar Imagen">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
-                                        width="100%">
-                                        <path
-                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h360v80H200v560h560v-360h80v360q0 33-23.5 56.5T760-120H200Zm480-480v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80ZM240-280h480L570-480 450-320l-90-120-120 160Zm-40-480v560-560Z" />
-                                    </svg>
-                                </a>
 
-                            </div>
-                            <div id="preview2" class="col">
-                                <p class="alert alert-info" id="file-info">No hay archivo aún</p>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col">
-                                <form action="{{ route('guardarAus', ['id' => $evento->id]) }}" method="POST"
-                                    enctype="multipart/form-data">
-                                    @csrf
-                                    <input id="file-auspiciadores" name="url" type="file" accept="image/*" />
-                                    <button type="submit" class="btn btn-primary" id="file-save"
-                                        title="Subir Imagen">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="100%"
-                                            viewBox="0 -960 960 960" width="100%">
-                                            <path
-                                                d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
-                                                fill="white" />
-                                        </svg>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
 
+                    </div>
                 </div>
             </div>
         </div>
