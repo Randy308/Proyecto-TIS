@@ -293,7 +293,7 @@
                 scroll: true,
                 cursor: "move",
             });
-            $(".containment-wrapper div.draggable").resizable({
+            $(".containment-wrapper div.draggable").rotatable().resizable({
                 containment: "#containment-wrapper",
                 handles: "n, e, s, w"
             });
