@@ -4,44 +4,28 @@
             {{-- contenedor modal y banner  --}}
             <div id="contenedor_bannerM" class="contenedor-banner position-relative">
                 {{-- <div id="fondotransparente"></div> --}}
-                <button id="mostrarMap" class="btn btn-success position-absolute"><span>Ubicacion</span></button>
+                <button id="mostrarMap" type="button" class="btn btn-success position-absolute"><span>Ubicacion</span></button>
                 <div id="contenedormap" class="position-absolute">
-                    <form action="{{ route('updateMap', ['id' => $evento->id]) }}" method="POST">
-                        @method('PUT')
-                        @csrf
-                        <div class="row">
-                            <div class="col-4 mt-0">
-                                <p id="titleUbicacion" class="mt-2">Ubicacion del Evento</p>
-                                <div class="mb-4 mt-2 ml-3">
-                                    <input type="text" id="autocomplete" placeholder="Busca una ubicación...">
-                                </div>
-                                <div class="mb-4 mt-2  ml-3">
-                                    <label for="latitud" class="form-label">Latitud</label>
-                                    <input type="text" class="form-control" name="latitud" id="latitud"
-                                        value="{{ $evento->latitud }}">
-                                    @error('latitud')
-                                        <small style="color: red">{{ $message }}</small>
-                                    @enderror
-                                </div>
-                                <div class="mb-4 ml-3">
-                                    <label for="longitud" class="form-label">Longitud</label>
-                                    <input type="text" class="form-control" name="longitud" id="longitud"
-                                        value="{{ $evento->longitud }}">
-                                    @error('latitud')
-                                        <small style="color: red">{{ $message }}</small>
-                                    @enderror
-                                </div>
+                    <div class="row">
+                        <div class="col mt-0">
 
+                            <div class="d-flex justify-content-between pb-2">
+                                <div class="d-flex justify-content-start">
+                                    <p class="h6 mt-2">Ubicacion del Evento:</p>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" id="adiosMap" class="btn btn-danger"><i class="bi bi-x"></i></button>
+                                </div>
                             </div>
-                            <div class="col-8 pt-5 pr-5 pl-5">
-                                <div id="mapa"></div>
-                            </div>
+                            <input type="hidden" class="form-control" name="latitud" id="latitud"
+                                value="{{ $evento->latitud }}">
+                            <input type="hidden" class="form-control" name="longitud" id="longitud"
+                                value="{{ $evento->longitud }}">
+
                         </div>
-                        <div class="text-center mt-4">
-                            <button id="adiosMap" type="button" class="btn btn-secondar mr-5">Cerrar</button>
-                            <button type="submit" class="btn btn-primary ml-5">Guardar</button>
-                        </div>
-                    </form>
+                    </div>
+
+
                 </div>
                 <img src="{{ asset($evento->direccion_banner) }}" alt="logo-banner" id="miBanner" />
             </div>
@@ -146,7 +130,9 @@
 
 
                         </div>
-                        <div class="card"></div>
+                        <div class="card">
+                            
+                        </div>
                     </div>
                     <div class="card" id="participantesContainer">
                         <h5>Lista de Participantes</h5>
@@ -190,9 +176,7 @@
 
                         </div>
                     </div>
-                    <div class="card" id="tab2">
-
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -203,16 +187,11 @@
                 <div class="row">
                     <div class="col border p-0 ml-3">
 
-                        <div style="display: flex; margin: 0 -5px">
+                        <div id="contenedorDeImagenAuspiciadores">
 
                             @if ($evento->auspiciadors->count())
                                 @foreach ($evento->auspiciadors as $item)
-                                <div style="margin: 0 5px">
-                                    <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}"
-                                        style="width: 100%;height: 200px;" />
-                                </div>
-                                
-                                    
+                                    <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}" />
                                 @endforeach
                             @endif
                         </div>

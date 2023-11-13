@@ -194,37 +194,25 @@
                         </div>
                     </div>
                     <div class="subcontent-c2">
-                        <div class="cont-c1">
-                            <div id="preview">
-                                <a href="#" id="file-select-auspiciadores" class="btn btn-default">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
-                                        width="100%">
-                                        <path
-                                            d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h360v80H200v560h560v-360h80v360q0 33-23.5 56.5T760-120H200Zm480-480v-80h-80v-80h80v-80h80v80h80v80h-80v80h-80ZM240-280h480L570-480 450-320l-90-120-120 160Zm-40-480v560-560Z" />
-                                    </svg>
-                                </a>
-                            </div>
-                            <div id="preview2">
-                                <p class="alert alert-info" id="file-info">No existe archivos</p>
-                            </div>
-                        </div>
-                        <div class="c2">
-                            <form id="file-submit" enctype="multipart/form-data">
-                                <input id="file-auspiciadores" name="file" type="file" />
-                                <a href="#" class="btn btn-primary" id="file-save"><svg
-                                        xmlns="http://www.w3.org/2000/svg" height="100%" viewBox="0 -960 960 960"
-                                        width="100%">
-                                        <path
-                                            d="M440-320v-326L336-542l-56-58 200-200 200 200-56 58-104-104v326h-80ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z"
-                                            fill="white" />
-                                    </svg></a>
-                            </form>
-                        </div>
+                        
+                        
                         <div class="c3">
+                            <div class="d-flex align-elements-center">
+                                <p class="h6"> Lista de Auspiciadores: </p>
+                            </div>
+                            
                             <div class="card dropzone" id="contenedorTemporal">
-                                <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
-                                    id="contenedorTemporal1" alt="123" width="100%" height="100%">
-
+                               
+                                {{-- <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
+                                    id="contenedorTemporal1" alt="123" width="100%" height="100%"> --}}
+                                @if ($evento->auspiciadors->count())
+                                    @foreach ($evento->auspiciadors as $item)
+                                        <div style="margin: 0 5px">
+                                            <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}"
+                                            width="100%" height="100%" id="contenedorTemporal{{$item->id}}" class="ui-widget-content1" />
+                                        </div>
+                                    @endforeach
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -278,7 +266,7 @@
         integrity="sha256-c9vxcXyAG4paArQG3xk6DjyW/9aHxai2ef9RpMWO44A=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.css">
-<script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.min.js"></script>
     <script>
         $(document).ready(function() {
             const domNode = document.getElementById('containment-wrapper');
@@ -293,7 +281,7 @@
                 scroll: true,
                 cursor: "move",
             });
-            $(".containment-wrapper div.draggable").rotatable().resizable({
+            $(".containment-wrapper div.draggable").resizable({
                 containment: "#containment-wrapper",
                 handles: "n, e, s, w"
             });
@@ -306,6 +294,7 @@
                 $('#containment-wrapper').css("overflow", "visible");
                 $('#containment-wrapper').css("width", "900px");
                 $('#containment-wrapper').css("height", "400px");
+                $('#containment-wrapper .activo').css("border", "none");
                 var scale = 2;
                 var fileName = 'Test File';
 
@@ -332,23 +321,7 @@
 
             });
             $("#btnStoreElement").on('click', function() {
-                // $('#dialog').css('display', 'block')
-                // $(function() {
-                //     $("#dialog").dialog({
-                //         dialogClass: "no-close",
-                //         buttons: [{
-                //             text: "Cancelar",
-                //             click: function() {
-                //                 $(this).dialog("close");
-                //             },
-                //             text: "Guardar",
-                //             click: function() {
-                //                 document.getElementById('FormUpdateBanner').submit();
-                //             }
-                //         }]
-                //     });
-
-                // });
+                
                 if (confirm(
                         "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
                     )) {
@@ -370,32 +343,6 @@
 
         });
     </script>
-
-    {{-- <script>
-        $(document).ready(function() {
-            var contenedor = document.getElementById('containment-wrapper');
-            var contForm = document.getElementById('contenedor-imagen');
-            $("#btnSaveElement").on('click', function() {
-                $('#containment-wrapper').css("overflow", "visible");
-                $('#containment-wrapper').css("width", "900px");
-                domtoimage.toJpeg(contenedor, {
-                        quality: 0.97
-                    })
-                    .then(function(dataUrl) {
-                        var link = document.createElement('a');
-                        //link.download = 'my-image-name.jpeg';
-                        link.href = dataUrl;
-                        //link.click();
-                        contForm.appendChild(link);
-                        $('#containment-wrapper').css("overflow", "auto");
-                        $('#containment-wrapper').css("width", "auto");
-                    });
-
-            });
-
-
-        });
-    </script> --}}
 </body>
 
 </html>
