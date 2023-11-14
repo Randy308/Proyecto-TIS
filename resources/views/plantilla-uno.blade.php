@@ -21,6 +21,7 @@
                                 value="{{ $evento->latitud }}">
                             <input type="hidden" class="form-control" name="longitud" id="longitud"
                                 value="{{ $evento->longitud }}">
+                                <div id="mapa"></div>
 
                         </div>
                     </div>
