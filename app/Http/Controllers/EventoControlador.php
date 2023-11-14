@@ -188,10 +188,6 @@ class EventoControlador extends Controller
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-        ], [
-            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
-            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
-            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->nombre_evento = $request->input('nombre_evento');

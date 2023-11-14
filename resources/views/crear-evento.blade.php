@@ -9,8 +9,8 @@
     @include('layouts/estilos')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
-    integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -85,15 +85,15 @@
                                     <select id="auspiciadoresSelect" class="form-select"
                                         aria-label="Default select example">
                                         <option selected disabled>Lista de auspiciadores</option>
-                                        
+
                                         @if ($auspiciadores)
-                                        @foreach ($auspiciadores as $auspiciador)
-                                        <option value="{{$auspiciador->nombre}}">{{$auspiciador->nombre}}</option>
-                                        @endforeach
-                                        
+                                            @foreach ($auspiciadores as $auspiciador)
+                                                <option value="{{ $auspiciador->nombre }}">{{ $auspiciador->nombre }}
+                                                </option>
+                                            @endforeach
                                         @else
-                                        <option selected disabled>No existen auspiciadores</option>
-                                            
+                                            <option selected disabled>No existen auspiciadores</option>
+
                                         @endif
                                     </select>
                                     <div id="recipient-list" class="d-flex">
@@ -103,9 +103,9 @@
                                 <div class="form-group">
                                     <label for="descripcion_evento">Descripcion del Evento</label>
                                     <textarea type="text" name="descripcion_evento"
-                                        class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento"
-                                        value="{{ old('descripcion_evento') }}" required aria-describedby="descripcion_evento_help"
-                                        placeholder="Ingrese la descripcion del evento" style="width: 100%; max-height: 190px;height: 180px;"></textarea>
+                                        class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento" required
+                                        aria-describedby="descripcion_evento_help" placeholder="Ingrese la descripcion del evento"
+                                        style="width: 100%; max-height: 190px;height: 180px;">{{ old('descripcion_evento') }}</textarea>
                                     @error('descripcion_evento')
                                         <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
