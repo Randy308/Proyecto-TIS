@@ -207,12 +207,18 @@ class EventoControlador extends Controller
         ]);
         $eventoActual = Evento::FindOrFail($evento);
 
+        // $png_url = "banner-" . time() . ".png";
+        // $path = public_path() . '/storage/banners/' . $png_url;
+
+        // Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
         $png_url = "banner-" . time() . ".png";
-        $path = public_path() . '/storage/banners/' . $png_url;
+        $file_content = file_get_contents($request->input('imagen-banner'));
 
-        Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+        // Store the file in the public disk
+        $url = Storage::disk('public')->url($png_url);
+        Storage::disk('public')->put($png_url, $file_content);
 
-        $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
+        $eventoActual->direccion_banner = '/storage/' . $png_url;
         $eventoActual->update();
         return redirect()->route('misEventos')->with('status', '¡Banner actualizado exitosamente!.');
     }

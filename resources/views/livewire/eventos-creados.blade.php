@@ -23,7 +23,7 @@
                             <td>{{ $evento->id }}</td>
                             <td>{{ $evento->nombre_evento }}</td>
                             <td>{{ $evento->estado }}</td>
-                            <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
+                            <td><img src="{{asset($evento->direccion_banner)  }}" width="170px" alt="{{ $evento->Titulo }}"></td>
                             <td width="10px">
                                 <form
                                     action="{{ route('evento.banner.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
