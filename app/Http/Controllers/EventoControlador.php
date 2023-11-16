@@ -77,6 +77,7 @@ class EventoControlador extends Controller
 
     public function crearEvento(Request $request)
     {
+        //return $request;
         $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
         $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
         $validator = $request->validate([
@@ -94,10 +95,6 @@ class EventoControlador extends Controller
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             "Auspiciadores"    => "array",
             "Auspiciadores.*"  => "string|distinct",
-        ], [
-            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
-            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
-            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.'
         ]);
         $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
@@ -120,8 +117,8 @@ class EventoControlador extends Controller
             'fecha_fin' => $request->input('fecha_fin'),
             'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
 
-            'latitud' => -17.39359989348116,
-            'longitud' => -66.14596353915297,
+            'latitud' => $request->input('latitud'),
+            'longitud' => $request->input('longitud'),
 
             'background_color' => '#21618C'
 

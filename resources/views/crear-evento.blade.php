@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
         integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
 <body>
@@ -45,7 +46,11 @@
                                     @enderror
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label for="Ubicacion">Agregar ubicación:</label>
+                                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
+                                   @include('modal-ubicacion')
+                                </div>
 
                                 <div class="form-group">
                                     <label for="categoria">Categoría</label>
@@ -144,7 +149,10 @@
 
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
-
+    <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
+    </script>
     <script>
         $(function() {
             const date = new Date();
