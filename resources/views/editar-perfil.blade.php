@@ -5,7 +5,8 @@
     <title>Inicio</title>
     @include('layouts/estilos')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    <script src="{{ asset('js/roles-script.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/roles-stilos.css') }}">
 </head>
 
 <body>
@@ -16,12 +17,12 @@
             <div class="container-sm mt-4">
                 <div class="card">
                     <div class="card-body">
-                        
+
                         @livewire('user-auth')
                     </div>
-                    
-                    
-                    
+
+
+
                 </div>
             </div>
 
@@ -30,6 +31,7 @@
     </div>
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+
 </body>
 
 </html>

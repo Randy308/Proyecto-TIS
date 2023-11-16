@@ -48,7 +48,7 @@
                     <li>
                         <a href="{{ route('crearUsuario') }}">Crear Usuario</a>
                     </li>
-                
+
             </ul>
         </li>
         @endauth
@@ -58,8 +58,14 @@
                 <span>Auspiciadores</span>
             </a>
         </li>
+        <li>
+            <a href="{{ route('asignarRoles') }}">
+                <i class="bi bi-person-rolodex"></i>
+                <span>Roles</span>
+            </a>
+        </li>
     </ul>
-    
+
     <ul class="list-unstyled CTAs">
 
     </ul>

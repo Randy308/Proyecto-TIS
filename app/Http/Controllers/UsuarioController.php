@@ -16,7 +16,7 @@ class UsuarioController extends Controller
     private function validacionesCE(Request $request,bool $nuevaContra){
         if($nuevaContra){
             $this->validate($request, [
-                'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z0-9_]+$/', 'max:30'],
+                'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z\s]*$/', 'max:60'],
                 'telefono' => 'required',
                 'direccion' => 'required|string',
                 'email' => 'required',
@@ -29,7 +29,7 @@ class UsuarioController extends Controller
             ]);
         }
         $this->validate($request, [
-                'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z0-9_]+$/', 'max:30'],
+                'nombre' => ['required','string' ,'min:4', 'regex:/^[a-zA-Z\s]*$/', 'max:60'],
                 'telefono' => 'required',
                 'direccion' => 'required|string',
                 'email' => 'required',

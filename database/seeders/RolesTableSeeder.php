@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
-
+use Spatie\Permission\Models\Permission;
 
 class RolesTableSeeder extends Seeder
 {
@@ -16,11 +16,13 @@ class RolesTableSeeder extends Seeder
      */
     public function run()
     {
-        Role::create(['name' => 'administrador']);
-        Role::create(['name' => 'organizador']);
-        Role::create(['name' => 'colaborador']);
-        Role::create(['name' => 'usuario común']);
-
+        $administrador = Role::create(['name' => 'administrador']);
+        $organizador =Role::create(['name' => 'organizador']);
+        $colaborador =Role::create(['name' => 'colaborador']);
+        $usuario_comun =Role::create(['name' => 'usuario común']);
+        Permission::create(['name' => 'usuario.ver-eventos'])->syncRoles([$administrador,$organizador,$colaborador,$usuario_comun]);
+        Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador,$organizador]);
+        Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
         $admin = User::create([
             'name' => 'Administrador',
             'email' => 'admin@example.com',
