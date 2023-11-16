@@ -26,7 +26,7 @@
                                 <div class="text-center">
                                     <img src="{{ $usuario->foto_perfil }}"
                                         onerror="this.onerror=null; this.src='/storage/image/default_user_image.png'"
-                                        class="img-fluid" alt="Imagen de Perfil">
+                                        class="img-fluid" alt="Imagen de Perfil" style="width:200px; height:200px">
                                 </div>
 
 
@@ -66,6 +66,11 @@
                                     <a href="{{ route('listaUsuarios') }}" class="btn btn-danger mr-2">Volver</a>
                                     <a href="{{ route('editarUsuario', $usuario->id) }}"
                                         class="btn btn-primary">Editar</a>
+                                    <a href="{{ route('asignarRoles.edit', $usuario->id) }}" class="btn btn-info">
+                                        Editar Roles
+                                    </a>
+
+
                                 </div>
 
                             </div>

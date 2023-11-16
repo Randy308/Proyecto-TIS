@@ -3,7 +3,7 @@
 
 <div class="container">
     <div class="row">
-        
+
         <div class="col-md-12 mb-3">
             <label for="">Búsqueda por Nombre</label>
             <div class="input-group">
@@ -40,10 +40,10 @@
             </select>
         </div>
 
-        
 
 
-       
+
+
     </div>
 
 <div class="row">
@@ -62,7 +62,9 @@
                 <div class="position-relative">
                     <div class="cintaRol">{{$usuario->getRoleNames()->first()}}</div>
                     <a href="{{ route('verUsuario', $usuario->id) }}">
-                        <img src="{{$this->getProfileImage($usuario)}}"  class="card-img-top" alt="imagen no encontrada">
+                       <div class="d-flex justify-content-center">
+                        <img src="{{$this->getProfileImage($usuario)}}"  class="card-img-top" alt="imagen no encontrada" style="width:200px; height:200px" >
+                       </div>
                     </a>
                     <div class="{{$usuario->estado}}">{{$usuario->estado}}</div>
 
@@ -78,10 +80,10 @@
             </div>
         </div>
     @endforeach
- 
-    
+
+
 </div>
 
-{{ $usuarios->links() }} 
+{{ $usuarios->links() }}
 </div>
 @livewireScripts

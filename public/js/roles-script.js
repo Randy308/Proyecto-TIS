@@ -31,7 +31,22 @@ function agregarRol(value) {
     recipient.appendChild(recipientName);
     rolesList.appendChild(recipient);
 }
+function agregarPermisos(value) {
 
+    const rolesList = document.getElementById("roles-list");
+    console.log(value);
+    if (value.trim() === "") {
+        return;
+    }
+    const recipient = document.createElement("div");
+    recipient.classList.add("recipient");
+    //background-color: #ff8880;
+    const recipientName = document.createElement("span");
+    recipientName.textContent = value;
+    recipient.style.backgroundColor = getColor();
+    recipient.appendChild(recipientName);
+    rolesList.appendChild(recipient);
+}
 function addRecipient(input) {
     const recipientList = document.getElementById("recipient-list");
 

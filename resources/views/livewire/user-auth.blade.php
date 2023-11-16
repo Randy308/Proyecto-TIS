@@ -64,7 +64,7 @@
 
                     <div class="text-center mt-4">
                         <a href="{{ route('index') }}" class="btn btn-danger mr-2">Volver</a>
-                        <a href="{{ route('editarUsuario', $user->id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ route('editUser', $user->id) }}" class="btn btn-primary">Editar</a>
                     </div>
                 </div>
             </div>

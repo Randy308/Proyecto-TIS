@@ -5,6 +5,8 @@
     <title>Inicio</title>
     @include('layouts/estilos')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ asset('js/roles-script.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('css/roles-stilos.css') }}">
 
 </head>
 
@@ -20,28 +22,29 @@
                         <h3 class="d-flex justify-content-center card-title">Asignar permisos</h3>
                         <div class="card-body">
                             <p class="h5">Nombre rol:</p>
-                            <p class="form-control">{{ $role->name }}</p>
+                            <p class="form-control">{{  ucfirst(trans($role->name))  }}</p>
 
-                            <p class="h6">Permisos asigando al rol:</p>
+                            <p class="h5"><strong>Permisos asigando al rol:</strong></p>
                             @if ($rol_permisos->count())
-                                <div class="container">
-                                    <div class="row">
-                                        @foreach ($rol_permisos as $rol_permiso)
-                                            <div class="form-check col-12 col-md-6">
-                                                <input class="form-check-input" type="checkbox"
-                                                    value="{{ $rol_permiso->id }}" id="flexCheckChecked" checked
-                                                    disabled>
-                                                <label class="form-check-label" for="flexCheckChecked">
-                                                    {{ $rol_permiso->name }}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
+
+                                <div id="roles-list" class="d-flex mb-3">
                                 </div>
+                                @php
+                                    $misPermisos = $role->getPermissionNames()->toArray();
+                                @endphp
+
+                                <script>
+                                    var misPermisos = [];
+                                    misPermisos = @json($misPermisos);
+
+                                    for (const iterator of misPermisos) {
+                                        agregarPermisos(iterator);
+                                    }
+                                </script>
                             @else
                                 <div class="container">
                                     <div class="row">
-                                        <p><strong>Este rol no cuenta con permisos asignados</strong></p>
+                                        <p class="h6">Este rol no cuenta con permisos asignados</p>
                                     </div>
                                 </div>
                             @endif
@@ -59,7 +62,8 @@
                                         @foreach ($permisos as $permiso)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox"
-                                                    value="{{ $permiso->name }}" name="name[]">
+                                                    value="{{ $permiso->name }}" name="name[]"
+                                                    @if ($role->getPermissionNames()->contains($permiso->name)) checked @endif>
                                                 <label class="form-check-label" for="defaultCheck1">
                                                     {{ $permiso->name }}
                                                 </label>

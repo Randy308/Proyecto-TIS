@@ -16,7 +16,8 @@ use App\Http\Controllers\RoleController;
 
 
 Route::get('/', function () {
-    return view('index'); })->name('index');
+    return view('index');
+})->name('index');
 
 //Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
 
@@ -55,7 +56,8 @@ Route::get('/registrarParticipante', [ParticipanteController::class, 'index'])->
 Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])->name('registroParticipante.store');
 
 Route::get('/misEventos', function () {
-    return view('eventos-creados'); })->name('misEventos')->middleware('checkRole:administrador,organizador,colaborador');
+    return view('eventos-creados');
+})->name('misEventos')->middleware('checkRole:administrador,organizador,colaborador');
 
 
 Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete')->middleware('checkRole:administrador,organizador');
@@ -89,7 +91,8 @@ Route::get('/recuperar-cuenta', [RecuperarCuentaController::class, 'index'])->na
 Route::post('/recuperar-cuenta', [RecuperarCuentaController::class, 'enviarEmail'])->name('enviar-email');
 
 Route::get('/actualizar-cuenta', function () {
-    return view('confirmar-cuenta'); })->name('actualizar-password');
+    return view('confirmar-cuenta');
+})->name('actualizar-password');
 
 Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
 
@@ -134,3 +137,8 @@ Route::get('/asignarPermiso/{role}', [PermisoController::class, 'edit'])
     ->name('asignarPermiso.edit');
 Route::put('/asignarPermiso/{role}', [PermisoController::class, 'update'])
     ->name('asignarPermiso.update');
+
+
+
+Route::get('/perfil/{id}/editar', [UsuarioController::class, 'editUser'])->name('editUser')->middleware('checkRole:administrador');
+Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
