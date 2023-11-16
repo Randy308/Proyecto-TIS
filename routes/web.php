@@ -103,3 +103,11 @@ Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBa
 Route::get('/auspiciadores', [AuspiciadorController::class, 'index'])->name('auspiciadores-index');
 
 Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');
+Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');
+
+Route::get('/editarPerfil', function () {
+    return view('editar-perfil');
+})->name('editarPerfil');
+
+Route::put('/editarPerfil/{user}', [AuthUser::class, 'update'])
+    ->name('user.update');

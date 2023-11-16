@@ -66,7 +66,7 @@ class User extends Authenticatable
     {
         return $this->roles->contains('name', $role);
     }
-    public function institucions()
+    public function institucion()
     {
         return $this->belongsTo(Institucion::class);
     }
