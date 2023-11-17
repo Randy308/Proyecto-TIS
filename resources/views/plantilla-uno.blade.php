@@ -108,7 +108,7 @@
 
                         </div>
                         <div class="card">
-                            
+
                         </div>
                     </div>
                     <div class="card" id="participantesContainer">
@@ -116,22 +116,16 @@
                         <div class="card" id="participantes">
 
 
-                            <div class="row">
-                                <div class="col mt-0">
-                                       
-                                    <input type="hidden" class="form-control" name="latitud" id="latitud"
-                                        value="{{ $evento->latitud }}">
-                                    <input type="hidden" class="form-control" name="longitud" id="longitud"
-                                        value="{{ $evento->longitud }}">
-                                        <div id="mapa"></div>
-        
-                                </div>
-                            </div>
+                            <input type="hidden" class="form-control" name="latitud" id="latitud"
+                                value="{{ $evento->latitud }}">
+                            <input type="hidden" class="form-control" name="longitud" id="longitud"
+                                value="{{ $evento->longitud }}">
+                            <div id="mapa"></div>
 
 
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
