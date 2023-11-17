@@ -181,13 +181,18 @@ p {
     font-size: 0.9em;
     color: black;
 }
+.emaillink{
+    font-size: small;
+}
 @media screen and (max-width: 880px) {
     .c2 {
         background-color: gainsboro;
         display: grid;
         grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
         font-size: smaller;
     }
+
     h1 {
         font-size: large;
     }

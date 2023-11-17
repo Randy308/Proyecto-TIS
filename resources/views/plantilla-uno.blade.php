@@ -93,21 +93,40 @@
             <div class="tabContent">
                 <div class="c2" id="tab1">
                     <div class="card" id="card-principal">
-                        <div class="card">
-                            <h4>Detalles</h4>
-                            <p>descripcion</p>
-                            <p>{{ $evento->descripcion_evento }}</p>
-                            <h5>Estado</h5>
-                            <p>{{ $evento->estado }}</p>
+                        <div class="card" id="detallesEvento">
+                            <p class="h4">Detalles</p>
+                            <span><i class="bi bi-person h3"></i> Evento de
+                                <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
+                            <span><i class="bi bi-tools h3"></i> Estado: <b>{{ $evento->estado }}</b> </span>
+                                <span><i class="bi bi-people-fill h3"></i> <span>{{  count($evento->users) }} personas participan</span></span>
+                            <span>Descripción:<p>{{ $evento->descripcion_evento }}</p></span>
+
                         </div>
                         <div class="card">
                             <h4>Organizador</h4>
-                            <p>{{ $evento->user->name }}</p>
-                            <p>{{ $evento->user->email }}</p>
+                            <div class="row">
+                                <div class="col-3">
+                                    <img src="{{ $evento->user->foto_perfil }}" class="card-img-top"
+                                        alt="imagen no encontrada" style="width:100px; height:100px">
+                                </div>
+                                <div class="col-7">
+                                    <span>Nombre: <b>{{ ucfirst(trans($evento->user->name)) }}</b></span>
+
+                                    <span>Email: <a
+                                            href = "mailto:{{ $evento->user->email }}?subject = Feedback&body = Message"
+                                            class="btn btn-link emaillink">
+                                            {{ $evento->user->email }}
+                                        </a></span>
+
+                                </div>
+                            </div>
+
+
 
 
                         </div>
                         <div class="card">
+                            <h4>Colaboradores:</h4>
 
                         </div>
                     </div>
