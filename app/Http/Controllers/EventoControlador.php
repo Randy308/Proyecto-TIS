@@ -55,17 +55,17 @@ class EventoControlador extends Controller
         $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
         $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         $fecha = Carbon::parse($evento->fecha_fin);
-        $fecha_inicial =  Carbon::parse($evento->fecha_inicio);
+        $fecha_inicial = Carbon::parse($evento->fecha_inicio);
         $mes = $meses[($fecha->format('n')) - 1];
         $mes_inicial = $meses[($fecha_inicial->format('n')) - 1];
         //$miFechaInicial;
-        if($mes == $mes_inicial){
-            $miFechaInicial =$fecha_inicial->format('d').' y ';
-        }else{
-            $miFechaInicial =$fecha_inicial->format('d'). ' de ' . $mes_inicial .' hasta el ';
+        if ($mes == $mes_inicial) {
+            $miFechaInicial = $fecha_inicial->format('d') . ' y ';
+        } else {
+            $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
         }
-        $mifechaFinal = $miFechaInicial. $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-        return view('visualizar-evento', compact('evento', 'imgAuspiciadores','mifechaFinal'));
+        $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+        return view('visualizar-evento', compact('evento', 'imgAuspiciadores', 'mifechaFinal'));
     }
 
     public function listaEventos()
@@ -105,6 +105,8 @@ class EventoControlador extends Controller
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
+            'latitud' => 'required|numeric|between:-90,90',
+            'longitud' => 'required|numeric|between:-180,180',
         ]);
         $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
@@ -180,13 +182,13 @@ class EventoControlador extends Controller
         $evento = Evento::findOrFail($evento);
         $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         $fecha = Carbon::parse($evento->fecha_fin);
-        $fecha_inicial =  Carbon::parse($evento->fecha_inicio);
+        $fecha_inicial = Carbon::parse($evento->fecha_inicio);
         $mes = $meses[($fecha->format('n')) - 1];
         $mes_inicial = $meses[($fecha_inicial->format('n')) - 1];
         //$miFechaInicial;
-        $miFechaInicial ='Desde '.$fecha_inicial->format('d'). ' de ' . $mes_inicial .' del '. $fecha_inicial->format('Y');
-        $mifechaFinal = 'Hasta el '. $fecha->format('d') . ' de ' . $mes . ' del ' . $fecha->format('Y');
-        return view('editar-evento', ['evento' => $evento,'miFechaInicial' => $miFechaInicial , 'mifechaFinal'=>$mifechaFinal]);
+        $miFechaInicial = 'Desde ' . $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' del ' . $fecha_inicial->format('Y');
+        $mifechaFinal = 'Hasta el ' . $fecha->format('d') . ' de ' . $mes . ' del ' . $fecha->format('Y');
+        return view('editar-evento', ['evento' => $evento, 'miFechaInicial' => $miFechaInicial, 'mifechaFinal' => $mifechaFinal]);
     }
     public function update($user, $evento, Request $request)
     {
@@ -204,6 +206,8 @@ class EventoControlador extends Controller
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            'latitud' => 'required|numeric|between:-90,90',
+            'longitud' => 'required|numeric|between:-180,180',
         ]);
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->nombre_evento = $request->input('nombre_evento');
@@ -211,6 +215,9 @@ class EventoControlador extends Controller
         $evento->categoria = $request->input('categoria');
         $evento->fecha_inicio = $request->input('fecha_inicio');
         $evento->fecha_fin = $request->input('fecha_fin');
+        $evento->latitud = $request->input('latitud');
+        $evento->longitud = $request->input('longitud');
+
         $evento->save();
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
         return redirect()->route('misEventos');

@@ -13,13 +13,13 @@
 
                 <label for="latitud" class="form-label">Latitud</label>
                 <input type="text"  class="form-control" name="latitud" id="latitud"
-                    value="{{ old('latitud') }}"  class="@error('latitud') is-invalid @enderror">
+                    value="{{ $miEvento->latitud }}"  class="@error('latitud') is-invalid @enderror">
                 @error('latitud')
                     <small style="color: red">{{ $message }}</small>
                 @enderror
                 <label for="longitud" class="form-label">Longitud</label>
                 <input type="text" class="form-control" name="longitud" id="longitud"
-                    value="{{ old('longitud') }}"  class="@error('longitud') is-invalid @enderror">
+                    value="{{ $miEvento->longitud }}"  class="@error('longitud') is-invalid @enderror">
                 @error('longitud')
                     <small style="color: red">{{ $message }}</small>
                 @enderror

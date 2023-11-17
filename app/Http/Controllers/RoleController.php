@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use App\Models\User;
-
+use Illuminate\Validation\Rule;
 class RoleController extends Controller
 {
     public function assignRolesView()
@@ -42,7 +42,7 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['rol' => ['required', 'string']],);
+        $request->validate(['rol' => ['required', 'string',Rule::unique('roles', 'name')]],);
         $role = new Role();
         $role->name = $request['rol'];
         $role->save();

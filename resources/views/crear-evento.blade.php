@@ -174,6 +174,8 @@
         });
     </script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>
+    @include('layouts.mensajes-alerta')
+
 </body>
 
 </html>

@@ -18,7 +18,10 @@
                           <input type="text" name="rol" id="rol" class="form-control "
                               class="@error('rol') is-invalid @enderror" />
                           @error('rol')
-                              <small>{{ $message }}</small>
+                          <div class="alert alert-danger">
+                            <small >{{ $message }}</small>
+                          </div>
+
                           @enderror
 
                       </div>
