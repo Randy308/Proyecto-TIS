@@ -9,19 +9,7 @@
             {{--  --}}
             <div class="div-titulo">
                 <div>
-                    @php
-
-                        $idEventoPagina = $evento->id;
-
-                        \Carbon\Carbon::setlocale(config('app.locale'));
-                    @endphp
-                    <h5>Fecha {{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}</h5>
-
-
-
-
-
-
+                    <h5>Fecha: <b>{{$mifechaFinal}}</b></h5>
                     <h1 id="miTitulo">{{ $evento->nombre_evento }}</h1>
                     <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
                 </div>

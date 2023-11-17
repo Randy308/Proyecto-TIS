@@ -16,9 +16,7 @@ use App\Models\AsistenciaEvento;
 use App\Models\Auspiciador;
 use App\Models\AuspiciadorEventos;
 use App\Models\ImagenAuspiciador;
-
-
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 
@@ -53,9 +51,13 @@ class EventoControlador extends Controller
     public function show($id) //id de evento
     {
         $evento = Evento::find($id);
-        $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
 
-        return view('visualizar-evento', compact('evento', 'imgAuspiciadores'));
+        $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
+        $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+        $fecha = Carbon::parse($evento->fecha_fin);
+        $mes = $meses[($fecha->format('n')) - 1];
+        $mifechaFinal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+        return view('visualizar-evento', compact('evento', 'imgAuspiciadores','mifechaFinal'));
     }
 
     public function listaEventos()
@@ -93,8 +95,8 @@ class EventoControlador extends Controller
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
-            "Auspiciadores"    => "array",
-            "Auspiciadores.*"  => "string|distinct",
+            "Auspiciadores" => "array",
+            "Auspiciadores.*" => "string|distinct",
         ]);
         $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
