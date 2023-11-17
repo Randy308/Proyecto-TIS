@@ -55,8 +55,16 @@ class EventoControlador extends Controller
         $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
         $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         $fecha = Carbon::parse($evento->fecha_fin);
+        $fecha_inicial =  Carbon::parse($evento->fecha_inicio);
         $mes = $meses[($fecha->format('n')) - 1];
-        $mifechaFinal = $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
+        $mes_inicial = $meses[($fecha_inicial->format('n')) - 1];
+        //$miFechaInicial;
+        if($mes == $mes_inicial){
+            $miFechaInicial =$fecha_inicial->format('d').' y ';
+        }else{
+            $miFechaInicial =$fecha_inicial->format('d'). ' de ' . $mes_inicial .' hasta el ';
+        }
+        $mifechaFinal = $miFechaInicial. $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
         return view('visualizar-evento', compact('evento', 'imgAuspiciadores','mifechaFinal'));
     }
 
@@ -169,7 +177,16 @@ class EventoControlador extends Controller
     public function editBanner($user, $evento)
     {
         //
-        return view('editar-evento', ['evento' => Evento::findOrFail($evento)]);
+        $evento = Evento::findOrFail($evento);
+        $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
+        $fecha = Carbon::parse($evento->fecha_fin);
+        $fecha_inicial =  Carbon::parse($evento->fecha_inicio);
+        $mes = $meses[($fecha->format('n')) - 1];
+        $mes_inicial = $meses[($fecha_inicial->format('n')) - 1];
+        //$miFechaInicial;
+        $miFechaInicial ='Desde '.$fecha_inicial->format('d'). ' de ' . $mes_inicial .' del '. $fecha_inicial->format('Y');
+        $mifechaFinal = 'Hasta el '. $fecha->format('d') . ' de ' . $mes . ' del ' . $fecha->format('Y');
+        return view('editar-evento', ['evento' => $evento,'miFechaInicial' => $miFechaInicial , 'mifechaFinal'=>$mifechaFinal]);
     }
     public function update($user, $evento, Request $request)
     {

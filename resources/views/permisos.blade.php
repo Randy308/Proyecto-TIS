@@ -3,6 +3,7 @@
 
 <head>
     <title>Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     @include('layouts/estilos')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/roles-script.js') }}"></script>
@@ -56,11 +57,11 @@
                             <div class="card">
                                 <div class="card-body">
                                     <p class="h6">Lista de todos los permisos:</p>
-                                    <form action="{{ route('asignarPermiso.update', $role->id) }}" method="POST">
+                                    <form action="{{ route('asignarPermiso.update', $role->id) }}" method="POST" class="p-4">
                                         @csrf
                                         @method('PUT')
                                         @foreach ($permisos as $permiso)
-                                            <div class="form-check">
+                                            <div class="form-check form-switch ">
                                                 <input class="form-check-input" type="checkbox"
                                                     value="{{ $permiso->name }}" name="name[]"
                                                     @if ($role->getPermissionNames()->contains($permiso->name)) checked @endif>

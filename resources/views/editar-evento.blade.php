@@ -45,17 +45,16 @@
                         <div class="c1 pb-4">
                             <div id="toolbar">
 
-                                <button type="button" id="expand-h" class="btn btn-light "> <i
+                                {{-- <button type="button" id="expand-h" class="btn btn-light "> <i
                                         class="bi bi-arrows-expand"></i></button>
                                 <button type="button" id="contract-h" class="btn btn-light "><i
                                         class="bi bi-arrows-collapse"></i></button>
                                 <button type="button" id="expand-w" class="btn btn-light "> <i
                                         class="bi bi-arrows-expand-vertical"></i></button>
                                 <button type="button" id="contract-w" class="btn btn-light "><i
-                                        class="bi bi-arrows-collapse-vertical"></i></button>
-                                <button type="button" id="trash-delete" class="btn btn-light"><i
-                                        class="bi bi-trash3"></i></button>
-                                <select id="zoom">
+                                        class="bi bi-arrows-collapse-vertical"></i></button> --}}
+
+                                {{-- <select id="zoom">
                                     <option selected disabled>Zoom</option>
                                     <option>50%</option>
                                     <option>75%</option>
@@ -64,7 +63,7 @@
                                     <option>125%</option>
                                     <option>150%</option>
                                     <option>200%</option>
-                                </select>
+                                </select> --}}
                                 <select id="fontname" style="width: 300px">
                                     <option selected disabled>Fuente</option>
                                     <option>Arial</option>
@@ -136,17 +135,21 @@
 
 
                                 </select></div> --}}
+
+                                <div>
+                                    <input type="text" id="tituloTexto">
+                                    <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
+                                        Texto</button>
+                                </div>
+
                                 <button type="button" class=" btn btn-light" id="btnEditText"><i
                                         class="bi bi-pencil-fill"></i> Modificar</button>
-                                <input type="text" id="tituloTexto">
-                                <button type="button" class=" btn btn-light" id="agregarElemento">Agregar
-                                    Texto</button>
-
+                                <button type="button" id="trash-delete" class="btn btn-light">Borrar <i
+                                        class="bi bi-trash3"></i></button>
 
                                 <div class="input-group">
                                     <div class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
-                                    <input type="color"class="form-control" id="highlightColorPicker"
-                                        value="#0000">
+                                    <input type="color"class="form-control" id="highlightColorPicker" value="#0000">
                                 </div>
 
 
@@ -173,6 +176,7 @@
                                     height:{{ $item->height }};">
                                     @endforeach
                                 @endif
+
                                 @if ($evento->elementosBanners->count())
                                     @foreach ($evento->elementosBanners as $items)
                                         <div class="draggable" id="itemDrag{{ $items->id }}"
@@ -184,9 +188,9 @@
                                     <div id="draggable3" class="draggable" style="position: absolute;">
                                         {{ $evento->nombre_evento }}</div>
                                     <div id="draggable4" class="draggable " style="position: absolute;">
-                                        {{ $evento->fecha_inicio }}</div>
+                                        {{ $miFechaInicial }}</div>
                                     <div id="draggable5" class="draggable" style="position: absolute;">
-                                        {{ $evento->fecha_fin }}</div>
+                                        {{ $mifechaFinal }}</div>
                                 @endif
 
 
@@ -194,22 +198,24 @@
                         </div>
                     </div>
                     <div class="subcontent-c2">
-                        
-                        
+
+
                         <div class="c3">
                             <div class="d-flex align-elements-center">
                                 <p class="h6"> Lista de Auspiciadores: </p>
                             </div>
-                            
+
                             <div class="card dropzone" id="contenedorTemporal">
-                               
+
                                 {{-- <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
                                     id="contenedorTemporal1" alt="123" width="100%" height="100%"> --}}
                                 @if ($evento->auspiciadors->count())
                                     @foreach ($evento->auspiciadors as $item)
                                         <div style="margin: 0 5px">
                                             <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}"
-                                            width="100%" height="100%" id="contenedorTemporal{{$item->id}}" class="ui-widget-content1" />
+                                                width="100%" height="100%"
+                                                id="contenedorTemporal{{ $item->id }}"
+                                                class="ui-widget-content1" />
                                         </div>
                                     @endforeach
                                 @endif
@@ -268,6 +274,13 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.css">
     <script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.min.js"></script>
     <script>
+        function limpiar() {
+            var iconos = document.querySelectorAll(
+                ".ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se");
+            for (const element of iconos) {
+                element.style.backgroundImage = 'none';
+            }
+        }
         $(document).ready(function() {
             const domNode = document.getElementById('containment-wrapper');
             var contForm = document.getElementById('nueva-imagen-banner');
@@ -276,11 +289,28 @@
                 scroll: true,
                 cursor: "move",
             });
-            $(".containment-wrapper .imgDrag").draggable({
+            // $(".containment-wrapper .imgDrag").draggable({
+            //     containment: "#containment-wrapper",
+            //     scroll: true,
+            //     cursor: "move",
+            // });
+            //
+            $(".containment-wrapper .imgDrag").resizable({
+                handles: 'ne, se, sw, nw'
+            });
+            $(".containment-wrapper .imgDrag").parent().draggable({
                 containment: "#containment-wrapper",
                 scroll: true,
-                cursor: "move",
+                cursor: "pointer",
             });
+
+            //
+
+            // $(".containment-wrapper .imgDrag").resizable({
+            //     containment: "#containment-wrapper",
+            //     handles: "n, e, s, w"
+            // });
+
             $(".containment-wrapper div.draggable").resizable({
                 containment: "#containment-wrapper",
                 handles: "n, e, s, w"
@@ -297,7 +327,7 @@
                 $('#containment-wrapper .activo').css("border", "none");
                 var scale = 2;
                 var fileName = 'Test File';
-
+                limpiar();
                 domtoimage.toPng(domNode, {
                         width: domNode.clientWidth * scale,
                         height: domNode.clientHeight * scale,
@@ -321,7 +351,7 @@
 
             });
             $("#btnStoreElement").on('click', function() {
-                
+
                 if (confirm(
                         "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
                     )) {

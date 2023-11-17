@@ -5,6 +5,10 @@
 } */
 /* .thumbnail {
 } */
+.ui-icon, .ui-widget-content .ui-icon {
+    background-image: none;
+    color: aqua;
+}
 
 .container {
     display: grid;
@@ -281,6 +285,8 @@ img {
     width: 250px;
     max-height: 300px;
 }
+
+
 @media screen and (max-width: 1300px) {
     .subcontent,
     .container {
