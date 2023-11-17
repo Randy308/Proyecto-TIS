@@ -4,30 +4,6 @@
             {{-- contenedor modal y banner  --}}
             <div id="contenedor_bannerM" class="contenedor-banner position-relative">
                 {{-- <div id="fondotransparente"></div> --}}
-                <button id="mostrarMap" type="button" class="btn btn-success position-absolute"><span>Ubicacion</span></button>
-                <div id="contenedormap" class="position-absolute">
-                    <div class="row">
-                        <div class="col mt-0">
-
-                            <div class="d-flex justify-content-between pb-2">
-                                <div class="d-flex justify-content-start">
-                                    <p class="h6 mt-2">Ubicacion del Evento:</p>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" id="adiosMap" class="btn btn-danger"><i class="bi bi-x"></i></button>
-                                </div>
-                            </div>
-                            <input type="hidden" class="form-control" name="latitud" id="latitud"
-                                value="{{ $evento->latitud }}">
-                            <input type="hidden" class="form-control" name="longitud" id="longitud"
-                                value="{{ $evento->longitud }}">
-                                <div id="mapa"></div>
-
-                        </div>
-                    </div>
-
-
-                </div>
                 <img src="{{ asset($evento->direccion_banner) }}" alt="logo-banner" id="miBanner" />
             </div>
             {{--  --}}
@@ -136,43 +112,21 @@
                         </div>
                     </div>
                     <div class="card" id="participantesContainer">
-                        <h5>Lista de Participantes</h5>
+                        <h5>Ubicacion</h5>
                         <div class="card" id="participantes">
 
 
-                            @if ($evento->users->count())
-                                <table class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Nombre</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($evento->users as $user)
-                                            <tr>
-
-                                                <td>{{ $user->id }}</td>
-                                                <td>{{ $user->name }}</td>
-                                                @include('eliminar-participante')
-
-
-                                                @if (auth()->check() &&
-                                                        (auth()->user()->hasRole('administrador') ||
-                                                            auth()->user()->hasRole('organizador')))
-                                                    <td>
-                                                        <button class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#eliminarParticipanteModal_{{ $user->id }}">Eliminar</button>
-                                                    </td>
-                                                @endif
-
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <p>No existe participantes</p>
-                            @endif
+                            <div class="row">
+                                <div class="col mt-0">
+                                       
+                                    <input type="hidden" class="form-control" name="latitud" id="latitud"
+                                        value="{{ $evento->latitud }}">
+                                    <input type="hidden" class="form-control" name="longitud" id="longitud"
+                                        value="{{ $evento->longitud }}">
+                                        <div id="mapa"></div>
+        
+                                </div>
+                            </div>
 
 
                         </div>
