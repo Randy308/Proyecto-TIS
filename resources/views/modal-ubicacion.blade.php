@@ -12,12 +12,14 @@
             <div class="modal-body">
 
                 <label for="latitud" class="form-label">Latitud</label>
-                <input type="text" readonly class="form-control" name="latitud" id="latitud" value="-17.393921554011527">
+                <input type="text"  class="form-control" name="latitud" id="latitud"
+                    value="{{ old('latitud') }}">
                 @error('latitud')
                     <small style="color: red">{{ $message }}</small>
                 @enderror
                 <label for="longitud" class="form-label">Longitud</label>
-                <input type="text" readonly class="form-control" name="longitud" id="longitud" value="-66.14727083711682">
+                <input type="text" class="form-control" name="longitud" id="longitud"
+                    value="{{ old('longitud') }}">
                 @error('latitud')
                     <small style="color: red">{{ $message }}</small>
                 @enderror
@@ -28,8 +30,21 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary"  data-dismiss="modal">Guardar cambios</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar cambios</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        var latitud = '-17.3940933752559';
+        var longitud = '-66.14733561172048';
+        if ($("#latitud").val().length === 0) {
+            $("#latitud").val(latitud);
+        }
+        if ($("#longitud").val().length === 0) {
+            $("#longitud").val(longitud);
+        }
+        iniciarMapa();
+    });
+</script>
