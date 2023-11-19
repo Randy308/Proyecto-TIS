@@ -9,7 +9,7 @@
             {{--  --}}
             <div class="div-titulo">
                 <div>
-                    <h5>Fecha: <b>{{$mifechaFinal}}</b></h5>
+                    <h5>Fecha: <b>{{ $mifechaFinal }}</b></h5>
                     <h1 id="miTitulo">{{ $evento->nombre_evento }}</h1>
                     <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
                 </div>
@@ -86,8 +86,12 @@
                             <span><i class="bi bi-person h3"></i> Evento de
                                 <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
                             <span><i class="bi bi-tools h3"></i> Estado: <b>{{ $evento->estado }}</b> </span>
-                                <span><i class="bi bi-people-fill h3"></i> <span>{{  count($evento->users) }} personas participan</span></span>
-                            <span>Descripción:<p>{{ $evento->descripcion_evento }}</p></span>
+                            <span><i class="bi bi-people-fill h3"></i> <span>{{ count($evento->users) }} personas
+                                    participan</span></span>
+
+                            @if (!empty($evento->descripcion_evento))
+                                <span>Descripción:<p>{{ $evento->descripcion_evento }}</p></span>
+                            @endif
 
                         </div>
                         <div class="card">

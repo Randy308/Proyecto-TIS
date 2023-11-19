@@ -32,10 +32,11 @@
                     <form method="POST" action="{{ route('crear-evento') }}" id="FormCrearEvento">
                         @csrf
                         <h2>Crear Evento</h2>
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nombre_evento">Nombre del Evento</label>
+                                    <label for="nombre_evento">Nombre del Evento <span class="text-danger font-weight-bold ">*</span></label>
                                     <input type="text" name="nombre_evento"
                                         class="form-control @error('nombre_evento') is-invalid @enderror"
                                         id="nombre_evento" value="{{ old('nombre_evento') }}"
@@ -63,7 +64,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="fecha_inicio">Fecha de inicio</label>
+                                    <label for="fecha_inicio">Fecha de inicio <span class="text-danger font-weight-bold ">*</span></label>
                                     <input type="date" name="fecha_inicio"
                                         class="form-control @error('fecha_inicio') is-invalid @enderror"
                                         id="fecha_inicio" value="{{ old('fecha_inicio') }}" required
@@ -74,7 +75,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="fecha_fin">Fecha de finalización</label>
+                                    <label for="fecha_fin">Fecha de finalización <span class="text-danger font-weight-bold ">*</span></label>
                                     <input type="date" name="fecha_fin"
                                         class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
                                         value="{{ old('fecha_fin') }}" required aria-describedby="fecha_fin_help">
@@ -108,7 +109,7 @@
                                 <div class="form-group">
                                     <label for="descripcion_evento">Descripcion del Evento</label>
                                     <textarea type="text" name="descripcion_evento"
-                                        class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento" required
+                                        class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento"
                                         aria-describedby="descripcion_evento_help" placeholder="Ingrese la descripcion del evento"
                                         style="width: 100%; max-height: 190px;height: 180px;">{{ old('descripcion_evento') }}</textarea>
                                     @error('descripcion_evento')
@@ -119,6 +120,7 @@
 
 
                             </div>
+                            <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo es obligatorio</span></div>
                             <div class="col d-flex justify-content-end">
                                 <div class="form-group">
                                     <a href="#" class="btn btn-cancelar"
@@ -171,6 +173,7 @@
             let currentDate = `${year}-${month}-${day}`;
             document.getElementById('fecha_inicio').setAttribute('min', currentDate);
             document.getElementById('fecha_fin').setAttribute('min', currentDate);
+            $('#fecha_inicio').val(currentDate);
         });
     </script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>

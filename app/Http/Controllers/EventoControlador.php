@@ -88,8 +88,7 @@ class EventoControlador extends Controller
     public function crearEvento(Request $request)
     {
         //return $request;
-        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
-        $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
+
         $validator = $request->validate([
             'nombre_evento' => [
                 'required',
@@ -99,7 +98,7 @@ class EventoControlador extends Controller
                     return $query->where('categoria', $request->input('categoria'));
                 })->ignore($request->input('id'), 'id'),
             ],
-            'descripcion_evento' => 'required|string',
+            'descripcion_evento' => 'nullable|string',
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
@@ -108,6 +107,9 @@ class EventoControlador extends Controller
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
         ]);
+        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
+
+
         $background_color = '#21618C';
         $rutaBanner = $this->generarBanner(
             $nombreEvento,
@@ -117,25 +119,25 @@ class EventoControlador extends Controller
 
 
         );
+
+
         $nombreDelArchivo = basename($rutaBanner);
+        $evento = new Evento();
+        $evento-> nombre_evento = $nombreEvento;
+        if($request->has('descripcion_evento')){
 
-        $evento = new Evento([
-            'nombre_evento' => $nombreEvento,
-            'descripcion_evento' => $descripcionEvento,
-            'user_id' => auth()->id(),
-            'estado' => 'Borrador',
-            'categoria' => $request->input('categoria'),
-            'fecha_inicio' => $request->input('fecha_inicio'),
-            'fecha_fin' => $request->input('fecha_fin'),
-            'direccion_banner' => '/storage/banners/' . $nombreDelArchivo,
-
-            'latitud' => $request->input('latitud'),
-            'longitud' => $request->input('longitud'),
-
-            'background_color' => '#21618C'
-
-        ]);
-
+            $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
+            $evento-> descripcion_evento = $descripcionEvento;
+        }
+        $evento-> user_id =  auth()->id();
+        $evento-> estado = 'Borrador';
+        $evento-> categoria = $request->input('categoria');
+        $evento-> fecha_inicio =  $request->input('fecha_inicio');
+        $evento-> fecha_fin = $request->input('fecha_fin');
+        $evento-> direccion_banner = '/storage/banners/' . $nombreDelArchivo;
+        $evento-> latitud = $request->input('latitud');
+        $evento-> longitud = $request->input('longitud');
+        $evento-> background_color = '#21618C';
         $evento->save();
         $inputArray = $request->input('Auspiciadores');
 
