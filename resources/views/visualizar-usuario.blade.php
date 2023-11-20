@@ -66,11 +66,6 @@
                                     <a href="{{ route('listaUsuarios') }}" class="btn btn-danger mr-2">Volver</a>
                                     <a href="{{ route('editarUsuario', $usuario->id) }}"
                                         class="btn btn-primary">Editar</a>
-                                    <a href="{{ route('asignarRoles.edit', $usuario->id) }}" class="btn btn-info">
-                                        Editar Roles
-                                    </a>
-
-
                                 </div>
 
                             </div>

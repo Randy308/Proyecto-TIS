@@ -36,6 +36,11 @@
         </div>
     </div>
     @include('layouts.sidebar-scripts')
+    <script>
+        $("#BottonFiltrado").on("click", function() {
+            $("#filtrosEvento").toggleClass('FiltroInvisible');
+        });
+    </script>
 </body>
 
 </html>

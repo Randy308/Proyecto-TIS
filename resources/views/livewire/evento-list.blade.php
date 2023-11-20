@@ -6,13 +6,14 @@
                 <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
                 <div class="input-group-append">
 
-                  <button type="button" id="BottonFiltrado"  class="btn btn-info" ><i class="bi bi-funnel-fill"></i></button>
+                    <button type="button" id="BottonFiltrado" class="btn btn-info"><i
+                            class="bi bi-funnel-fill"></i></button>
                 </div>
-              </div>
+            </div>
         </div>
     </div>
     <div id="filtrosEvento" class="FiltroInvisible">
-        <div class="row" >
+        <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="">Ordenar por:</label>
                 <select wire:model="orderb" class="form-control">
@@ -68,7 +69,8 @@
 
                     @foreach ($gestiones as $gestion)
                         @if ($anio != $gestion->anio || $gesActual != $gestion->gestion)
-                            <option value="{{ json_encode(['anio' => $gestion->anio, 'gestion' => $gestion->gestion]) }}">
+                            <option
+                                value="{{ json_encode(['anio' => $gestion->anio, 'gestion' => $gestion->gestion]) }}">
                                 {{ $gestion->anio }} - {{ $gestion->gestion }}</option>
                         @endif
                     @endforeach
