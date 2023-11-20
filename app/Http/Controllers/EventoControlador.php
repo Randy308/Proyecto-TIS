@@ -86,9 +86,11 @@ class EventoControlador extends Controller
 
 
     public function crearEvento(Request $request)
-    {
-        //return $request;
+    {   
 
+        $todayDate = now('GMT-4')->format('Y-m-d');
+        //return $request;
+        //return $todayDate;
         $validator = $request->validate([
             'nombre_evento' => [
                 'required',
@@ -100,8 +102,8 @@ class EventoControlador extends Controller
             ],
             'descripcion_evento' => 'nullable|string',
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
-            'fecha_inicio' => 'required|date|after_or_equal:today',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            'fecha_inicio' => 'date_format:Y-m-d|required|date|after_or_equal:'. $todayDate,
+            'fecha_fin' => 'date_format:Y-m-d|required|date|after_or_equal:fecha_inicio',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
@@ -176,7 +178,7 @@ class EventoControlador extends Controller
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->estado = 'Activo';
         $evento->save();
-        return redirect()->route('listaEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+        return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
     }
     public function editBanner($user, $evento)
     {
@@ -248,7 +250,7 @@ class EventoControlador extends Controller
         $eventoActual = Evento::FindOrFail($evento);
         $eventoActual->estado = 'Cancelado';
         $eventoActual->update();
-        return redirect()->route('misEventos')->with('status', 'Se cancelo el evento exitosamente');
+        return redirect()->route('misEventos')->with('info', 'Se cancelo el evento');
     }
 
     public function guardarMap(Request $request, $id)
