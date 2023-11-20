@@ -3,7 +3,7 @@
     @if ($eventos->count())
         <h3 class="p-3">Lista de Eventos Creados</h3>
         <div class="card-body">
-            <table class="table table-striped">
+            <table class="table table-striped table-responsive-sm">
                 <thead>
                     <tr>
                         <th>ID</th>

@@ -2,76 +2,82 @@
     <div class="row">
         <div class="col-md-12 mb-3">
             <label for="">Búsqueda por Nombre</label>
-            <div class="input-group">
+            <div class="input-group mb-3">
                 <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
+                <div class="input-group-append">
+
+                  <button type="button" id="BottonFiltrado"  class="btn btn-info" ><i class="bi bi-funnel-fill"></i></button>
+                </div>
+              </div>
+        </div>
+    </div>
+    <div id="filtrosEvento" class="FiltroInvisible">
+        <div class="row" >
+            <div class="col-md-3 mb-3">
+                <label for="">Ordenar por:</label>
+                <select wire:model="orderb" class="form-control">
+                    <option value="0">Recientes</option>
+                    <option value="1">Antiguos</option>
+                    <option value="2">Nombre A-Z</option>
+                    <option value="3">Nombre Z-A</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="">Filtrar por Estado:</label>
+                <select wire:model="filtroEstado" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="borrador">Borrador</option>
+                    <option value="activo">Activo</option>
+                    <option value="finalizado">Finalizado</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label for="">Filtrar por Categoría:</label>
+                <select wire:model="filtroCategoria" class="form-control">
+                    <option value="">Todos</option>
+                    <option value="Diseño">Diseño</option>
+                    <option value="QA">QA</option>
+                    <option value="Desarrollo">Desarrollo</option>
+                    <option value="Ciencia de datos">Ciencia de datos</option>
+                </select>
+            </div>
+
+            @php
+                $mes = date('n');
+                $anio = date('Y');
+
+                $gesActual = '';
+                if ($mes <= 6) {
+                    $gesActual = 'I';
+                } else {
+                    $gesActual = 'II';
+                }
+            @endphp
+
+            <div class="col-md-3 mb-3">
+                <label for="">Filtrar por Gestion:</label>
+                <select wire:model="filtroGestion" class="form-control">
+
+                    <option value="{{ json_encode(['anio' => $anio, 'gestion' => $gesActual]) }}">{{ $anio }} -
+                        {{ $gesActual }}</option>
+
+                    <option value="">Todo</option>
+
+                    @foreach ($gestiones as $gestion)
+                        @if ($anio != $gestion->anio || $gesActual != $gestion->gestion)
+                            <option value="{{ json_encode(['anio' => $gestion->anio, 'gestion' => $gestion->gestion]) }}">
+                                {{ $gestion->anio }} - {{ $gestion->gestion }}</option>
+                        @endif
+                    @endforeach
+
+                </select>
+
+
             </div>
         </div>
-
-        <div class="col-md-3 mb-3">
-            <label for="">Ordenar por:</label>
-            <select wire:model="orderb" class="form-control">
-                <option value="0">Recientes</option>
-                <option value="1">Antiguos</option>
-                <option value="2">Nombre A-Z</option>
-                <option value="3">Nombre Z-A</option>
-            </select>
-        </div>
-
-        <div class="col-md-3 mb-3">
-            <label for="">Filtrar por Estado:</label>
-            <select wire:model="filtroEstado" class="form-control">
-                <option value="">Todos</option>
-                <option value="borrador">Borrador</option>
-                <option value="activo">Activo</option>
-                <option value="finalizado">Finalizado</option>
-                <option value="cancelado">Cancelado</option>
-            </select>
-        </div>
-
-        <div class="col-md-3 mb-3">
-            <label for="">Filtrar por Categoría:</label>
-            <select wire:model="filtroCategoria" class="form-control">
-                <option value="">Todos</option>
-                <option value="Diseño">Diseño</option>
-                <option value="QA">QA</option>
-                <option value="Desarrollo">Desarrollo</option>
-                <option value="Ciencia de datos">Ciencia de datos</option>
-            </select>
-        </div>
-
-        @php
-            $mes = date('n');
-            $anio = date('Y');
-
-            $gesActual = '';
-            if ($mes <= 6) {
-                $gesActual = 'I';
-            } else {
-                $gesActual = 'II';
-            }
-        @endphp
-
-        <div class="col-md-3 mb-3">
-            <label for="">Filtrar por Gestion:</label>
-            <select wire:model="filtroGestion" class="form-control">
-
-                <option value="{{ json_encode(['anio' => $anio, 'gestion' => $gesActual]) }}">{{ $anio }} -
-                    {{ $gesActual }}</option>
-
-                <option value="">Todo</option>
-
-                @foreach ($gestiones as $gestion)
-                    @if ($anio != $gestion->anio || $gesActual != $gestion->gestion)
-                        <option value="{{ json_encode(['anio' => $gestion->anio, 'gestion' => $gestion->gestion]) }}">
-                            {{ $gestion->anio }} - {{ $gestion->gestion }}</option>
-                    @endif
-                @endforeach
-
-            </select>
-
-
-        </div>
-
     </div>
 
     <div class="row">
@@ -106,7 +112,7 @@
 
                                 </div>
                                 <div class="col-6">
-                                    
+
                                     <p class="h6">{{ $evento->nombre_evento }}</p>
                                 </div>
                             </div>
@@ -133,7 +139,7 @@
 
                             </div>
 
-                            <div class="{{ $evento->estado }}">{{ $evento->estado }}</div>
+                            <div class="pt-4">{{ $evento->estado }}</div>
 
 
 

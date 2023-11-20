@@ -11,7 +11,7 @@ class RoleIndex extends Component
 {
     use WithPagination;
 
-    public $search;
+    public $search='';
 
     protected $paginationTheme = 'bootstrap';
 
@@ -26,3 +26,6 @@ class RoleIndex extends Component
         return view('livewire.role-index', compact('roles'));
     }
 }
+
+
+

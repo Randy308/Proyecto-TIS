@@ -1,6 +1,3 @@
-
-
-
 <div class="container">
     <div class="row">
 
@@ -24,7 +21,7 @@
             <select wire:model="filtroRol" class="form-control">
                 <option value="">Todos</option>
                 @foreach ($roles as $rol)
-                <option value="{{$rol->name}}">{{$rol->name}}</option>
+                    <option value="{{ $rol->name }}">{{ $rol->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -45,45 +42,80 @@
 
 
     </div>
+    @if ($usuarios->count())
+        <div class="card-body">
+            <table class="table table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($usuarios as $user)
+                        <tr>
 
-<div class="row">
-    @if($usuarios->count() == 0)
-        <div class="col-12">
-            <div class="alert alert-info">
-                No se encontro Usuarios.
-            </div>
+                            <td width="10px">{{ $user->id }}</td>
+                            <td width: auto;>{{ $user->name }}</td>
+                            <td width: auto;>{{ $user->email }}</td>
+
+
+                            @if ($user->roles->count())
+                                <td width: auto;>{{ implode(', ', $user->roles->pluck('name')->toArray()) }}</td>
+                            @else
+                                <td>No esta validado</td>
+                            @endif
+                            <td width="10px">
+
+                                <div class="btn-group" role="group">
+
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="width: 150px">
+                                        Acción
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a href="{{ route('verUsuario', $user->id) }}" class="dropdown-item"
+                                            type="button">Ver Detalles</a>
+                                        <a class="dropdown-item" href="{{ route('asignarRoles.edit', $user->id) }}"
+                                            type="submit">Editar Roles</a>
+                                        <form id="FormularioEli" action="{{ route('user.delete', $user->id) }}"
+                                            method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button id="BotonEliminar" class="dropdown-item" type="submit">Eliminar
+                                                Usuario</button>
+
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-        @endif
-
-
-    @foreach ($usuarios as $usuario)
-        <div class="col-md-4 mb-3">
-            <div class="card">
-                <div class="position-relative">
-                    <div class="cintaRol">{{$usuario->getRoleNames()->first()}}</div>
-                    <a href="{{ route('verUsuario', $usuario->id) }}">
-                       <div class="d-flex justify-content-center">
-                        <img src="{{$this->getProfileImage($usuario)}}"  class="card-img-top" alt="imagen no encontrada" style="width:200px; height:200px" >
-                       </div>
-                    </a>
-                    <div class="{{$usuario->estado}}">{{$usuario->estado}}</div>
-
-
-
-
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">{{ $usuario->name }}</h5>
-                    <p class="card-text">{{ $usuario->email }}</p>
-                    <p class="card-text">{{ $usuario->instituto }}</p>
-                </div>
-            </div>
+        <div class="card-footer">
+            {{ $usuarios->links() }}
         </div>
-    @endforeach
-
-
-</div>
-
-{{ $usuarios->links() }}
+        <script>
+            $("#BotonEliminar").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de eliminar a este usuario?")) {
+                    var form = $("#BotonEliminar").parents('form:first');
+                    form.submit();
+                }
+            });
+        </script>
+    @else
+        <div class="card-body">
+            <strong>No hay registros</strong>
+        </div>
+    @endif
 </div>
 @livewireScripts

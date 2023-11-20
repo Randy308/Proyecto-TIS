@@ -14,18 +14,18 @@
 }
 
 .Borrador .card-header {
-    background-color: #caac2a; /* Tono más oscuro de naranja */
+    background-color: #E6C700; /* Tono más oscuro de naranja */
 }
 
 .Finalizado .card-header {
     background-color: #345d8d; /* Tono más oscuro de azul */
 }
-
+.FiltroInvisible{
+    display: none;
+}
 body{
     background-color: #f5f5f5;
 }
-
-
 .Cancelado {
     background-color: #ee6f68;
     position: relative;
@@ -43,7 +43,7 @@ body{
 }
 
 .Borrador {
-    background-color: #fdd835;
+    background-color: #FEDD00;
     position: relative;
 
     color: white;

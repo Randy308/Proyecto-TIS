@@ -5,7 +5,7 @@
             <div class="d-flex justify-content-start">
                 <p class="h4">Listado de Roles</p>
             </div>
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end align-items-center">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Crear nuevo rol
                 </button>
@@ -15,12 +15,12 @@
 
         </div>
 
-        <div class="car-header p-4">
+        <div class="card-header">
             <input wire:model="search" class="form-control" placeholder="Ingrese el nombre del rol">
         </div>
         @if ($roles->count())
             <div class="card-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-responsive-sm">
                     <thead>
                         <tr>
                             <th>ID</th>

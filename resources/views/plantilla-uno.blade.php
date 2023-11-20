@@ -89,7 +89,7 @@
                                 <button type="button" disabled class="btn btn-primary" id="boton-registro">
                                     Evento finalizado
                                 </button>
-                               
+
                             @endif
 
 

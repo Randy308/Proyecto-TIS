@@ -142,3 +142,6 @@ Route::put('/asignarPermiso/{role}', [PermisoController::class, 'update'])
 
 Route::get('/perfil/{id}/editar', [UsuarioController::class, 'editUser'])->name('editUser')->middleware('checkRole:administrador');
 Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
+
+Route::delete('/eliminar/{user}', [UsuarioController::class, 'destroy'])
+    ->name('user.delete');

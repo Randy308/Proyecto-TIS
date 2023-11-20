@@ -173,6 +173,11 @@ class UsuarioController extends Controller
         $instituciones = Institucion::all();
         return view('cambiar-perfil', compact('user', 'instituciones'));
     }
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return back()->with('success', 'Usuario Eliminado Exitosamente');
+    }
 
     public function update(Request $request, $id)
     {

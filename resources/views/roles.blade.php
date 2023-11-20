@@ -2,10 +2,13 @@
 <html lang="es">
 
 <head>
-    <title>Inicio</title>
+    <title>Roles</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('layouts/estilos')
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    @livewireScripts
 </head>
 
 <body>
