@@ -26,7 +26,7 @@ function generarMapa() {
 
     marcador = new google.maps.Marker({
         map: mapa,
-        draggable: true,
+        draggable: false,
         position: new google.maps.LatLng(coordenadas.lat, coordenadas.lng),
     });
 
