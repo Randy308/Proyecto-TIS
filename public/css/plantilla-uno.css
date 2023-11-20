@@ -163,6 +163,8 @@ body {
 }
 #boton-registro {
     width: fit-content;
+    white-space: normal;
+    word-wrap: break-word;
 }
 a#boton-registro {
     width: fit-content;
@@ -184,6 +186,24 @@ p {
 .emaillink{
     font-size: small;
 }
+
+
+.Cancelado{
+    color: #c73633; /* Tono más oscuro de rojo */
+}
+
+.Activo {
+    color: #3c9c64; /* Tono más oscuro de verde */
+}
+
+.Borrador{
+    color: #caac2a; /* Tono más oscuro de naranja */
+}
+
+.Finalizado {
+    color: #345d8d; /* Tono más oscuro de azul */
+}
+
 @media screen and (max-width: 880px) {
     .c2 {
         background-color: gainsboro;
@@ -208,6 +228,8 @@ p {
     }
     #boton-registro {
         font-size: x-small;
+        white-space: normal;
+        word-wrap: break-word;
     }
     #lista-registro * {
         font-size: xx-small;
@@ -236,3 +258,4 @@ p {
         padding-bottom: 0;
     }
 }
+

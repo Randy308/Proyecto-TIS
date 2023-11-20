@@ -7,65 +7,100 @@
                 <img src="{{ asset($evento->direccion_banner) }}" alt="logo-banner" id="miBanner" />
             </div>
             {{--  --}}
-            <div class="div-titulo">
-                <div>
-                    <h5>Fecha: <b>{{ $mifechaFinal }}</b></h5>
-                    <h1 id="miTitulo">{{ $evento->nombre_evento }}</h1>
-                    <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
+            <div class="div-titulos p-4">
+                <div class="row">
+                    <div class="col">
+                        <h5>Fecha: <b>{{ $mifechaFinal }}</b></h5>
+                    </div>
                 </div>
-                <div class="div-btn-registrarse">
-                    @if (strtotime($evento->fecha_fin) > strtotime(now()))
-                        @guest
-                            <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
-                                data-target="#loginModal">
-                                Iniciar Sesion
-                            </button>
+                <div class="row">
+                    <div class="col">
+                        <h1 id="miTitulo">{{ $evento->nombre_evento }}</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
 
-                        @endguest
-                        @auth
-                            @php
-                                $id_evento_pagina = $evento->id;
-                                $id_usuario = auth()->user()->id;
-                                $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
-                                    ->where('evento_id', $id_evento_pagina)
-                                    ->exists();
-                            @endphp
-                            @if ($registroExistente)
-                                <div class="dropdown" id="lista-registro">
-                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                        id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
-                                        aria-expanded="false">
-                                        Ya se encuentra <br>registrado en el evento
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" href="#" data-toggle="modal"
-                                            data-target="#abandonarModal">Abandonar evento</a>
-
-                                    </div>
-                                </div>
-                                @include('abandonar-evento', ['evento' => $evento])
-                            @else
-                                <form method="POST"
-                                    action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                    @method('PUT')
-                                    @csrf
-
-                                    <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                    <button type="submit" class="btn btn-primary" id="boton-registro">
-                                        Registrarse
+                        <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
+                    </div>
+                    <div class="col ">
+                        <div class="div-btn d-flex justify-content-end">
+                            @if (strtotime($evento->fecha_fin) > strtotime(now('GMT-4')))
+                                @guest
+                                    <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
+                                        data-target="#loginModal">
+                                        Iniciar Sesion
                                     </button>
-                                </form>
+
+                                @endguest
+                                @auth
+                                    @php
+                                        $id_evento_pagina = $evento->id;
+                                        $id_usuario = auth()->user()->id;
+                                        $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                            ->where('evento_id', $id_evento_pagina)
+                                            ->exists();
+                                    @endphp
+                                    @if ($registroExistente)
+                                        <div class="dropdown" id="lista-registro">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                id="dropdownMenuLink boton-registro" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                Ya se encuentra <br>registrado en el evento
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                                    data-target="#abandonarModal">Abandonar evento</a>
+
+                                            </div>
+                                        </div>
+                                        @include('abandonar-evento', ['evento' => $evento])
+                                    @else
+                                        @if (strtoupper($evento->estado) == 'CANCELADO')
+                                            <button type="button" disabled class="btn btn-danger" id="boton-registro">
+                                                Evento cancelado
+                                            </button>
+                                        @elseif(strtoupper($evento->estado) == 'FINALIZADO')
+                                            <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                                Evento finalizado
+                                            </button>
+                                        @elseif (strtoupper($evento->estado) == 'ACTIVO')
+                                            <form method="POST"
+                                                action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
+                                                @method('PUT')
+                                                @csrf
+
+                                                <input type="hidden" name="evento" value="{{ $evento->id }}">
+                                                <button type="submit" class="btn btn-success" id="boton-registro">
+                                                    Registrarse
+                                                </button>
+                                            </form>
+                                        @else
+                                            <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                                Registro no disponible
+                                            </button>
+                                        @endif
+                                    @endif
+
+
+
+                                @endauth
+                            @else
+                                <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                    Evento finalizado
+                                </button>
+                               
                             @endif
 
 
-
-                        @endauth
-                    @else
-                        <p>El evento ya paso.</p>
-                    @endif
+                        </div>
+                    </div>
+                </div>
+                <div>
 
 
                 </div>
+
             </div>
         </div>
     </div>
@@ -85,7 +120,8 @@
                             <p class="h4">Detalles</p>
                             <span><i class="bi bi-person h3"></i> Evento de
                                 <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
-                            <span><i class="bi bi-tools h3"></i> Estado: <b>{{ $evento->estado }}</b> </span>
+                            <span><i class="bi bi-tools h3"></i> Estado: <b
+                                    class="{{ $evento->estado }}">{{ $evento->estado }}</b> </span>
                             <span><i class="bi bi-people-fill h3"></i> <span>{{ count($evento->users) }} personas
                                     participan</span></span>
 

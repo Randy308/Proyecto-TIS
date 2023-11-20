@@ -86,22 +86,38 @@
 
         @foreach ($eventos as $evento)
             <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="position-relative">
-                        <div class="cintaCategoria">{{ $evento->categoria }}</div>
-                        <a href="{{ route('verEvento', $evento->id) }}">
-                            <img src="{{ $evento->direccion_banner }}" class="card-img-top" alt="{{ $evento->Titulo }}">
-                        </a>
-                        <div class="{{ $evento->estado }}">{{ $evento->estado }}</div>
-                    </div>
-                    <div class="card-body">
-                        <a href="{{ route('verEvento', $evento->id) }}">
-                            <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
-                            @if (!empty($evento->descripcion_evento))
-                                <p class="card-text"><b class=" font-weight-bold">Descripción:
-                                    </b>{{ $evento->descripcion_evento }}</p>
-                            @endif
+                <a href="{{ route('verEvento', $evento->id) }}">
+                    <div class="card position-relative {{ $evento->estado }}">
+                        <div class="card-header">
+                            <div class="cintaCategoria">{{ $evento->categoria }}</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row d-flex">
+                                <div class="col-4">
+                                    @if (strtoupper($evento->estado) == 'CANCELADO')
+                                        <i class="bi bi-calendar-x display-4"></i>
+                                    @elseif(strtoupper($evento->estado) == 'FINALIZADO')
+                                        <i class="bi bi-calendar2-check display-4"></i>
+                                    @elseif(strtoupper($evento->estado) == 'ACTIVO')
+                                        <i class="bi bi-calendar-event display-4"></i>
+                                    @else
+                                        <i class="bi bi-calendar2-plus display-4"></i>
+                                    @endif
 
+                                </div>
+                                <div class="col-6">
+                                    
+                                    <p class="h6">{{ $evento->nombre_evento }}</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    @if (!empty($evento->descripcion_evento))
+                                        <p class="card-text"><b class=" font-weight-bold">Descripción:
+                                            </b>{{ $evento->descripcion_evento }}</p>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <p class="card-text"><span>Desde: </span>
@@ -117,11 +133,15 @@
 
                             </div>
 
-                        </a>
+                            <div class="{{ $evento->estado }}">{{ $evento->estado }}</div>
 
 
+
+                        </div>
                     </div>
-                </div>
+
+                </a>
+
             </div>
         @endforeach
 
