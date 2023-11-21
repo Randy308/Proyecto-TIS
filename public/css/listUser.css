@@ -1,0 +1,28 @@
+.cintaRol{
+    position: relative;
+    background-color: #003153;
+    color: white;
+    text-align: center;
+}
+
+
+
+.Deshabilitado {
+    background-color: #FF0000;
+    position: relative;
+
+    color: white;
+    text-align: center;
+}
+
+.Habilitado{
+    background-color: #00FF00;
+    position: relative;
+
+    color: white;
+    text-align: center;
+}
+
+.FiltroInvisible{
+    display: none;
+}

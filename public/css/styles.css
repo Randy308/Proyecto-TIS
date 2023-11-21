@@ -1,0 +1,165 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
+
+:root {
+    --main-color: #003153;
+    --second-color: #3498db;
+    --main-colors: #323268;
+    --main-g-colors: -webkit-linear-gradient(to bottom right,#003153, #0086ff);
+
+}
+
+body {
+    background-color: #eee;
+    color: #333;
+}
+
+.close-button {
+    cursor: pointer;
+    padding-left: 10px;
+    font-weight: bold;
+}
+.recipient{
+    display: flex;
+
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#recipient-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.contact-form {
+    background: #fff;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    width: 90%;
+    border-radius: 1rem;
+}
+.contact-image{
+    text-align: center;
+}
+.contact-image span{
+    font-size: 68px;
+    background-color: white;
+    color: var(--main-color);
+    border-radius: 7rem;
+    width: 11%;
+    margin-top: -3%;
+
+}
+.contact-form .form-control {
+    border-radius: 1rem;
+}
+.contact-form h2 {
+    margin-bottom: 8%;
+    margin-top: -10%;
+    text-align: center;
+    color: var(--main-color);
+}
+.contact-form form {
+    padding: 10%;
+}
+.contact-form form .row {
+    margin-bottom: -7%;
+}
+header {
+    background-color: var(--main-color);
+    color: #fff;
+    padding: 10px;
+}
+.btn-primary {
+    background-color: var(--main-color);
+    color: #fff;
+    border-color: var(--main-color);
+}
+.btn-outline-info {
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
+    background-color: transparent;
+    width: 50%;
+}
+.botones-juntos .btn-cancelar {
+    margin-right: 10px; /* Ajusta el margen entre los botones */
+}
+.btn-cancelar {
+    background-color: #fff;
+    border: 2px solid var(--main-color);
+    color: #000;
+    transition:
+        background-color 0.3s,
+        color 0.3s;
+}
+
+.btn-cancelar:hover {
+    background-color: #ff0000;
+    color: #fff;
+    border: 2px solid #ff0000;
+}
+.formulario {
+    background-color: #ffff;
+    padding: 20px;
+    border-radius: 20px;
+    max-width: 600px;
+    width: 45%;
+    border: 2px solid var(--main-color);
+    display: inline-block;
+    margin: 0 20px;
+}
+
+.formulario input[type="text"],
+.formulario input[type="date"],
+.formulario select,
+.formulario textarea {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.formulario h1 {
+    color: #4eb3ee;
+}
+
+.formulario button {
+    width: 100%;
+}
+
+.etiqueta-celeste {
+    color: var(--main-color);
+}
+
+.etiqueta-celeste input[type="text"],
+.etiqueta-celeste input[type="date"],
+.etiqueta-celeste select,
+.etiqueta-celeste textarea {
+    border: 2px solid var(--main-color);
+}
+
+.editar-color {
+    text-align: center; /* Centra horizontalmente el contenido */
+    margin-right: 0; /* Sin espacio entre el "Editar Color" y el formulario */
+    display: inline-block; /* Coloca el "Editar Color" en línea con el formulario */
+}
+
+.editar-color i {
+    font-size: 20px;
+    color: var(--main-color);
+    margin-right: 5px; /* Espacio a la derecha del icono */
+}
+
+.editar-color span {
+    font-size: 32px;
+    color: var(--main-color);
+    cursor: pointer;
+}
+
+.contenedor-flex {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: center; /* Centra horizontalmente los elementos */
+}
+
+
