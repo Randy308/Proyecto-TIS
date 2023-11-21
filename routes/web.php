@@ -93,9 +93,7 @@ Route::get('/actualizar-cuenta', function () {
 
 Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
 
-Route::get('/assign-roles', [RoleController::class, 'assignRolesView'])->name('assign-roles');
 
-Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign-role');
 Route::get('/acceso-denegado', function () {
     return view('acceso-denegado');
 })->name('acceso-denegado');
@@ -114,18 +112,7 @@ Route::get('/editarPerfil', function () {
 Route::put('/editarPerfil/{user}', [AuthUser::class, 'update'])
     ->name('user.update');
 
-Route::get('/asignarRoles', function () {
-    return view('roles');
-})->name('asignarRoles');
-Route::post('/asignarRoles', [RoleController::class, 'store'])
-    ->name('asignarRoles.store');
 
-Route::delete('//eliminarRol/{role}', [RoleController::class, 'destroy'])
-    ->name('asignarRoles.delete');
-Route::get('/asignarRoles/{user}', [RoleController::class, 'edit'])
-    ->name('asignarRoles.edit');
-Route::put('/asignarRoles/{user}', [RoleController::class, 'update'])
-    ->name('asignarRoles.update');
 
 Route::get('/asignarPermiso/{role}', [PermisoController::class, 'edit'])
     ->name('asignarPermiso.edit');
@@ -144,4 +131,24 @@ Route::group(['middleware' => ['can:admin.crear-auspiciador']], function () {
 
     Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');
     Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');
+});
+
+
+Route::group(['middleware' => ['can:admin.ver-roles']], function () {
+
+    Route::get('/asignarRoles', function () {
+        return view('roles');
+    })->name('asignarRoles');
+    Route::delete('/eliminarRol/{role}', [RoleController::class, 'destroy'])
+        ->name('asignarRoles.delete');
+    Route::get('/asignarRoles/{user}', [RoleController::class, 'edit'])
+        ->name('asignarRoles.edit');
+    Route::put('/asignarRoles/{user}', [RoleController::class, 'update'])
+        ->name('asignarRoles.update');
+});
+
+
+Route::group(['middleware' => ['can:admin.crear-roles']], function () {
+    Route::post('/asignarRoles', [RoleController::class, 'store'])
+        ->name('asignarRoles.store');
 });

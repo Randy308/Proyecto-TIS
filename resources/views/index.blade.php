@@ -28,6 +28,7 @@
                 <hr>
             </div>
             <h5>Laravel {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</h5>
+            @livewire('evento-proximo')
         </div>
 
     </div>
