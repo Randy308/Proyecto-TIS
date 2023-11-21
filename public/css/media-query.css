@@ -1,0 +1,41 @@
+@media screen and (min-width: 320px) and (max-width: 978px) {
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    .content {
+        padding: 0;
+        margin: 0;
+    }
+    body,
+    html {
+        padding: 0;
+        margin: 0;
+    }
+    #miContainer {
+        padding: 0;
+        margin: 0;
+    }
+    #miContent {
+        padding: 0;
+        margin: 0;
+    }
+    .p-5 {
+        padding: 0;
+    }
+    .m-5 {
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+    }
+
+    .navbar-fixed-top,
+    .navbar-fixed-bottom,
+    .navbar-static-top {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+}
