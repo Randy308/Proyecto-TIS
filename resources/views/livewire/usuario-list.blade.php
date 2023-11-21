@@ -47,7 +47,7 @@
     </div>
     @if ($usuarios->count())
         <div class="card-body">
-            <table class="table table-striped table-responsive">
+            <table class="table table-striped table-responsive-sm">
                 <thead>
                     <tr>
                         <th>ID</th>

@@ -11,7 +11,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable
 {
     use HasFactory, Notifiable, HasRoles;
-    
+
     /**
      * The attributes that are mass assignable.
      *
@@ -66,5 +66,9 @@ class User extends Authenticatable
     public function institucion()
     {
         return $this->belongsTo(Institucion::class);
+    }
+    public function eventosColabora()
+    {
+        return $this->belongsToMany(Evento::class, 'colaboradors');
     }
 }

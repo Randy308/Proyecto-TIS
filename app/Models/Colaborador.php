@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Colaborador extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'evento_id',
+        'user_id',
+        'rol',
+    ];
 }

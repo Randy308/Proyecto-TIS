@@ -15,8 +15,13 @@ class CreateColaboradorsTable extends Migration
     {
         Schema::create('colaboradors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('evento_id');
             $table->unsignedBigInteger('user_id');
+            $table->unique(['user_id', 'evento_id']);
+            $table->string('rol');
             $table->timestamps();
+            $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

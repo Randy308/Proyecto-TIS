@@ -51,8 +51,6 @@ class EventoControlador extends Controller
     public function show($id) //id de evento
     {
         $evento = Evento::find($id);
-
-        $imgAuspiciadores = ImagenAuspiciador::where('evento_id', $id)->get();
         $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         $fecha = Carbon::parse($evento->fecha_fin);
         $fecha_inicial = Carbon::parse($evento->fecha_inicio);
@@ -65,7 +63,7 @@ class EventoControlador extends Controller
             $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
         }
         $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-        return view('visualizar-evento', compact('evento', 'imgAuspiciadores', 'mifechaFinal'));
+        return view('visualizar-evento', compact('evento', 'mifechaFinal'));
     }
 
     public function listaEventos()
@@ -86,9 +84,9 @@ class EventoControlador extends Controller
 
 
     public function crearEvento(Request $request)
-    {   
+    {
 
-        $todayDate = now('GMT-4')->format('Y-m-d');
+        $todayDate = now('GMT-4')->format('Y-m-d\TH:i');
         //return $request;
         //return $todayDate;
         $validator = $request->validate([
@@ -102,8 +100,9 @@ class EventoControlador extends Controller
             ],
             'descripcion_evento' => 'nullable|string',
             'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
-            'fecha_inicio' => 'date_format:Y-m-d|required|date|after_or_equal:'. $todayDate,
-            'fecha_fin' => 'date_format:Y-m-d|required|date|after_or_equal:fecha_inicio',
+            'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
+            'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
+            //'fecha_fin' => 'date_format:Y-m-d|required|date|after_or_equal:fecha_inicio',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
@@ -121,6 +120,24 @@ class EventoControlador extends Controller
 
 
         );
+        // Get the datetime input from the request
+        $datetimeInput1 = $request->input('datetime_input');
+
+        // Convert the datetime input to a Carbon instance
+        $carbonDatetime1 = Carbon::parse($datetimeInput1);
+
+        // Extract date and time
+        $dateInicio = $carbonDatetime1->toDateString(); // Format: Y-m-d
+        $timeInicio = $carbonDatetime1->toTimeString(); // Format: H:i:s
+         // Get the datetime input from the request
+         $datetimeInput2 = $request->input('datetime_input');
+
+         // Convert the datetime input to a Carbon instance
+         $carbonDatetime2 = Carbon::parse($datetimeInput2);
+
+         // Extract date and time
+         $dateFinal = $carbonDatetime2->toDateString(); // Format: Y-m-d
+         $timeFinal = $carbonDatetime2->toTimeString(); // Format: H:i:s
 
 
         $nombreDelArchivo = basename($rutaBanner);
@@ -134,8 +151,11 @@ class EventoControlador extends Controller
         $evento-> user_id =  auth()->id();
         $evento-> estado = 'Borrador';
         $evento-> categoria = $request->input('categoria');
-        $evento-> fecha_inicio =  $request->input('fecha_inicio');
-        $evento-> fecha_fin = $request->input('fecha_fin');
+        $evento-> fecha_inicio =  $dateInicio;
+        $evento-> fecha_fin = $dateFinal;
+
+        $evento-> tiempo_inicio =  $timeInicio;
+        $evento-> tiempo_fin = $timeFinal;
         $evento-> direccion_banner = '/storage/banners/' . $nombreDelArchivo;
         $evento-> latitud = $request->input('latitud');
         $evento-> longitud = $request->input('longitud');

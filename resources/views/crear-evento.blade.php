@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
         integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
 <body>
@@ -36,7 +36,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="nombre_evento">Nombre del Evento <span class="text-danger font-weight-bold ">*</span></label>
+                                    <label for="nombre_evento">Nombre del Evento <span
+                                            class="text-danger font-weight-bold ">*</span></label>
                                     <input type="text" name="nombre_evento"
                                         class="form-control @error('nombre_evento') is-invalid @enderror"
                                         id="nombre_evento" value="{{ old('nombre_evento') }}"
@@ -49,8 +50,9 @@
 
                                 <div class="form-group">
                                     <label for="Ubicacion">Agregar ubicación:</label>
-                                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
-                                   @include('modal-ubicacion')
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
+                                    @include('modal-ubicacion')
                                 </div>
 
                                 <div class="form-group">
@@ -64,8 +66,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="fecha_inicio">Fecha de inicio <span class="text-danger font-weight-bold ">*</span></label>
-                                    <input type="date" name="fecha_inicio"
+                                    <label for="fecha_inicio">Fecha de inicio <span
+                                            class="text-danger font-weight-bold ">*</span></label>
+                                    <input type="datetime-local" name="fecha_inicio"
                                         class="form-control @error('fecha_inicio') is-invalid @enderror"
                                         id="fecha_inicio" value="{{ old('fecha_inicio') }}" required
                                         aria-describedby="fecha_inicio_help">
@@ -75,8 +78,9 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="fecha_fin">Fecha de finalización <span class="text-danger font-weight-bold ">*</span></label>
-                                    <input type="date" name="fecha_fin"
+                                    <label for="fecha_fin">Fecha de finalización <span
+                                            class="text-danger font-weight-bold ">*</span></label>
+                                    <input type="datetime-local" name="fecha_fin"
                                         class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
                                         value="{{ old('fecha_fin') }}" required aria-describedby="fecha_fin_help">
                                     @error('fecha_fin')
@@ -120,7 +124,8 @@
 
 
                             </div>
-                            <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo es obligatorio</span></div>
+                            <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo
+                                    es obligatorio</span></div>
                             <div class="col d-flex justify-content-end">
                                 <div class="form-group">
                                     <a href="#" class="btn btn-cancelar"
@@ -159,6 +164,7 @@
         $(function() {
             const date = new Date();
 
+            // Format the date
             let day = date.getDate();
             if (day < 10) {
                 day = '0' + day;
@@ -169,11 +175,28 @@
             }
             let year = date.getFullYear();
 
-            // This arrangement can be altered based on how we want the date's format to appear.
+            // Format the time
+            let hours = date.getHours();
+            if (hours < 10) {
+                hours = '0' + hours;
+            }
+            let minutes = date.getMinutes();
+            if (minutes < 10) {
+                minutes = '0' + minutes;
+            }
+            let seconds = date.getSeconds();
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+
+            // Create the formatted date and time strings
             let currentDate = `${year}-${month}-${day}`;
-            document.getElementById('fecha_inicio').setAttribute('min', currentDate);
-            document.getElementById('fecha_fin').setAttribute('min', currentDate);
-            $('#fecha_inicio').val(currentDate);
+            let currentTime = `${hours}:${minutes}:00`;
+
+            // Set the minimum attribute and initial value for date inputs
+            document.getElementById('fecha_inicio').setAttribute('min', currentDate + 'T' + currentTime);
+            document.getElementById('fecha_fin').setAttribute('min', currentDate + 'T' + currentTime);
+            $('#fecha_inicio').val(currentDate + 'T' + currentTime);
         });
     </script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>
