@@ -42,14 +42,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="tipo_evento">Tipo de Evento</label>
-                                        <select name="tipo_evento" class="form-control" id="tipo_evento">
-                                            <option value="reclutamiento">Reclutamiento</option>
-                                            <option value="competencia_individual">Competencia Individual</option>
-                                            <option value="competencia_grupal">Competencia Grupal</option>
-                                            <option value="taller_individual">Taller Individual</option>
-                                            <option value="taller_grupal">Taller Grupal</option>
+                                        <select name="tipo_evento" class="form-control @error('tipo_evento') is-invalid @enderror" id="tipo_evento">
+                                            <option value="reclutamiento" {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>Reclutamiento</option>
+                                            <option value="competencia_individual" {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>Competencia Individual</option>
+                                            <option value="competencia_grupal" {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>Competencia Grupal</option>
+                                            <option value="taller_individual" {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>Taller Individual</option>
+                                            <option value="taller_grupal" {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal</option>
                                         </select>
+                                        @error('tipo_evento')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
+                                    
                                     
 
                                     <div class="form-group">
@@ -87,18 +93,35 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="privacidad">Privacidad del Evento</label>
-                                        <select name="privacidad" class="form-control" id="privacidad" required>
+                                        <select name="privacidad" class="form-control @error('privacidad') is-invalid @enderror" id="privacidad" required>
                                             <option value="publico">Público</option>
                                             <option value="institucional">Institucional</option>
                                         </select>
+                                        @error('privacidad')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
+                                    
                                     <div class="form-group">
                                         <label for="inscritos_minimos">Cantidad Mínima de Inscritos</label>
-                                        <input type="number" name="inscritos_minimos" class="form-control" id="inscritos_minimos" min="0" oninput="validarMinimo(this)">
+                                        <input type="number" name="inscritos_minimos" class="form-control @error('inscritos_minimos') is-invalid @enderror" id="inscritos_minimos" min="0" oninput="validarMinimo(this)">
+                                        @error('inscritos_minimos')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                         
                                         <label for="inscritos_maximos">Cantidad Máxima de Inscritos</label>
-                                        <input type="number" name="inscritos_maximos" class="form-control" id="inscritos_maximos" min="0" oninput="validarMaximo(this)">
+                                        <input type="number" name="inscritos_maximos" class="form-control @error('inscritos_maximos') is-invalid @enderror" id="inscritos_maximos" min="0" oninput="validarMaximo(this)">
+                                        @error('inscritos_maximos')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
+                                    
                                     
                                     
 

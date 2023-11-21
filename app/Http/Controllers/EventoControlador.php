@@ -82,10 +82,31 @@ class EventoControlador extends Controller
             'descripcion_evento' => 'required|string',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            'privacidad' => 'required|in:publico,institucional',
+            'inscritos_minimos' => 'required|integer|min:0', 
+            'inscritos_maximos' => 'required|integer|min:' . $request->input('inscritos_minimos'),
+            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
         ], [
+            'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
+            'fecha_fin.required' => 'La fecha de finalización es obligatoria.',
             'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
-            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.'
+            'nombre_evento.required' => 'El nombre del evento es obligatorio.',
+            'nombre_evento.string' => 'El nombre del evento debe ser una cadena de texto.',
+            'nombre_evento.max' => 'El nombre del evento no puede tener más de :max caracteres.',
+            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
+            'descripcion_evento.required' => 'La descripción del evento es obligatoria.',
+            'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
+            'privacidad.required' => 'La privacidad del evento es obligatoria.',
+            'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
+            'inscritos_minimos.required' => 'La cantidad mínima de inscritos es obligatoria.',
+            'inscritos_minimos.integer' => 'La cantidad mínima de inscritos debe ser un número entero.',
+            'inscritos_minimos.min' => 'La cantidad mínima de inscritos debe ser al menos :min.',
+            'inscritos_maximos.required' => 'La cantidad máxima de inscritos es obligatoria.',
+            'inscritos_maximos.integer' => 'La cantidad máxima de inscritos debe ser un número entero.',
+            'inscritos_maximos.min' => 'La cantidad máxima de inscritos debe ser al menos :min.',
+            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
+            'tipo_evento.in' => 'El tipo de evento no es válido.',
         ]);
     
         $background_color = '#21618C';
