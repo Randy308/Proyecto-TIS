@@ -54,27 +54,24 @@
             </li>
 
         @endauth
-        @can('usuario.ver-eventos')
+        @can('admin.crear-auspiciador')
             <li>
                 <a href="{{ route('auspiciadores-index') }}">
                     <i class="bi bi-cup-hot"></i>
-                    <span>Hola mundo</span>
+                    <span>Auspiciadores</span>
                 </a>
             </li>
         @endcan
-        <li>
-            <a href="{{ route('auspiciadores-index') }}">
-                <i class="bi bi-cup-hot"></i>
-                <span>Auspiciadores</span>
-            </a>
-        </li>
-
+        @can('admin.ver-roles')
         <li>
             <a href="{{ route('asignarRoles') }}">
                 <i class="bi bi-person-rolodex"></i>
                 <span>Roles</span>
             </a>
         </li>
+        @endcan
+
+        
     </ul>
 
     <ul class="list-unstyled CTAs">
