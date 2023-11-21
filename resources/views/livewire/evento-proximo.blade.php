@@ -4,7 +4,7 @@
     @if (!empty($evento))
         <div class="content pt-5 p-5 m-5 m-sm-0 p-auto-0" id="miContent">
             <div class="container p-5 p-sm-0" id="miContainer">
-                <div class="card">
+                <div class="card ">
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-md-auto">
