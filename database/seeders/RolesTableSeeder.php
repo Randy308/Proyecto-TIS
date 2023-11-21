@@ -17,12 +17,19 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         $administrador = Role::create(['name' => 'administrador']);
+        $administrador->save();
         $organizador = Role::create(['name' => 'organizador']);
+        $organizador->save();
         $colaborador = Role::create(['name' => 'colaborador']);
+        $colaborador->save();
         $usuario_comun = Role::create(['name' => 'usuario común']);
-        Permission::create(['name' => 'usuario.ver-eventos'])->syncRoles([$administrador, $organizador, $colaborador, $usuario_comun]);
-        Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador, $organizador]);
-        Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
+        $usuario_comun->save();
+        $permiso1 =Permission::create(['name' => 'usuario.ver-eventos'])->syncRoles([$administrador, $organizador, $colaborador, $usuario_comun]);
+        $permiso2 =Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador, $organizador]);
+        $permiso3 =Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
+        $permiso1->save();
+        $permiso2->save();
+        $permiso3->save();
         // Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador,$organizador]);
         // Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
         // Permission::create(['name' => 'admin.eliminar-usuarios'])->assignRole($administrador);

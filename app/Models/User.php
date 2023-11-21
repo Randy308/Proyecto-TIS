@@ -62,10 +62,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Evento::class);
     }
-    public function hasRole($role)
-    {
-        return $this->roles->contains('name', $role);
-    }
+
     public function institucion()
     {
         return $this->belongsTo(Institucion::class);

@@ -52,15 +52,16 @@
 
                 </ul>
             </li>
-            @can('usuario.ver-eventos', Model::class)
-                <li>
-                    <a href="{{ route('auspiciadores-index') }}">
-                        <i class="bi bi-cup-hot"></i>
-                        <span>Auspiciadores</span>
-                    </a>
-                </li>
-            @endcan
+
         @endauth
+        @can('usuario.ver-eventos')
+            <li>
+                <a href="{{ route('auspiciadores-index') }}">
+                    <i class="bi bi-cup-hot"></i>
+                    <span>Hola mundo</span>
+                </a>
+            </li>
+        @endcan
         <li>
             <a href="{{ route('auspiciadores-index') }}">
                 <i class="bi bi-cup-hot"></i>
