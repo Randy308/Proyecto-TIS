@@ -40,18 +40,17 @@
                                             <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-
-
-
                                     <div class="form-group">
-                                        <label for="categoria">Categoría</label>
-                                        <select name="categoria" class="form-control" id="categoria" required>
-                                            <option value="Diseño">Diseño</option>
-                                            <option value="QA">QA</option>
-                                            <option value="Desarrollo">Desarrollo</option>
-                                            <option value="Ciencia de datos">Ciencia de datos</option>
+                                        <label for="tipo_evento">Tipo de Evento</label>
+                                        <select name="tipo_evento" class="form-control" id="tipo_evento">
+                                            <option value="reclutamiento">Reclutamiento</option>
+                                            <option value="competencia_individual">Competencia Individual</option>
+                                            <option value="competencia_grupal">Competencia Grupal</option>
+                                            <option value="taller_individual">Taller Individual</option>
+                                            <option value="taller_grupal">Taller Grupal</option>
                                         </select>
                                     </div>
+                                    
 
                                     <div class="form-group">
                                         <label for="fecha_inicio">Fecha de inicio</label>
@@ -73,6 +72,7 @@
                                         @enderror
                                     </div>
 
+
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -85,24 +85,33 @@
                                             <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
+                                    <div class="form-group">
+                                        <label for="privacidad">Privacidad del Evento</label>
+                                        <select name="privacidad" class="form-control" id="privacidad" required>
+                                            <option value="publico">Público</option>
+                                            <option value="institucional">Institucional</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inscritos_minimos">Cantidad Mínima de Inscritos</label>
+                                        <input type="number" name="inscritos_minimos" class="form-control" id="inscritos_minimos" min="0" oninput="validarMinimo(this)">
+                                        
+                                        <label for="inscritos_maximos">Cantidad Máxima de Inscritos</label>
+                                        <input type="number" name="inscritos_maximos" class="form-control" id="inscritos_maximos" min="0" oninput="validarMaximo(this)">
+                                    </div>
+                                    
+                                    
+
                                     <div class="form-group text-center botones-juntos">
                                         <a href="#" class="btn btn-cancelar" style="width: 45%;"
                                             onclick="confirmarCancelacion()">Cancelar</a>
-                                        <button type="submit" class="btn btn-info" style="width: 45%;">Crear Evento</button>
+                                        <button type="submit" class="btn btn-info" style="width: 45%;" >Crear Evento</button>
                                     </div>
+                                    
 
                                 </div>
                             </div>
 
-
-
-                            <script>
-                                function confirmarCancelacion() {
-                                    if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
-                                        window.location.href = "{{ route('index') }}";
-                                    }
-                                }
-                            </script>
 
                         </form>
                     </div>
@@ -134,6 +143,40 @@
             document.getElementById('fecha_fin').setAttribute('min', currentDate);
         });
     </script>
+    <script>
+            function validarMinimo(input) {
+        // Obtener el valor mínimo permitido (0 en este caso)
+        var minimo = parseInt(input.min);
+
+        // Validar y ajustar el valor si es menor al mínimo
+        if (parseInt(input.value) < minimo) {
+            input.value = minimo;
+        }
+    }
+
+    function validarMaximo(input) {
+        // Obtener el valor mínimo permitido (0 en este caso)
+        var minimo = parseInt(input.min);
+
+        // Validar y ajustar el valor si es menor al mínimo
+        if (parseInt(input.value) < minimo) {
+            input.value = minimo;
+        }
+
+        // Validar y ajustar el valor si es menor al mínimo
+        var inscritosMinimosInput = document.getElementById("inscritos_minimos");
+        if (parseInt(input.value) < parseInt(inscritosMinimosInput.value)) {
+            input.value = inscritosMinimosInput.value;
+        }
+    }
+        function confirmarCancelacion() {
+            if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
+                window.location.href = "{{ route('index') }}";
+            }
+        }
+
+    </script>
+
 </body>
 
 </html>

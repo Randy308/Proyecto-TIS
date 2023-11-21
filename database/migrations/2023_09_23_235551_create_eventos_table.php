@@ -19,16 +19,18 @@ class CreateEventosTable extends Migration
             $table->string('nombre_evento'); // Cambiar el nombre del atributo a snake_case
             $table->text('descripcion_evento');
             $table->enum('estado', ['Borrador','Activo', 'Finalizado', 'Cancelado']);
-            $table->enum('categoria', ['Diseño','QA', 'Desarrollo', 'Ciencia de datos']);
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->string('direccion_banner');
             $table->string('background_color');
+            $table->enum('tipo_evento', ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal']);
+            $table->enum('privacidad', ['publico', 'institucional']);
+            $table->unsignedBigInteger('inscritos_minimos')->nullable();
+            $table->unsignedBigInteger('inscritos_maximos')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
-
 
 
     /**

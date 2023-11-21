@@ -47,15 +47,35 @@
 
 
                                 <div class="form-group">
-                                    <label for="categoria">Categoría</label>
-                                    <select name="categoria" class="form-control" id="categoria" required>
-                                        @foreach ($categorias as $categoria)
-                                            <option value="{{ $categoria }}"
-                                                {{ $miEvento->categoria === $categoria ? 'selected' : '' }}>
-                                                {{ $categoria }}
+                                    <label for="tipo_evento">Tipo de Evento</label>
+                                    <select name="tipo_evento" class="form-control" id="tipo_evento" required>
+                                        @foreach ($tiposEvento as $tipo)
+                                            <option value="{{ $tipo }}" {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
+                                                {{ $tipo }}
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="privacidad">Privacidad</label>
+                                    <select name="privacidad" class="form-control" id="privacidad" required>
+                                        @foreach ($privacidades as $privacidad)
+                                            <option value="{{ $privacidad }}" {{ $miEvento->privacidad_evento === $privacidad ? 'selected' : '' }}>
+                                                {{ $privacidad }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inscritos_minimos">Inscritos Mínimos</label>
+                                    <input type="number" name="inscritos_minimos" class="form-control" id="inscritos_minimos" value="{{ $miEvento->min_inscritos }}" min="0" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inscritos_maximos">Inscritos Máximos</label>
+                                    <input type="number" name="inscritos_maximos" class="form-control" id="inscritos_maximos" value="{{ $miEvento->max_inscritos }}" min="{{ $miEvento->min_inscritos }}" required>
                                 </div>
 
                                 <div class="form-group">

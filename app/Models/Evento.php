@@ -12,15 +12,17 @@ class Evento extends Model
     protected $fillable = [
         'nombre_evento',
         'descripcion_evento',
-        'user_id',
         'estado',
-        'categoria',
+        'user_id',
         'fecha_inicio',
         'fecha_fin',
         'background_color',
         'direccion_banner',
+        'privacidad',
+        'inscritos_minimos',
+        'inscritos_maximos',
+        'tipo_evento',
     ];
-
     public function user()
     {
         return $this->belongsTo(User::class);

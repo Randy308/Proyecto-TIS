@@ -19,7 +19,7 @@ Route::get('/', function () {return view('index');})->name('index');
 
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
-Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento')->middleware('checkRole:administrador,organizador');;
+Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento')->middleware('checkRole:administrador,organizador');
 
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento')->middleware('checkRole:administrador,organizador');
 
