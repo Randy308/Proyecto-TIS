@@ -37,7 +37,7 @@
                 $( "#miContainer" ).removeClass( "p-5" );
                 $( "#miContainer" ).removeClass( "m-5" );
             } else {
-                addClass
+                
                 $( "#miContent" ).addClass( "p-5" );
                 $( "#miContent" ).addClass( "m-5" );
                 $( "#miContainer" ).addClass( "p-5" );
