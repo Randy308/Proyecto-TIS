@@ -4,18 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Evento;
 
-class ImagenAuspiciador extends Model
+class Colaborador extends Model
 {
-    //use HasFactory;
+    use HasFactory;
     protected $fillable = [
         'evento_id',
-        'url'
+        'user_id',
+        'rol',
     ];
-
-    public function evento(){
-        return $this->belongsTo(Evento::class);
-    }
 }
-

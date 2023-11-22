@@ -22,8 +22,9 @@ class Evento extends Model
         'direccion_banner',
         'latitud',
         'longitud',
+        'tiempo_inicio',
+        'tiempo_fin',
     ];
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -33,9 +34,6 @@ class Evento extends Model
         return $this->belongsToMany(User::class, 'asistencia_eventos');
     }
 
-    public function imagen_auspiciadors(){
-        return $this->hasMany(ImagenAuspiciador::class);
-    }
     public function elementosBanners()
     {
         return $this->hasMany(ElementosBanner::class);
@@ -44,5 +42,13 @@ class Evento extends Model
     {
         return $this->hasMany(ElementoImagenBanner::class);
 
+    }
+    public function auspiciadors()
+    {
+        return $this->belongsToMany(Auspiciador::class, 'auspiciador_eventos');
+    }
+    public function colaboradors()
+    {
+        return $this->belongsToMany(User::class, 'colaboradors');
     }
 }

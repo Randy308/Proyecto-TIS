@@ -11,7 +11,7 @@ use DateTime;
 class UsuarioList extends Component
 {
    protected $paginationTheme = 'bootstrap';
-    
+
     use WithPagination;
     public $search ='';
     public $orderb = 0;
@@ -31,9 +31,9 @@ class UsuarioList extends Component
         if($this->filtroRol){
             $usuarios->when($this->filtroRol, function ($query) {
                 return $query->role($this->filtroRol);
-            })->get();   
+            })->get();
         }
-        
+
          switch($this->orderb){
             case 0:
                 $usuarios->orderBy('created_at', 'desc');
@@ -48,11 +48,11 @@ class UsuarioList extends Component
                 $usuarios->orderBy('name', 'desc');
                 break;
 
-         } 
+         }
 
          $usuarios = $usuarios->paginate(6);
          $roles = Role::all();
-         
+
 
         return view('livewire.usuario-list',  [
             'usuarios' => $usuarios, 'roles' => $roles]);
@@ -67,7 +67,7 @@ class UsuarioList extends Component
         if (file_exists(public_path($usuario->foto_perfil)) && $usuario->foto_perfil != '') {
             return $usuario->foto_perfil;
         } else {
-            return '/storage/image/default_user_image.png'; 
+            return '/storage/image/default_user_image.png';
         }
     }
 
