@@ -4,7 +4,7 @@
         <div class="col-xl-4">
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Foto de Perfil</div>
-                <div class="card-body text-center">
+                <div class="card-body text-center" id="cardImagen">
                     <!-- Profile picture image-->
                     <div class="thumbnail">
                         <img class="img-thumbnail" src="{{ asset($user->foto_perfil) }}" id="image-preview"
@@ -19,7 +19,7 @@
         <div class="col-xl-8">
             <div class="card mb-4">
                 <div class="card-header">Datos Personales</div>
-                <div class="card-body">
+                <div class="card-body" id="cardDatos">
                     <form action='{{ route('editUser.update' , $user->id) }}' method="POST" class="px-md-2"
                         enctype="multipart/form-data">
                         @csrf
@@ -148,7 +148,7 @@
                             @enderror
 
                         </div>
-                        <div class="pt-4 d-flex justify-content-end">
+                        <div class="pt-4 d-flex justify-content-end flex-wrap">
                             <a href="{{ route('editarPerfil') }}" class="btn btn-danger m-2">Regresar</a>
                             <button type="submit" class="btn btn-primary m-2">Aplicar cambios</button>
                         </div>

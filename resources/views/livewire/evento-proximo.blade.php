@@ -40,6 +40,8 @@
                                 <p class="h6 ">{{ $evento->user->name }}</p>
                                 <p class="h6 ">{{ $evento->user->email }}</p>
                                 <p class="h6 ">{{ $evento->tiempo_inicio }}</p>
+                                <p>{{ $evento->fecha_inicio }}</p>
+                                <p>{{ $evento->tiempo_inicio }}</p>
                                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore odio ipsa dolor
                                     soluta voluptatum minus, consequatur quam architecto, explicabo in necessitatibus
                                     quisquam deserunt! Delectus quibusdam expedita quod quos ut facere.</p>
@@ -77,7 +79,7 @@
                         <div class="row ">
                             <div class="col ">
                                 <div class="date_content p-4" id="miFooter">
-                                    <h2>Falta Poco</h2>
+                                    <h2 id="demo-Header">Falta Poco</h2>
                                     <p id="demo"></p>
                                 </div>
                             </div>
@@ -91,12 +93,13 @@
 
         <script>
             // Set the date we're counting down to
+            //2023-11-29 14:51:34
             var countDownDate = new Date('{{ $evento->fecha_inicio }}' + ' ' + '{{ $evento->tiempo_inicio }}').getTime();
-
+            //var countDownDate = new Date('2023-11-22' + ' ' + '14:22:34').getTime();
             // Update the count down every 1 second
             var x = setInterval(function() {
 
-                // Get today's date and time
+                // Get today's date and timegi
                 var now = new Date().getTime();
 
                 // Find the distance between now and the count down date
@@ -115,7 +118,8 @@
                 // If the count down is over, write some text
                 if (distance < 0) {
                     clearInterval(x);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
+                    document.getElementById("demo").innerHTML = "";
+                    document.getElementById("demo-Header").innerHTML = "El evento ya ha comenzado";
                 }
             }, 1000);
         </script>

@@ -4,7 +4,7 @@
         <div class="col-xl-4">
             <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Foto de Perfil</div>
-                <div class="card-body text-center">
+                <div class="card-body text-center" id="cardImagen">
                     <!-- Profile picture image-->
                     <div class="thumbnail">
                         <img class="img-thumbnail" src="{{ asset($user->foto_perfil) }}"
@@ -19,7 +19,7 @@
         <div class="col-xl-8">
             <div class="card mb-4">
                 <div class="card-header">Datos Personales</div>
-                <div class="card-body">
+                <div class="card-body" id="cardDatos">
                     <ul class="list-group mt-3">
                         <li class="list-group-item"><strong>Roles:</strong>
                             <div id="roles-list" class="d-flex">
