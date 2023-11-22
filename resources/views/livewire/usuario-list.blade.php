@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div id="filtrosEvento"  class="FiltroInvisible" >
+    <div id="filtrosEvento" class="FiltroInvisible">
         <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="">Ordenar por:</label>
@@ -85,13 +85,12 @@
                                             type="button">Ver Detalles</a>
                                         <a class="dropdown-item" href="{{ route('asignarRoles.edit', $user->id) }}"
                                             type="submit">Editar Roles</a>
-                                        <form id="FormularioEli" action="{{ route('user.delete', $user->id) }}"
-                                            method="post">
+                                        <form class="eliminar-usuario-form"
+                                            action="{{ route('user.delete', $user->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button id="BotonEliminar" class="dropdown-item" type="button">Eliminar
+                                            <button class="dropdown-item boton-eliminar" type="button">Eliminar
                                                 Usuario</button>
-
                                         </form>
                                     </div>
                                 </div>
@@ -108,10 +107,10 @@
             {{ $usuarios->links() }}
         </div>
         <script>
-            $("#BotonEliminar").on("click", function(e) {
+            $(".boton-eliminar").on("click", function(e) {
                 e.preventDefault();
                 if (confirm("¿Está seguro de eliminar a este usuario?")) {
-                    var form = $("#BotonEliminar").parents('form:first');
+                    var form = $(this).parents('form:first');
                     form.submit();
                 }
             });
