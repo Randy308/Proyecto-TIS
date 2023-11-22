@@ -31,7 +31,7 @@ class ParticipanteController extends Controller
         $this->validate($request, [
 
             'name' => 'required|string|regex:/^[a-zA-Z\s]*$/',
-            'telefono' => 'required|regex:/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/',
+            'telefono' => 'required|regex:#^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$#',
             'direccion' => 'required|string',
             'email' => ['required', 'unique:users,email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
             'fecha_nac' => 'required',

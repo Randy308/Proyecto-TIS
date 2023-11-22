@@ -1,15 +1,19 @@
-
-
-
 <div class="container">
-        <div class="row">
-            <div class="col-md-12 mb-3">
-                <label for="">Búsqueda por Nombre</label>
-                <div class="input-group">
-                    <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
+    <div class="row">
+        <div class="col-md-12 mb-3">
+            <label for="">Búsqueda por Nombre</label>
+            <div class="input-group mb-3">
+                <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
+                <div class="input-group-append">
+
+                    <button type="button" id="BottonFiltrado" class="btn btn-info"><i
+                            class="bi bi-funnel-fill"></i></button>
                 </div>
             </div>
-
+        </div>
+    </div>
+    <div id="filtrosEvento" class="FiltroInvisible">
+        <div class="row">
             <div class="col-md-3 mb-3">
                 <label for="">Ordenar por:</label>
                 <select wire:model="orderb" class="form-control">
@@ -46,11 +50,11 @@
                 $mes = date('n');
                 $anio = date('Y');
 
-                $gesActual = "";
-                if($mes <= 6){
-                    $gesActual = "I";
-                }else{
-                    $gesActual = "II";
+                $gesActual = '';
+                if ($mes <= 6) {
+                    $gesActual = 'I';
+                } else {
+                    $gesActual = 'II';
                 }
             @endphp
 
@@ -58,70 +62,94 @@
                 <label for="">Filtrar por Gestion:</label>
                 <select wire:model="filtroGestion" class="form-control">
 
-                    <option value="{{ json_encode(['anio' => $anio , 'gestion' => $gesActual]) }}">{{$anio}} - {{$gesActual}}</option>
+                    <option value="{{ json_encode(['anio' => $anio, 'gestion' => $gesActual]) }}">{{ $anio }} -
+                        {{ $gesActual }}</option>
 
                     <option value="">Todo</option>
 
                     @foreach ($gestiones as $gestion)
-
-                        @if($anio != $gestion->anio || $gesActual != $gestion->gestion)
-                        <option value="{{ json_encode(['anio' => $gestion->anio , 'gestion' => $gestion->gestion]) }}">{{$gestion->anio}} - {{$gestion->gestion}}</option>
+                        @if ($anio != $gestion->anio || $gesActual != $gestion->gestion)
+                            <option
+                                value="{{ json_encode(['anio' => $gestion->anio, 'gestion' => $gestion->gestion]) }}">
+                                {{ $gestion->anio }} - {{ $gestion->gestion }}</option>
                         @endif
-
-
                     @endforeach
 
                 </select>
 
 
             </div>
-
         </div>
+    </div>
 
     <div class="row">
-        @if($eventos->count() == 0)
-        <div class="col-12">
-            <div class="alert alert-info">
-                No hay eventos disponibles.
+        @if ($eventos->count() == 0)
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No hay eventos disponibles.
+                </div>
             </div>
-        </div>
         @endif
 
 
         @foreach ($eventos as $evento)
             <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="position-relative">
-                        <div class="cintaCategoria">{{ $evento->categoria }}</div>
-                        <a href="{{ route('verEvento', $evento->id) }}">
-                            <img src="{{ $evento->direccion_banner }}" class="card-img-top" alt="{{ $evento->Titulo }}">
-                        </a>
-                        <div class="{{$evento->estado}}">{{ $evento->estado }}</div>
+                <a href="{{ route('verEvento', $evento->id) }}">
+                    <div class="card position-relative {{ $evento->estado }}">
+                        <div class="card-header">
+                            <div class="cintaCategoria">{{ $evento->categoria }}</div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row d-flex">
+                                <div class="col-4">
+                                    @if (strtoupper($evento->estado) == 'CANCELADO')
+                                        <i class="bi bi-calendar-x display-4"></i>
+                                    @elseif(strtoupper($evento->estado) == 'FINALIZADO')
+                                        <i class="bi bi-calendar2-check display-4"></i>
+                                    @elseif(strtoupper($evento->estado) == 'ACTIVO')
+                                        <i class="bi bi-calendar-event display-4"></i>
+                                    @else
+                                        <i class="bi bi-calendar2-plus display-4"></i>
+                                    @endif
 
+                                </div>
+                                <div class="col-6">
 
-
-
-                    </div>
-                    <div class="card-body">
-                        <a href="{{ route('verEvento', $evento->id) }}">
-                            <h5 class="card-title">{{ $evento->nombre_evento }}</h5>
-                            <p class="card-text"><b class=" font-weight-bold">Descripción: </b>{{ $evento->descripcion_evento }}</p>
+                                    <p class="h6">{{ $evento->nombre_evento }}</p>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col">
-                                    <p class="card-text" >{{ \Carbon\Carbon::parse($evento->fecha_inicio)->formatLocalized('%d %b %Y') }}</p>
+                                    @if (!empty($evento->descripcion_evento))
+                                        <p class="card-text"><b class=" font-weight-bold">Descripción:
+                                            </b>{{ $evento->descripcion_evento }}</p>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-text"><span>Desde: </span>
+                                        {{ \Carbon\Carbon::parse($evento->fecha_inicio)->formatLocalized('%d %b %Y') }}
+                                    </p>
                                 </div>
                                 <div class="col">
-                                    <p class="card-text" >{{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}</p>
+                                    <p class="card-text"><span>Hasta: </span>
+                                        {{ \Carbon\Carbon::parse($evento->fecha_fin)->formatLocalized('%d %b %Y') }}
+                                    </p>
                                 </div>
 
 
                             </div>
 
-                        </a>
+                            <div class="pt-4">{{ $evento->estado }}</div>
 
 
+
+                        </div>
                     </div>
-                </div>
+
+                </a>
+
             </div>
         @endforeach
 
@@ -131,5 +159,3 @@
     {{ $eventos->links() }}
 </div>
 @livewireScripts
-
-

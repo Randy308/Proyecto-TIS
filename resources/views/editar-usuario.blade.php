@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="wrapper"> 
+    <div class="wrapper">
         @include('layouts/sidebar')
         <div id="content">
 
@@ -21,17 +21,17 @@
                 <div class="col-lg-8 col-xl-8">
                     <div class="card rounded-3">
                         <div class="card-body p-4 p-md-5">
-                
-                
+
+
                             <form action='{{ route('editarUsuario.edit' , $usuario->id) }}' method="POST" class="px-md-2"
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2 text-center">Editar Usuario</h3>
 
-                                    <img class="img-prewiew" id="image-preview" src="/storage/image/default_user_image.png" alt="Previsualización de la imagen" style="max-width: 100%;margin: 0 auto;">    
+                                    <img class="img-prewiew" id="image-preview" src="/storage/image/default_user_image.png" alt="Previsualización de la imagen" style="max-width: 100%;margin: 0 auto; width:200px; height:200px">
                                 <br>
-                                
+
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="formName">Nombre completo</label>
                                     <input type="text" id="formName" class="form-control" name="nombre"
@@ -40,21 +40,21 @@
                                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                     @enderror
                                 </div>
-                
+
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
-                
+
                                         <div class="form-outline datepicker">
                                             <label for="formBirthDate" class="form-label">Fecha de
                                                 nacimiento</label>
                                             <input type="date" class="form-control" id="formBirthDate" name="fecha_nac"
                                                 class="@error('fecha_nac') is-invalid @enderror"  value="{{ old('fecha_nac', $usuario->fecha_nac) }}" />
-                
+
                                             @error('fecha_nac')
                                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                             @enderror
                                         </div>
-                
+
                                     </div>
                                     <div class="col-md-6 mb-2">
                                         <label for="formFile" class="form-label">Foto de perfil</label>
@@ -64,15 +64,15 @@
                                         @error('foto_perfil')
                                             <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                         @enderror
-                
-                
+
+
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-2">
-                
+
                                             <label for="formEstado" class="form-label">Estado</label>
                                             <select class="form-control form-control" class="form-select" name="estado"
                                             id="formEstado">
@@ -82,14 +82,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2">
-                
+
                                         <label class="form-label" for="formRol">Rol</label><br>
                                         <select class="form-control form-control" class="form-select" name="rol"
                                             id="formRol">
                                             @foreach ($roles as $rol)
                                             <option value="{{$rol->name}}" {{ $usuario->getRoleNames()->first() == $rol->name ? 'selected': ''}}>{{$rol->name}}</option>
                                             @endforeach
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-2">
-                
+
                                             <label for="formEmail" class="form-label">Correo electronico</label>
                                             <input type="email" id="formEmail" class="form-control" name="email"
                                                 class="@error('email') is-invalid @enderror"  value="{{ old('email', $usuario->email)}}" />
@@ -108,7 +108,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2">
-                
+
                                         <label class="form-label" for="formInstitucion">Seleccione su Pais de origen</label><br>
                                         <select class="form-control form-control" class="form-select" name="pais"
                                             id="formInstitucion">
@@ -129,22 +129,22 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
-                
+
                                         <div class="form-outline datepicker">
                                             <label for="formPhoneNumber" class="form-label">Telefono</label>
                                             <input type="tel" id="formPhoneNumber" name="telefono" class="form-control"
                                                 class="@error('telefono') is-invalid @enderror" value="{{ old('telefono', $usuario->telefono) }}" />
-                
-                
+
+
                                             @error('telefono')
                                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                             @enderror
-                
+
                                         </div>
-                
+
                                     </div>
                                     <div class="col-md-6 mb-2">
-                
+
                                         <label class="form-label" for="formInstitucion">Seleccione su Institucion</label><br>
                                         <select class="form-control form-control" class="form-select" name="institucion"
                                             id="formInstitucion">
@@ -155,13 +155,13 @@
                                                 @endforeach
                                             @else
                                                 <option value="Otros" disabled>No existen instituciones</option>
-                
-                
+
+
                                             @endif
                                         </select>
                                     </div>
                                 </div>
-                
+
                                 <div class="form-outline mb-2">
                                     <label class="form-label" for="formAddressLocation">Direccion de domicilio</label>
                                     <input type="text" id="formAddressLocation" class="form-control" name="direccion"
@@ -169,17 +169,17 @@
                                     @error('direccion')
                                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                     @enderror
-                
+
                                 </div>
                                 <div class="form-outline mb-2">
                                     <label class="form-label" for="textAreaHistorial">Historial Academico</label>
                                     <textarea id="textAreaHistorial" class="form-control" name="historial"
                                         class="@error('historial') is-invalid @enderror" cols="30" rows="3" >{{ old('historial', $usuario->historial_academico) }}</textarea>
-                
+
                                     @error('historial')
                                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                     @enderror
-                
+
                                 </div>
                                 <div class="form-group form-check">
                                     <input type="checkbox" class="form-check-input" id="cambiar-contrasena" name="cambiar_contrasena">
@@ -193,24 +193,24 @@
                                                 class="@error('password') is-invalid @enderror" />
                                             <span class="input-group-text">
                                                 <i class="far fa-eye" id="firstToggle" style="cursor: pointer;"></i></span>
-                    
+
                                         </div>
                                         @error('password')
                                             <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                         @enderror
-                    
+
                                     </div>
-                    
+
                                     <div class="form-outline">
                                         <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
                                         <div class="input-group mb-2">
-                    
+
                                             <input type="password" name="password_confirmation" id="password_confirmation"
                                                 class="form-control form-control"
                                                 class="@error('password_confirmation') is-invalid @enderror" />
                                             <span class="input-group-text">
                                                 <i class="far fa-eye" id="secondToggle" style="cursor: pointer;"></i></span>
-                    
+
                                         </div>
                                         @error('password_confirmation')
                                             <div class="alert alert-danger"><small>{{ $message }}</small></div>
@@ -218,20 +218,20 @@
                                     </div>
 
                                 </div>
-                                
+
                                 <div class="pt-4 d-flex justify-content-around">
                                     <a type="button" href="{{ route('verUsuario', $usuario->id) }}" class="btn btn-secondary btn-lg mb-1">Regresar</a>
                                     <button type="submit" class="btn btn-primary btn-lg mb-1">Editar usuario</button>
                                 </div>
-                
-                
-                
+
+
+
                             </form>
-                
+
                         </div>
                     </div>
                 </div>
-                
+
                 <script>
                     const firstToggle = document.querySelector('#firstToggle');
                     const secondToggle = document.querySelector('#secondToggle');
@@ -241,16 +241,16 @@
                         // toggle the type attribute
                         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
                         password.setAttribute('type', type);
-                
+
                         // toggle the eye slash icon
                         this.classList.toggle('fa-eye-slash');
                     });
-                
+
                     secondToggle.addEventListener('click', function(e) {
                         // toggle the type attribute
                         const type = password_confirmation.getAttribute('type') === 'password' ? 'text' : 'password';
                         password_confirmation.setAttribute('type', type);
-                
+
                         // toggle the eye slash icon
                         this.classList.toggle('fa-eye-slash');
                     });
@@ -272,17 +272,17 @@
                             reader.readAsDataURL(fileInput.files[0]);
                         } else {
                             // Cuando no se selecciona un archivo, muestra la imagen predeterminada
-                            imagePreview.src = "/storage/image/default_user_image.png"; 
+                            imagePreview.src = "/storage/image/default_user_image.png";
                             imagePreview.style.display = "block";
                         }
                     });
                 </script>
-                
+
 
                 <script>
                     const cambiarContrasenaCheckbox = document.getElementById('cambiar-contrasena');
                     const contrasenaFields = document.getElementById('contrasena-fields');
-                
+
                     cambiarContrasenaCheckbox.addEventListener('change', function() {
                         if (this.checked) {
                             contrasenaFields.style.display = 'block';
@@ -291,7 +291,7 @@
                         }
                     });
                 </script>
-                
+
             </div>
 
 

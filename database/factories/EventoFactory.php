@@ -36,7 +36,9 @@ class EventoFactory extends Factory
             'estado' => $estado,
             'latitud'=>-17.39359989348116,
             'longitud'=>-66.14596353915297,
-            'background_color' => '#FFFF'
+            'background_color' => '#FFFF',
+            'tiempo_inicio'=> $this->faker->time('H:i:s'),
+            'tiempo_fin'=>$this->faker->time('H:i:s'),
 
         ];
     }
