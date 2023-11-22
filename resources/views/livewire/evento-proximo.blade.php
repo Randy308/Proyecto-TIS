@@ -119,5 +119,28 @@
                 }
             }, 1000);
         </script>
+    @else
+        <div class="container pt-4">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="mensaje-sin-eventos d-flex justify-content-center">
+                        <p class="h5">Por el momento no existen eventos activos</p>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img src="/storage/image/robot-working.png" alt="robotWorking"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <p class="h6">Vuelve pronto para conocer las próximas actividades. ¡Estamos ansiosos de
+                                tenerte con nosotros!</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     @endif
-</div>
