@@ -15,73 +15,25 @@ use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RoleController;
 
 
+// Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
+// Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
 Route::get('/', function () {
     return view('index');
 })->name('index');
-
-//Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
-
-Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
-Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
-Route::get('/crear-evento', [EventoControlador::class, 'index'])->name('crear-evento');;
-
-Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
-
-Route::get('/editar-evento', function () {
-    return view('editar-evento');
-})->name('editar-evento');
-
-
+Route::get('/login', [AuthUser::class, 'index'])->name('login');
 Route::post('/login', [AuthUser::class, 'store'])->name('iniciar.sesion.store');
 
 
 Route::post('/logout', [AuthUser::class, 'destroy'])->name('logout');
 
-
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
-Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
-
-Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
-
-
-Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
-Route::delete('/eliminar-participante/{user_id}/{evento_id}', [AsistenciaEventosController::class, 'eliminarParticipante'])
-    ->name('eliminar-participante');
 
 Route::get('/registrarParticipante', [ParticipanteController::class, 'index'])->name('registrar-participante');
 
 Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])->name('registroParticipante.store');
 
-Route::get('/misEventos', function () {
-    return view('eventos-creados');
-})->name('misEventos')->middleware('checkRole:administrador,organizador,colaborador');
-
-
-Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete');
-
-Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
-Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
-
-Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update');
-
-Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
-
-Route::put('/evento/{id}', [EventoControlador::class, 'guardarMap'])->name('updateMap');
-
-Route::post('/evento/{id}', [ImagenAuspiciadorController::class, 'store'])->name('guardarAus');
-Route::delete('/evento/{id}', [ImagenAuspiciadorController::class, 'destroy'])->name('eliminarAus');
-
-Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
-Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario');
-Route::post('/usuario/crear', [UsuarioController::class, 'store'])->name('crearUsuario.store');
-Route::get('/usuario/{id}', [UsuarioController::class, 'show'])->name('verUsuario');
-Route::get('/usuario/{id}/editar', [UsuarioController::class, 'editForm'])->name('editarUsuario');
-Route::put('/usuario/{id}/editar', [UsuarioController::class, 'edit'])->name('editarUsuario.edit');
-Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
-
-Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
 
 Route::get('/recuperar-cuenta', [RecuperarCuentaController::class, 'index'])->name('recuperar-cuenta');
 
@@ -93,37 +45,98 @@ Route::get('/actualizar-cuenta', function () {
 
 Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
 
+//crear evento
 
-Route::get('/acceso-denegado', function () {
-    return view('acceso-denegado');
-})->name('acceso-denegado');
-
-Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
-
-Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
-Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
+Route::group(['middleware' => ['can:organizador.crear-evento']], function () {
+    Route::get('/crear-evento', [EventoControlador::class, 'index'])->name('crear-evento');
+    Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
+});
 
 
 
-Route::get('/editarPerfil', function () {
-    return view('editar-perfil');
-})->name('editarPerfil');
-
-Route::put('/editarPerfil/{user}', [AuthUser::class, 'update'])
-    ->name('user.update');
-
+Route::group(['middleware' => ['can:organizador.ver-mis-eventos']], function () {
+    Route::get('/misEventos', function () {
+        return view('eventos-creados');
+    })->name('misEventos');
+});
 
 
-Route::get('/asignarPermiso/{role}', [PermisoController::class, 'edit'])
-    ->name('asignarPermiso.edit');
-Route::put('/asignarPermiso/{role}', [PermisoController::class, 'update'])
-    ->name('asignarPermiso.update');
 
-Route::get('/perfil/{id}/editar', [UsuarioController::class, 'editUser'])->name('editUser');
-Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
+Route::group(['middleware' => ['can:admin.eliminar-participante']], function () {
+    Route::delete('/eliminar-participante/{user_id}/{evento_id}', [AsistenciaEventosController::class, 'eliminarParticipante'])
+        ->name('eliminar-participante');
+});
 
-Route::delete('/eliminar/{user}', [UsuarioController::class, 'destroy'])
-    ->name('user.delete');
+
+
+
+Route::group(['middleware' => ['can:admin.editar-banner']], function () {
+    // Route::get('/editar-evento', function () {
+    //     return view('editar-evento');
+    // })->name('editar-evento');
+    Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
+    Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
+});
+
+
+
+Route::group(['middleware' => ['can:admin.editar-evento']], function () {
+    Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
+
+    Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update');
+    Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
+    Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
+
+});
+
+
+Route::group(['middleware' => ['can:admin.eliminar-evento']], function () {
+    Route::delete('/eliminarEvento/{user}/{evento}', [EventoControlador::class, 'destroy'])->name('evento.delete');
+});
+
+
+
+Route::group(['middleware' => ['can:admin.listar-todos-usuarios']], function () {
+    Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+    // Route::get('/usuario/lista', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+    // Route::get('/lista-usuarios', [UsuarioController::class, 'listaUsuarios'])->name('listaUsuarios');
+});
+
+
+Route::group(['middleware' => ['can:admin.crear-usuario']], function () {
+    Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario');
+    Route::post('/usuario/crear', [UsuarioController::class, 'store'])->name('crearUsuario.store');
+});
+
+
+Route::group(['middleware' => ['can:admin.ver-detalle-usuarios']], function () {
+    Route::get('/usuario/{id}', [UsuarioController::class, 'show'])->name('verUsuario');
+});
+
+
+Route::group(['middleware' => ['can:admin.editar-usuarios']], function () {
+    Route::get('/usuario/{id}/editar', [UsuarioController::class, 'editForm'])->name('editarUsuario');
+    Route::put('/usuario/{id}/editar', [UsuarioController::class, 'edit'])->name('editarUsuario.edit');
+});
+
+
+Route::group(['middleware' => ['can:admin.modificar-permisos-rol']], function () {
+    Route::put('/asignarPermiso/{role}', [PermisoController::class, 'update'])
+        ->name('asignarPermiso.update');
+});
+Route::group(['middleware' => ['can:admin.ver-permisos']], function () {
+    Route::get('/asignarPermiso/{role}', [PermisoController::class, 'edit'])
+        ->name('asignarPermiso.edit');
+});
+
+
+
+Route::group(['middleware' => ['can:admin.eliminar-usuarios']], function () {
+
+    Route::delete('/eliminar/{user}', [UsuarioController::class, 'destroy'])
+        ->name('user.delete');
+});
+
 
 Route::group(['middleware' => ['can:admin.crear-auspiciador']], function () {
 
@@ -132,7 +145,6 @@ Route::group(['middleware' => ['can:admin.crear-auspiciador']], function () {
     Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');
     Route::post('/auspiciadores', [AuspiciadorController::class, 'store'])->name('auspiciador.store');
 });
-
 
 Route::group(['middleware' => ['can:admin.ver-roles']], function () {
 
@@ -151,4 +163,21 @@ Route::group(['middleware' => ['can:admin.ver-roles']], function () {
 Route::group(['middleware' => ['can:admin.crear-roles']], function () {
     Route::post('/asignarRoles', [RoleController::class, 'store'])
         ->name('asignarRoles.store');
+});
+Route::get('/acceso-denegado', function () {
+    return view('acceso-denegado');
+})->name('acceso-denegado');
+
+// Rutas para usuario authentificado
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/editarPerfil', function () {
+        return view('editar-perfil');
+    })->name('editarPerfil');
+    Route::put('/editarPerfil/{user}', [AuthUser::class, 'update'])->name('user.update');
+    Route::get('/perfil/{id}/editar', [UsuarioController::class, 'editUser'])->name('editUser');
+    Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
+    Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
+    Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
+
 });
