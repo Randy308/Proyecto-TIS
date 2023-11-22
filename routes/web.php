@@ -71,20 +71,16 @@ Route::group(['middleware' => ['can:admin.eliminar-participante']], function () 
 
 
 Route::group(['middleware' => ['can:admin.editar-banner']], function () {
-    // Route::get('/editar-evento', function () {
-    //     return view('editar-evento');
-    // })->name('editar-evento');
     Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
     Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
+    Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
 });
 
 
 
 Route::group(['middleware' => ['can:admin.editar-evento']], function () {
     Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
-
     Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update');
-    Route::post('/guardar-elementos/{evento}', [ElementosBannerController::class, 'store'])->name('crear-elementos-banner');
     Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
 });
@@ -129,12 +125,12 @@ Route::group(['middleware' => ['can:admin.ver-permisos']], function () {
         ->name('asignarPermiso.edit');
 });
 
-
-
+// Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
+Route::delete('/eliminar/{user}', [UsuarioController::class, 'destroy'])
+->name('user.delete');
 Route::group(['middleware' => ['can:admin.eliminar-usuarios']], function () {
 
-    Route::delete('/eliminar/{user}', [UsuarioController::class, 'destroy'])
-        ->name('user.delete');
+
 });
 
 
@@ -178,6 +174,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/perfil/{id}/editar', [UsuarioController::class, 'editUser'])->name('editUser');
     Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
     Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
-    Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
+    Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.abandonar');
 
 });

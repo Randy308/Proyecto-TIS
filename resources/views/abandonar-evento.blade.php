@@ -14,12 +14,12 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-          <form action="{{ route('user.delete',['user' => auth()->user() , 'evento' => $evento]) }}" method="post">
+          <form action="{{ route('user.abandonar',['user' => auth()->user() , 'evento' => $evento]) }}" method="post">
             @csrf
-            @method('DELETE')           
+            @method('DELETE')
             <button type="submit" class="btn btn-primary">Abandonar</button>
             </form>
-          
+
         </div>
       </div>
     </div>

@@ -89,7 +89,7 @@
                                             method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button id="BotonEliminar" class="dropdown-item" type="submit">Eliminar
+                                            <button id="BotonEliminar" class="dropdown-item" type="button">Eliminar
                                                 Usuario</button>
 
                                         </form>
