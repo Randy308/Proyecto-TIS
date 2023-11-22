@@ -5,6 +5,15 @@ p#demo {
     color: #ffffff !important;
     font-family: "Alata", Helvetica, Arial, Lucida, sans-serif;
 }
+/* #miContent{
+    padding: 30%;
+    margin: 20%;
+} */
+#miContainer{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
 #miFooter {
     border-radius: 0 0 40px 40px;
 }

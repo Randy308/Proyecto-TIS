@@ -2,8 +2,8 @@
     {{-- The best athlete wants his opponent at his best. --}}
     {{-- {"id":1,"user_id":1,"nombre_evento":"Ipsa unde itaque assumenda.","descripcion_evento":"Molestias sapiente esse nihil veniam ipsam.","estado":"Activo","categoria":"Ciencia de datos","fecha_inicio":"2023-11-22","fecha_fin":"2023-12-17","direccion_banner":"\/storage\/image\/img-default.jpeg","latitud":-17.393599893481,"longitud":-66.145963539153,"background_color":"#FFFF","created_at":"2023-11-19T14:59:21.000000Z","updated_at":"2023-11-19T14:59:21.000000Z"} --}}
     @if (!empty($evento))
-        <div class="content pt-5 p-5 m-5 m-sm-0 p-auto-0 d-flex justify-content-center" id="miContent">
-            <div class="container p-5 p-sm-0" id="miContainer">
+        <div class="d-flex justify-content-center" id="miContent">
+            <div class="container pt-4" id="miContainer">
                 <div class="card ">
                     <div class="card-body p-0">
                         <div class="row">

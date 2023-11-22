@@ -38,10 +38,10 @@
                 $( "#miContainer" ).removeClass( "m-5" );
             } else {
                 
-                $( "#miContent" ).addClass( "p-5" );
-                $( "#miContent" ).addClass( "m-5" );
-                $( "#miContainer" ).addClass( "p-5" );
-                $( "#miContainer" ).addClass( "m-5" );
+                // $( "#miContent" ).addClass( "p-5" );
+                // $( "#miContent" ).addClass( "m-5" );
+                // $( "#miContainer" ).addClass( "p-5" );
+                // $( "#miContainer" ).addClass( "m-5" );
                 //document.body.style.backgroundColor = "pink";
             }
         }
