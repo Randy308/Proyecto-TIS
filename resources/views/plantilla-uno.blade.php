@@ -96,16 +96,23 @@
                                 </div>
                                 @include('abandonar-evento', ['evento' => $evento])
                             @else
-                                <form method="POST"
-                                    action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                    @method('PUT')
-                                    @csrf
+                                {{--si es  un evento individual--}}
+                                @if (false)
+                                    <form method="POST"
+                                     action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
+                                        @method('PUT')
+                                        @csrf
 
-                                    <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                    <button type="submit" class="btn btn-primary" id="boton-registro">
-                                        Registrarse
-                                    </button>
-                                </form>
+                                        <input type="hidden" name="evento" value="{{ $evento->id }}">
+                                        <button type="submit" class="btn btn-primary" id="boton-registro">
+                                            Registrarse
+                                        </button>
+                                    </form>    
+                                @else
+
+                                    @livewire('registrar-grupo', ['evento_id' => $evento->id])
+                                    
+                                @endif
                             @endif
 
 

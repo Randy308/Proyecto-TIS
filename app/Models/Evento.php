@@ -43,6 +43,10 @@ class Evento extends Model
     public function elementoImagenBanners()
     {
         return $this->hasMany(ElementoImagenBanner::class);
-
     }
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class);
+    }
+    
 }

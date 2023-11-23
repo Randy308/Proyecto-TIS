@@ -70,4 +70,12 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Institucion::class);
     }
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class);
+    }
+    public function grupos_pertenecen_grupos()
+    {
+        return $this->belongsToMany(Grupo::class, 'pertenecen_grupos');
+    }
 }

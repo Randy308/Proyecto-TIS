@@ -9,6 +9,7 @@
     @include('layouts/estilos')
 
     <link rel="stylesheet" href="{{ asset('css/plantilla-uno.css') }}" />
+    @livewireStyles
 </head>
 
 <body>
@@ -63,7 +64,8 @@
                 $("#" + $(this).attr("src")).show();
         });
     </script>
-
+    
+    @livewireScripts
 </body>
 
 </html>
