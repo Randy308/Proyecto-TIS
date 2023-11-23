@@ -28,11 +28,9 @@ function nextPrev(n) {
 
     if (currentTab == 1  && form1) {
         document.getElementById('FormularioEnviarEmail').submit();
-        alert("tab 1");
         currentTab = currentTab - n;
-        form1 = false;
+        form0 = false;
     } else if (currentTab == 2  && form2) {
-        alert("tab 2");
         form2 = false;
     }
     currentTab = currentTab + n;

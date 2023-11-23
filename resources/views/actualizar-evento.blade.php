@@ -8,7 +8,7 @@
     <title>Modificar Evento</title>
     @include('layouts/estilos')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
 <body>
@@ -26,7 +26,8 @@
                     <div class="contact-image">
                         <span><i class="bi bi-calendar2-plus-fill"></i></span>
                     </div>
-                    <form method="POST" action="{{ route('evento.update', ['user'=> auth()->user()->id , 'evento'=> $miEvento->id]) }}">
+                    <form method="POST"
+                        action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}">
                         @csrf
                         @method('PUT')
                         <h2>Modificar Evento</h2>
@@ -44,7 +45,12 @@
                                     @enderror
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label for="Ubicacion">Agregar ubicación:</label>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
+                                    @include('layouts.modal-editar-ubicacion')
+                                </div>
 
                                 <div class="form-group">
                                     <label for="tipo_evento">Tipo de Evento</label>
@@ -114,7 +120,7 @@
                                 <div class="form-group text-center botones-juntos">
                                     <a href="#" class="btn btn-cancelar" style="width: 45%;"
                                         onclick="confirmarCancelacion()">Cancelar</a>
-                                    <button type="submit" class="btn btn-info" style="width: 45%;">Crear
+                                    <button type="submit" class="btn btn-info" style="width: 45%;">Actualizar
                                         Evento</button>
                                 </div>
 
@@ -160,6 +166,11 @@
             document.getElementById('fecha_inicio').setAttribute('min', currentDate);
             document.getElementById('fecha_fin').setAttribute('min', currentDate);
         });
+    </script>
+    @include('layouts.mensajes-alerta')
+    <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
     </script>
 </body>
 

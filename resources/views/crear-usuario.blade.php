@@ -33,9 +33,9 @@
                                 
                                 <div class="form-outline mb-4">
                                     <label class="form-label" for="formName">Nombre completo</label>
-                                    <input type="text" id="formName" class="form-control" name="name"
-                                        class="@error('name') is-invalid @enderror" value="{{ old('name') }}" />
-                                    @error('name')
+                                    <input type="text" id="formName" class="form-control" name="nombre"
+                                        class="@error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" />
+                                    @error('nombre')
                                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                     @enderror
                                 </div>

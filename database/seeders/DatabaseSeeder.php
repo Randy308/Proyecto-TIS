@@ -58,19 +58,15 @@ class DatabaseSeeder extends Seeder
         $usuario->remember_token = Str::random(10);
         $usuario->assignRole('administrador');
         $usuario->save();
-
-
-        
-
-        $us = User::factory(40)->create();
+        $us = User::factory(4)->create();
 
         foreach($us as $u){
                 
                 $u->assignRole('usuario común');
         }
 
-        Evento::factory(40)->create();
-        AsistenciaEvento::factory(20)->create();
+        Evento::factory(4)->create();
+        //AsistenciaEvento::factory(20)->create();
         
     }
 }

@@ -12,7 +12,6 @@ class EventoFactory extends Factory
 
     public function definition()
     {
-        $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
         $eventTypes = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
         $privacyOptions = ['publico', 'institucional'];
 
@@ -41,6 +40,12 @@ class EventoFactory extends Factory
             'inscritos_minimos' => $inscritosMinimos,
             'inscritos_maximos' => $inscritosMaximos,
             'tipo_evento' => $tipoEvento,
+            'latitud'=>-17.39359989348116,
+            'longitud'=>-66.14596353915297,
+            'background_color' => '#FFFF',
+            'tiempo_inicio'=> $this->faker->time('H:i:s'),
+            'tiempo_fin'=>$this->faker->time('H:i:s'),
+
         ];
     }
 }

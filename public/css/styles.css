@@ -1,9 +1,38 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap");
 
+:root {
+    --main-color: #003153;
+    --second-color: #3498db;
+    --main-colors: #323268;
+    --main-g-colors: -webkit-linear-gradient(to bottom right,#003153, #0086ff);
+
+}
+
 body {
-    background-color: lightgray;
+    background-color: #eee;
     color: #333;
 }
+
+.close-button {
+    cursor: pointer;
+    padding-left: 10px;
+    font-weight: bold;
+}
+.recipient{
+    display: flex;
+
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#recipient-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
 .contact-form {
     background: #fff;
     margin-top: 5%;
@@ -17,7 +46,7 @@ body {
 .contact-image span{
     font-size: 68px;
     background-color: white;
-    color: #3498db;
+    color: var(--main-color);
     border-radius: 7rem;
     width: 11%;
     margin-top: -3%;
@@ -30,7 +59,7 @@ body {
     margin-bottom: 8%;
     margin-top: -10%;
     text-align: center;
-    color: #3498db;
+    color: var(--main-color);
 }
 .contact-form form {
     padding: 10%;
@@ -39,18 +68,18 @@ body {
     margin-bottom: -7%;
 }
 header {
-    background-color: #3498db;
+    background-color: var(--main-color);
     color: #fff;
     padding: 10px;
 }
 .btn-primary {
-    background-color: #3498db;
+    background-color: var(--main-color);
     color: #fff;
-    border-color: #3498db;
+    border-color: var(--main-color);
 }
 .btn-outline-info {
-    color: #3498db;
-    border: 2px solid #3498db;
+    color: var(--main-color);
+    border: 2px solid var(--main-color);
     background-color: transparent;
     width: 50%;
 }
@@ -59,7 +88,7 @@ header {
 }
 .btn-cancelar {
     background-color: #fff;
-    border: 2px solid #3498db;
+    border: 2px solid var(--main-color);
     color: #000;
     transition:
         background-color 0.3s,
@@ -77,7 +106,7 @@ header {
     border-radius: 20px;
     max-width: 600px;
     width: 45%;
-    border: 2px solid #3498db;
+    border: 2px solid var(--main-color);
     display: inline-block;
     margin: 0 20px;
 }
@@ -99,14 +128,14 @@ header {
 }
 
 .etiqueta-celeste {
-    color: #3498db;
+    color: var(--main-color);
 }
 
 .etiqueta-celeste input[type="text"],
 .etiqueta-celeste input[type="date"],
 .etiqueta-celeste select,
 .etiqueta-celeste textarea {
-    border: 2px solid #3498db;
+    border: 2px solid var(--main-color);
 }
 
 .editar-color {
@@ -117,13 +146,13 @@ header {
 
 .editar-color i {
     font-size: 20px;
-    color: #3498db;
+    color: var(--main-color);
     margin-right: 5px; /* Espacio a la derecha del icono */
 }
 
 .editar-color span {
     font-size: 32px;
-    color: #3498db;
+    color: var(--main-color);
     cursor: pointer;
 }
 
@@ -132,3 +161,5 @@ header {
     align-items: center; /* Centra verticalmente los elementos */
     justify-content: center; /* Centra horizontalmente los elementos */
 }
+
+
