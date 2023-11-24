@@ -1,5 +1,8 @@
 var contador = 2;
 $(document).ready(function () {
+
+
+    
     $("#agregarElemento").on("click", function () {
         var div = document.createElement("div");
         div.classList.add("ui-widget-content1");
@@ -11,9 +14,6 @@ $(document).ready(function () {
         $("#contenedorTemporal").append(div);
     });
 
-    $("#contenedorTemporal img").resizable({
-        containment: "#contenedorTemporal",
-    });
     $("#contenedorTemporal").on("click", ".ui-widget-content1", function () {
         var id = $(this).attr("id");
         const childElement = document.getElementById(id);
@@ -33,25 +33,41 @@ $(document).ready(function () {
         $("#containment-wrapper").append(this);
 
         // Make it draggable and resizable
-        $("#" + id).css("position", "absolute");
-        $("#" + id).resizable({
-            containment: "#containment-wrapper",
-            handles: "n, e, s, w",
-        });
+        if (childElement.tagName == "IMG") {
 
-        $("#" + id).draggable({
-            containment: "#containment-wrapper",
-            scroll: true,
-            cursor: "pointer",
-        });
+            $("#" + id).resizable({
+
+
+            });
+            $("#" + id).parent().draggable({
+
+                containment: "#containment-wrapper",
+                scroll: true,
+                cursor: "pointer",
+            });
+
+
+        } else {
+            $("#" + id).css("position", "absolute");
+            $("#" + id).resizable({
+                containment: "#containment-wrapper",
+                handles: "n, e, s, w",
+            });
+
+            $("#" + id).draggable({
+                containment: "#containment-wrapper",
+                scroll: true,
+                cursor: "pointer",
+            });
+        }
     });
 
-    $("#containment-wrapper").on("click", "*", function () {
+    $("#containment-wrapper").on("click", ".draggable ", function () {
         var id = $(this).attr("id");
         const childElement = document.getElementById(id);
         console.log("hola mundo");
-        $("#containment-wrapper *").removeClass("activo");
-        $("#containment-wrapper *").css("border", "");
+        $("#containment-wrapper .draggable ").removeClass("activo");
+        $("#containment-wrapper .draggable ").css("border", "");
         childElement.classList.toggle("activo");
         $(this).css("border", "1px solid black");
     });
@@ -195,6 +211,9 @@ $(document).ready(function () {
     $("#trash-delete").on("click", function () {
         var elements = document.getElementsByClassName("activo");
         Array.from(elements).forEach(function (element) {
+            if (element.tagName == "IMG") {
+                element.parentNode.remove();
+            }
             element.remove();
         });
     });
@@ -242,7 +261,9 @@ $(document).ready(function () {
             );
             contForm.innerHTML = "";
             contForm.append(firstElementChild);
-            var Mibackground = rgb2hex($("#containment-wrapper").css("background-color"));
+            var Mibackground = rgb2hex(
+                $("#containment-wrapper").css("background-color"),
+            );
 
             secondElementChild.value = Mibackground;
             contForm.append(secondElementChild);
@@ -251,8 +272,8 @@ $(document).ready(function () {
                 var myJSON;
                 if ($element.prop("nodeName").toLowerCase() === "img") {
                     const elementoBanner = {
-                        left: $element.css("left"),
-                        top: $element.css("top"),
+                        left: $(element).parent().css("left"),
+                        top: $element.parent().css("top"),
                         width: $element.css("width"),
                         height: $element.css("height"),
                         src:

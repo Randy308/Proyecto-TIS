@@ -59,11 +59,7 @@ class DatabaseSeeder extends Seeder
         $usuario->remember_token = Str::random(10);
         $usuario->assignRole('administrador');
         $usuario->save();
-
-
-        
-
-        $us = User::factory(40)->create();
+        $us = User::factory(4)->create();
 
         foreach($us as $u){
                 
@@ -97,7 +93,8 @@ class DatabaseSeeder extends Seeder
             $faseFinalizacion->save();
         }
 
-        AsistenciaEvento::factory(20)->create();
+        Evento::factory(12)->create();
+        //AsistenciaEvento::factory(20)->create();
         
     }
 }

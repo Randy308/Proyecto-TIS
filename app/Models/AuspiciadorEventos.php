@@ -5,7 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model
+class AuspiciadorEventos extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'evento_id',
+        'auspiciador_id',
+    ];
 }

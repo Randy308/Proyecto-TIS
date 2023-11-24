@@ -11,7 +11,8 @@ class EventosCreados extends Component
 {
     public function render()
     {   $user = User::findOrFail(Auth::id());
-        $eventos = $user->eventos()->where('fecha_fin', '>', Carbon::now())->get();
+        $todayDate = now('GMT-4')->format('Y-m-d');
+        $eventos = $user->eventos()->where('fecha_fin', '>=',  $todayDate)->get();
         //$eventos = $user->eventos()->where('fecha_fin', '>', Carbon::now())->where('estado', 'borrador')->get();
         return view('livewire.eventos-creados',['user'=> $user ,'eventos'=> $eventos]);
     }

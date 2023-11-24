@@ -3,9 +3,13 @@
 
 <head>
     <title>Inicio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @include('layouts/estilos')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+    @livewireStyles
+    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/media-query.css') }}">
 </head>
 
 <body>
@@ -13,33 +17,39 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            <div class="container-sm mt-4">
-                <?php
-                try {
-                    \DB::connection()->getPDO();
-                    echo '<strong>Nombre de la base de datos: </strong>' . \DB::connection()->getDatabaseName();
-                } catch (\Exception $e) {
-                    echo 'No existe conexion';
-                }
-                ?>
-                <hr>
-            </div>
-            <h5>Laravel {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</h5>
+            @livewire('evento-proximo')
+            <footer>
+                <p>Laravel {{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})</p>
+            </footer>
         </div>
 
     </div>
 
-    <div>
-        <form action="POST" id="form1">
-            @csrf
-            <input type="hidden" name="id" value="1">
-        </form>
-
-
-    </div>
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+    <script>
+        function myFunction(x) {
+            if (x.matches) { // If media query matches
+                //document.body.style.backgroundColor = "yellow";
+                $( "#miContent" ).removeClass( "p-5" );
+                $( "#miContent" ).removeClass( "m-5" );
+                $( "#miContainer" ).removeClass( "p-5" );
+                $( "#miContainer" ).removeClass( "m-5" );
+            } else {
+                
+                // $( "#miContent" ).addClass( "p-5" );
+                // $( "#miContent" ).addClass( "m-5" );
+                // $( "#miContainer" ).addClass( "p-5" );
+                // $( "#miContainer" ).addClass( "m-5" );
+                //document.body.style.backgroundColor = "pink";
+            }
+        }
+
+        var x = window.matchMedia("(max-width: 700px)")
+        myFunction(x) // Call listener function at run time
+        x.addListener(myFunction) // Attach listener function on state changes
+    </script>
 </body>
 
 </html>

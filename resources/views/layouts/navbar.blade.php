@@ -24,20 +24,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     <button class="dropdown-item" disabled>{{ auth()->user()->email }}</button>
-
-                    <!--
-                                 <a class="dropdown-item"  disabled >Configuracion</a>
-                                <a class="dropdown-item" href="#">Editar Perfil</a>
-                            -->
-                    @if(auth()->user()->hasRole('administrador'))
-                        <button class="dropdown-item" disabled>Administrador</button>
-                    @elseif(auth()->user()->hasRole('organizador'))
-                        <button class="dropdown-item" disabled>Organizador</button>
-                    @elseif(auth()->user()->hasRole('colaborador'))
-                        <button class="dropdown-item" disabled>Colaborador</button>
-                    @elseif(auth()->user()->hasRole('usuario común'))
-                        <button class="dropdown-item" disabled>Usuario Común</button>
-                    @endif
+                     <a class="dropdown-item" href="{{ route('editarPerfil') }}">Editar Perfil</a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="dropdown-item">Cerrar sesión</button>

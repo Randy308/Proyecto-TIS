@@ -9,6 +9,7 @@
     @include('layouts/estilos')
 
     <link rel="stylesheet" href="{{ asset('css/plantilla-uno.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
 <body>
@@ -63,7 +64,11 @@
                 $("#" + $(this).attr("src")).show();
         });
     </script>
-
+    {{-- js de ubicacion y API googleMaps --}}
+    <script src="{{ asset('js/ubicacion-mapa-vista.js') }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
+    </script>
 </body>
 
 </html>
