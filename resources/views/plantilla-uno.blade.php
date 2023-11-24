@@ -83,6 +83,10 @@
                             @endphp
                             @if ($registroExistente)
                                 <div class="dropdown" id="lista-registro">
+                                    {{-- Fases --}}
+                                    <a class="btn btn-secondary" href="{{ route('fases.fasesdeEvento', ['evento'=>$evento->id]) }}">
+                                        Fases
+                                    </a>
                                     <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                                         id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
                                         aria-expanded="false">
@@ -95,9 +99,10 @@
                                     </div>
                                 </div>
                                 @include('abandonar-evento', ['evento' => $evento])
+                                
                             @else
                                 {{--si es  un evento individual--}}
-                                @if (false)
+                                @if (true)
                                     <form method="POST"
                                      action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
                                         @method('PUT')
@@ -113,6 +118,7 @@
                                     @livewire('registrar-grupo', ['evento_id' => $evento->id])
                                     
                                 @endif
+
                             @endif
 
 

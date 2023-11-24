@@ -5,6 +5,7 @@
                                                 ->first();
     @endphp
     @if ($registroExistente1)
+        fase
         <span class="text-center alert alert-success">Grupo: {{$registroExistente1->nombre}}</span>
     @else
         <button class="btn btn-primary" wire:click="$set('showModal',true)">Registrar Grupo</button>

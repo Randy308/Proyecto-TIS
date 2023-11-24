@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\ElementosBannerController;
+use App\Http\Controllers\FaseController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
@@ -99,3 +100,4 @@ Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEs
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');
 
+Route::get('/fases/{evento}',[FaseController::class,'fasesdeEvento'])->name('fases.fasesdeEvento');

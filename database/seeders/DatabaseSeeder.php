@@ -69,8 +69,11 @@ class DatabaseSeeder extends Seeder
                 $u->assignRole('usuario común');
         }
 
+
         Evento::factory(40)->create();
         AsistenciaEvento::factory(20)->create();
+
+        $this->call(FaseSeeder::class);
         
     }
 }
