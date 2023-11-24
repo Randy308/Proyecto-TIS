@@ -32,10 +32,10 @@
 
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-3">
+                                        <div class="col-md-auto">
                                             <label for="exampleInputEmail1">Correo electronico:</label>
                                         </div>
-                                        <div class="col-7">
+                                        <div class="col">
                                             <input type="email" class="form-control" value="{{ $user->email }}"
                                                 id="exampleInputEmail1" aria-describedby="emailHelp"
                                                 placeholder="Enter email" disabled>
@@ -44,14 +44,14 @@
                                     </div>
                                     <br>
                                     <div class="row">
-                                        <div class="col-3">
-                                            <label for="exampleInputEmail1">Historial Academico:</label>
+                                        <div class="col-md-auto">
+                                            <label for="exampleInputEmail1" >Estado:</label>
                                         </div>
-                                        <div class="col-7">
+                                        <div class="col">
                                             <input type="text" class="form-control"
-                                                value="{{ $user->historial_academico }}" id="exampleInputEmail1"
+                                                value="{{ $user->estado }}" id="exampleInputEmail1"
                                                 aria-describedby="emailHelp" placeholder="No existe historial academico"
-                                                disabled>
+                                                disabled style="color: {{ $user->estado == 'Habilitado' ? 'green' : 'red' }}">
 
 
                                         </div>
@@ -86,7 +86,8 @@
                                         <form action="{{ route('asignarRoles.update', $user->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            @foreach ($roles as $role)
+                                            <div class="d-flex gap-3 flex-column p-4">
+                                                @foreach ($roles as $role)
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" id="flexCheckDefault{{$role->id }}"
                                                         value="{{ $role->name }}" name="name[]"
@@ -96,12 +97,13 @@
                                                     </label>
                                                 </div>
                                             @endforeach
+                                            </div>
+                                            <div class="d-flex flex-wrap  gap-3 justify-content-around">
+                                                <button type="submit" class="btn btn-primary">Asignar roles</button>
+                                                <input type="button" value="Regresar" class="btn btn-secondary"
+                                                    onclick="history.back()">
+                                            </div>
 
-
-                                            <br>
-                                            <button type="submit" class="btn btn-primary">Asignar roles</button>
-                                            <input type="button" value="Regresar" class="btn btn-secondary"
-                                                onclick="history.back()">
                                         </form>
 
 

@@ -27,6 +27,7 @@ class RolesTableSeeder extends Seeder
         Permission::create(['name' => 'organizador.ver-mis-eventos'])->syncRoles([$administrador, $organizador, $colaborador]);
         Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador,$organizador]);
         Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
+        Permission::create(['name' => 'admin.eliminar-participante'])->assignRole($administrador);
         Permission::create(['name' => 'admin.eliminar-usuarios'])->assignRole($administrador);
         Permission::create(['name' => 'admin.editar-usuarios'])->assignRole($administrador);
         Permission::create(['name' => 'admin.ver-detalle-usuarios'])->assignRole($administrador);

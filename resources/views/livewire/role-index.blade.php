@@ -1,7 +1,7 @@
 <div>
     {{-- Care about people's approval and you will be their prisoner. --}}
     <div class="card">
-        <div class="d-flex justify-content-between p-3">
+        <div class="d-flex justify-content-between p-3 flex-wrap">
             <div class="d-flex justify-content-start">
                 <p class="h4">Listado de Roles</p>
             </div>
