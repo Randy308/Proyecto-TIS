@@ -55,10 +55,10 @@
                                         method="post">
                                         @csrf
                                         @method('PUT')
-
-                                    </form>
-                                    <button id="BotonPublicarEvento" class="btn btn-warning"
+                                        <button class="btn btn-warning boton-publicar"
                                         type="button">Publicar</button>
+                                    </form>
+
                                 @endif
 
 
@@ -77,6 +77,16 @@
                 </tbody>
             </table>
         </div>
+        <script>
+            $(".boton-publicar").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que deseas publicar el evento?")) {
+                    var form = $(this).parents('form:first');
+                    console.log('enviando form')
+                    form.submit();
+                }
+            });
+        </script>
     @else
         <div class="card-body">
             <strong>No hay registros</strong>

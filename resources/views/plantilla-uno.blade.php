@@ -34,71 +34,80 @@
 
                                 @endguest
                                 @auth
-                                    @php
-                                        $id_evento_pagina = $evento->id;
-                                        $id_usuario = auth()->user()->id;
-                                        $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
-                                            ->where('evento_id', $id_evento_pagina)
-                                            ->exists();
-                                    @endphp
-                                    @if ($registroExistente)
-                                        {{-- Fases --}}
-                                        <a class="btn btn-secondary"
-                                            href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
-                                            Fases
-                                        </a>
-                                        {{--  --}}
-                                        <div class="dropdown" id="lista-registro">
-                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                id="dropdownMenuLink boton-registro" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                Ya se encuentra <br>registrado en el evento
+                                    @if (auth()->user()->hasRole('Usuario común') ||
+                                            auth()->user()->hasRole('Coach'))
+                                        @php
+                                            $id_evento_pagina = $evento->id;
+                                            $id_usuario = auth()->user()->id;
+                                            $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                                ->where('evento_id', $id_evento_pagina)
+                                                ->exists();
+                                        @endphp
+                                        @if ($registroExistente)
+                                            {{-- Fases --}}
+                                            <a class="btn btn-secondary"
+                                                href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                                                Fases
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#abandonarModal">Abandonar evento</a>
+                                            {{--  --}}
+                                            <div class="dropdown" id="lista-registro">
+                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                    id="dropdownMenuLink boton-registro" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Ya se encuentra <br>registrado en el evento
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                                        data-target="#abandonarModal">Abandonar evento</a>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                        @include('abandonar-evento', ['evento' => $evento])
-                                    @else
-                                        @if (strtoupper($evento->estado) == 'CANCELADO')
-                                            <button type="button" disabled class="btn btn-danger" id="boton-registro">
-                                                Evento cancelado
-                                            </button>
-                                        @elseif(strtoupper($evento->estado) == 'FINALIZADO')
-                                            <button type="button" disabled class="btn btn-primary" id="boton-registro">
-                                                Evento finalizado
-                                            </button>
-                                        @elseif (strtoupper($evento->estado) == 'ACTIVO')
-                                            {{-- si es  un evento individual --}}
-                                            @if (true)
-                                                <form method="POST"
-                                                    action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                                    @method('PUT')
-                                                    @csrf
-
-                                                    <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                                    <button type="submit" class="btn btn-success" id="boton-registro">
-                                                        Registrarse
-                                                    </button>
-                                                </form>
-                                            @else
-                                                @livewire('registrar-grupo', ['evento_id' => $evento->id])
-                                            @endif
+                                            @include('abandonar-evento', ['evento' => $evento])
                                         @else
-                                            <button type="button" disabled class="btn btn-info" id="boton-registro">
-                                                Registro no disponible
-                                            </button>
+                                            @if (strtoupper($evento->estado) == 'CANCELADO')
+                                                <button type="button" disabled class="btn btn-danger" id="boton-registro">
+                                                    Evento cancelado
+                                                </button>
+                                            @elseif(strtoupper($evento->estado) == 'FINALIZADO')
+                                                <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                                    Evento finalizado
+                                                </button>
+                                            @elseif (strtoupper($evento->estado) == 'ACTIVO')
+                                                {{-- si es  un evento individual --}}
+                                                @if (true)
+                                                    <form method="POST"
+                                                        action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
+                                                        @method('PUT')
+                                                        @csrf
+
+                                                        <input type="hidden" name="evento" value="{{ $evento->id }}">
+                                                        <button type="submit" class="btn btn-success" id="boton-registro">
+                                                            Registrarse
+                                                        </button>
+                                                    </form>
+                                                @else
+                                                    @livewire('registrar-grupo', ['evento_id' => $evento->id])
+                                                @endif
+                                            @else
+                                                <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                                    Registro no disponible
+                                                </button>
+                                            @endif
                                         @endif
+                                    @else
+                                    <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                        Inscripción solo para<br>participantes y entrenadores.
+                                    </button>
                                     @endif
+
 
 
 
                                 @endauth
                             @else
                                 <button type="button" disabled class="btn btn-primary" id="boton-registro">
-                                    Evento finalizado <p>{{ strtotime($evento->fecha_fin)."  ". strtotime(now('GMT-4')) }}</p>
+                                    Evento finalizado <p>
+                                        {{ strtotime($evento->fecha_fin) . '  ' . strtotime(now('GMT-4')) }}</p>
                                 </button>
 
                             @endif
