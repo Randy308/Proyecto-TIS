@@ -12,14 +12,17 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\RoleController;
 
+use App\Http\Controllers\FaseController;
 
 Route::get('/', function () {return view('index');})->name('index');
 
 //Route::post('/crear-evento', [EventoControlador::class, 'crearEvento']);
 
+
+
 Route::post('/home' , [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas' ,  [AjaxController::class, 'prueba'])->name('ajax-prueba');
-Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento')->middleware('checkRole:administrador,organizador');;
+Route::get('/crear-evento', [EventoControlador::class, 'crearEventoForm'])->name('crear-evento')->middleware('checkRole:administrador,organizador');
 
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento')->middleware('checkRole:administrador,organizador');
 
@@ -94,8 +97,10 @@ Route::get('/acceso-denegado', function () {
     return view('acceso-denegado');
 })->name('acceso-denegado');
 
-Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update')->middleware('checkRole:administrador,Organizador');
+Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update')->middleware('checkRole:administrador,organizador');
 
-Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,Organizador');
-Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,Organizador');
+Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit')->middleware('checkRole:administrador,organizador');
+Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update')->middleware('checkRole:administrador,organizador');
 
+Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');

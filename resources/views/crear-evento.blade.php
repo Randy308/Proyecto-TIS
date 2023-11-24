@@ -55,7 +55,7 @@
 
                                     <div class="form-group">
                                         <label for="fecha_inicio">Fecha de inicio</label>
-                                        <input type="date" name="fecha_inicio"
+                                        <input type="datetime-local" name="fecha_inicio"
                                             class="form-control @error('fecha_inicio') is-invalid @enderror" id="fecha_inicio"
                                             value="{{ old('fecha_inicio') }}" required aria-describedby="fecha_inicio_help">
                                         @error('fecha_inicio')
@@ -65,7 +65,7 @@
 
                                     <div class="form-group">
                                         <label for="fecha_fin">Fecha de finalización</label>
-                                        <input type="date" name="fecha_fin"
+                                        <input type="datetime-local" name="fecha_fin"
                                             class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
                                             value="{{ old('fecha_fin') }}" required aria-describedby="fecha_fin_help">
                                         @error('fecha_fin')
@@ -98,7 +98,7 @@
 
                             <script>
                                 function confirmarCancelacion() {
-                                    if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
+                                    if (confirm("¿Estás seguro de que deseas cancelar la creacion del evento?")) {
                                         window.location.href = "{{ route('index') }}";
                                     }
                                 }
@@ -107,9 +107,11 @@
                         </form>
                     </div>
 
+                   
+
             </div>
-
-
+            
+            
         </div>
     </div>
 

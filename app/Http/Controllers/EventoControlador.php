@@ -6,6 +6,7 @@ use App\Models\CoordenadaEvento;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use App\Models\FaseEvento;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -125,6 +126,29 @@ class EventoControlador extends Controller
         ]);
 
         $evento->save();
+
+        $faseInscripcion = new FaseEvento([
+            'evento_id' => $evento->id,
+            'nombre_fase'=> 'Fase de Inscripción',
+            'descripcion_fase' => 'Mientras la fase de inscripción este activa podras incribirte al eveto',
+            'fechaInicio' => $request->input('fecha_inicio'),
+            'fechaFin' => $request->input('fecha_inicio'),
+            'tipo' => 'Inscripcion',
+            'actual'=> true,  
+        ]);
+
+        $faseInscripcion->save();
+        $faseFinalizacion = new FaseEvento([
+            'evento_id' => $evento->id,
+            'nombre_fase'=> 'Evento Finalizado',
+            'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
+            'fechaInicio' => $request->input('fecha_fin'),
+            'fechaFin' => $request->input('fecha_fin'),
+            'tipo' => 'Finalizacion',
+            'actual'=> false,  
+        ]);
+
+        $faseFinalizacion->save();
 
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }

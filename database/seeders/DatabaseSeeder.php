@@ -6,6 +6,7 @@ use App\Models\AsistenciaEvento;
 use App\Models\Evento;
 use App\Models\Institucion;
 use App\Models\User;
+use App\Models\FaseEvento;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -69,7 +70,33 @@ class DatabaseSeeder extends Seeder
                 $u->assignRole('usuario común');
         }
 
-        Evento::factory(40)->create();
+        $ev = Evento::factory(40)->create();
+        foreach($ev as $e){
+                
+            $faseInscripcion = new FaseEvento([
+                'evento_id' => $e->id,
+                'nombre_fase'=> 'Fase de Inscripción',
+                'descripcion_fase' => 'Mientras la fase de inscripción este activa podras incribirte al eveto',
+                'fechaInicio' => $e->fecha_inicio->format('Y-m-d').' 00:00:00',
+                'fechaFin' => $e->fecha_inicio->format('Y-m-d').' 00:00:00',
+                'tipo' => 'Inscripcion',
+                'actual'=> true,  
+            ]);
+    
+            $faseInscripcion->save();
+            $faseFinalizacion = new FaseEvento([
+                'evento_id' => $e->id,
+                'nombre_fase'=> 'Evento Finalizado',
+                'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
+                'fechaInicio' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
+                'fechaFin' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
+                'tipo' => 'Finalizacion',
+                'actual'=> false,  
+            ]);
+    
+            $faseFinalizacion->save();
+        }
+
         AsistenciaEvento::factory(20)->create();
         
     }

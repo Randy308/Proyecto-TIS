@@ -9,7 +9,7 @@ class Institucion extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'nombre_institucion',
+        'nombre_institucion'
     ];
 
     public function users()
