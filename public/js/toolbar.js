@@ -1,8 +1,41 @@
-var contador = 2;
+var contador = 12;
 $(document).ready(function () {
+    // <img  class="ui-widget-content1" src="/storage/image/default_user_image.png" alt="Previsualización de la imagen" id="contenedorTemporal31"  width="100%" height="100%">
+    document.getElementById("formFile").addEventListener("change", function () {
+        const fileInput = this;
+        const contenedor = document.getElementById("contenedorTemporal");
+        var divContainer = document.createElement("div");
+        var imagePreview = document.createElement("img");
+        imagePreview.alt = "Previsualizacion de la imagen" + contador;
+        imagePreview.id = "ImagenCargada" + contador;
+        imagePreview.style.width = "100px";
+        imagePreview.style.height = "100px";
+        imagePreview.style.backgroundColor = "transparent";
+        imagePreview.classList.add("ui-widget-content1", "imagenCargada");
+        contador++;
+        //const imagePreview = document.getElementById("image-preview");
 
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
 
-    
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = "block";
+                divContainer.appendChild(imagePreview);
+                contenedor.appendChild(divContainer);
+            };
+
+            reader.readAsDataURL(fileInput.files[0]);
+        } else {
+            // Cuando no se selecciona un archivo, muestra la imagen predeterminada
+
+            //
+            imagePreview.src = "/storage/image/default_user_image.png";
+            imagePreview.style.display = "block";
+            return;
+        }
+    });
+
     $("#agregarElemento").on("click", function () {
         var div = document.createElement("div");
         div.classList.add("ui-widget-content1");
@@ -34,19 +67,17 @@ $(document).ready(function () {
 
         // Make it draggable and resizable
         if (childElement.tagName == "IMG") {
-
-            $("#" + id).resizable({
-
-
-            });
-            $("#" + id).parent().draggable({
-
-                containment: "#containment-wrapper",
-                scroll: true,
-                cursor: "pointer",
-            });
-
-
+            $("#" + id).css("position", "absolute");
+            $("#" + id).css("backgroundColor","transparent");
+            //imagePreview.style.position = "absolute";
+            $("#" + id).resizable({});
+            $("#" + id)
+                .parent()
+                .draggable({
+                    containment: "#containment-wrapper",
+                    scroll: true,
+                    cursor: "pointer",
+                });
         } else {
             $("#" + id).css("position", "absolute");
             $("#" + id).resizable({
@@ -69,7 +100,7 @@ $(document).ready(function () {
         $("#containment-wrapper .draggable ").removeClass("activo");
         $("#containment-wrapper .draggable ").css("border", "");
         childElement.classList.toggle("activo");
-        $(this).css("border", "1px solid black");
+        $(this).css("border", "5px dashed red");
     });
 
     $("#fontsize").selectmenu({
@@ -255,6 +286,65 @@ $(document).ready(function () {
 
         var numeroElemento = 1;
         var numeroImagen = 1;
+        function salvarElementosBanner() {
+            var elements = document.querySelectorAll(
+                "#containment-wrapper .draggable",
+            );
+            contForm.innerHTML = "";
+            contForm.append(firstElementChild);
+            var Mibackground = rgb2hex(
+                $("#containment-wrapper").css("background-color"),
+            );
+
+            secondElementChild.value = Mibackground;
+            contForm.append(secondElementChild);
+            Array.from(elements).forEach(function (element) {
+                const $element = $(element); // Convert the DOM element to a jQuery object
+                var myJSON;
+                if ($element.prop("nodeName").toLowerCase() === "img") {
+                    if (!$element.hasClass("imagenCargada")) {
+                        const elementoBanner = {
+                            left: $(element).parent().css("left"),
+                            top: $element.parent().css("top"),
+                            width: $element.css("width"),
+                            height: $element.css("height"),
+                            src:
+                                "/storage" +
+                                $element.attr("src").split("/storage").pop(),
+                        };
+                        myJSON = JSON.stringify(elementoBanner);
+                        let input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "imagen" + numeroImagen;
+                        numeroImagen++;
+                        input.value = encodeURI(myJSON);
+                        contForm.appendChild(input);
+                    }
+                } else {
+                    const elementoBanner = {
+                        text: $element.text().trim(),
+                        left: $element.css("left"),
+                        top: $element.css("top"),
+                        "text-decoration": $element.css("text-decoration"),
+                        "font-style": $element.css("font-style"),
+                        background: $element.css("background"),
+                        width: $element.css("width"),
+                        height: $element.css("height"),
+                        color: $element.css("color"),
+                        "font-family": $element.css("font-family"),
+                        "font-size": $element.css("font-size"),
+                    };
+                    myJSON = JSON.stringify(elementoBanner);
+                    let input = document.createElement("input");
+                    input.type = "hidden";
+                    input.name = "elemento" + numeroElemento;
+                    numeroElemento++;
+                    input.value = encodeURI(myJSON);
+                    contForm.appendChild(input);
+                }
+                //console.log(myJSON);
+            });
+        }
         $("#btnSaveElement").on("click", function () {
             var elements = document.querySelectorAll(
                 "#containment-wrapper .draggable",
@@ -271,22 +361,24 @@ $(document).ready(function () {
                 const $element = $(element); // Convert the DOM element to a jQuery object
                 var myJSON;
                 if ($element.prop("nodeName").toLowerCase() === "img") {
-                    const elementoBanner = {
-                        left: $(element).parent().css("left"),
-                        top: $element.parent().css("top"),
-                        width: $element.css("width"),
-                        height: $element.css("height"),
-                        src:
-                            "/storage" +
-                            $element.attr("src").split("/storage").pop(),
-                    };
-                    myJSON = JSON.stringify(elementoBanner);
-                    let input = document.createElement("input");
-                    input.type = "hidden";
-                    input.name = "imagen" + numeroImagen;
-                    numeroImagen++;
-                    input.value = encodeURI(myJSON);
-                    contForm.appendChild(input);
+                    if (!$element.hasClass("imagenCargada")) {
+                        const elementoBanner = {
+                            left: $(element).parent().css("left"),
+                            top: $element.parent().css("top"),
+                            width: $element.css("width"),
+                            height: $element.css("height"),
+                            src:
+                                "/storage" +
+                                $element.attr("src").split("/storage").pop(),
+                        };
+                        myJSON = JSON.stringify(elementoBanner);
+                        let input = document.createElement("input");
+                        input.type = "hidden";
+                        input.name = "imagen" + numeroImagen;
+                        numeroImagen++;
+                        input.value = encodeURI(myJSON);
+                        contForm.appendChild(input);
+                    }
                 } else {
                     const elementoBanner = {
                         text: $element.text().trim(),
@@ -314,3 +406,78 @@ $(document).ready(function () {
         });
     });
 });
+function rgb2hex(rgb) {
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+        return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+}
+var contenedor = document.getElementById("containment-wrapper");
+const contForm = document.getElementById("GuardarElementos");
+var firstElementChild = document.querySelector(
+    "form#GuardarElementos [name='_token']",
+);
+var secondElementChild = document.querySelector(
+    "form#GuardarElementos #miBackgroundColor",
+);
+
+var numeroElemento = 1;
+var numeroImagen = 1;
+function salvarElementosBanner() {
+    var elements = document.querySelectorAll("#containment-wrapper .draggable");
+    contForm.innerHTML = "";
+    contForm.append(firstElementChild);
+    var Mibackground = rgb2hex(
+        $("#containment-wrapper").css("background-color"),
+    );
+
+    secondElementChild.value = Mibackground;
+    contForm.append(secondElementChild);
+    Array.from(elements).forEach(function (element) {
+        const $element = $(element); // Convert the DOM element to a jQuery object
+        var myJSON;
+        if ($element.prop("nodeName").toLowerCase() === "img") {
+            if (!$element.hasClass("imagenCargada")) {
+                const elementoBanner = {
+                    left: $(element).parent().css("left"),
+                    top: $element.parent().css("top"),
+                    width: $element.css("width"),
+                    height: $element.css("height"),
+                    src:
+                        "/storage" +
+                        $element.attr("src").split("/storage").pop(),
+                };
+                myJSON = JSON.stringify(elementoBanner);
+                let input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "imagen" + numeroImagen;
+                numeroImagen++;
+                input.value = encodeURI(myJSON);
+                contForm.appendChild(input);
+            }
+        } else {
+            const elementoBanner = {
+                text: $element.text().trim(),
+                left: $element.css("left"),
+                top: $element.css("top"),
+                "text-decoration": $element.css("text-decoration"),
+                "font-style": $element.css("font-style"),
+                background: $element.css("background"),
+                width: $element.css("width"),
+                height: $element.css("height"),
+                color: $element.css("color"),
+                "font-family": $element.css("font-family"),
+                "font-size": $element.css("font-size"),
+            };
+            myJSON = JSON.stringify(elementoBanner);
+            let input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "elemento" + numeroElemento;
+            numeroElemento++;
+            input.value = encodeURI(myJSON);
+            contForm.appendChild(input);
+        }
+        //console.log(myJSON);
+    });
+}
