@@ -40,13 +40,13 @@ p#demo {
 }
 .cardEvento {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 20px;
     font-family:
-        Open Sans,
+        "Open Sans",
         Arial,
         sans-serif;
     color: black !important;
-    text-shadow: 0.08em 0.08em 0.08em rgba(0, 0, 0, 0.4);
+
 }
 .date_content h2 {
     font-family: "Alata", Helvetica, Arial, Lucida, sans-serif;

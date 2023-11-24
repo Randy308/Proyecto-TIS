@@ -27,12 +27,13 @@
                             </div>
                             <div class="col p-4">
                                 <p class="h3 tituloEvento">{{ $evento->nombre_evento }}</p>
+                                <p class="h4 cardEvento">{{ $evento->descripcion_evento }}</p>
                             </div>
 
                         </div>
                         <div class="row ">
                             <div class="col p-4 d-flex flex-column align-content-center justify-content-center">
-                                <p class="h5 cardEvento">{{ $evento->descripcion_evento }}</p>
+
                                 <span>Fecha: <span class="h5 ">{{ $mifechaFinal }}</span></span>
                                 <span>Organizador: <span class="h5 ">{{ $evento->user->name }}</span></span>
                                 <p class="h5">Contactos :</p>
