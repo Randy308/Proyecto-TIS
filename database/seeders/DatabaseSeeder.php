@@ -95,6 +95,6 @@ class DatabaseSeeder extends Seeder
 
         Evento::factory(12)->create();
         //AsistenciaEvento::factory(20)->create();
-        
+        $this->call(FaseSeeder::class);
     }
 }

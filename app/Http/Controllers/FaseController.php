@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\Fase;
 use App\Models\FaseEvento;
 use Illuminate\Http\Request;
 use App\Rules\ValidarSuperposicionFechasFases;
@@ -42,4 +44,8 @@ class FaseController extends Controller
 
     }
 
+    public function fasesdeEvento($evento_id){
+        $fases = Fase::where('evento_id', 1)->get();
+        return view('fase',['fases'=>$fases]);
+    }
 }

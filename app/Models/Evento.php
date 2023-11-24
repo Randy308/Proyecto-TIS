@@ -46,8 +46,15 @@ class Evento extends Model
     public function elementoImagenBanners()
     {
         return $this->hasMany(ElementoImagenBanner::class);
-
     }
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class);
+    }
+    public function fases(){
+        return $this->hasMany(Fase::class);
+    }
+    
     public function auspiciadors()
     {
         return $this->belongsToMany(Auspiciador::class, 'auspiciador_eventos');

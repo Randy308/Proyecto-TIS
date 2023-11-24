@@ -7,14 +7,13 @@ use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\AuspiciadorController;
 use App\Http\Controllers\ElementosBannerController;
+use App\Http\Controllers\FaseController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RoleController;
-
-use App\Http\Controllers\FaseController;
 
 Route::get('/', function () {
     return view('index');
@@ -107,6 +106,7 @@ Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('fase
 Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
+Route::get('/fases/{evento}',[FaseController::class,'fasesdeEvento'])->name('fases.fasesdeEvento');
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
 
