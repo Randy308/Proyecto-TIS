@@ -30,7 +30,7 @@ Route::post('/logout', [AuthUser::class, 'destroy'])->name('logout');
 
 
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
-=======
+
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
 Route::get('/eventos-reclutamiento', [EventoControlador::class, 'obtenerEventosReclutamiento']);
 
