@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col">
 
-                        <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
+                        <h6>Tipo de evento: <b> {{ $evento->tipo_evento }}</b></h6>
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">

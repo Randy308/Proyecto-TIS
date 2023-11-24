@@ -18,7 +18,6 @@ class EventoList extends Component
     public $search = '';
     public $orderb = 0;
     public $filtroEstado = '';
-    public $filtroCategoria = '';
     public $firstTime = true;
     public function render()
     {
@@ -60,10 +59,6 @@ class EventoList extends Component
 
 
         }
-        if ($this->filtroCategoria) {
-            $eventos->where('categoria', $this->filtroCategoria);
-        }
-
 
 
         switch ($this->orderb) {

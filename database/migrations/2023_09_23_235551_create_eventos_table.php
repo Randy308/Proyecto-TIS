@@ -28,10 +28,13 @@ class CreateEventosTable extends Migration
             $table->double('longitud');
             $table->string('background_color');
             $table->enum('tipo_evento', ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal']);
-            $table->enum('privacidad', ['publico', 'institucional']);
-            $table->unsignedBigInteger('inscritos_minimos')->nullable();
-            $table->unsignedBigInteger('inscritos_maximos')->nullable();
+            $table->enum('privacidad', ['libre', 'con-restriccion']);
+            $table->double('costo')->nullable();
+            $table->unsignedBigInteger('cantidad_minima')->nullable();
+            $table->unsignedBigInteger('cantidad_maxima')->nullable();
+            $table->string('institucion')->nullable();
             $table->timestamps();
+            //tipo_de_evento
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

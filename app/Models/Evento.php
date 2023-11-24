@@ -20,11 +20,13 @@ class Evento extends Model
         'background_color',
         'direccion_banner',
         'privacidad',
-        'inscritos_minimos',
-        'inscritos_maximos',
+        'cantidad_minima',
+        'cantidad_maxima',
         'tipo_evento',
         'latitud',
         'longitud',
+        'costo',
+        'institucion',
         'tiempo_inicio',
         'tiempo_fin',
     ];
@@ -54,4 +56,5 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'colaboradors');
     }
+
 }

@@ -26,6 +26,8 @@ Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
 Route::get('/crear-evento', [EventoControlador::class, 'index'])->name('crear-evento');;
 
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
+Route::get('/eventos-reclutamiento', [EventoControlador::class, 'obtenerEventosReclutamiento']);
+
 
 Route::get('/editar-evento', function () {
     return view('editar-evento');
@@ -39,6 +41,7 @@ Route::post('/logout', [AuthUser::class, 'destroy'])->name('logout');
 
 
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
+Route::get('/api/eventos', [EventoControlador::class, 'obtenerEventos']);
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');

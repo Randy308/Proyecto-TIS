@@ -99,19 +99,21 @@ class EventoControlador extends Controller
                 'max:255',
                 Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
             ],
-            'privacidad' => 'required|in:publico,institucional',
-            'inscritos_minimos' => 'required|integer|min:0', 
-            'inscritos_maximos' => 'required|integer|min:' . $request->input('inscritos_minimos'),
+            'privacidad' => 'required|in:libre,con-restriccion',
+            'cantidad_minima' => 'required|integer|min:0', 
+            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
             'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
             'descripcion_evento' => 'nullable|string',
-            'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
             'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
-            //'fecha_fin' => 'date_format:Y-m-d|required|date|after_or_equal:fecha_inicio',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
+            'costo' => 'nullable|numeric|min:0',
+            'cantidad_minima' => 'nullable|integer|min:0',
+            'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
+            'institucion' => 'nullable|string',
         ], [
             'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
             'fecha_fin.required' => 'La fecha de finalización es obligatoria.',
@@ -177,7 +179,6 @@ class EventoControlador extends Controller
         }
         $evento-> user_id =  auth()->id();
         $evento-> estado = 'Borrador';
-        $evento-> categoria = $request->input('categoria');
         $evento-> fecha_inicio =  $dateInicio;
         $evento-> fecha_fin = $dateFinal;
 
@@ -188,9 +189,11 @@ class EventoControlador extends Controller
         $evento-> longitud = $request->input('longitud');
         $evento-> background_color = '#21618C';
         $evento->privacidad = $request->input('privacidad');
-        $evento->inscritos_minimos = $request->input('inscritos_minimos');
-        $evento->inscritos_maximos = $request->input('inscritos_maximos');
         $evento->tipo_evento = $request->input('tipo_evento');
+        $evento->costo = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('costo');
+        $evento->cantidad_minima = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('cantidad_minima');
+        $evento->cantidad_maxima = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('cantidad_maxima');
+        $evento->institucion = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('institucion');
         $evento->save();
         $inputArray = $request->input('Auspiciadores');
         
@@ -220,7 +223,7 @@ class EventoControlador extends Controller
     public function edit($user, $evento)
     {
         $tiposEvento = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
-        $privacidades = ['publico', 'institucional'];
+        $privacidades = ['libre', 'con-restriccion'];
     
         $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
     
@@ -282,9 +285,9 @@ class EventoControlador extends Controller
         $evento->tipo_evento = $request->input('tipo_evento');
         $evento->fecha_inicio = $request->input('fecha_inicio');
         $evento->fecha_fin = $request->input('fecha_fin');
-        $evento->privacidad_evento = $request->input('privacidad');
-        $evento->min_inscritos = $request->input('inscritos_minimos');
-        $evento->max_inscritos = $request->input('inscritos_maximos');
+        $evento->privacidad = $request->input('privacidad');
+        $evento->min_inscritos = $request->input('cantidad_minima');
+        $evento->max_inscritos = $request->input('cantidad_maxima');
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->save();
@@ -337,5 +340,11 @@ class EventoControlador extends Controller
         $evento->save();
         return redirect()->route('verEvento', ['id' => $id]);
         // return back();
+    }
+    public function obtenerEventosReclutamiento()
+    {
+        $eventosReclutamiento = Evento::where('tipo_evento', 'reclutamiento')->get();
+    
+        return view('crear-evento', ['eventosReclutamiento' => $eventosReclutamiento]);
     }
 }

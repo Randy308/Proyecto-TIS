@@ -12,8 +12,9 @@ class EventoFactory extends Factory
 
     public function definition()
     {
+        $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
         $eventTypes = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
-        $privacyOptions = ['publico', 'institucional'];
+        $privacyOptions = ['libre', 'con-restriccion'];
 
         $user = DB::table('users')->where('id', 1)->first();
 
@@ -29,23 +30,21 @@ class EventoFactory extends Factory
 
         return [
             'user_id' => $user->id,
-            'direccion_banner' => '/storage/banners/img-default.jpeg', // Ajusta la ruta de la imagen
             'nombre_evento' => $nombreEvento,
             'descripcion_evento' => $descripcionEvento,
+            'estado' => $estado,
             'fecha_inicio' => $fechaInicio,
             'fecha_fin' => $fechaFin,
-            'estado' => $estado,
+            'direccion_banner' => '/storage/banners/img-default.jpeg', // Ajusta la ruta de la imagen
+            'latitud' => -17.39359989348116,
+            'longitud' => -66.14596353915297,
             'background_color' => '#FFFF', // Ajusta el color de fondo según tus necesidades
-            'privacidad' => $privacidad,
-            'inscritos_minimos' => $inscritosMinimos,
-            'inscritos_maximos' => $inscritosMaximos,
             'tipo_evento' => $tipoEvento,
-            'latitud'=>-17.39359989348116,
-            'longitud'=>-66.14596353915297,
-            'background_color' => '#FFFF',
-            'tiempo_inicio'=> $this->faker->time('H:i:s'),
-            'tiempo_fin'=>$this->faker->time('H:i:s'),
-
+            'privacidad' => $privacidad,
+            'cantidad_minima' => $inscritosMinimos,
+            'cantidad_maxima' => $inscritosMaximos,
+            'tiempo_inicio' => $this->faker->time('H:i:s'),
+            'tiempo_fin' => $this->faker->time('H:i:s'),
         ];
     }
 }
