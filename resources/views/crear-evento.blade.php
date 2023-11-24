@@ -168,8 +168,6 @@
                                     </div>
                                 </div>
 
-
-
                             </div>
                             <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo
                                     es obligatorio</span></div>
@@ -195,9 +193,11 @@
                     </form>
                 </div>
 
+                   
+
             </div>
-
-
+            
+            
         </div>
     </div>
 

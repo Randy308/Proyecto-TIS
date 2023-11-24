@@ -14,7 +14,6 @@ class AsistenciaEvento extends Model
         'user_id',
         'rol',
         'fechaInscripcion',
-        'estado',
-
+        'estado'
     ];
 }

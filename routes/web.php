@@ -14,6 +14,7 @@ use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RoleController;
 
+use App\Http\Controllers\FaseController;
 
 Route::get('/', function () {
     return view('index');
@@ -101,6 +102,9 @@ Route::get('/acceso-denegado', function () {
     return view('acceso-denegado');
 })->name('acceso-denegado');
 
+
+Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
