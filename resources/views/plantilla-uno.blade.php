@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col">
 
-                        <h6>Tipo de evento: <b> {{ $evento->categoria }}</b></h6>
+                        <h6>Tipo de evento: <b> {{ $evento->tipo_evento }}</b></h6>
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">
@@ -42,6 +42,11 @@
                                             ->exists();
                                     @endphp
                                     @if ($registroExistente)
+                                        {{-- Fases --}}
+                                        <a class="btn btn-secondary" href="{{ route('fases.fasesdeEvento', ['evento'=>$evento->id]) }}">
+                                            Fases
+                                        </a>
+                                        {{--  --}}
                                         <div class="dropdown" id="lista-registro">
                                             <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                                                 id="dropdownMenuLink boton-registro" data-toggle="dropdown"
@@ -65,7 +70,9 @@
                                                 Evento finalizado
                                             </button>
                                         @elseif (strtoupper($evento->estado) == 'ACTIVO')
-                                            <form method="POST"
+                                         {{--si es  un evento individual--}}
+                                        @if (true)   
+                                        <form method="POST"
                                                 action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
                                                 @method('PUT')
                                                 @csrf
@@ -75,6 +82,9 @@
                                                     Registrarse
                                                 </button>
                                             </form>
+                                        @else
+                                            @livewire('registrar-grupo', ['evento_id' => $evento->id])
+                                        @endif
                                         @else
                                             <button type="button" disabled class="btn btn-info" id="boton-registro">
                                                 Registro no disponible

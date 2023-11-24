@@ -47,22 +47,27 @@
                                         <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="form-group">
+                                    <label for="tipo_evento">Tipo de Evento</label>
+                                    <select name="tipo_evento" class="form-control @error('tipo_evento') is-invalid @enderror" id="tipo_evento">
+                                        <option value="reclutamiento" {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>Reclutamiento</option>
+                                        <option value="competencia_individual" {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>Competencia Individual</option>
+                                        <option value="competencia_grupal" {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>Competencia Grupal</option>
+                                        <option value="taller_individual" {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>Taller Individual</option>
+                                        <option value="taller_grupal" {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal</option>
+                                    </select>
+                                    @error('tipo_evento')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
 
                                 <div class="form-group">
                                     <label for="Ubicacion">Agregar ubicación:</label>
                                     <button type="button" class="btn btn-info" data-toggle="modal"
                                         data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
                                     @include('modal-ubicacion')
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="categoria">Categoría</label>
-                                    <select name="categoria" class="form-control" id="categoria" required>
-                                        <option value="Diseño">Diseño</option>
-                                        <option value="QA">QA</option>
-                                        <option value="Desarrollo">Desarrollo</option>
-                                        <option value="Ciencia de datos">Ciencia de datos</option>
-                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -120,8 +125,48 @@
                                         <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
-
+                                <div class="form-group">
+                                    <label for="privacidad">Privacidad del Evento</label>
+                                    <select name="privacidad" class="form-control @error('privacidad') is-invalid @enderror" id="privacidad" required>
+                                        <option value="libre">Libre</option>
+                                        <option value="con-restriccion">Con Restriccion</option>
+                                    </select>
+                                    @error('privacidad')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                
+                                <div id="campos-adicionales">
+                                    <!-- Checkbox para cada campo adicional -->
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evemto
+                                        <input type="text" name="costo" class="form-control" id="costo" style="display: none;">
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad minima de particpantes
+                                        <input type="text" name="cantidad_minima" class="form-control" id="cantidad_minima" style="display: none;">
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad maxima de particpantes
+                                        <input type="text" name="cantidad_maxima" class="form-control" id="cantidad_maxima" style="display: none;">
+                                    </div>
+                                
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarInstitucion" id="mostrarInstitucion"> institucion
+                                        <input type="text" name="institucion" class="form-control" id="institucion" style="display: none;">
+                                    </div>
+                                
+                                    <div class="form-group" id="eventoRequeridoGroup">
+                                        <label for="evento">Evento requerido</label>
+                                        <select name="evento" class="form-control" id="evento">
+                                            <option value="" selected disabled>Selecciona un evento</option>
+                                        </select>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo
@@ -148,17 +193,75 @@
                     </form>
                 </div>
 
+                   
+
             </div>
-
-
+            
+            
         </div>
     </div>
 
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
+    </script>
+    <script>
+        $(document).ready(function () {
+            // Oculta los campos adicionales al cargar la página
+            $('#campos-adicionales input[type="text"]').hide();
+
+            // Muestra u oculta los campos adicionales según el estado de los checkboxes
+            $('input[type="checkbox"]').change(function () {
+                var campoAsociado = $(this).next('input[type="text"]');
+                campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
+            });
+
+            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable
+            $('#privacidad').change(function () {
+                if ($(this).val() === 'con-restriccion') {
+                    $('#campos-adicionales').show();
+                } else {
+                    $('#campos-adicionales').hide();
+                    // Oculta los campos adicionales si el tipo de evento no es "competencia_individual" ni "taller_individual"
+                    $('#eventoRequeridoGroup').hide();
+                    $('#mostrarEvento').prop('checked', false);
+                    $('#evento').hide();
+                }
+            });
+
+            $('#tipo_evento').change(function () {
+                var selectedTipoEvento = $(this).val();
+                var eventoRequeridoGroup = $('#eventoRequeridoGroup');
+
+                if (selectedTipoEvento === 'competencia_individual' || selectedTipoEvento === 'competencia_grupal') {
+                    eventoRequeridoGroup.show();
+                } else {
+                    eventoRequeridoGroup.hide();
+                    $('#mostrarEvento').prop('checked', false);
+                    $('#evento').hide();
+                }
+            });
+
+            $('#mostrarEvento').change(function () {
+                $('#evento').toggle(this.checked);
+            });
+        });
+    </script>
+    <script>
+        
+        $(document).ready(function () {
+            $('#campos-adicionales').hide();
+            $('#privacidad').change(function () {
+                if ($(this).val() === 'con-restriccion') {
+                    $('#campos-adicionales').show();
+                } else {
+                    $('#campos-adicionales').hide();
+                }
+            });
+        });
     </script>
     <script>
         $(function() {
@@ -198,6 +301,40 @@
             document.getElementById('fecha_fin').setAttribute('min', currentDate + 'T' + currentTime);
             $('#fecha_inicio').val(currentDate + 'T' + currentTime);
         });
+    </script>
+    <script>
+            function validarMinimo(input) {
+        // Obtener el valor mínimo permitido (0 en este caso)
+        var minimo = parseInt(input.min);
+
+        // Validar y ajustar el valor si es menor al mínimo
+        if (parseInt(input.value) < minimo) {
+            input.value = minimo;
+        }
+    }
+
+
+    function validarMaximo(input) {
+        // Obtener el valor mínimo permitido (0 en este caso)
+        var minimo = parseInt(input.min);
+
+        // Validar y ajustar el valor si es menor al mínimo
+        if (parseInt(input.value) < minimo) {
+            input.value = minimo;
+        }
+
+        // Validar y ajustar el valor si es menor al mínimo
+        var inscritosMinimosInput = document.getElementById("inscritos_minimos");
+        if (parseInt(input.value) < parseInt(inscritosMinimosInput.value)) {
+            input.value = inscritosMinimosInput.value;
+        }
+    }
+        function confirmarCancelacion() {
+            if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
+                window.location.href = "{{ route('index') }}";
+            }
+        }
+
     </script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>
     @include('layouts.mensajes-alerta')

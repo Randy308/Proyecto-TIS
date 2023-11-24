@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/plantilla-uno.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
+    @livewireStyles
 </head>
 
 <body>
@@ -46,6 +47,8 @@
                 $("#" + $(this).attr("src")).show();
         });
     </script>
+    
+    @livewireScripts
     {{-- js de ubicacion y API googleMaps --}}
     <script src="{{ asset('js/ubicacion-mapa-vista.js') }}"></script>
     <script

@@ -13,15 +13,20 @@ class Evento extends Model
     protected $fillable = [
         'nombre_evento',
         'descripcion_evento',
-        'user_id',
         'estado',
-        'categoria',
+        'user_id',
         'fecha_inicio',
         'fecha_fin',
         'background_color',
         'direccion_banner',
+        'privacidad',
+        'cantidad_minima',
+        'cantidad_maxima',
+        'tipo_evento',
         'latitud',
         'longitud',
+        'costo',
+        'institucion',
         'tiempo_inicio',
         'tiempo_fin',
     ];
@@ -41,8 +46,15 @@ class Evento extends Model
     public function elementoImagenBanners()
     {
         return $this->hasMany(ElementoImagenBanner::class);
-
     }
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class);
+    }
+    public function fases(){
+        return $this->hasMany(Fase::class);
+    }
+    
     public function auspiciadors()
     {
         return $this->belongsToMany(Auspiciador::class, 'auspiciador_eventos');
@@ -51,4 +63,5 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'colaboradors');
     }
+
 }

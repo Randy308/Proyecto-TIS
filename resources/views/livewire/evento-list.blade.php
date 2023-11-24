@@ -35,7 +35,7 @@
                 </select>
             </div>
 
-            <div class="col-md-3 mb-3">
+            {{-- <div class="col-md-3 mb-3">
                 <label for="">Filtrar por Categoría:</label>
                 <select wire:model="filtroCategoria" class="form-control">
                     <option value="">Todos</option>
@@ -44,7 +44,7 @@
                     <option value="Desarrollo">Desarrollo</option>
                     <option value="Ciencia de datos">Ciencia de datos</option>
                 </select>
-            </div>
+            </div> --}}
 
             @php
                 $mes = date('n');
@@ -97,7 +97,7 @@
                 <a href="{{ route('verEvento', $evento->id) }}">
                     <div class="card position-relative {{ $evento->estado }}">
                         <div class="card-header">
-                            <div class="cintaCategoria">{{ $evento->categoria }}</div>
+                            <div class="cintaCategoria">{{ $evento->tipo_eventoo }}</div>
                         </div>
                         <div class="card-body">
                             <div class="row d-flex">

@@ -5,15 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class AsistenciaEvento extends Model
+class Fase extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'evento_id',
-        'user_id',
-        'rol',
-        'fechaInscripcion',
-        'estado'
+        'nombre',
+        'descripcion',
+        'fechaIni',
+        'fechaFin',
     ];
+    public function evento()
+    {
+        return $this->belongsTo(Evento::class);
+    }
 }

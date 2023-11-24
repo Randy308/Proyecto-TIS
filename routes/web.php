@@ -7,6 +7,7 @@ use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\AuspiciadorController;
 use App\Http\Controllers\ElementosBannerController;
+use App\Http\Controllers\FaseController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\RoleController;
 
 // Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
 // Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
+
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -26,7 +28,13 @@ Route::post('/login', [AuthUser::class, 'store'])->name('iniciar.sesion.store');
 
 Route::post('/logout', [AuthUser::class, 'destroy'])->name('logout');
 
+
 Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
+=======
+Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
+Route::get('/eventos-reclutamiento', [EventoControlador::class, 'obtenerEventosReclutamiento']);
+
+
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 
@@ -39,9 +47,14 @@ Route::get('/recuperar-cuenta', [RecuperarCuentaController::class, 'index'])->na
 
 Route::post('/recuperar-cuenta', [RecuperarCuentaController::class, 'enviarEmail'])->name('enviar-email');
 
+
 Route::get('/actualizar-cuenta', function () {
     return view('confirmar-cuenta');
 })->name('actualizar-password');
+
+Route::get('/evento/{id}', [EventoControlador::class, 'show'])->name('verEvento');
+Route::get('/api/eventos', [EventoControlador::class, 'obtenerEventos']);
+
 
 Route::post('/actualizar-cuenta', [UsuarioController::class, 'resetPassword'])->name('actualizar-password');
 
@@ -103,6 +116,16 @@ Route::group(['middleware' => ['can:admin.crear-usuario']], function () {
     Route::get('/usuario/crear', [UsuarioController::class, 'createForm'])->name('crearUsuario');
     Route::post('/usuario/crear', [UsuarioController::class, 'store'])->name('crearUsuario.store');
 });
+
+
+Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
+Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
+
+Route::get('/fases/{evento}',[FaseController::class,'fasesdeEvento'])->name('fases.fasesdeEvento');
+Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
+Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
+
 
 
 Route::group(['middleware' => ['can:admin.ver-detalle-usuarios']], function () {

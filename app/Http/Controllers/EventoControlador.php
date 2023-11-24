@@ -6,6 +6,7 @@ use App\Models\CoordenadaEvento;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use App\Models\Evento;
+use App\Models\FaseEvento;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -85,28 +86,59 @@ class EventoControlador extends Controller
 
     public function crearEvento(Request $request)
     {
+        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
+        $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
 
         $todayDate = now('GMT-4')->format('Y-m-d\TH:i');
         //return $request;
         //return $todayDate;
+
         $validator = $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
-                    return $query->where('categoria', $request->input('categoria'));
-                })->ignore($request->input('id'), 'id'),
+                Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
             ],
+            'privacidad' => 'required|in:libre,con-restriccion',
+            'cantidad_minima' => 'required|integer|min:0', 
+            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
+            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
             'descripcion_evento' => 'nullable|string',
-            'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
             'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
-            //'fecha_fin' => 'date_format:Y-m-d|required|date|after_or_equal:fecha_inicio',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
+            'costo' => 'nullable|numeric|min:0',
+            'cantidad_minima' => 'nullable|integer|min:0',
+            'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
+            'institucion' => 'nullable|string',
+        ], [
+            'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
+            'fecha_fin.required' => 'La fecha de finalización es obligatoria.',
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
+            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+            'nombre_evento.required' => 'El nombre del evento es obligatorio.',
+            'nombre_evento.string' => 'El nombre del evento debe ser una cadena de texto.',
+            'nombre_evento.max' => 'El nombre del evento no puede tener más de :max caracteres.',
+            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
+            'descripcion_evento.required' => 'La descripción del evento es obligatoria.',
+            'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
+            'privacidad.required' => 'La privacidad del evento es obligatoria.',
+            'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
+            'inscritos_minimos.required' => 'La cantidad mínima de inscritos es obligatoria.',
+            'inscritos_minimos.integer' => 'La cantidad mínima de inscritos debe ser un número entero.',
+            'inscritos_minimos.min' => 'La cantidad mínima de inscritos debe ser al menos :min.',
+            'inscritos_maximos.required' => 'La cantidad máxima de inscritos es obligatoria.',
+            'inscritos_maximos.integer' => 'La cantidad máxima de inscritos debe ser un número entero.',
+            'inscritos_maximos.min' => 'La cantidad máxima de inscritos debe ser al menos :min.',
+            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
+            'tipo_evento.in' => 'El tipo de evento no es válido.',
+    
+
+
         ]);
         $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
 
@@ -117,8 +149,6 @@ class EventoControlador extends Controller
             $request->input('fecha_inicio'),
             $request->input('fecha_fin'),
             $background_color,
-
-
         );
         // Get the datetime input from the request
         $datetimeInput1 = $request->input('datetime_input');
@@ -139,7 +169,7 @@ class EventoControlador extends Controller
          $dateFinal = $carbonDatetime2->toDateString(); // Format: Y-m-d
          $timeFinal = $carbonDatetime2->toTimeString(); // Format: H:i:s
 
-
+        
         $nombreDelArchivo = basename($rutaBanner);
         $evento = new Evento();
         $evento-> nombre_evento = $nombreEvento;
@@ -150,7 +180,6 @@ class EventoControlador extends Controller
         }
         $evento-> user_id =  auth()->id();
         $evento-> estado = 'Borrador';
-        $evento-> categoria = $request->input('categoria');
         $evento-> fecha_inicio =  $dateInicio;
         $evento-> fecha_fin = $dateFinal;
 
@@ -160,8 +189,15 @@ class EventoControlador extends Controller
         $evento-> latitud = $request->input('latitud');
         $evento-> longitud = $request->input('longitud');
         $evento-> background_color = '#21618C';
+        $evento->privacidad = $request->input('privacidad');
+        $evento->tipo_evento = $request->input('tipo_evento');
+        $evento->costo = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('costo');
+        $evento->cantidad_minima = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('cantidad_minima');
+        $evento->cantidad_maxima = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('cantidad_maxima');
+        $evento->institucion = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('institucion');
         $evento->save();
         $inputArray = $request->input('Auspiciadores');
+        
 
         if ($request->filled('Auspiciadores') && is_array($inputArray)) {
             foreach ($inputArray as $value) {
@@ -178,6 +214,29 @@ class EventoControlador extends Controller
         } else {
         }
 
+        $faseInscripcion = new FaseEvento([
+            'evento_id' => $evento->id,
+            'nombre_fase'=> 'Fase de Inscripción',
+            'descripcion_fase' => 'Mientras la fase de inscripción este activa podras incribirte al eveto',
+            'fechaInicio' => $request->input('fecha_inicio'),
+            'fechaFin' => $request->input('fecha_inicio'),
+            'tipo' => 'Inscripcion',
+            'actual'=> true,  
+        ]);
+
+        $faseInscripcion->save();
+        $faseFinalizacion = new FaseEvento([
+            'evento_id' => $evento->id,
+            'nombre_fase'=> 'Evento Finalizado',
+            'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
+            'fechaInicio' => $request->input('fecha_fin'),
+            'fechaFin' => $request->input('fecha_fin'),
+            'tipo' => 'Finalizacion',
+            'actual'=> false,  
+        ]);
+
+        $faseFinalizacion->save();
+
         return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
     public function index()
@@ -187,11 +246,14 @@ class EventoControlador extends Controller
     }
     public function edit($user, $evento)
     {
-        //
-        $categorias = ['Diseño', 'QA', 'Desarrollo', 'Ciencia de datos'];
+        $tiposEvento = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
+        $privacidades = ['libre', 'con-restriccion'];
+    
         $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
-        return view('actualizar-evento', compact('miEvento', 'categorias'));
+    
+        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades'));
     }
+    
     public function updateEstado($user, $evento, Request $request)
     {
         //
@@ -216,37 +278,49 @@ class EventoControlador extends Controller
     }
     public function update($user, $evento, Request $request)
     {
-        //
         $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
-                    return $query->where('categoria', $request->input('categoria'));
+                    return $query->where('tipo_evento', $request->input('tipo_evento'));
                 })->ignore($evento, 'id'),
             ],
             'descripcion_evento' => 'required|string',
-            'categoria' => 'required|string|in:Diseño,QA,Desarrollo,Ciencia de datos',
             'fecha_inicio' => 'required|date|after_or_equal:today',
             'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
+            'inscritos_minimos' => 'nullable|integer|min:0',
+            'inscritos_maximos' => 'nullable|integer|gte:inscritos_minimos',
+        ], [
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
+            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.',
+            'inscritos_maximos.gte' => 'El número máximo de inscritos debe ser igual o mayor al número mínimo de inscritos.',
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
         ]);
-        $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
+    
+        $evento = Evento::where('user_id', $user)->where('id', $evento)->first();
+    
+        // Actualizar los campos del modelo con los nuevos nombres
         $evento->nombre_evento = $request->input('nombre_evento');
         $evento->descripcion_evento = $request->input('descripcion_evento');
-        $evento->categoria = $request->input('categoria');
+        $evento->tipo_evento = $request->input('tipo_evento');
         $evento->fecha_inicio = $request->input('fecha_inicio');
         $evento->fecha_fin = $request->input('fecha_fin');
+        $evento->privacidad = $request->input('privacidad');
+        $evento->min_inscritos = $request->input('cantidad_minima');
+        $evento->max_inscritos = $request->input('cantidad_maxima');
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
-
         $evento->save();
+    
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
         return redirect()->route('misEventos');
     }
-
+    
+    
     public function updateBanner($user, $evento, Request $request)
     {
         $request->validate([
@@ -290,5 +364,11 @@ class EventoControlador extends Controller
         $evento->save();
         return redirect()->route('verEvento', ['id' => $id]);
         // return back();
+    }
+    public function obtenerEventosReclutamiento()
+    {
+        $eventosReclutamiento = Evento::where('tipo_evento', 'reclutamiento')->get();
+    
+        return view('crear-evento', ['eventosReclutamiento' => $eventosReclutamiento]);
     }
 }

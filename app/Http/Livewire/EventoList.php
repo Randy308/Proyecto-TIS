@@ -63,10 +63,6 @@ class EventoList extends Component
 
 
         }
-        if ($this->filtroCategoria) {
-            $eventos->where('categoria', $this->filtroCategoria);
-        }
-
 
 
         switch ($this->orderb) {
