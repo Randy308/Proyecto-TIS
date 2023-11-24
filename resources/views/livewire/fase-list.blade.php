@@ -24,20 +24,20 @@
                                 <td>{{ $fase->fechaInicio->format('H:i d/m/Y') }}</td>
                                 <td>{{ $fase->fechaFin->format('H:i d/m/Y') }}</td>
                                 <td>{{ $fase->tipo }}</td>
-                                
+
                                 <td>
                                     <button class="btn btn-primary btn-sm btnEditar" data-toggle="modal" data-target="#fasesModalEdit" data-fase="{{ $fase }}">
                                         <i class="bi bi-pencil-fill"></i>
                                     </button>
                                     @if( $fase->tipo !== 'Inscripcion' && $fase->tipo !== 'Finalizacion')
                                         <button  class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i></button>
-                                       
+
                                     @endif
-                                    
+
                                 </td>
 
                             </tr>
-                           
+
                             @endforeach
                         </tbody>
                     </table>
@@ -69,4 +69,3 @@
 
 
 @include('fasesFormEdit')
-<script src="{{ asset('js/login-form.js') }}"></script>

@@ -8,6 +8,9 @@
     <title>Modificar Evento</title>
     @include('layouts/estilos')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
+        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
@@ -27,10 +30,20 @@
                         <span><i class="bi bi-calendar2-plus-fill"></i></span>
                     </div>
                     <form method="POST"
-                        action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}">
+                        action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}"
+                        id="FormCrearEvento">
                         @csrf
                         @method('PUT')
                         <h2>Modificar Evento</h2>
+                        @php
+                            $misAuspiciadores = isset($miEvento->auspiciadors) ? $miEvento->auspiciadors : [];
+                            $miAuspiciadores = [];
+
+                            foreach ($misAuspiciadores as $auspiciador) {
+                                $miAuspiciadores[] = $auspiciador->nombre;
+                            }
+                        @endphp
+
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -56,32 +69,42 @@
                                     <label for="tipo_evento">Tipo de Evento</label>
                                     <select name="tipo_evento" class="form-control" id="tipo_evento" required>
                                         @foreach ($tiposEvento as $tipo)
-                                            <option value="{{ $tipo }}" {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
+                                            <option value="{{ $tipo }}"
+                                                {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
                                                 {{ $tipo }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad</label>
                                     <select name="privacidad" class="form-control" id="privacidad" required>
                                         @foreach ($privacidades as $privacidad)
-                                            <option value="{{ $privacidad }}" {{ $miEvento->privacidad_evento === $privacidad ? 'selected' : '' }}>
+                                            <option value="{{ $privacidad }}"
+                                                {{ $miEvento->privacidad_evento === $privacidad ? 'selected' : '' }}>
                                                 {{ $privacidad }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="inscritos_minimos">Inscritos Mínimos</label>
-                                    <input type="number" name="inscritos_minimos" class="form-control" id="inscritos_minimos" value="{{ $miEvento->min_inscritos }}" min="0" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="inscritos_maximos">Inscritos Máximos</label>
-                                    <input type="number" name="inscritos_maximos" class="form-control" id="inscritos_maximos" value="{{ $miEvento->max_inscritos }}" min="{{ $miEvento->min_inscritos }}" required>
+
+                                <div class="form-group pb-4">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="inscritos_minimos">Inscritos Mínimos</label>
+                                            <input type="number" name="inscritos_minimos" class="form-control"
+                                                id="inscritos_minimos" value="{{ $miEvento->min_inscritos }}" min="0"
+                                                required>
+                                        </div>
+                                        <div class="col">
+                                            <label for="inscritos_maximos">Inscritos Máximos</label>
+                                            <input type="number" name="inscritos_maximos" class="form-control"
+                                                id="inscritos_maximos" value="{{ $miEvento->max_inscritos }}"
+                                                min="{{ $miEvento->min_inscritos }}" required>
+                                        </div>
+                                    </div>
+
                                 </div>
 
                                 <div class="form-group">
@@ -99,7 +122,8 @@
                                     <label for="fecha_fin">Fecha de finalización</label>
                                     <input type="datetime-local" name="fecha_fin"
                                         class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
-                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help" disabled>
+                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help"
+                                        disabled>
                                     @error('fecha_fin')
                                         <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -107,6 +131,26 @@
 
                             </div>
                             <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="auspiciadoresSelect">Seleccione Auspiciadores: </label>
+                                    <select id="auspiciadoresSelect" class="form-select"
+                                        aria-label="Default select example">
+                                        <option selected disabled>Lista de auspiciadores</option>
+
+                                        @if ($auspiciadores)
+                                            @foreach ($auspiciadores as $auspiciador)
+                                                <option value="{{ $auspiciador->nombre }}">{{ $auspiciador->nombre }}
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            <option selected disabled>No existen auspiciadores</option>
+
+                                        @endif
+                                    </select>
+                                    <div id="recipient-list" class="d-flex">
+
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="descripcion_evento">Descripcion del Evento</label>
                                     <textarea type="text" name="descripcion_evento"
@@ -138,30 +182,32 @@
                         </script>
 
                     </form>
-                </div>  
+                </div>
             </div>
             <div class="container contact-form">
                 <br>
-                    <div class="row">
-                        <div class="col-md-6 text-center text-md-left">
-                            <H3>Gestion de fases</H3>
-                        </div>
-                        <div class="col-md-6 text-center text-md-right">
-                            <a class="btn btn-primary" href="#" role="button" data-toggle="modal" data-target="#fasesModal">
-                                Crear una fase 
-                            </a>
-                        </div>
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left">
+                        <H3>Gestion de fases</H3>
                     </div>
-                @livewire('fase-list', ['idEvento' =>$miEvento->id])
-               
+                    <div class="col-md-6 text-center text-md-right">
+                        <a class="btn btn-primary" href="#" role="button" data-toggle="modal"
+                            data-target="#fasesModal">
+                            Crear una fase
+                        </a>
+                    </div>
+                </div>
+                @livewire('fase-list', ['idEvento' => $miEvento->id])
+
             </div>
-        
+
         </div>
     </div>
 
-    @include('fasesForm',  ['evento' => $miEvento])
+    @include('fasesForm', ['evento' => $miEvento])
 
     @include('layouts/sidebar-scripts')
+    <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script>
         $(function() {
             const date = new Date();
@@ -186,6 +232,16 @@
     <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
+    </script>
+    <script src="{{ asset('js/script-crear-evento.js') }}"></script>
+    <script>
+        // Convierte el array de auspiciadores de PHP a un array de JavaScript
+        var auspiciadoresArray = @json($miAuspiciadores);
+        for (const iterator of auspiciadoresArray) {
+            addRecipient(iterator);
+        }
+        // Puedes usar auspiciadoresArray en tu código JavaScript
+        console.log(auspiciadoresArray);
     </script>
 </body>
 

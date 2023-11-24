@@ -32,7 +32,10 @@
                     <form method="POST" action="{{ route('crear-evento') }}" id="FormCrearEvento">
                         @csrf
                         <h2>Crear Evento</h2>
-
+                        @php
+                            $misValores = session()->getOldInput();
+                            $miAuspiciadores = isset($misValores['Auspiciadores']) ? $misValores['Auspiciadores'] : [];
+                        @endphp
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -49,12 +52,24 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="tipo_evento">Tipo de Evento</label>
-                                    <select name="tipo_evento" class="form-control @error('tipo_evento') is-invalid @enderror" id="tipo_evento">
-                                        <option value="reclutamiento" {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>Reclutamiento</option>
-                                        <option value="competencia_individual" {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>Competencia Individual</option>
-                                        <option value="competencia_grupal" {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>Competencia Grupal</option>
-                                        <option value="taller_individual" {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>Taller Individual</option>
-                                        <option value="taller_grupal" {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal</option>
+                                    <select name="tipo_evento"
+                                        class="form-control @error('tipo_evento') is-invalid @enderror"
+                                        id="tipo_evento">
+                                        <option value="reclutamiento"
+                                            {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>Reclutamiento
+                                        </option>
+                                        <option value="competencia_individual"
+                                            {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>
+                                            Competencia Individual</option>
+                                        <option value="competencia_grupal"
+                                            {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>
+                                            Competencia Grupal</option>
+                                        <option value="taller_individual"
+                                            {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>Taller
+                                            Individual</option>
+                                        <option value="taller_grupal"
+                                            {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal
+                                        </option>
                                     </select>
                                     @error('tipo_evento')
                                         <span class="invalid-feedback" role="alert">
@@ -127,7 +142,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad del Evento</label>
-                                    <select name="privacidad" class="form-control @error('privacidad') is-invalid @enderror" id="privacidad" required>
+                                    <select name="privacidad"
+                                        class="form-control @error('privacidad') is-invalid @enderror" id="privacidad"
+                                        required>
                                         <option value="libre">Libre</option>
                                         <option value="con-restriccion">Con Restriccion</option>
                                     </select>
@@ -137,29 +154,37 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
+
                                 <div id="campos-adicionales">
                                     <!-- Checkbox para cada campo adicional -->
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evemto
-                                        <input type="text" name="costo" class="form-control" id="costo" style="display: none;">
+                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del
+                                        Evemto
+                                        <input type="text" name="costo" class="form-control" id="costo"
+                                            style="display: none;">
                                     </div>
-                                
+
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad minima de particpantes
-                                        <input type="text" name="cantidad_minima" class="form-control" id="cantidad_minima" style="display: none;">
+                                        <input type="checkbox" name="mostrarCantidadMinima"
+                                            id="mostrarCantidadMinima"> Cantidad minima de particpantes
+                                        <input type="text" name="cantidad_minima" class="form-control"
+                                            id="cantidad_minima" style="display: none;">
                                     </div>
-                                
+
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad maxima de particpantes
-                                        <input type="text" name="cantidad_maxima" class="form-control" id="cantidad_maxima" style="display: none;">
+                                        <input type="checkbox" name="mostrarCantidadMaxima"
+                                            id="mostrarCantidadMaxima"> Cantidad maxima de particpantes
+                                        <input type="text" name="cantidad_maxima" class="form-control"
+                                            id="cantidad_maxima" style="display: none;">
                                     </div>
-                                
+
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarInstitucion" id="mostrarInstitucion"> institucion
-                                        <input type="text" name="institucion" class="form-control" id="institucion" style="display: none;">
+                                        <input type="checkbox" name="mostrarInstitucion" id="mostrarInstitucion">
+                                        institucion
+                                        <input type="text" name="institucion" class="form-control"
+                                            id="institucion" style="display: none;">
                                     </div>
-                                
+
                                     <div class="form-group" id="eventoRequeridoGroup">
                                         <label for="evento">Evento requerido</label>
                                         <select name="evento" class="form-control" id="evento">
@@ -189,38 +214,39 @@
                                 }
                             }
                         </script>
-
                     </form>
                 </div>
 
-                   
+                <input type="hidden" value="{{ old('Auspiciadores[]') }}">
 
             </div>
-            
-            
+
+
         </div>
     </div>
 
     @include('layouts/sidebar-scripts')
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
+
+
     <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
     </script>
+    <script src="{{ asset('js/script-fecha.js') }}"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             // Oculta los campos adicionales al cargar la página
             $('#campos-adicionales input[type="text"]').hide();
 
             // Muestra u oculta los campos adicionales según el estado de los checkboxes
-            $('input[type="checkbox"]').change(function () {
+            $('input[type="checkbox"]').change(function() {
                 var campoAsociado = $(this).next('input[type="text"]');
                 campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
             });
 
             // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable
-            $('#privacidad').change(function () {
+            $('#privacidad').change(function() {
                 if ($(this).val() === 'con-restriccion') {
                     $('#campos-adicionales').show();
                 } else {
@@ -232,11 +258,12 @@
                 }
             });
 
-            $('#tipo_evento').change(function () {
+            $('#tipo_evento').change(function() {
                 var selectedTipoEvento = $(this).val();
                 var eventoRequeridoGroup = $('#eventoRequeridoGroup');
 
-                if (selectedTipoEvento === 'competencia_individual' || selectedTipoEvento === 'competencia_grupal') {
+                if (selectedTipoEvento === 'competencia_individual' || selectedTipoEvento ===
+                    'competencia_grupal') {
                     eventoRequeridoGroup.show();
                 } else {
                     eventoRequeridoGroup.hide();
@@ -245,16 +272,15 @@
                 }
             });
 
-            $('#mostrarEvento').change(function () {
+            $('#mostrarEvento').change(function() {
                 $('#evento').toggle(this.checked);
             });
         });
     </script>
     <script>
-        
-        $(document).ready(function () {
+        $(document).ready(function() {
             $('#campos-adicionales').hide();
-            $('#privacidad').change(function () {
+            $('#privacidad').change(function() {
                 if ($(this).val() === 'con-restriccion') {
                     $('#campos-adicionales').show();
                 } else {
@@ -263,80 +289,52 @@
             });
         });
     </script>
+
     <script>
-        $(function() {
-            const date = new Date();
+        function validarMinimo(input) {
+            // Obtener el valor mínimo permitido (0 en este caso)
+            var minimo = parseInt(input.min);
 
-            // Format the date
-            let day = date.getDate();
-            if (day < 10) {
-                day = '0' + day;
+            // Validar y ajustar el valor si es menor al mínimo
+            if (parseInt(input.value) < minimo) {
+                input.value = minimo;
             }
-            let month = date.getMonth() + 1;
-            if (month < 10) {
-                month = '0' + month;
-            }
-            let year = date.getFullYear();
-
-            // Format the time
-            let hours = date.getHours();
-            if (hours < 10) {
-                hours = '0' + hours;
-            }
-            let minutes = date.getMinutes();
-            if (minutes < 10) {
-                minutes = '0' + minutes;
-            }
-            let seconds = date.getSeconds();
-            if (seconds < 10) {
-                seconds = '0' + seconds;
-            }
-
-            // Create the formatted date and time strings
-            let currentDate = `${year}-${month}-${day}`;
-            let currentTime = `${hours}:${minutes}:00`;
-
-            // Set the minimum attribute and initial value for date inputs
-            document.getElementById('fecha_inicio').setAttribute('min', currentDate + 'T' + currentTime);
-            document.getElementById('fecha_fin').setAttribute('min', currentDate + 'T' + currentTime);
-            $('#fecha_inicio').val(currentDate + 'T' + currentTime);
-        });
-    </script>
-    <script>
-            function validarMinimo(input) {
-        // Obtener el valor mínimo permitido (0 en este caso)
-        var minimo = parseInt(input.min);
-
-        // Validar y ajustar el valor si es menor al mínimo
-        if (parseInt(input.value) < minimo) {
-            input.value = minimo;
-        }
-    }
-
-
-    function validarMaximo(input) {
-        // Obtener el valor mínimo permitido (0 en este caso)
-        var minimo = parseInt(input.min);
-
-        // Validar y ajustar el valor si es menor al mínimo
-        if (parseInt(input.value) < minimo) {
-            input.value = minimo;
         }
 
-        // Validar y ajustar el valor si es menor al mínimo
-        var inscritosMinimosInput = document.getElementById("inscritos_minimos");
-        if (parseInt(input.value) < parseInt(inscritosMinimosInput.value)) {
-            input.value = inscritosMinimosInput.value;
+
+        function validarMaximo(input) {
+            // Obtener el valor mínimo permitido (0 en este caso)
+            var minimo = parseInt(input.min);
+
+            // Validar y ajustar el valor si es menor al mínimo
+            if (parseInt(input.value) < minimo) {
+                input.value = minimo;
+            }
+
+            // Validar y ajustar el valor si es menor al mínimo
+            var inscritosMinimosInput = document.getElementById("inscritos_minimos");
+            if (parseInt(input.value) < parseInt(inscritosMinimosInput.value)) {
+                input.value = inscritosMinimosInput.value;
+            }
         }
-    }
+
         function confirmarCancelacion() {
             if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
                 window.location.href = "{{ route('index') }}";
             }
         }
-
     </script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>
+    <script>
+        // Convierte el array de auspiciadores de PHP a un array de JavaScript
+        var auspiciadoresArray = @json($miAuspiciadores);
+        for (const iterator of auspiciadoresArray) {
+            addRecipient(iterator);
+        }
+        // Puedes usar auspiciadoresArray en tu código JavaScript
+        console.log(auspiciadoresArray);
+    </script>
+
     @include('layouts.mensajes-alerta')
 
 </body>

@@ -10,8 +10,8 @@ p#demo {
     margin: 20%;
 } */
 #miContainer{
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
 .miFooter {
     border-radius: 0 0 40px 40px;
@@ -87,21 +87,21 @@ p#demo {
 }
 .polygono1 {
     background-color: #bd2738;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     clip-path: polygon(0 0, 0 100%, 100% 0);
 }
 .polygono2 {
     background-color: #ffd51d;
     width: 300px;
     height: 300px;
-    clip-path: polygon(100% 18%, 36% 56%, 100% 87%);
+    clip-path: polygon(100% 0, 0 56%, 100% 100%);
 }
 .polygono3 {
     background-color: #4a82c3;
     width: 300px;
     height: 300px;
-    clip-path: polygon(0 0, 0 100%, 65% 48%);
+    clip-path: polygon(0 0, 0 100%, 100% 54%);
 }
 .polygono4 {
     width: 10px;

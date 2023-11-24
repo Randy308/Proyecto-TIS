@@ -25,7 +25,7 @@
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">
-                            @if (strtotime($evento->fecha_fin) > strtotime(now('GMT-4')))
+                            @if (strtotime($evento->fecha_fin) >= strtotime(now('GMT-4')))
                                 @guest
                                     <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
                                         data-target="#loginModal">
@@ -43,7 +43,8 @@
                                     @endphp
                                     @if ($registroExistente)
                                         {{-- Fases --}}
-                                        <a class="btn btn-secondary" href="{{ route('fases.fasesdeEvento', ['evento'=>$evento->id]) }}">
+                                        <a class="btn btn-secondary"
+                                            href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
                                             Fases
                                         </a>
                                         {{--  --}}
@@ -70,21 +71,21 @@
                                                 Evento finalizado
                                             </button>
                                         @elseif (strtoupper($evento->estado) == 'ACTIVO')
-                                         {{--si es  un evento individual--}}
-                                        @if (true)   
-                                        <form method="POST"
-                                                action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                                @method('PUT')
-                                                @csrf
+                                            {{-- si es  un evento individual --}}
+                                            @if (true)
+                                                <form method="POST"
+                                                    action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
+                                                    @method('PUT')
+                                                    @csrf
 
-                                                <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                                <button type="submit" class="btn btn-success" id="boton-registro">
-                                                    Registrarse
-                                                </button>
-                                            </form>
-                                        @else
-                                            @livewire('registrar-grupo', ['evento_id' => $evento->id])
-                                        @endif
+                                                    <input type="hidden" name="evento" value="{{ $evento->id }}">
+                                                    <button type="submit" class="btn btn-success" id="boton-registro">
+                                                        Registrarse
+                                                    </button>
+                                                </form>
+                                            @else
+                                                @livewire('registrar-grupo', ['evento_id' => $evento->id])
+                                            @endif
                                         @else
                                             <button type="button" disabled class="btn btn-info" id="boton-registro">
                                                 Registro no disponible
@@ -97,7 +98,7 @@
                                 @endauth
                             @else
                                 <button type="button" disabled class="btn btn-primary" id="boton-registro">
-                                    Evento finalizado
+                                    Evento finalizado <p>{{ strtotime($evento->fecha_fin)."  ". strtotime(now('GMT-4')) }}</p>
                                 </button>
 
                             @endif

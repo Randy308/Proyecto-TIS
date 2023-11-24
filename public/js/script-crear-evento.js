@@ -1,8 +1,7 @@
 $(document).ready(function () {
     $("#auspiciadoresSelect").selectmenu({
         change: function (event, data) {
-            var selectedFont = data.item;
-            //console.log(selectedFont)
+            var selectedFont = data.item.value;
             addRecipient(selectedFont);
             var selectElement = document.getElementById("auspiciadoresSelect");
             selectElement.selectedIndex = 0;
@@ -21,42 +20,44 @@ function getColor() {
         "%)"
     );
 }
+
 var idInput = 1;
 const misAuspiciadores = [];
 
-function addRecipient(input) {
+
+function addRecipient(value) {
     const recipientList = document.getElementById("recipient-list");
 
-    if (input.value.trim() === "") {
+    if (value.trim() === "") {
         return;
     }
+
     for (const auspiciador of misAuspiciadores) {
-        if (auspiciador == input.value) {
+        if (auspiciador == value) {
+            console.log('ya existe el auspiciador')
             return;
         }
     }
-    
-    misAuspiciadores.push(input.value);
+
+    misAuspiciadores.push(value);
     var index = misAuspiciadores.length - 1;
     const recipient = document.createElement("div");
     recipient.classList.add("recipient");
-    //background-color: #ff8880;
     const recipientName = document.createElement("span");
-    recipientName.textContent = input.value;
+    recipientName.textContent = value;
     recipient.style.backgroundColor = getColor();
 
     const closeButton = document.createElement("span");
     closeButton.classList.add("close-button");
-    //<i class="bi bi-x"></i>
     const icono = document.createElement("i");
     icono.classList.add("bi", "bi-x");
     closeButton.appendChild(icono);
-    //closeButton.textContent = "X";
+
     const formulario = document.getElementById("FormCrearEvento");
     var inputHidden = document.createElement("input");
     inputHidden.type = "hidden";
     inputHidden.name = "Auspiciadores[]";
-    inputHidden.value = input.value;
+    inputHidden.value = value;
     inputHidden.id = "InputOculto" + idInput;
     idInput++;
     formulario.appendChild(inputHidden);
