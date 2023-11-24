@@ -153,11 +153,11 @@
                         <div class="card">
                             <h4>Organizador</h4>
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-md-auto">
                                     <img src="{{ $evento->user->foto_perfil }}" class="card-img-top"
                                         alt="imagen no encontrada" style="width:100px; height:100px">
                                 </div>
-                                <div class="col-7">
+                                <div class="col">
                                     <span>Nombre: <b>{{ ucfirst(trans($evento->user->name)) }}</b></span>
 
                                     <span>Email: <a
@@ -173,10 +173,30 @@
 
 
                         </div>
+                        @if ($evento->colaboradors->count())
                         <div class="card">
                             <h4>Colaboradores:</h4>
+                            @foreach ($evento->colaboradors as $user)
+                            <div class="row">
+                                <div class="col-md-auto">
+                                    <img src="{{ $user->foto_perfil }}" class="card-img-top"
+                                        alt="imagen no encontrada" style="width:50px; height:50px">
+                                </div>
+                                <div class="col">
+                                    <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
 
+                                    <span>Email: <a
+                                            href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
+                                            class="btn btn-link emaillink">
+                                            {{ $user->email }}
+                                        </a></span>
+
+                                </div>
+                            </div>
+                            @endforeach
                         </div>
+                        @endif
+
                     </div>
                     <div class="card" id="participantesContainer">
                         <h5>Ubicacion</h5>
