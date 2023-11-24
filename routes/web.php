@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\AuspiciadorController;
+use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\FaseController;
 use App\Http\Controllers\ParticipanteController;
@@ -200,3 +201,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.abandonar');
 
 });
+
+Route::get('/misColaboradores', [ColaboradorController::class, 'index'])->name('colaboradores.index');
+Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'asignarColaborador'])->name('colaboradores.asignar');
+Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');

@@ -76,6 +76,13 @@
                     </a>
                 </li>
             @endcan
+            <li>
+                <a href="{{ route('colaboradores.index') }}">
+                    <i class="bi bi-person-heart"></i>
+                    <span>Colaboradores</span>
+                </a>
+            </li>
+
         @endauth
 
     </ul>
