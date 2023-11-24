@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImagenAuspiciadorsTable extends Migration
+class CreateAuspiciadorEventosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateImagenAuspiciadorsTable extends Migration
      */
     public function up()
     {
-        Schema::create('imagen_auspiciadors', function (Blueprint $table) {
+        Schema::create('auspiciador_eventos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('evento_id');
-            $table->string('url');
+            $table->unsignedBigInteger('auspiciador_id');
             $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('auspiciador_id')->references('id')->on('auspiciadors')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateImagenAuspiciadorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('imagen_auspiciadors');
+        Schema::dropIfExists('auspiciador_eventos');
     }
 }

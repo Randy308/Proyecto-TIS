@@ -14,7 +14,8 @@
             background-color: #007BFF;
             color: #fff;
         }
-        p{
+
+        p {
             color: black;
             font-size: 13px;
         }
@@ -47,7 +48,11 @@
 
     @include('layouts/sidebar-scripts')
 
-
+    <script>
+        $("#BottonFiltrado").on("click", function() {
+            $("#filtrosEvento").toggleClass('FiltroInvisible');
+        });
+    </script>
 </body>
 
 </html>

@@ -19,8 +19,9 @@ class CheckRole
         if ($request->user() && $request->user()->hasRole($role)) {
             return $next($request);
         }
+        $currentPath = $request->path();
     
-        return redirect()->back()->with('error', 'No tienes permisos para acceder aqui.');
+        return redirect()->back()->with('error', "No tienes permisos para acceder a la ruta '$currentPath'.");
     }
     
 }

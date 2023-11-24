@@ -1,0 +1,112 @@
+p#demo {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 0px;
+    color: #ffffff !important;
+    font-family: "Alata", Helvetica, Arial, Lucida, sans-serif;
+}
+/* #miContent{
+    padding: 30%;
+    margin: 20%;
+} */
+#miContainer{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+#miFooter {
+    border-radius: 0 0 40px 40px;
+}
+.CardFooter {
+    background-color: white;
+    border-radius: 0 0 40px 40px;
+}
+.tituloEvento {
+    font-family: "Open Sans", Arial, sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    /* color: #bd2738 !important; */
+    text-shadow: 0.08em 0.08em 0.08em rgba(255, 255, 255, 0.3);
+}
+.imagen-container {
+    max-width: 500px;
+    width: 100%;
+    height: auto;
+}
+.cardEvento {
+    font-weight: 700;
+    font-size: 15px;
+    font-family:
+        Open Sans,
+        Arial,
+        sans-serif;
+    color: black !important;
+    text-shadow: 0.08em 0.08em 0.08em rgba(0, 0, 0, 0.4);
+}
+.date_content h2 {
+    font-family: "Alata", Helvetica, Arial, Lucida, sans-serif;
+    font-size: 20px;
+    color: #ffffff !important;
+    letter-spacing: 6px;
+
+    text-align: center;
+    text-shadow: 0.08em 0.08em 0.08em rgba(0, 0, 0, 0.4);
+}
+.date_content {
+    /* background-color: #bd2738; */
+    background-color: #4c83c3;
+}
+.polygono1 {
+    background-color: #bd2738;
+    width: 200px;
+    height: 200px;
+    clip-path: polygon(0 0, 0 100%, 100% 0);
+}
+.polygono2 {
+    background-color: #ffd51d;
+    width: 300px;
+    height: 300px;
+    clip-path: polygon(100% 18%, 36% 56%, 100% 87%);
+}
+.polygono3 {
+    background-color: #4a82c3;
+    width: 300px;
+    height: 300px;
+    clip-path: polygon(0 0, 0 100%, 65% 48%);
+}
+.polygono4 {
+    width: 10px;
+    height: 50px;
+}
+
+
+
+/* @media (max-width: 978px) {
+    .container {
+        padding: 0;
+        margin: 0;
+    }
+    body,
+    html {
+        padding: 0;
+        margin: 0;
+    }
+    .p-5 {
+        padding: 0;
+    }
+    .m-5 {
+        margin: 0;
+    }
+
+    body {
+        padding: 0;
+    }
+
+    .navbar-fixed-top,
+    .navbar-fixed-bottom,
+    .navbar-static-top {
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 0;
+    }
+} */

@@ -8,7 +8,7 @@
     <title>Modificar Evento</title>
     @include('layouts/estilos')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-
+    <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
 <body>
@@ -26,7 +26,8 @@
                     <div class="contact-image">
                         <span><i class="bi bi-calendar2-plus-fill"></i></span>
                     </div>
-                    <form method="POST" action="{{ route('evento.update', ['user'=> auth()->user()->id , 'evento'=> $miEvento->id]) }}">
+                    <form method="POST"
+                        action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}">
                         @csrf
                         @method('PUT')
                         <h2>Modificar Evento</h2>
@@ -44,26 +45,51 @@
                                     @enderror
                                 </div>
 
-
+                                <div class="form-group">
+                                    <label for="Ubicacion">Agregar ubicación:</label>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
+                                    @include('layouts.modal-editar-ubicacion')
+                                </div>
 
                                 <div class="form-group">
-                                    <label for="categoria">Categoría</label>
-                                    <select name="categoria" class="form-control" id="categoria" required>
-                                        @foreach ($categorias as $categoria)
-                                            <option value="{{ $categoria }}"
-                                                {{ $miEvento->categoria === $categoria ? 'selected' : '' }}>
-                                                {{ $categoria }}
+                                    <label for="tipo_evento">Tipo de Evento</label>
+                                    <select name="tipo_evento" class="form-control" id="tipo_evento" required>
+                                        @foreach ($tiposEvento as $tipo)
+                                            <option value="{{ $tipo }}" {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
+                                                {{ $tipo }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
+                                
+                                <div class="form-group">
+                                    <label for="privacidad">Privacidad</label>
+                                    <select name="privacidad" class="form-control" id="privacidad" required>
+                                        @foreach ($privacidades as $privacidad)
+                                            <option value="{{ $privacidad }}" {{ $miEvento->privacidad_evento === $privacidad ? 'selected' : '' }}>
+                                                {{ $privacidad }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inscritos_minimos">Inscritos Mínimos</label>
+                                    <input type="number" name="inscritos_minimos" class="form-control" id="inscritos_minimos" value="{{ $miEvento->min_inscritos }}" min="0" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="inscritos_maximos">Inscritos Máximos</label>
+                                    <input type="number" name="inscritos_maximos" class="form-control" id="inscritos_maximos" value="{{ $miEvento->max_inscritos }}" min="{{ $miEvento->min_inscritos }}" required>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="fecha_inicio">Fecha de inicio</label>
-                                    <input type="date" name="fecha_inicio"
+                                    <input type="datetime-local" name="fecha_inicio"
                                         class="form-control @error('fecha_inicio') is-invalid @enderror"
                                         id="fecha_inicio" value="{{ $miEvento->fecha_inicio }}" required
-                                        aria-describedby="fecha_inicio_help">
+                                        aria-describedby="fecha_inicio_help" disabled>
                                     @error('fecha_inicio')
                                         <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -71,9 +97,9 @@
 
                                 <div class="form-group">
                                     <label for="fecha_fin">Fecha de finalización</label>
-                                    <input type="date" name="fecha_fin"
+                                    <input type="datetime-local" name="fecha_fin"
                                         class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
-                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help">
+                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help" disabled>
                                     @error('fecha_fin')
                                         <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -94,7 +120,7 @@
                                 <div class="form-group text-center botones-juntos">
                                     <a href="#" class="btn btn-cancelar" style="width: 45%;"
                                         onclick="confirmarCancelacion()">Cancelar</a>
-                                    <button type="submit" class="btn btn-info" style="width: 45%;">Crear
+                                    <button type="submit" class="btn btn-info" style="width: 45%;">Actualizar
                                         Evento</button>
                                 </div>
 
@@ -112,13 +138,28 @@
                         </script>
 
                     </form>
-                </div>
-
+                </div>  
             </div>
-
-
+            <div class="container contact-form">
+                <br>
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-left">
+                            <H3>Gestion de fases</H3>
+                        </div>
+                        <div class="col-md-6 text-center text-md-right">
+                            <a class="btn btn-primary" href="#" role="button" data-toggle="modal" data-target="#fasesModal">
+                                Crear una fase 
+                            </a>
+                        </div>
+                    </div>
+                @livewire('fase-list', ['idEvento' =>$miEvento->id])
+               
+            </div>
+        
         </div>
     </div>
+
+    @include('fasesForm',  ['evento' => $miEvento])
 
     @include('layouts/sidebar-scripts')
     <script>
@@ -140,6 +181,11 @@
             document.getElementById('fecha_inicio').setAttribute('min', currentDate);
             document.getElementById('fecha_fin').setAttribute('min', currentDate);
         });
+    </script>
+    @include('layouts.mensajes-alerta')
+    <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
     </script>
 </body>
 

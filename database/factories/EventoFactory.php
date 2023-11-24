@@ -1,10 +1,10 @@
 <?php
 
 namespace Database\Factories;
+
 use App\Models\Evento;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class EventoFactory extends Factory
 {
@@ -13,33 +13,39 @@ class EventoFactory extends Factory
     public function definition()
     {
         $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
-        $eventTypes = ['Diseño', 'QA', 'Desarrollo', 'Ciencia de datos'];
+        $eventTypes = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
+        $privacyOptions = ['libre', 'con-restriccion'];
 
         $user = DB::table('users')->where('id', 1)->first();
 
         $nombreEvento = $this->faker->unique()->sentence(3);
         $descripcionEvento = $this->faker->text($this->faker->numberBetween(55, 85));
-        $categoria = $eventTypes[rand(0, 3)];
         $fechaInicio = $this->faker->dateTimeBetween('now', '+30 days');
         $fechaFin = $this->faker->dateTimeBetween($fechaInicio, '+60 days');
         $estado = $arrayValues[rand(0, 3)];
+        $privacidad = $privacyOptions[rand(0, 1)];
+        $inscritosMinimos = $this->faker->numberBetween(1, 50);
+        $inscritosMaximos = $this->faker->numberBetween($inscritosMinimos, 100);
+        $tipoEvento = $eventTypes[rand(0, 4)];
 
-        // Define los atributos del evento según las restricciones de validación
         return [
             'user_id' => $user->id,
-            'direccion_banner' => '/storage/image/img-default.jpeg',
             'nombre_evento' => $nombreEvento,
             'descripcion_evento' => $descripcionEvento,
-            'categoria' => $categoria,
+            'estado' => $estado,
             'fecha_inicio' => $fechaInicio,
             'fecha_fin' => $fechaFin,
-            'estado' => $estado,
-            'latitud'=>-17.39359989348116,
-            'longitud'=>-66.14596353915297,
-            'background_color' => '#FFFF'
-
+            'direccion_banner' => '/storage/banners/img-default.jpeg', // Ajusta la ruta de la imagen
+            'latitud' => -17.39359989348116,
+            'longitud' => -66.14596353915297,
+            'background_color' => '#FFFF', // Ajusta el color de fondo según tus necesidades
+            'tipo_evento' => $tipoEvento,
+            'privacidad' => $privacidad,
+            'cantidad_minima' => $inscritosMinimos,
+            'cantidad_maxima' => $inscritosMaximos,
+            'tiempo_inicio' => $this->faker->time('H:i:s'),
+            'tiempo_fin' => $this->faker->time('H:i:s'),
         ];
     }
 }
-
 

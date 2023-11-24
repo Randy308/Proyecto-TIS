@@ -57,9 +57,9 @@
                                     </div>
                                     <div class="col-md-6 mb-2">
                                         <label for="formFile" class="form-label">Foto de perfil</label>
-                                        <input class="form-control form-control-sm" name="foto_perfil" type="file" id="formFile"
-                                            ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB"
-                                            class="@error('foto_perfil') is-invalid @enderror">
+                                            <input class="form-control form-control-sm" name="foto_perfil" type="file" id="formFile"
+                                                ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB"
+                                                class="@error('foto_perfil') is-invalid @enderror">
                                         @error('foto_perfil')
                                             <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                         @enderror

@@ -5,17 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Evento;
-
-class ImagenAuspiciador extends Model
+class FaseEvento extends Model
 {
-    //use HasFactory;
+    use HasFactory;
+
+
     protected $fillable = [
         'evento_id',
-        'url'
+        'nombre_fase',
+        'descripcion_fase',
+        'fechaInicio',
+        'fechaFin',
+        'tipo',
+        'actual',  
     ];
 
-    public function evento(){
+    public function evento()
+    {
         return $this->belongsTo(Evento::class);
     }
 }
-

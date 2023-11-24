@@ -20,5 +20,4 @@ class Fase extends Model
     {
         return $this->belongsTo(Evento::class);
     }
-
 }
