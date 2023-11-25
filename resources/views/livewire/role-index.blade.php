@@ -69,3 +69,4 @@
     </div>
 </div>
 @include('crear-rol-modal')
+<script src="{{ asset('js/validaciones-formulario.js') }}"></script>

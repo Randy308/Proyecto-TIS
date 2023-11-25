@@ -288,8 +288,6 @@ class EventoControlador extends Controller
                 })->ignore($evento, 'id'),
             ],
             'descripcion_evento' => 'required|string',
-            'fecha_inicio' => 'required|date|after_or_equal:today',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'inscritos_minimos' => 'nullable|integer|min:0',
             'inscritos_maximos' => 'nullable|integer|gte:inscritos_minimos',
         ], [
@@ -315,6 +313,22 @@ class EventoControlador extends Controller
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->save();
+
+        $inputArray = $request->input('Auspiciadores');
+        if ($request->filled('Auspiciadores') && is_array($inputArray)) {
+            foreach ($inputArray as $value) {
+                $miAuspiciador = Auspiciador::where('nombre', $value)->first();
+
+                if ($miAuspiciador) {
+                    $auspiciadorEvento = new AuspiciadorEventos();
+                    $auspiciadorEvento->evento_id = $evento->id;
+                    $auspiciadorEvento->auspiciador_id = $miAuspiciador->id;
+                    $auspiciadorEvento->save();
+                } else {
+                }
+            }
+        } else {
+        }
 
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
         return redirect()->route('misEventos');
