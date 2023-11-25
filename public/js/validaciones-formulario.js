@@ -63,4 +63,36 @@ $(function () {
             $('#crearEventoBoton').prop("disabled", true);
         }
     });
+
+
+    $('#nameCheck').hide();
+    $("#formName").on("input", function () {
+        let regex = /^[a-zA-Z0-9 ]*$/;
+        let s = $(this).val();
+        if (regex.test(s)) {
+            $("#nameCheck").hide();
+            $("#nameCheck").html("");
+            $('#crearUsuarioBoton').prop("disabled", false);
+        } else {
+            $("#nameCheck").show();
+            $("#nameCheck").html("nombre incorrecto");
+            $('#crearUsuarioBoton').prop("disabled", true);
+        }
+    });
+
+
+    $('#emailUserCheck').hide();
+    $("#formEmail").on("input", function () {
+        let regex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+        let s = $(this).val();
+        if (regex.test(s)) {
+            $("#emailUserCheck").hide();
+            $("#emailUserCheck").html("");
+            $('#crearUsuarioBoton').prop("disabled", false);
+        } else {
+            $("#emailUserCheck").show();
+            $("#emailUserCheck").html("nombre incorrecto");
+            $('#crearUsuarioBoton').prop("disabled", true);
+        }
+    });
 });
