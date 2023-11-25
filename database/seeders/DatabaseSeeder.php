@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
+
 
         $insti = new Institucion();
         $insti->nombre_institucion = 'UMSS';
@@ -62,13 +62,13 @@ class DatabaseSeeder extends Seeder
         $us = User::factory(4)->create();
 
         foreach($us as $u){
-                
+
                 $u->assignRole('usuario común');
         }
 
-        $ev = Evento::factory(40)->create();
+        $ev = Evento::factory(8)->create();
         foreach($ev as $e){
-                
+
             $faseInscripcion = new FaseEvento([
                 'evento_id' => $e->id,
                 'nombre_fase'=> 'Fase de Inscripción',
@@ -76,9 +76,9 @@ class DatabaseSeeder extends Seeder
                 'fechaInicio' => $e->fecha_inicio->format('Y-m-d').' 00:00:00',
                 'fechaFin' => $e->fecha_inicio->format('Y-m-d').' 00:00:00',
                 'tipo' => 'Inscripcion',
-                'actual'=> true,  
+                'actual'=> true,
             ]);
-    
+
             $faseInscripcion->save();
             $faseFinalizacion = new FaseEvento([
                 'evento_id' => $e->id,
@@ -87,14 +87,12 @@ class DatabaseSeeder extends Seeder
                 'fechaInicio' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
                 'fechaFin' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
                 'tipo' => 'Finalizacion',
-                'actual'=> false,  
+                'actual'=> false,
             ]);
-    
+
             $faseFinalizacion->save();
         }
 
-        Evento::factory(12)->create();
-        //AsistenciaEvento::factory(20)->create();
         $this->call(FaseSeeder::class);
     }
 }

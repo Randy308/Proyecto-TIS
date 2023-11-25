@@ -104,12 +104,12 @@ img.imgDrag {
     font-size: smaller;
     text-align: center;
 }
-input[type="file"] {
+/* input[type="file"] {
     position: absolute;
     visibility: hidden;
     width: 0;
     z-index: -9999;
-}
+} */
 #file-save {
     text-align: center;
     width: 100%;

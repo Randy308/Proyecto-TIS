@@ -25,8 +25,9 @@ class RolesTableSeeder extends Seeder
         $usuario_comun = Role::create(['name' => 'usuario común']);
         $usuario_comun->save();
         Permission::create(['name' => 'organizador.ver-mis-eventos'])->syncRoles([$administrador, $organizador, $colaborador]);
-        Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador,$organizador]);
+        Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador, $organizador]);
         Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
+        Permission::create(['name' => 'admin.eliminar-participante'])->assignRole($administrador);
         Permission::create(['name' => 'admin.eliminar-usuarios'])->assignRole($administrador);
         Permission::create(['name' => 'admin.editar-usuarios'])->assignRole($administrador);
         Permission::create(['name' => 'admin.ver-detalle-usuarios'])->assignRole($administrador);
@@ -53,6 +54,7 @@ class RolesTableSeeder extends Seeder
             'password' => bcrypt('password'),
             'institucion_id' => 1,
             'estado' => "Habilitado",
+            'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
         $admin->assignRole('administrador');
 
@@ -62,6 +64,7 @@ class RolesTableSeeder extends Seeder
             'password' => bcrypt('contraseña'),
             'institucion_id' => 1,
             'estado' => "Habilitado",
+            'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
         $organizador->assignRole('organizador');
 
@@ -71,6 +74,7 @@ class RolesTableSeeder extends Seeder
             'password' => bcrypt('contraseña'),
             'institucion_id' => 1,
             'estado' => "Habilitado",
+            'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
         $colaborador->assignRole('colaborador');
     }

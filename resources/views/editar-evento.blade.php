@@ -144,7 +144,7 @@
                                 </div>
 
                                 <button type="button" class=" btn btn-light" id="btnEditText"><i
-                                        class="bi bi-pencil-fill"></i> Modificar</button>
+                                        class="bi bi-pencil-fill"></i> Modificar Texto</button>
                                 <button type="button" id="trash-delete" class="btn btn-light">Borrar <i
                                         class="bi bi-trash3"></i></button>
 
@@ -156,12 +156,10 @@
 
                                 {{-- <button type="button" class=" btn btn-light" data-toggle="modal"
                                     data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button> --}}
-                                <button type="button" class=" btn btn-light" id="btnStoreElement" disabled><i
-                                        class="bi bi-floppy-fill"></i> Aplicar cambios</button>
+                                <button type="button" class=" btn btn-light" id="btnStoreElement"><i
+                                        class="bi bi-floppy-fill"></i> Crear Banner</button>
 
-                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i
-                                        class="bi bi-arrow-repeat"></i> Sincronizar</button>
-                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement" disabled><i
+                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement"><i
                                         class="bi bi-cloud-arrow-up-fill"></i> Guardar progreso</button>
                             </div>
 
@@ -204,8 +202,13 @@
                         <div class="c3">
                             <div class="d-flex align-elements-center">
                                 <p class="h6"> Lista de Auspiciadores: </p>
-                            </div>
 
+                            </div>
+                            <div class="p-2">
+                                <label for="formFile">Agregar imagen</label>
+                                <input class="form-control form-control-sm" name="foto_perfil" type="file"
+                                    id="formFile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB">
+                            </div>
                             <div class="card dropzone" id="contenedorTemporal">
 
                                 {{-- <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
@@ -257,10 +260,7 @@
             @csrf
             <input type="hidden" id="miBackgroundColor" name="background_color">
         </form>
-        {{-- <div id="dialog" title="Basic dialog" style="display:none;">
-            <p>This is the default dialog which is useful for displaying information. The dialog window can be moved,
-                resized and closed with the &apos;x&apos; icon.</p>
-        </div> --}}
+
     </div>
 
     @include('layouts/sidebar-scripts')
@@ -275,6 +275,37 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.css">
     <script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.min.js"></script>
     <script>
+        function generarImagenBanner() {
+            let domNode = document.getElementById('containment-wrapper');
+            let contForm = document.getElementById('nueva-imagen-banner');
+            $('#containment-wrapper').css("overflow", "visible");
+            $('#containment-wrapper').css("width", "900px");
+            $('#containment-wrapper').css("height", "400px");
+            $('#containment-wrapper .activo').css("border", "none");
+            var scale = 2;
+            var fileName = 'Test File';
+            limpiar();
+            domtoimage.toPng(domNode, {
+                    width: domNode.clientWidth * scale,
+                    height: domNode.clientHeight * scale,
+                    style: {
+                        transform: "scale(" + scale + ")",
+                        transformOrigin: "top left"
+                    }
+                })
+                .then(function(imgData) {
+
+                    var link = document.createElement('a');
+                    //link.download = 'my-image-name.jpeg';
+                    link.href = imgData;
+                    //link.click();
+                    contForm.value = imgData;
+
+                });
+
+        }
+    </script>
+    <script>
         function limpiar() {
             var iconos = document.querySelectorAll(
                 ".ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se");
@@ -283,19 +314,13 @@
             }
         }
         $(document).ready(function() {
-            const domNode = document.getElementById('containment-wrapper');
-            var contForm = document.getElementById('nueva-imagen-banner');
+
             $(".containment-wrapper div.draggable").draggable({
                 containment: "#containment-wrapper",
                 scroll: true,
                 cursor: "move",
             });
-            // $(".containment-wrapper .imgDrag").draggable({
-            //     containment: "#containment-wrapper",
-            //     scroll: true,
-            //     cursor: "move",
-            // });
-            //
+
             $(".containment-wrapper .imgDrag").resizable({
                 handles: 'ne, se, sw, nw'
             });
@@ -305,69 +330,47 @@
                 cursor: "pointer",
             });
 
-            //
-
-            // $(".containment-wrapper .imgDrag").resizable({
-            //     containment: "#containment-wrapper",
-            //     handles: "n, e, s, w"
-            // });
 
             $(".containment-wrapper div.draggable").resizable({
                 containment: "#containment-wrapper",
                 handles: "n, e, s, w"
             });
-            // $(".containment-wrapper div.draggable").rotatable({
-            //     containment: "#containment-wrapper"
-            // });
 
 
-            $("#btnSaveElement").on('click', function() {
-                $('#containment-wrapper').css("overflow", "visible");
-                $('#containment-wrapper').css("width", "900px");
-                $('#containment-wrapper').css("height", "400px");
-                $('#containment-wrapper .activo').css("border", "none");
-                var scale = 2;
-                var fileName = 'Test File';
-                limpiar();
-                domtoimage.toPng(domNode, {
-                        width: domNode.clientWidth * scale,
-                        height: domNode.clientHeight * scale,
-                        style: {
-                            transform: "scale(" + scale + ")",
-                            transformOrigin: "top left"
-                        }
-                    })
-                    .then(function(imgData) {
-
-                        var link = document.createElement('a');
-                        //link.download = 'my-image-name.jpeg';
-                        link.href = imgData;
-                        //link.click();
-                        contForm.value = imgData;
 
 
-                        $('#btnStoreElement').removeAttr('disabled');
-                        $('#btnCloudSaveElement').removeAttr('disabled');
-                    });
-
-            });
             $("#btnStoreElement").on('click', function() {
+                generarImagenBanner();
+                var millisecondsToWait = 1000;
+                setTimeout(function() {
+                    if (confirm(
+                            "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
+                        )) {
 
-                if (confirm(
-                        "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
-                    )) {
-                    document.getElementById('FormUpdateBanner').submit();
-                } else {
-                    console.log("presionaste Cancel!");
-                }
+                        //salvarElementosBanner();
+                        document.getElementById('FormUpdateBanner').submit();
+                    } else {
+                        console.log("presionaste Cancel!");
+                    }
+                }, millisecondsToWait);
+
                 // document.getElementById('FormUpdateBanner').submit();
             });
             $("#btnCloudSaveElement").on('click', function() {
-                if (confirm('¿Estás seguro de guardar su progreso de edicionr? ')) {
-                    document.getElementById('GuardarElementos').submit();
-                } else {
-                    console.log("presionaste Cancel!");
-                }
+                salvarElementosBanner();
+                var millisecondsToWait = 1000;
+                setTimeout(function() {
+                    if (confirm(
+                            '¿Estás seguro de querer guardar tu progreso de edición? Ten en cuenta que si has agregado imágenes, estas no se guardarán '
+                            )) {
+                        document.getElementById('GuardarElementos').submit();
+                        generarImagenBanner();
+
+                    } else {
+                        console.log("presionaste Cancel!");
+                    }
+
+                }, millisecondsToWait);
 
             });
 

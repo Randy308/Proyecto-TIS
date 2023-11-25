@@ -18,60 +18,73 @@
             </a>
             <ul class="collapse list-unstyled" id="homeSubmenu">
                 @auth
-                    @if (auth()->user()->hasRole('administrador') ||
-                            auth()->user()->hasRole('organizador'))
+                    @can('organizador.crear-evento')
                         <li>
                             <a href="{{ route('crear-evento') }}">Crear Evento</a>
                         </li>
+                    @endcan
+                    @can('organizador.ver-mis-eventos')
                         <li>
                             <a href="{{ route('misEventos') }}">Mis eventos</a>
                         </li>
-                    @endif
+                    @endcan
                 @endauth
                 <li>
                     <a href="{{ route('listaEventos') }}">Lista de Eventos</a>
                 </li>
             </ul>
         </li>
-
         @auth
+            @can('admin.listar-todos-usuarios')
+                <li>
+                    <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Usuarios</span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu2">
+
+
+                        <li>
+                            <a href="{{ route('listaUsuarios') }}">Lista de Usuarios</a>
+                        </li>
+                        @can('admin.crear-usuario')
+                            <li>
+                                <a href="{{ route('crearUsuario') }}">Crear Usuario</a>
+                            </li>
+                        @endcan
+
+
+                    </ul>
+                </li>
+            @endcan
+
+
+
+            @can('admin.crear-auspiciador')
+                <li>
+                    <a href="{{ route('auspiciadores-index') }}">
+                        <i class="bi bi-cup-hot"></i>
+                        <span>Auspiciadores</span>
+                    </a>
+                </li>
+            @endcan
+            @can('admin.ver-roles')
+                <li>
+                    <a href="{{ route('asignarRoles') }}">
+                        <i class="bi bi-person-rolodex"></i>
+                        <span>Roles</span>
+                    </a>
+                </li>
+            @endcan
             <li>
-                <a href="#homeSubmenu2" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Usuarios</span>
+                <a href="{{ route('colaboradores.index') }}">
+                    <i class="bi bi-person-heart"></i>
+                    <span>Colaboradores</span>
                 </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu2">
-
-
-                    <li>
-                        <a href="{{ route('listaUsuarios') }}">Lista de Usuarios</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('crearUsuario') }}">Crear Usuario</a>
-                    </li>
-
-                </ul>
             </li>
 
         @endauth
-        @can('admin.crear-auspiciador')
-            <li>
-                <a href="{{ route('auspiciadores-index') }}">
-                    <i class="bi bi-cup-hot"></i>
-                    <span>Auspiciadores</span>
-                </a>
-            </li>
-        @endcan
-        @can('admin.ver-roles')
-        <li>
-            <a href="{{ route('asignarRoles') }}">
-                <i class="bi bi-person-rolodex"></i>
-                <span>Roles</span>
-            </a>
-        </li>
-        @endcan
 
-        
     </ul>
 
     <ul class="list-unstyled CTAs">

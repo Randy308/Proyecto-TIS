@@ -35,7 +35,7 @@ class EventoFactory extends Factory
             'estado' => $estado,
             'fecha_inicio' => $fechaInicio,
             'fecha_fin' => $fechaFin,
-            'direccion_banner' => '/storage/banners/img-default.jpeg', // Ajusta la ruta de la imagen
+            'direccion_banner' => '/storage/image/img-default.jpeg', // Ajusta la ruta de la imagen
             'latitud' => -17.39359989348116,
             'longitud' => -66.14596353915297,
             'background_color' => '#FFFF', // Ajusta el color de fondo según tus necesidades

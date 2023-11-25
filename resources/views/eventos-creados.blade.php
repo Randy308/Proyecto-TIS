@@ -32,7 +32,7 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
-    <script>
+    {{-- <script>
         $(document).ready(function() {
         $('#BotonPublicarEvento').on('click', function() {
             //"¿Estás seguro de que deseas Publicar el evento? Una vez publicado los usuario podran interactuar con el evento ."
@@ -44,7 +44,8 @@
             }
         });
     });
-    </script>
+    </script> --}}
+
 </body>
 
 </html>

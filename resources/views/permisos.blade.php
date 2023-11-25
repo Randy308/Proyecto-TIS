@@ -52,11 +52,6 @@
                                     </div>
                                 </div>
                             @endif
-
-
-
-
-
                             <div class="card">
                                 <div class="card-body">
                                     <p class="h6">Lista de todos los permisos:</p>
@@ -74,9 +69,12 @@
                                             </div>
                                         @endforeach
                                         <br>
-                                        <button type="submit" class="btn btn-primary">Modificar permisos</button>
-                                        <input type="button" value="Regresar" class="btn btn-secondary"
-                                            onclick="history.back()">
+                                        <div class="d-flex flex-wrap  gap-3 justify-content-around">
+                                            <button type="submit" class="btn btn-primary">Modificar permisos</button>
+                                            <input type="button" value="Regresar" class="btn btn-secondary"
+                                                onclick="history.back()">
+                                        </div>
+
                                     </form>
                                 </div>
                             </div>
