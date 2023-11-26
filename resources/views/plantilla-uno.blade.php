@@ -22,10 +22,16 @@
                     <div class="col">
 
                         <h6>Tipo de evento: <b> {{ $evento->tipo_evento }}</b></h6>
+                        <h6>Tipo de evento: <b> {{ $evento->tiempo_inicio }}</b></h6>
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">
-                            @if (strtotime($evento->fecha_fin) >= strtotime(now('GMT-4')))
+                            @php
+                                $fechaCompleta = $evento->fecha_inicio . ' ' . $evento->tiempo_inicio;
+                                $fechaFinal = $evento->fecha_fin . ' ' . $evento->tiempo_fin;
+
+                            @endphp
+                            @if (strtotime($fechaCompleta) >= strtotime(now('GMT-4')))
                                 @guest
                                     <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
                                         data-target="#loginModal">
@@ -34,8 +40,8 @@
 
                                 @endguest
                                 @auth
-                                    @if (auth()->user()->hasRole('Usuario común') ||
-                                            auth()->user()->hasRole('Coach'))
+                                    @if (auth()->user()->hasRole('usuario común') ||
+                                            auth()->user()->hasRole('coach'))
                                         @php
                                             $id_evento_pagina = $evento->id;
                                             $id_usuario = auth()->user()->id;
@@ -95,19 +101,58 @@
                                             @endif
                                         @endif
                                     @else
-                                    <button type="button" disabled class="btn btn-info" id="boton-registro">
-                                        Inscripción solo para<br>participantes y entrenadores.
-                                    </button>
+                                        <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                            Inscripción solo para<br>participantes y entrenadores.
+                                        </button>
                                     @endif
 
 
 
 
                                 @endauth
+                            @elseif (strtotime($fechaFinal) >= strtotime(now('GMT-4')))
+                                @guest
+                                    <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                        Evento en progreso <br>no se admiten mas incripciones
+                                    </button>
+                                @endguest
+                                @auth
+                                    @php
+                                        $id_evento_pagina = $evento->id;
+                                        $id_usuario = auth()->user()->id;
+                                        $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                            ->where('evento_id', $id_evento_pagina)
+                                            ->exists();
+                                    @endphp
+                                    @if ($registroExistente)
+                                        {{-- Fases --}}
+                                        <a class="btn btn-secondary"
+                                            href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                                            Fases
+                                        </a>
+                                        {{--  --}}
+                                        <div class="dropdown" id="lista-registro">
+                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                id="dropdownMenuLink boton-registro" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">
+                                                Ya se encuentra <br>registrado en el evento
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                                    data-target="#abandonarModal">Abandonar evento</a>
+
+                                            </div>
+                                        </div>
+                                        @include('abandonar-evento', ['evento' => $evento])
+                                    @else
+                                        <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                            Evento en progreso <br>no se admiten mas incripciones
+                                        </button>
+                                    @endif
+                                @endauth
                             @else
                                 <button type="button" disabled class="btn btn-primary" id="boton-registro">
-                                    Evento finalizado <p>
-                                        {{ strtotime($evento->fecha_fin) . '  ' . strtotime(now('GMT-4')) }}</p>
+                                    Evento finalizado
                                 </button>
 
                             @endif
@@ -174,27 +219,27 @@
 
                         </div>
                         @if ($evento->colaboradors->count())
-                        <div class="card">
-                            <h4>Colaboradores:</h4>
-                            @foreach ($evento->colaboradors as $user)
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <img src="{{ $user->foto_perfil }}" class="card-img-top"
-                                        alt="imagen no encontrada" style="width:50px; height:50px">
-                                </div>
-                                <div class="col">
-                                    <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
+                            <div class="card">
+                                <h4>Colaboradores:</h4>
+                                @foreach ($evento->colaboradors as $user)
+                                    <div class="row">
+                                        <div class="col-md-auto">
+                                            <img src="{{ $user->foto_perfil }}" class="card-img-top"
+                                                alt="imagen no encontrada" style="width:50px; height:50px">
+                                        </div>
+                                        <div class="col">
+                                            <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
 
-                                    <span>Email: <a
-                                            href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
-                                            class="btn btn-link emaillink">
-                                            {{ $user->email }}
-                                        </a></span>
+                                            <span>Email: <a
+                                                    href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
+                                                    class="btn btn-link emaillink">
+                                                    {{ $user->email }}
+                                                </a></span>
 
-                                </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
                         @endif
 
                     </div>

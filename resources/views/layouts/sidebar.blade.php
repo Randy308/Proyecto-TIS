@@ -1,10 +1,10 @@
 <nav id="sidebar">
     <div class="sidebar-header">
         <div class="d-flex justify-content-center">
-            <img src="/storage/image/tech-bird-logo.png" alt="logo-tech-bird"
-            id="ImagenLogo"  style="width: 100px; height: 100%; object-fit: cover;">
+            <img src="/storage/image/tech-bird-logo.png" alt="logo-tech-bird" id="ImagenLogo"
+                style="width: 100px; height: 100%; object-fit: cover;">
         </div>
-        
+
         <strong><i class="bi bi-layout-text-sidebar"></i></strong>
     </div>
 
@@ -80,12 +80,15 @@
                     </a>
                 </li>
             @endcan
-            <li>
-                <a href="{{ route('colaboradores.index') }}">
-                    <i class="bi bi-person-heart"></i>
-                    <span>Colaboradores</span>
-                </a>
-            </li>
+            @hasanyrole('administrador|organizador')
+                <li>
+                    <a href="{{ route('colaboradores.index') }}">
+                        <i class="bi bi-person-heart"></i>
+                        <span>Colaboradores</span>
+                    </a>
+                </li>
+            @endhasanyrole
+
 
         @endauth
 
