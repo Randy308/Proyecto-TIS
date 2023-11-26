@@ -30,7 +30,7 @@
                                     <form
                                         action="{{ route('evento.banner.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
                                         method="get">
-                                        <button class="btn btn-info" type="submit">Editar <br> Banner</button>
+                                        <button class="btn btn-info" type="submit">Editar banner</button>
 
                                     </form>
 

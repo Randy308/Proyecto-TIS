@@ -51,16 +51,18 @@
                                         @endphp
                                         @if ($registroExistente)
                                             {{-- Fases --}}
+
+
                                             <a class="btn btn-secondary"
                                                 href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
                                                 Fases
                                             </a>
-                                            {{--  --}}
+
                                             <div class="dropdown" id="lista-registro">
-                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                <a class="btn btn-info dropdown-toggle" href="#" role="button"
                                                     id="dropdownMenuLink boton-registro" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false">
-                                                    Ya se encuentra <br>registrado en el evento
+                                                    Ya esta registrado<br> en el evento
                                                 </a>
                                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                                     <a class="dropdown-item" href="#" data-toggle="modal"
@@ -125,25 +127,15 @@
                                             ->exists();
                                     @endphp
                                     @if ($registroExistente)
-                                        {{-- Fases --}}
-                                        <a class="btn btn-secondary"
-                                            href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
-                                            Fases
-                                        </a>
-                                        {{--  --}}
-                                        <div class="dropdown" id="lista-registro">
-                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                id="dropdownMenuLink boton-registro" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                Ya se encuentra <br>registrado en el evento
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a class="btn btn-secondary"
+                                                href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                                                Fases
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#abandonarModal">Abandonar evento</a>
+                                            <button type="button" class="btn btn-info" disabled> Ya esta <br>registrado
+                                                en el evento</button>
 
-                                            </div>
-                                        </div>
-                                        @include('abandonar-evento', ['evento' => $evento])
+                                        </div>                                       
                                     @else
                                         <button type="button" disabled class="btn btn-primary" id="boton-registro">
                                             Evento en progreso <br>no se admiten mas incripciones
