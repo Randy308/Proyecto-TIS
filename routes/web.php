@@ -199,6 +199,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
     Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
     Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.abandonar');
+    Route::get('/perfil/{id}/cambiarPassword', [UsuarioController::class, 'editPassword'])->name('editPassword');
+    Route::put('/perfil/{id}/cambiarPassword', [UsuarioController::class, 'updatePassword'])->name('password.update');
 
 });
 

@@ -27,7 +27,8 @@
                         <p class="text-center h5">Editar Usuario</p>
 
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="formName">Nombre completo</label>
+                            <label class="form-label" for="formName">Nombre completo<span
+                                class="text-danger font-weight-bold "> *</span></label>
                             <input type="text" id="formName" class="form-control" name="nombre"
                                 class="@error('nombre') is-invalid @enderror" value="{{ old('nombre', $user->name) }}" />
                             @error('nombre')
@@ -40,7 +41,8 @@
 
                                 <div class="form-outline datepicker">
                                     <label for="formBirthDate" class="form-label">Fecha de
-                                        nacimiento</label>
+                                        nacimiento<span
+                                        class="text-danger font-weight-bold "> *</span></label>
                                     <input type="date" class="form-control" id="formBirthDate" name="fecha_nac"
                                         class="@error('fecha_nac') is-invalid @enderror"  value="{{ old('fecha_nac', $user->fecha_nac) }}" />
 
@@ -66,7 +68,8 @@
                             <div class="col-md-6">
                                 <div class="mb-2">
 
-                                    <label for="formEmail" class="form-label">Correo electronico</label>
+                                    <label for="formEmail" class="form-label">Correo electronico<span
+                                        class="text-danger font-weight-bold "> *</span></label>
                                     <input type="email" id="formEmail" class="form-control" name="email"
                                         class="@error('email') is-invalid @enderror"  value="{{ old('email', $user->email)}}" />
                                     @error('email')
@@ -98,7 +101,8 @@
                             <div class="col-md-6 mb-2">
 
                                 <div class="form-outline datepicker">
-                                    <label for="formPhoneNumber" class="form-label">Telefono</label>
+                                    <label for="formPhoneNumber" class="form-label">Telefono<span
+                                        class="text-danger font-weight-bold "> *</span></label>
                                     <input type="tel" id="formPhoneNumber" name="telefono" class="form-control"
                                         class="@error('telefono') is-invalid @enderror" value="{{ old('telefono', $user->telefono) }}" />
 
@@ -130,7 +134,8 @@
                         </div>
 
                         <div class="form-outline mb-2">
-                            <label class="form-label" for="formAddressLocation">Direccion de domicilio</label>
+                            <label class="form-label" for="formAddressLocation">Direccion de domicilio<span
+                                class="text-danger font-weight-bold "> *</span></label>
                             <input type="text" id="formAddressLocation" class="form-control" name="direccion"
                                 class="@error('direccion') is-invalid @enderror"  value="{{ old('direccion', $user->direccion) }}"/>
                             @error('direccion')
@@ -139,7 +144,8 @@
 
                         </div>
                         <div class="form-outline mb-2">
-                            <label class="form-label" for="textAreaHistorial">Historial Academico</label>
+                            <label class="form-label" for="textAreaHistorial">Historial Academico<span
+                                class="text-danger font-weight-bold "> *</span></label>
                             <textarea id="textAreaHistorial" class="form-control" name="historial"
                                 class="@error('historial') is-invalid @enderror" cols="30" rows="3" >{{ old('historial', $user->historial_academico) }}</textarea>
 

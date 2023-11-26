@@ -23,7 +23,7 @@
                         width="40" height="40" class="rounded-circle">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <button class="dropdown-item" disabled>{{ auth()->user()->email }}</button>
+                    <button class="dropdown-item" disabled>{{ auth()->user()->name }}</button>
                      <a class="dropdown-item" href="{{ route('editarPerfil') }}">Editar Perfil</a>
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
