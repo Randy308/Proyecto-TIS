@@ -111,8 +111,8 @@
                                     <label for="fecha_inicio">Fecha de inicio</label>
                                     <input type="datetime-local" name="fecha_inicio"
                                         class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                        id="fecha_inicio" value="{{ $miEvento->fecha_inicio }}" required
-                                        aria-describedby="fecha_inicio_help" disabled>
+                                        id="fecha_inicio" value="{{ $miEvento->fecha_inicio }} {{$miEvento->tiempo_inicio}}" required
+                                        aria-describedby="fecha_inicio_help" readonly>
                                     @error('fecha_inicio')
                                         <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -122,8 +122,8 @@
                                     <label for="fecha_fin">Fecha de finalización</label>
                                     <input type="datetime-local" name="fecha_fin"
                                         class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
-                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help"
-                                        disabled>
+                                        value="{{ $miEvento->fecha_fin }} {{$miEvento->tiempo_fin}}" required aria-describedby="fecha_fin_help"
+                                        readonly>
                                     @error('fecha_fin')
                                         <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
                                     @enderror

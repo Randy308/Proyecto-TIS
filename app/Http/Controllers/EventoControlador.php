@@ -251,7 +251,7 @@ class EventoControlador extends Controller
 
         $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $auspiciadores = Auspiciador::get();
-        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades','auspiciadores'));
+        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores'));
     }
 
     public function updateEstado($user, $evento, Request $request)
@@ -288,8 +288,6 @@ class EventoControlador extends Controller
                 })->ignore($evento, 'id'),
             ],
             'descripcion_evento' => 'required|string',
-            'fecha_inicio' => 'required|date|after_or_equal:today',
-            'fecha_fin' => 'required|date|after_or_equal:fecha_inicio',
             'inscritos_minimos' => 'nullable|integer|min:0',
             'inscritos_maximos' => 'nullable|integer|gte:inscritos_minimos',
         ], [
@@ -302,19 +300,56 @@ class EventoControlador extends Controller
         ]);
 
         $evento = Evento::where('user_id', $user)->where('id', $evento)->first();
+        //
+        // Get the datetime input from the request
+        $datetimeInput1 = $request->input('fecha_inicio');
 
+        // Convert the datetime input to a Carbon instance
+        $carbonDatetime1 = Carbon::parse($datetimeInput1);
+
+        // Extract date and time
+        $dateInicio = $carbonDatetime1->toDateString(); // Format: Y-m-d
+        $timeInicio = $carbonDatetime1->toTimeString(); // Format: H:i:s
+        // Get the datetime input from the request
+        $datetimeInput2 = $request->input('fecha_fin');
+
+        // Convert the datetime input to a Carbon instance
+        $carbonDatetime2 = Carbon::parse($datetimeInput2);
+
+        // Extract date and time
+        $dateFinal = $carbonDatetime2->toDateString(); // Format: Y-m-d
+        $timeFinal = $carbonDatetime2->toTimeString(); // Format: H:i:s
         // Actualizar los campos del modelo con los nuevos nombres
         $evento->nombre_evento = $request->input('nombre_evento');
         $evento->descripcion_evento = $request->input('descripcion_evento');
         $evento->tipo_evento = $request->input('tipo_evento');
-        $evento->fecha_inicio = $request->input('fecha_inicio');
-        $evento->fecha_fin = $request->input('fecha_fin');
+        $evento->fecha_inicio = $dateInicio;
+        $evento->fecha_fin = $dateFinal;
+
+        $evento->tiempo_inicio = $timeInicio;
+        $evento->tiempo_fin = $timeFinal;
         $evento->privacidad = $request->input('privacidad');
-        $evento->min_inscritos = $request->input('cantidad_minima');
-        $evento->max_inscritos = $request->input('cantidad_maxima');
+        $evento->cantidad_minima = $request->input('cantidad_minima');
+        $evento->cantidad_maxima = $request->input('cantidad_maxima');
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->save();
+
+        $inputArray = $request->input('Auspiciadores');
+        if ($request->filled('Auspiciadores') && is_array($inputArray)) {
+            foreach ($inputArray as $value) {
+                $miAuspiciador = Auspiciador::where('nombre', $value)->first();
+
+                if ($miAuspiciador) {
+                    $auspiciadorEvento = new AuspiciadorEventos();
+                    $auspiciadorEvento->evento_id = $evento->id;
+                    $auspiciadorEvento->auspiciador_id = $miAuspiciador->id;
+                    $auspiciadorEvento->save();
+                } else {
+                }
+            }
+        } else {
+        }
 
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
         return redirect()->route('misEventos');

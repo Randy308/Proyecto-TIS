@@ -106,7 +106,7 @@
 
                                             </form>
                                         @else
-                                         <p class="h5">No existen eventos disponibles para asignar colaborador</p>
+                                         <p class="h7">No existen eventos disponibles para asignar un colaborador</p>
                                         @endif
 
 

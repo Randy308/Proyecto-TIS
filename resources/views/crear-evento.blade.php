@@ -49,6 +49,9 @@
                                     @error('nombre_evento')
                                         <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
+                                    <div class="alert alert-danger" role="alert" id="nombreEventoCheck">
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tipo_evento">Tipo de Evento</label>
@@ -139,6 +142,9 @@
                                     @error('descripcion_evento')
                                         <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
+                                    <div class="alert alert-danger" role="alert" id="descripcionEventoCheck">
+
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad del Evento</label>
@@ -200,7 +206,7 @@
                                 <div class="form-group">
                                     <a href="#" class="btn btn-cancelar"
                                         onclick="confirmarCancelacion()">Cancelar</a>
-                                    <button type="submit" class="btn btn-info">Crear Evento</button>
+                                    <button type="submit" class="btn btn-info" id="crearEventoBoton">Crear Evento</button>
                                 </div>
                             </div>
                         </div>
@@ -226,6 +232,7 @@
     </div>
 
     @include('layouts/sidebar-scripts')
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
 
 
