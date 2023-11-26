@@ -2,19 +2,27 @@
 
     <div class="row">
         <div class="col-xl-4">
-            <div class="card mb-4 mb-xl-0">
+            <div class="card mb-4 pb-4 mb-xl-0">
                 <div class="card-header">Foto de Perfil</div>
                 <div class="card-body text-center" id="cardImagen">
                     <!-- Profile picture image-->
                     <div class="thumbnail">
                         <img class="img-thumbnail" src="{{ asset($user->foto_perfil) }}"
-                            style="height: 300px;margin: 0 auto;" alt="" title="">
+                            style="height: 200px;margin: 0 auto;" alt="" title="">
                     </div>
                     <!-- Profile picture upload button-->
 
                 </div>
-            </div>
+                <div class="card-footer">
+                    <p class="h6">Configuración de usuario</p>
+                    <div class="d-flex flex-column wrap-4 justify-content-start align-items-start" id="contenedorBotonesUsuario">
 
+                        <a href="{{ route('editUser', $user->id) }}" class="btn btn-link">Editar cuenta</a>
+                        <a href="#" class="btn btn-link">Cambiar contraseña</a>
+                        <a href="{{ route('index') }}" class="btn btn-link">Regresar</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xl-8">
             <div class="card mb-4">
@@ -62,10 +70,7 @@
                             {{ $user->historial_academico }}</li>
                     </ul>
 
-                    <div class="text-center mt-4">
-                        <a href="{{ route('index') }}" class="btn btn-danger mr-2">Volver</a>
-                        <a href="{{ route('editUser', $user->id) }}" class="btn btn-primary">Editar</a>
-                    </div>
+
                 </div>
             </div>
         </div>
