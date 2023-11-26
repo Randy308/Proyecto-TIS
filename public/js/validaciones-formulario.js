@@ -1,7 +1,7 @@
 $(function () {
     // Validate Username
     $("#auspiciadorcheck").hide();
-    
+
     let auspiciadorError = true;
 
     $("#Auspiciador").on("input", function () {
@@ -32,7 +32,7 @@ $(function () {
             $('#crearRol').prop("disabled", true);
         }
     });
-    
+
 
     $('#nombreEventoCheck').hide();
     $("#nombre_evento").on("input", function () {
@@ -64,3 +64,5 @@ $(function () {
         }
     });
 });
+
+

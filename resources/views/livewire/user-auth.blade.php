@@ -18,7 +18,7 @@
                     <div class="d-flex flex-column wrap-4 justify-content-start align-items-start" id="contenedorBotonesUsuario">
 
                         <a href="{{ route('editUser', $user->id) }}" class="btn btn-link">Editar cuenta</a>
-                        <a href="#" class="btn btn-link">Cambiar contraseña</a>
+                        <a href="{{ route('editPassword',  $user->id) }}" class="btn btn-link">Cambiar contraseña</a>
                         <a href="{{ route('index') }}" class="btn btn-link">Regresar</a>
                     </div>
                 </div>

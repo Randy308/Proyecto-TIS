@@ -104,6 +104,31 @@ class UsuarioController extends Controller
     {
         return view('lista-usuarios');
     }
+    public function editPassword($id)
+    {
+
+        return view('cambiarPassword');
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $user = User::findOrFail($id);
+        //$my_old_input_password = Hash::make($request['old_password']);
+        $my_new_password = Hash::make($request['password']);
+
+        if (Hash::check($request['old_password'], $user->password)) {
+            $user->password = $my_new_password;
+            $user->save();
+            return redirect()->route('editUser',['id' => $id])->with('status', 'Se ha cambiado exitosamente su contraseña.');
+        } else {
+            return redirect()->back()->with('error', 'La contraseña actual no coincide con la del sistema .');
+        }
+        //return $request;
+    }
 
     public function show($id)
     {
