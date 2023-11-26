@@ -4,7 +4,7 @@
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 :root {
-    --main-sidebar-color: #003153;
+    --main-sidebar-color: #00446a;
     --second-sidebar-color: #1c2a3a;
     --text-sidebar-color: #fafafa;
     --main-sidebar-colors: #323268;
@@ -130,7 +130,7 @@ span {
     text-align: center;
 }
 
-#sidebar.active .sidebar-header h3,
+#sidebar.active .sidebar-header #ImagenLogo,
 #sidebar.active .CTAs {
     display: none;
 }

@@ -1,7 +1,11 @@
 <nav id="sidebar">
     <div class="sidebar-header">
-        <h3>Menu Lateral</h3>
-        <strong><i class="bi bi-menu-down"></i></strong>
+        <div class="d-flex justify-content-center">
+            <img src="/storage/image/tech-bird-logo.png" alt="logo-tech-bird"
+            id="ImagenLogo"  style="width: 100px; height: 100%; object-fit: cover;">
+        </div>
+        
+        <strong><i class="bi bi-layout-text-sidebar"></i></strong>
     </div>
 
     <ul class="list-unstyled components">
