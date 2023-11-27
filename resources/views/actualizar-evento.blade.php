@@ -8,14 +8,10 @@
     <title>Modificar Evento</title>
     @include('layouts/estilos')
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
-        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
 </head>
 
 <body>
-    @livewireStyles
     <div class="wrapper">
         @include('layouts/sidebar')
         <div id="content">
@@ -31,20 +27,10 @@
                         <span><i class="bi bi-calendar2-plus-fill"></i></span>
                     </div>
                     <form method="POST"
-                        action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}"
-                        id="FormCrearEvento">
+                        action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}">
                         @csrf
                         @method('PUT')
                         <h2>Modificar Evento</h2>
-                        @php
-                            $misAuspiciadores = isset($miEvento->auspiciadors) ? $miEvento->auspiciadors : [];
-                            $miAuspiciadores = [];
-
-                            foreach ($misAuspiciadores as $auspiciador) {
-                                $miAuspiciadores[] = $auspiciador->nombre;
-                            }
-                        @endphp
-
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -58,59 +44,34 @@
                                         <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="Ubicacion">Agregar ubicación:</label>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
+                                    @include('layouts.modal-editar-ubicacion')
+                                </div>
+
                                 <div class="form-group">
                                     <label for="tipo_evento">Tipo de Evento</label>
                                     <select name="tipo_evento" class="form-control" id="tipo_evento" required>
                                         @foreach ($tiposEvento as $tipo)
-                                            <option value="{{ $tipo }}"
-                                                {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
+                                            <option value="{{ $tipo }}" {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
                                                 {{ $tipo }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="privacidad">Privacidad</label>
-                                    <select name="privacidad" class="form-control" id="privacidad" required>
-                                        @foreach ($privacidades as $privacidad)
-                                            <option value="{{ $privacidad }}"
-                                                {{ $miEvento->privacidad_evento === $privacidad ? 'selected' : '' }}>
-                                                {{ $privacidad }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="form-group pb-4">
-                                    <div class="row">
-                                        <div class="col">
-                                            <label for="inscritos_minimos">Inscritos Mínimos</label>
-                                            <input type="number" name="inscritos_minimos" class="form-control"
-                                                id="inscritos_minimos" value="{{ $miEvento->min_inscritos }}" min="0"
-                                                required>
-                                        </div>
-                                        <div class="col">
-                                            <label for="inscritos_maximos">Inscritos Máximos</label>
-                                            <input type="number" name="inscritos_maximos" class="form-control"
-                                                id="inscritos_maximos" value="{{ $miEvento->max_inscritos }}"
-                                                min="{{ $miEvento->min_inscritos }}" required>
-                                        </div>
-                                    </div>
-
-                                </div>
-
- 
+                                
                             
-                               
-
+                            
 
                                 <div class="form-group">
                                     <label for="fecha_inicio">Fecha de inicio</label>
-                                    <input type="datetime-local" name="fecha_inicio"
+                                    <input type="date" name="fecha_inicio"
                                         class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                        id="fecha_inicio" value="{{ $miEvento->fecha_inicio }} {{$miEvento->tiempo_inicio}}" required
-                                        aria-describedby="fecha_inicio_help" readonly>
+                                        id="fecha_inicio" value="{{ $miEvento->fecha_inicio }}" required
+                                        aria-describedby="fecha_inicio_help">
                                     @error('fecha_inicio')
                                         <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -118,10 +79,9 @@
 
                                 <div class="form-group">
                                     <label for="fecha_fin">Fecha de finalización</label>
-                                    <input type="datetime-local" name="fecha_fin"
+                                    <input type="date" name="fecha_fin"
                                         class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
-                                        value="{{ $miEvento->fecha_fin }} {{$miEvento->tiempo_fin}}" required aria-describedby="fecha_fin_help"
-                                        readonly>
+                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help">
                                     @error('fecha_fin')
                                         <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -129,26 +89,6 @@
 
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="auspiciadoresSelect">Seleccione Auspiciadores: </label>
-                                    <select id="auspiciadoresSelect" class="form-select"
-                                        aria-label="Default select example">
-                                        <option selected disabled>Lista de auspiciadores</option>
-
-                                        @if ($auspiciadores)
-                                            @foreach ($auspiciadores as $auspiciador)
-                                                <option value="{{ $auspiciador->nombre }}">{{ $auspiciador->nombre }}
-                                                </option>
-                                            @endforeach
-                                        @else
-                                            <option selected disabled>No existen auspiciadores</option>
-
-                                        @endif
-                                    </select>
-                                    <div id="recipient-list" class="d-flex">
-
-                                    </div>
-                                </div>
                                 <div class="form-group">
                                     <label for="descripcion_evento">Descripcion del Evento</label>
                                     <textarea type="text" name="descripcion_evento"
@@ -159,12 +99,11 @@
                                         <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad del Evento</label>
                                     <select name="privacidad" class="form-control @error('privacidad') is-invalid @enderror" id="privacidad" required>
-                                        <option value="libre">Libre</option>
-                                        <option value="con-restriccion">Con Restriccion</option>
+                                        <option value="libre" {{ old('privacidad', $miEvento->privacidad) == 'libre' ? 'selected' : '' }}>Libre</option>
+                                        <option value="con-restriccion" {{ old('privacidad', $miEvento->privacidad) == 'con-restriccion' ? 'selected' : '' }}>Con Restriccion</option>
                                     </select>
                                     @error('privacidad')
                                         <span class="invalid-feedback" role="alert">
@@ -175,40 +114,42 @@
                                 
                                 <div id="campos-adicionales">
                                     
-                                    <div class="form-group">
-                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evento
-                                        <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo" placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
-                                        @error('costo')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
                                     
-                                    
-                                    <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad mínima de participantes
-                                        <input type="text" name="cantidad_minima" class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima" placeholder="Ingrese la cantidad mínima de participantes" value="{{ old('cantidad_minima') }}">
-                                        @error('cantidad_minima')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-                                    
-                                    
-                                    <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad máxima de participantes
-                                        <input type="text" name="cantidad_maxima" class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima" placeholder="Ingrese la cantidad máxima de participantes" value="{{ old('cantidad_maxima') }}">
-                                        @error('cantidad_maxima')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-{{--                                     <div>
-                                        @livewire('eventos-dropdown')
-                                        </div> --}}
+                                        <div class="form-group">
+                                            Costo del Evento
+                                            <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo"
+                                                placeholder="Ingrese el costo del evento" value="{{ old('costo', $miEvento->costo) }}">
+                                            @error('costo')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                
+                                        <div class="form-group">
+                                                {{ old('mostrarCantidadMinima') ? 'checked' : '' }}> Cantidad mínima de participantes
+                                            <input type="text" name="cantidad_minima"
+                                                class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima"
+                                                placeholder="Ingrese la cantidad mínima de participantes"
+                                                value="{{ old('cantidad_minima', $miEvento->cantidad_minima) }}">
+                                            @error('cantidad_minima')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                
+                                        <div class="form-group">
+                                                {{ old('mostrarCantidadMaxima') ? 'checked' : '' }}> Cantidad máxima de participantes
+                                            <input type="text" name="cantidad_maxima"
+                                                class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima"
+                                                placeholder="Ingrese la cantidad máxima de participantes"
+                                                value="{{ old('cantidad_maxima', $miEvento->cantidad_maxima) }}">
+                                            @error('cantidad_maxima')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
 
 
 
 
                                 </div>
-
 
                                 <div class="form-group text-center botones-juntos">
                                     <a href="#" class="btn btn-cancelar" style="width: 45%;"
@@ -232,73 +173,14 @@
 
                     </form>
                 </div>
-            </div>
-            <div class="container contact-form">
-                <br>
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-left">
-                        <H3>Gestion de fases</H3>
-                    </div>
-                    <div class="col-md-6 text-center text-md-right">
-                        <a class="btn btn-primary" href="#" role="button" data-toggle="modal"
-                            data-target="#fasesModal">
-                            Crear una fase
-                        </a>
-                    </div>
-                </div>
-                @livewire('fase-list', ['idEvento' => $miEvento->id])
 
             </div>
+
 
         </div>
     </div>
 
-    @include('fasesForm', ['evento' => $miEvento])
-
     @include('layouts/sidebar-scripts')
-    <script src="{{ asset('js/jquery-ui.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            // Oculta los campos adicionales al cargar la página
-            $('#campos-adicionales input[type="text"]').hide();
-
-            // Muestra u oculta los campos adicionales según el estado de los checkboxes
-            $('input[type="checkbox"]').change(function () {
-                var campoAsociado = $(this).next('input[type="text"]');
-                campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
-            });
-
-            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable de privacidad
-            $('#privacidad').change(function () {
-                var privacidadSeleccionada = $(this).val();
-                var camposAdicionales = $('#campos-adicionales');
-                var eventoRequeridoGroup = $('#eventoRequeridoGroup');
-
-                if (privacidadSeleccionada === 'con-restriccion') {
-                    camposAdicionales.show();
-                } else {
-                    camposAdicionales.hide();
-                    eventoRequeridoGroup.hide();
-                    $('#mostrarEvento').prop('checked', false);
-                    $('#evento').hide();
-                }
-            });
-
-        });
-    </script>
-    <script>
-        
-        $(document).ready(function () {
-            $('#campos-adicionales').hide();
-            $('#privacidad').change(function () {
-                if ($(this).val() === 'con-restriccion') {
-                    $('#campos-adicionales').show();
-                } else {
-                    $('#campos-adicionales').hide();
-                }
-            });
-        });
-    </script>
     <script>
         $(function() {
             const date = new Date();
@@ -323,16 +205,6 @@
     <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
-    </script>
-    <script src="{{ asset('js/script-crear-evento.js') }}"></script>
-    <script>
-        // Convierte el array de auspiciadores de PHP a un array de JavaScript
-        var auspiciadoresArray = @json($miAuspiciadores);
-        for (const iterator of auspiciadoresArray) {
-            addRecipient(iterator);
-        }
-        // Puedes usar auspiciadoresArray en tu código JavaScript
-        console.log(auspiciadoresArray);
     </script>
 </body>
 

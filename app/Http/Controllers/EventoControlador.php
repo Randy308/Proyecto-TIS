@@ -299,25 +299,73 @@ class EventoControlador extends Controller
     }
     public function update($user, $evento, Request $request)
     {
-        $request->validate([
+        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
+        $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
+
+        $todayDate = now('GMT-4')->format('Y-m-d\TH:i');
+        //return $request;
+        //return $todayDate;
+
+        $validator = $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('eventos', 'nombre_evento')->where(function ($query) use ($request) {
-                    return $query->where('tipo_evento', $request->input('tipo_evento'));
-                })->ignore($evento, 'id'),
+                Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
+                'regex:/^[a-zA-Z0-9\s\.\-]+$/',
+                'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
+                'not_in:registracion,registro,admin,event', 
+                'not_in:admin,user', 
+                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre', 
+                'not_regex:/[!@#\$%\^&\*\(\)_\+=\[\]{};:\'",<>\?\/\\~`\|]+/',
             ],
-            'descripcion_evento' => 'required|string',
-            'inscritos_minimos' => 'nullable|integer|min:0',
-            'inscritos_maximos' => 'nullable|integer|gte:inscritos_minimos',
-        ], [
-            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
-            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
-            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado en esta categoría. Por favor, elige un nombre único.',
-            'inscritos_maximos.gte' => 'El número máximo de inscritos debe ser igual o mayor al número mínimo de inscritos.',
+            'privacidad' => 'required|in:libre,con-restriccion',
+
+            'cantidad_minima' => 'required|integer|min:0',
+            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
+            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
+            'descripcion_evento' => 'nullable|string',
+            'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
+            'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
+
+            "Auspiciadores" => "array",
+            "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
+            'costo' => 'nullable|numeric|min:0',
+            'institucion' => 'nullable|string',
+        ], [
+            'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
+            'fecha_fin.required' => 'La fecha de finalización es obligatoria.',
+            'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
+            'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+            'descripcion_evento.required' => 'La descripción del evento es obligatoria.',
+            'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
+            'privacidad.required' => 'La privacidad del evento es obligatoria.',
+            'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
+            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
+            'tipo_evento.in' => 'El tipo de evento no es válido.',
+            'cantidad_minima.required' => 'La cantidad mínima de participantes es obligatoria.',
+            'cantidad_minima.integer' => 'La cantidad mínima de participantes debe ser un número entero.',
+            'cantidad_minima.min' => 'La cantidad mínima de participantes debe ser al menos :min.',
+            'cantidad_maxima.required' => 'La cantidad máxima de participantes es obligatoria.',
+            'cantidad_maxima.integer' => 'La cantidad máxima de participantes debe ser un número entero.',
+            'cantidad_maxima.gt' => 'La cantidad máxima de participantes debe ser mayor que la cantidad mínima.',
+            'institucion.required_if' => 'Si selecciona una institución, debe especificar el nombre de la misma.',
+            'institucion.string' => 'El nombre de la institución debe ser una cadena de texto.',
+            'costo.numeric' => 'El costo debe ser un valor numérico.',
+            'costo.min' => 'El costo no puede ser un número negativo.',
+            'nombre_evento' => [
+                'required' => 'El nombre del evento es obligatorio.',
+                'string' => 'El nombre del evento debe ser una cadena de texto.',
+                'max' => 'El nombre del evento no puede tener más de :max caracteres.',
+                'unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
+                'regex' => 'El nombre del evento solo puede contener caracteres alfanuméricos, espacios, guiones y puntos.',
+                'not_regex' => 'Evita el uso de ciertas palabras en el nombre del evento.',
+                'not_in' => 'Evita el uso de ciertas palabras o frases comunes en el nombre del evento.',
+            ],
+
+
         ]);
 
         $evento = Evento::where('user_id', $user)->where('id', $evento)->first();
