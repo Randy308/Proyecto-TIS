@@ -29,12 +29,7 @@ class AuspiciadorController extends Controller
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //
@@ -50,7 +45,7 @@ class AuspiciadorController extends Controller
         $url = Storage::url($imagen);
         $auspiciador->url = $url;
         $auspiciador->save();
-        return redirect()->route('index')->with('status', 'Se agrego un auspiciador exitosamente!.');
+        return redirect()->route('auspiciadores-index')->with('status', 'Se agrego un auspiciador exitosamente!.');
         //return $request;
     }
 

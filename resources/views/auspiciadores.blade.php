@@ -28,9 +28,11 @@
                         <div class="mt-3">
 
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Nombre del auspiciador</label>
-                                <input type="name" name="nombre" class="form-control" id="exampleFormControlInput1"
-                                    placeholder="ingrese el nombre de su auspiciador">
+                                <label for="Auspiciador" class="form-label">Nombre del auspiciador</label>
+                                <input type="name" name="nombre" class="form-control" id="Auspiciador" placeholder="ingrese el nombre de su auspiciador">
+                            </div>
+                            <div class="alert alert-danger" role="alert" id="auspiciadorcheck">
+
                             </div>
 
 
@@ -48,7 +50,7 @@
                             </div>
                         </div>
                         <div class="text-center mt-5">
-                            <button class="btn btn-primary">Guardar</button>
+                            <button type="submit" id="CrearAuspiciador" class="btn btn-primary">Guardar</button>
                         </div>
                     </form>
 
@@ -83,6 +85,7 @@
             }
         });
     </script>
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
 </body>
 
 </html>

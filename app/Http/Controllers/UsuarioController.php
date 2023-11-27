@@ -78,9 +78,33 @@ class UsuarioController extends Controller
     }
     public function store(Request $request)
     {
+        $this->validate($request, [
+
+            'nombre' => 'required|string|regex:/^[a-zA-Z\s]*$/',
+            'telefono' => 'required|regex:#^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s./0-9]*$#',
+            'email' => ['required', 'unique:users,email', 'regex:/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/'],
+            'institucion' => 'required',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+
+        ]);
         $user = new User();
-        $this->validacionesCE($request, true);
-        $this->guardarUsuario($user, $request, true);
+        $user->name = $request['nombre'];
+        $user->password = Hash::make($request['password']);
+        $user->institucion_id = $request['institucion'];
+
+        $user->telefono = $request['telefono'];
+
+        $user->email = $request['email'];
+
+        $user->email_verified_at = now();
+        $user->remember_token = Str::random(10);
+        $user->estado = $request['estado'];
+        $url = "/storage/image/default_user_image.png";
+
+        $user->foto_perfil = $url;
+
+        $user->assignRole($request['rol']);
+        $user->save();
         return redirect()->route('listaUsuarios')->with('status', 'Usuario creado exitosamente!.');
     }
 
@@ -96,13 +120,37 @@ class UsuarioController extends Controller
             $this->guardarUsuario($user, $request, $boolaux);
             return redirect()->route('verUsuario', ['id' => $id])->with('status', 'Usuario editado exitosamente!.');
         }
-
     }
 
 
     public function listaUsuarios()
     {
         return view('lista-usuarios');
+    }
+    public function editPassword($id)
+    {
+
+        return view('cambiarPassword');
+    }
+
+    public function updatePassword(Request $request, $id)
+    {
+        $this->validate($request, [
+            'old_password' => 'required',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+        $user = User::findOrFail($id);
+        //$my_old_input_password = Hash::make($request['old_password']);
+        $my_new_password = Hash::make($request['password']);
+
+        if (Hash::check($request['old_password'], $user->password)) {
+            $user->password = $my_new_password;
+            $user->save();
+            return redirect()->route('editUser',['id' => $id])->with('status', 'Se ha cambiado exitosamente su contraseña.');
+        } else {
+            return redirect()->back()->with('error', 'La contraseña actual no coincide con la del sistema .');
+        }
+        //return $request;
     }
 
     public function show($id)
@@ -163,7 +211,6 @@ class UsuarioController extends Controller
 
         DB::table('password_resets')->where('email', $user->email)->delete();
         return redirect()->route('index')->with('status', '¡Se ha actualizado su contraseña exitosamente!.');
-
     }
 
 
@@ -214,6 +261,5 @@ class UsuarioController extends Controller
         $user->update();
 
         return view('editar-perfil');
-
     }
 }

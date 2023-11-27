@@ -11,9 +11,7 @@
                         <th>Estado del Evento</th>
                         <th>Banner del Evento</th>
                         <th></th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -24,59 +22,87 @@
                             <td>{{ $evento->nombre_evento }}</td>
                             <td>{{ $evento->estado }}</td>
                             <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
-                            <td width="10px">
-                                <form
-                                    action="{{ route('evento.banner.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
-                                    method="get">
-                                    <button class="btn btn-info" type="submit">Editar Banner</button>
+                            @if (strtoupper($evento->estado) == 'BORRADOR')
+                                <td class="d-flex">
 
-                                </form>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false" style="width: 140px">
+                                            Acción
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                            <li>
+                                                <form
+                                                    action="{{ route('evento.banner.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                                    method="get">
+                                                    <button class="dropdown-item" type="submit">Editar banner</button>
 
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form
+                                                    action="{{ route('evento.delete', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button class="dropdown-item boton-cancelar" type="button"
+                                                        {{ $evento->estado != 'Borrador' ? 'disabled' : '' }}>Cancelar</button>
 
-                            </td>
-                            <td width="10px">
-                                <form
-                                    action="{{ route('evento.delete', ['user' => auth()->user(), 'evento' => $evento]) }}"
-                                    method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger" type="submit" {{$evento->estado != 'Borrador' ? 'disabled' : ''}}>Cancelar</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form id="FormPublicar"
+                                                    action="{{ route('evento.state.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                                    method="post">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="dropdown-item"
+                                                        type="button">Publicar</button>
+                                                </form>
+                                            </li>
+                                            <li>
+                                                <form
+                                                    action="{{ route('evento.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                                    method="get">
+                                                    <button type="submit" class="dropdown-item">Editar</button>
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </div>
 
-                                </form>
+                                </td>
+                            @else
+                                <td width="10px">
+                                    <button class="btn btn-secondary btn-sm" disabled style="width: 140px">Publicado</button>
+                                </td>
+                            @endif
 
-
-                            </td>
-                            <td width="10px">
-                                @if ($evento->estado == 'Activo')
-                                <button class="btn btn-secondary" disabled>Publicado</button>
-                                @else
-                                    <form id="FormPublicar"
-                                        action="{{ route('evento.state.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('PUT')
-
-                                    </form>
-                                    <button id="BotonPublicarEvento" class="btn btn-warning"
-                                        type="button">Publicar</button>
-                                @endif
-
-
-                            </td>
-                            <td width="10px">
-                                <form
-                                    action="{{ route('evento.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
-                                    method="get">
-                                    <button type="submit" class="btn btn-success">Editar</button>
-                                </form>
-
-                            </td>
 
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         </div>
+        <script>
+            $(".boton-publicar").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que deseas publicar el evento?")) {
+                    var form = $(this).parents('form:first');
+                    console.log('enviando form')
+                    form.submit();
+                }
+            });
+
+
+            $(".boton-cancelar").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que deseas cancelar el evento?")) {
+                    var form = $(this).parents('form:first');
+                    console.log('enviando form')
+                    form.submit();
+                }
+            });
+        </script>
     @else
         <div class="card-body">
             <strong>No hay registros</strong>

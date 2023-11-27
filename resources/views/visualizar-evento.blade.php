@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/plantilla-uno.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
+    @livewireStyles
 </head>
 
 <body>
@@ -19,24 +20,6 @@
 
             @include('layouts/navbar')
             <div class="container mt-4">
-
-                <div>
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            <strong>{{ session('status') }}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-
                 @include('plantilla-uno')
 
             </div>
@@ -64,6 +47,8 @@
                 $("#" + $(this).attr("src")).show();
         });
     </script>
+    
+    @livewireScripts
     {{-- js de ubicacion y API googleMaps --}}
     <script src="{{ asset('js/ubicacion-mapa-vista.js') }}"></script>
     <script

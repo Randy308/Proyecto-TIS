@@ -67,15 +67,21 @@
                                 </select> --}}
                                 <select id="fontname" style="width: 300px">
                                     <option selected disabled>Fuente</option>
-                                    <option>Arial</option>
-                                    <option>Comic Sans MS</option>
-                                    <option>Courier New</option>
-                                    <option>Georgia</option>
-                                    <option>Impact</option>
-                                    <option>Lucida Grande</option>
-                                    <option>Times New Roman</option>
-                                    <option>Verdana</option>
+                                    <option style="font-family: Arial">Arial</option>
+                                    <option style="font-family: 'Comic Sans MS'">Comic Sans MS</option>
+                                    <option style="font-family: 'Courier New'">Courier New</option>
+                                    <option style="font-family: Georgia">Georgia</option>
+                                    <option style="font-family: Impact">Impact</option>
+                                    <option style="font-family: 'Lucida Grande', sans-serif">Lucida Grande</option>
+                                    <option style="font-family: 'Times New Roman'">Times New Roman</option>
+                                    <option style="font-family: Verdana">Verdana</option>
+                                    <!-- Fuentes adicionales -->
+                                    <option style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica Neue</option>
+                                    <option style="font-family: 'Trebuchet MS', Arial, sans-serif">Trebuchet MS</option>
+                                    <option style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino Linotype</option>
+                                    <option style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
                                 </select>
+
                                 <select id="fontsize">
                                     <option selected disabled>Tamaño</option>
                                     <option value="8px">8px</option>
@@ -121,10 +127,15 @@
                                     <option value="purple">Morado</option>
                                     <option value="orange">Naranja</option>
                                 </select>
+                                <button  type="button" id="minuscula"><i class="bi bi-alphabet"></i></button>
+                                <button  type="button" id="mayuscula"><i class="bi bi-alphabet-uppercase"></i></button>
+                                <button  type="button" id="incrementarSize"><i class="bi bi-sort-up"></i></button>
+                                <button  type="button" id="disminuirSize"><i class="bi bi-sort-down"></i></button>
                                 <button type="button" id="Negrita">B</button>
                                 <button type="button" id="Italica">I</button>
                                 <button type="button" id="Underline">U</button>
-
+                                <button type="button" class=" btn btn-light" id="btnEditText"><i
+                                    class="bi bi-pencil-fill"></i> Modificar Texto</button>
                                 {{-- <div class="input-group">
                                     <select type="button" id="colorFondo" name="color" class="">
                                         <option selected disabled>Color de Fondo</option>
@@ -143,25 +154,23 @@
                                         Texto</button>
                                 </div>
 
-                                <button type="button" class=" btn btn-light" id="btnEditText"><i
-                                        class="bi bi-pencil-fill"></i> Modificar</button>
+
                                 <button type="button" id="trash-delete" class="btn btn-light">Borrar <i
                                         class="bi bi-trash3"></i></button>
 
-                                <div class="input-group">
-                                    <div class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
+                                <div class="input-group d-flex align-items-center">
+                                    <label for="highlightColorPicker">Color de Fondo</label>
+
                                     <input type="color"class="form-control" id="highlightColorPicker" value="#0000">
                                 </div>
 
 
                                 {{-- <button type="button" class=" btn btn-light" data-toggle="modal"
                                     data-target="#modalSubirBanner"><i class="bi bi-floppy-fill"></i></button> --}}
-                                <button type="button" class=" btn btn-light" id="btnStoreElement" disabled><i
-                                        class="bi bi-floppy-fill"></i> Aplicar cambios</button>
+                                <button type="button" class=" btn btn-light" id="btnStoreElement"><i
+                                        class="bi bi-floppy-fill"></i> Crear Banner</button>
 
-                                <button type="button" class=" btn btn-light" id="btnSaveElement"><i
-                                        class="bi bi-arrow-repeat"></i> Sincronizar</button>
-                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement" disabled><i
+                                <button type="button" class=" btn btn-light" id="btnCloudSaveElement"><i
                                         class="bi bi-cloud-arrow-up-fill"></i> Guardar progreso</button>
                             </div>
 
@@ -204,8 +213,13 @@
                         <div class="c3">
                             <div class="d-flex align-elements-center">
                                 <p class="h6"> Lista de Auspiciadores: </p>
-                            </div>
 
+                            </div>
+                            <div class="p-2">
+                                <label for="formFile">Agregar imagen</label>
+                                <input class="form-control form-control-sm" name="foto_perfil" type="file"
+                                    id="formFile" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB">
+                            </div>
                             <div class="card dropzone" id="contenedorTemporal">
 
                                 {{-- <img src="{{ asset('/storage/image/img-default.jpeg') }}" class="ui-widget-content1"
@@ -257,10 +271,7 @@
             @csrf
             <input type="hidden" id="miBackgroundColor" name="background_color">
         </form>
-        {{-- <div id="dialog" title="Basic dialog" style="display:none;">
-            <p>This is the default dialog which is useful for displaying information. The dialog window can be moved,
-                resized and closed with the &apos;x&apos; icon.</p>
-        </div> --}}
+
     </div>
 
     @include('layouts/sidebar-scripts')
@@ -275,6 +286,37 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.css">
     <script src="https://cdn.jsdelivr.net/gh/godswearhats/jquery-ui-rotatable@1.1/jquery.ui.rotatable.min.js"></script>
     <script>
+        function generarImagenBanner() {
+            let domNode = document.getElementById('containment-wrapper');
+            let contForm = document.getElementById('nueva-imagen-banner');
+            $('#containment-wrapper').css("overflow", "visible");
+            $('#containment-wrapper').css("width", "900px");
+            $('#containment-wrapper').css("height", "400px");
+            $('#containment-wrapper .activo').css("border", "none");
+            var scale = 2;
+            var fileName = 'Test File';
+            limpiar();
+            domtoimage.toPng(domNode, {
+                    width: domNode.clientWidth * scale,
+                    height: domNode.clientHeight * scale,
+                    style: {
+                        transform: "scale(" + scale + ")",
+                        transformOrigin: "top left"
+                    }
+                })
+                .then(function(imgData) {
+
+                    var link = document.createElement('a');
+                    //link.download = 'my-image-name.jpeg';
+                    link.href = imgData;
+                    //link.click();
+                    contForm.value = imgData;
+
+                });
+
+        }
+    </script>
+    <script>
         function limpiar() {
             var iconos = document.querySelectorAll(
                 ".ui-resizable-handle.ui-resizable-se.ui-icon.ui-icon-gripsmall-diagonal-se");
@@ -283,19 +325,13 @@
             }
         }
         $(document).ready(function() {
-            const domNode = document.getElementById('containment-wrapper');
-            var contForm = document.getElementById('nueva-imagen-banner');
+
             $(".containment-wrapper div.draggable").draggable({
                 containment: "#containment-wrapper",
                 scroll: true,
                 cursor: "move",
             });
-            // $(".containment-wrapper .imgDrag").draggable({
-            //     containment: "#containment-wrapper",
-            //     scroll: true,
-            //     cursor: "move",
-            // });
-            //
+
             $(".containment-wrapper .imgDrag").resizable({
                 handles: 'ne, se, sw, nw'
             });
@@ -305,69 +341,47 @@
                 cursor: "pointer",
             });
 
-            //
-
-            // $(".containment-wrapper .imgDrag").resizable({
-            //     containment: "#containment-wrapper",
-            //     handles: "n, e, s, w"
-            // });
 
             $(".containment-wrapper div.draggable").resizable({
                 containment: "#containment-wrapper",
                 handles: "n, e, s, w"
             });
-            // $(".containment-wrapper div.draggable").rotatable({
-            //     containment: "#containment-wrapper"
-            // });
 
 
-            $("#btnSaveElement").on('click', function() {
-                $('#containment-wrapper').css("overflow", "visible");
-                $('#containment-wrapper').css("width", "900px");
-                $('#containment-wrapper').css("height", "400px");
-                $('#containment-wrapper .activo').css("border", "none");
-                var scale = 2;
-                var fileName = 'Test File';
-                limpiar();
-                domtoimage.toPng(domNode, {
-                        width: domNode.clientWidth * scale,
-                        height: domNode.clientHeight * scale,
-                        style: {
-                            transform: "scale(" + scale + ")",
-                            transformOrigin: "top left"
-                        }
-                    })
-                    .then(function(imgData) {
-
-                        var link = document.createElement('a');
-                        //link.download = 'my-image-name.jpeg';
-                        link.href = imgData;
-                        //link.click();
-                        contForm.value = imgData;
 
 
-                        $('#btnStoreElement').removeAttr('disabled');
-                        $('#btnCloudSaveElement').removeAttr('disabled');
-                    });
-
-            });
             $("#btnStoreElement").on('click', function() {
+                generarImagenBanner();
+                var millisecondsToWait = 1000;
+                setTimeout(function() {
+                    if (confirm(
+                            "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
+                        )) {
 
-                if (confirm(
-                        "¿Estás seguro de que deseas modificar el banner? No podrás realizar ediciones en el banner si no guardaste tu progreso previamente."
-                    )) {
-                    document.getElementById('FormUpdateBanner').submit();
-                } else {
-                    console.log("presionaste Cancel!");
-                }
+                        //salvarElementosBanner();
+                        document.getElementById('FormUpdateBanner').submit();
+                    } else {
+                        console.log("presionaste Cancel!");
+                    }
+                }, millisecondsToWait);
+
                 // document.getElementById('FormUpdateBanner').submit();
             });
             $("#btnCloudSaveElement").on('click', function() {
-                if (confirm('¿Estás seguro de guardar su progreso de edicionr? ')) {
-                    document.getElementById('GuardarElementos').submit();
-                } else {
-                    console.log("presionaste Cancel!");
-                }
+                salvarElementosBanner();
+                var millisecondsToWait = 1000;
+                setTimeout(function() {
+                    if (confirm(
+                            '¿Estás seguro de querer guardar tu progreso de edición? Ten en cuenta que si has agregado imágenes, estas no se guardarán '
+                            )) {
+                        document.getElementById('GuardarElementos').submit();
+                        generarImagenBanner();
+
+                    } else {
+                        console.log("presionaste Cancel!");
+                    }
+
+                }, millisecondsToWait);
 
             });
 

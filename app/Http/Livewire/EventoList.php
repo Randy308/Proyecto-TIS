@@ -17,13 +17,14 @@ class EventoList extends Component
     public $filtroGestion;
     public $search = '';
     public $orderb = 0;
-    public $filtroEstado = '';
+    public $filtroEstado = 'Activo';
+    public $filtroCategoria = '';
     public $firstTime = true;
     public function render()
     {
 
 
-        $eventos = Evento::where('nombre_evento', 'LIKE', "%{$this->search}%")->where('Estado','!=','Cancelado');
+        $eventos = Evento::where('nombre_evento', 'LIKE', "%{$this->search}%");
 
         if ($this->firstTime) {
             $mes = date('n');
@@ -53,9 +54,12 @@ class EventoList extends Component
         }
         if ($this->filtroEstado) {
             $eventos->where('estado', $this->filtroEstado);
-            if($this->filtroEstado == 'cancelado'){
-                $eventos->orWhere('estado', $this->filtroEstado);
-            }
+            // if($this->filtroEstado == 'cancelado'){
+            //     $eventos->orWhere('estado', $this->filtroEstado);
+            // }
+            // if($this->filtroEstado == ''){
+            //     $eventos->orWhere('estado', 'Activo')->orWhere('estado', 'Borrador')->orWhere('estado', 'Cancelado')->orWhere('estado', 'Finalizado');
+            // }
 
 
         }
@@ -94,7 +98,8 @@ class EventoList extends Component
 
         return view('livewire.evento-list', [
             'eventos' => $eventos,
-            'gestiones' => $gestiones
+            'gestiones' => $gestiones,
+            'filtroEstado' => $this->filtroEstado,
         ]);
     }
 

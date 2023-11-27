@@ -10,12 +10,17 @@ p#demo {
     margin: 20%;
 } */
 #miContainer{
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 10%;
+    padding-right: 10%;
 }
-
+.miFooter {
+    border-radius: 0 0 40px 40px;
+}
 #miFooter {
     border-radius: 0 0 40px 40px;
+}
+.botonVisible{
+    display: none;
 }
 .CardFooter {
     background-color: white;
@@ -35,13 +40,13 @@ p#demo {
 }
 .cardEvento {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 20px;
     font-family:
-        Open Sans,
+        "Open Sans",
         Arial,
         sans-serif;
     color: black !important;
-    text-shadow: 0.08em 0.08em 0.08em rgba(0, 0, 0, 0.4);
+
 }
 .date_content h2 {
     font-family: "Alata", Helvetica, Arial, Lucida, sans-serif;
@@ -54,25 +59,49 @@ p#demo {
 }
 .date_content {
     /* background-color: #bd2738; */
-    background-color: #4c83c3;
+    /* background-color: #4c83c3; */
+    background-color: #bd2738;
+}
+.footer_content{
+    background-color: white;
+}
+.footer_content button {
+    font-size: 20px;
+    font-weight: 500;
+    padding: .3em 1em;
+    line-height: 1.7em!important;
+    background-size: cover;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border: 2px solid;
+    color: #FFFFFF!important;
+    border-width: 0px!important;
+    border-radius: 66px;
+    font-style: italic!important;
+    background-color: #BD2738;
+}
+.footer_content .h3{
+    font-weight: 600;
+    font-size: 45px;
+    color: #EE6F2D!important;
 }
 .polygono1 {
     background-color: #bd2738;
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
     clip-path: polygon(0 0, 0 100%, 100% 0);
 }
 .polygono2 {
     background-color: #ffd51d;
     width: 300px;
     height: 300px;
-    clip-path: polygon(100% 18%, 36% 56%, 100% 87%);
+    clip-path: polygon(100% 0, 0 56%, 100% 100%);
 }
 .polygono3 {
     background-color: #4a82c3;
     width: 300px;
     height: 300px;
-    clip-path: polygon(0 0, 0 100%, 65% 48%);
+    clip-path: polygon(0 0, 0 100%, 100% 54%);
 }
 .polygono4 {
     width: 10px;

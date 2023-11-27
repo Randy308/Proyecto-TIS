@@ -14,6 +14,7 @@ class AuthUser extends Controller
     public function index()
     {
         //
+        return view('index');
     }
 
 
