@@ -11,7 +11,9 @@ class EventoProximo extends Component
     public function render()
     {
         $todayDate = now('GMT-4')->format('Y-m-d');
-        $evento = Evento::where('fecha_inicio', '>=', $todayDate)
+        $todayTime = now('GMT-4')->format('H:i:s');
+
+        $evento = Evento::where('fecha_fin', '>=', $todayDate)->where('tiempo_fin', '>=', $todayTime)
             ->where('Estado', '=', 'Activo')
             ->orderBy('fecha_inicio', 'asc')
             ->first();
