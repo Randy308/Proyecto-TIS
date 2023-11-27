@@ -26,7 +26,6 @@ Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
 Route::get('/crear-evento', [EventoControlador::class, 'index'])->name('crear-evento');;
 
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
-Route::get('/eventos-reclutamiento', [EventoControlador::class, 'obtenerEventosReclutamiento']);
 
 
 Route::get('/editar-evento', function () {

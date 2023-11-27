@@ -15,6 +15,7 @@
 </head>
 
 <body>
+    @livewireStyles
     <div class="wrapper">
         @include('layouts/sidebar')
         <div id="content">
@@ -62,6 +63,9 @@
                                         </span>
                                     @enderror
                                 </div>
+                                
+                                
+                                
 
                                 <div class="form-group">
                                     <label for="Ubicacion">Agregar ubicación:</label>
@@ -139,33 +143,39 @@
                                 </div>
                                 
                                 <div id="campos-adicionales">
-                                    <!-- Checkbox para cada campo adicional -->
+                                    
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evemto
-                                        <input type="text" name="costo" class="form-control" id="costo" style="display: none;">
+                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evento
+                                        <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo" placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
+                                        @error('costo')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                
+                                    
+                                    
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad minima de particpantes
-                                        <input type="text" name="cantidad_minima" class="form-control" id="cantidad_minima" style="display: none;">
+                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad mínima de participantes
+                                        <input type="text" name="cantidad_minima" class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima" placeholder="Ingrese la cantidad mínima de participantes" value="{{ old('cantidad_minima') }}">
+                                        @error('cantidad_minima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                
+                                    
+                                    
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad maxima de particpantes
-                                        <input type="text" name="cantidad_maxima" class="form-control" id="cantidad_maxima" style="display: none;">
+                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad máxima de participantes
+                                        <input type="text" name="cantidad_maxima" class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima" placeholder="Ingrese la cantidad máxima de participantes" value="{{ old('cantidad_maxima') }}">
+                                        @error('cantidad_maxima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
-                                
-                                    <div class="form-group">
-                                        <input type="checkbox" name="mostrarInstitucion" id="mostrarInstitucion"> institucion
-                                        <input type="text" name="institucion" class="form-control" id="institucion" style="display: none;">
+                                    <div>
+                                        @livewire('eventos-dropdown')
                                     </div>
-                                
-                                    <div class="form-group" id="eventoRequeridoGroup">
-                                        <label for="evento">Evento requerido</label>
-                                        <select name="evento" class="form-control" id="evento">
-                                            <option value="" selected disabled>Selecciona un evento</option>
-                                        </select>
-                                    </div>
+
+
+
+
                                 </div>
 
 
@@ -208,6 +218,7 @@
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
     </script>
+
     <script>
         $(document).ready(function () {
             // Oculta los campos adicionales al cargar la página
@@ -219,35 +230,22 @@
                 campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
             });
 
-            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable
+            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable de privacidad
             $('#privacidad').change(function () {
-                if ($(this).val() === 'con-restriccion') {
-                    $('#campos-adicionales').show();
-                } else {
-                    $('#campos-adicionales').hide();
-                    // Oculta los campos adicionales si el tipo de evento no es "competencia_individual" ni "taller_individual"
-                    $('#eventoRequeridoGroup').hide();
-                    $('#mostrarEvento').prop('checked', false);
-                    $('#evento').hide();
-                }
-            });
-
-            $('#tipo_evento').change(function () {
-                var selectedTipoEvento = $(this).val();
+                var privacidadSeleccionada = $(this).val();
+                var camposAdicionales = $('#campos-adicionales');
                 var eventoRequeridoGroup = $('#eventoRequeridoGroup');
 
-                if (selectedTipoEvento === 'competencia_individual' || selectedTipoEvento === 'competencia_grupal') {
-                    eventoRequeridoGroup.show();
+                if (privacidadSeleccionada === 'con-restriccion') {
+                    camposAdicionales.show();
                 } else {
+                    camposAdicionales.hide();
                     eventoRequeridoGroup.hide();
                     $('#mostrarEvento').prop('checked', false);
                     $('#evento').hide();
                 }
             });
 
-            $('#mostrarEvento').change(function () {
-                $('#evento').toggle(this.checked);
-            });
         });
     </script>
     <script>
@@ -338,7 +336,7 @@
     </script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>
     @include('layouts.mensajes-alerta')
-
+    @livewireScripts
 </body>
 
 </html>

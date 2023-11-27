@@ -26,7 +26,7 @@ class Evento extends Model
         'latitud',
         'longitud',
         'costo',
-        'institucion',
+        'nombre_institucion',
         'tiempo_inicio',
         'tiempo_fin',
     ];
@@ -56,5 +56,8 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'colaboradors');
     }
-
+    public function institucion()
+    {
+        return $this->belongsTo(Institucion::class, 'institucion_id');
+    }
 }

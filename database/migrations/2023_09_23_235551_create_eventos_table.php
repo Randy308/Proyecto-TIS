@@ -32,9 +32,8 @@ class CreateEventosTable extends Migration
             $table->double('costo')->nullable();
             $table->unsignedBigInteger('cantidad_minima')->nullable();
             $table->unsignedBigInteger('cantidad_maxima')->nullable();
-            $table->string('institucion')->nullable();
+            $table->string('nombre_institucion')->nullable();
             $table->timestamps();
-            //tipo_de_evento
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }

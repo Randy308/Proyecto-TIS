@@ -18,6 +18,7 @@ use App\Models\AuspiciadorEventos;
 use App\Models\ImagenAuspiciador;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Models\Institucion;
 
 
 class EventoControlador extends Controller
@@ -98,44 +99,68 @@ class EventoControlador extends Controller
                 'string',
                 'max:255',
                 Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
+                'regex:/^[a-zA-Z0-9\s\.\-]+$/',
+                'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
+                'not_in:registracion,registro,admin,event', 
+                'not_in:admin,user', 
+                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre', 
+                'not_regex:/[!@#\$%\^&\*\(\)_\+=\[\]{};:\'",<>\?\/\\~`\|]+/',
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
-            'cantidad_minima' => 'required|integer|min:0', 
-            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
+            'cantidad_minima' => 'nullable|required_if:privacidad,con-restriccion|integer|min:0',
+            'cantidad_maxima' => [
+                'nullable',
+                'required_if:privacidad,con-restriccion',
+                'integer',
+                function ($attribute, $value, $fail) use ($request) {
+                    if ($request->input('privacidad') == 'con-restriccion' && $value < $request->input('cantidad_minima')) {
+                        $fail('El campo cantidad máxima debe ser mayor o igual a la cantidad mínima.');
+                    }
+                },
+            ],
             'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
             'descripcion_evento' => 'nullable|string',
             'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
             'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
+
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
             'costo' => 'nullable|numeric|min:0',
-            'cantidad_minima' => 'nullable|integer|min:0',
-            'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
             'institucion' => 'nullable|string',
         ], [
             'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
             'fecha_fin.required' => 'La fecha de finalización es obligatoria.',
             'fecha_inicio.after_or_equal' => 'La fecha de inicio debe ser igual o posterior a la fecha actual.',
             'fecha_fin.after_or_equal' => 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
-            'nombre_evento.required' => 'El nombre del evento es obligatorio.',
-            'nombre_evento.string' => 'El nombre del evento debe ser una cadena de texto.',
-            'nombre_evento.max' => 'El nombre del evento no puede tener más de :max caracteres.',
-            'nombre_evento.unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
             'descripcion_evento.required' => 'La descripción del evento es obligatoria.',
             'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
             'privacidad.required' => 'La privacidad del evento es obligatoria.',
             'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
-            'inscritos_minimos.required' => 'La cantidad mínima de inscritos es obligatoria.',
-            'inscritos_minimos.integer' => 'La cantidad mínima de inscritos debe ser un número entero.',
-            'inscritos_minimos.min' => 'La cantidad mínima de inscritos debe ser al menos :min.',
-            'inscritos_maximos.required' => 'La cantidad máxima de inscritos es obligatoria.',
-            'inscritos_maximos.integer' => 'La cantidad máxima de inscritos debe ser un número entero.',
-            'inscritos_maximos.min' => 'La cantidad máxima de inscritos debe ser al menos :min.',
             'tipo_evento.required' => 'El tipo de evento es obligatorio.',
             'tipo_evento.in' => 'El tipo de evento no es válido.',
-    
+            'mostrarCantidadMinima.required' => 'Debe especificar si hay una cantidad mínima de participantes.',
+            'mostrarCantidadMaxima.required' => 'Debe especificar si hay una cantidad máxima de participantes.',
+            'cantidad_minima.required' => 'La cantidad mínima de participantes es obligatoria.',
+            'cantidad_minima.integer' => 'La cantidad mínima de participantes debe ser un número entero.',
+            'cantidad_minima.min' => 'La cantidad mínima de participantes debe ser al menos :min.',
+            'cantidad_maxima.required' => 'La cantidad máxima de participantes es obligatoria.',
+            'cantidad_maxima.integer' => 'La cantidad máxima de participantes debe ser un número entero.',
+            'cantidad_maxima.gt' => 'La cantidad máxima de participantes debe ser mayor que la cantidad mínima.',
+            'institucion.required_if' => 'Si selecciona una institución, debe especificar el nombre de la misma.',
+            'institucion.string' => 'El nombre de la institución debe ser una cadena de texto.',
+            'costo.numeric' => 'El costo debe ser un valor numérico.',
+            'costo.min' => 'El costo no puede ser un número negativo.',
+            'nombre_evento' => [
+                'required' => 'El nombre del evento es obligatorio.',
+                'string' => 'El nombre del evento debe ser una cadena de texto.',
+                'max' => 'El nombre del evento no puede tener más de :max caracteres.',
+                'unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
+                'regex' => 'El nombre del evento solo puede contener caracteres alfanuméricos, espacios, guiones y puntos.',
+                'not_regex' => 'Evita el uso de ciertas palabras en el nombre del evento.',
+                'not_in' => 'Evita el uso de ciertas palabras o frases comunes en el nombre del evento.',
+            ],
 
 
         ]);
@@ -167,15 +192,19 @@ class EventoControlador extends Controller
          // Extract date and time
          $dateFinal = $carbonDatetime2->toDateString(); // Format: Y-m-d
          $timeFinal = $carbonDatetime2->toTimeString(); // Format: H:i:s
-
         
         $nombreDelArchivo = basename($rutaBanner);
+
         $evento = new Evento();
         $evento-> nombre_evento = $nombreEvento;
         if($request->has('descripcion_evento')){
 
             $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
             $evento-> descripcion_evento = $descripcionEvento;
+        }
+        if ($request->has('selectedInstitucion')) {
+            $nombreInstitucion = $request->input('selectedInstitucion');
+            $evento->nombre_institucion = $nombreInstitucion;
         }
         $evento-> user_id =  auth()->id();
         $evento-> estado = 'Borrador';
@@ -190,10 +219,9 @@ class EventoControlador extends Controller
         $evento-> background_color = '#21618C';
         $evento->privacidad = $request->input('privacidad');
         $evento->tipo_evento = $request->input('tipo_evento');
-        $evento->costo = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('costo');
-        $evento->cantidad_minima = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('cantidad_minima');
-        $evento->cantidad_maxima = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('cantidad_maxima');
-        $evento->institucion = $request->input('privacidad') === 'con-restriccion' ? null : $request->input('institucion');
+        $evento->costo = $request->input('privacidad') === 'libre' ? null : floatval($request->input('costo'));
+        $evento->cantidad_minima = $request->input('mostrarCantidadMinima') ? $request->input('cantidad_minima') : 0;
+        $evento->cantidad_maxima = $request->input('mostrarCantidadMaxima') ? $request->input('cantidad_maxima') : null;
         $evento->save();
         $inputArray = $request->input('Auspiciadores');
         
@@ -236,7 +264,7 @@ class EventoControlador extends Controller
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->estado = 'Activo';
         $evento->save();
-        return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+    return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
     }
     public function editBanner($user, $evento)
     {
@@ -286,10 +314,11 @@ class EventoControlador extends Controller
         $evento->fecha_inicio = $request->input('fecha_inicio');
         $evento->fecha_fin = $request->input('fecha_fin');
         $evento->privacidad = $request->input('privacidad');
-        $evento->min_inscritos = $request->input('cantidad_minima');
-        $evento->max_inscritos = $request->input('cantidad_maxima');
+        $evento->cantidad_minima = $request->input('cantidad_minima');
+        $evento->cantidad_maxima = $request->input('cantidad_maxima');
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
+        $evento->costo = $request->input('costo');
         $evento->save();
     
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
@@ -341,10 +370,5 @@ class EventoControlador extends Controller
         return redirect()->route('verEvento', ['id' => $id]);
         // return back();
     }
-    public function obtenerEventosReclutamiento()
-    {
-        $eventosReclutamiento = Evento::where('tipo_evento', 'reclutamiento')->get();
-    
-        return view('crear-evento', ['eventosReclutamiento' => $eventosReclutamiento]);
-    }
+
 }

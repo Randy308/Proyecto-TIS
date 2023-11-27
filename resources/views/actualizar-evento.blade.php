@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    @livewireStyles
     <div class="wrapper">
         @include('layouts/sidebar')
         <div id="content">
@@ -44,14 +45,6 @@
                                         <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="Ubicacion">Agregar ubicación:</label>
-                                    <button type="button" class="btn btn-info" data-toggle="modal"
-                                        data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
-                                    @include('layouts.modal-editar-ubicacion')
-                                </div>
-
                                 <div class="form-group">
                                     <label for="tipo_evento">Tipo de Evento</label>
                                     <select name="tipo_evento" class="form-control" id="tipo_evento" required>
@@ -62,27 +55,18 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group">
-                                    <label for="privacidad">Privacidad</label>
-                                    <select name="privacidad" class="form-control" id="privacidad" required>
-                                        @foreach ($privacidades as $privacidad)
-                                            <option value="{{ $privacidad }}" {{ $miEvento->privacidad_evento === $privacidad ? 'selected' : '' }}>
-                                                {{ $privacidad }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <label for="Ubicacion">Agregar ubicación:</label>
+                                    <button type="button" class="btn btn-info" data-toggle="modal"
+                                        data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
+                                    @include('layouts.modal-editar-ubicacion')
                                 </div>
-                                
-                                <div class="form-group">
-                                    <label for="inscritos_minimos">Inscritos Mínimos</label>
-                                    <input type="number" name="inscritos_minimos" class="form-control" id="inscritos_minimos" value="{{ $miEvento->min_inscritos }}" min="0" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="inscritos_maximos">Inscritos Máximos</label>
-                                    <input type="number" name="inscritos_maximos" class="form-control" id="inscritos_maximos" value="{{ $miEvento->max_inscritos }}" min="{{ $miEvento->min_inscritos }}" required>
-                                </div>
+
+ 
+                            
+                               
+
 
                                 <div class="form-group">
                                     <label for="fecha_inicio">Fecha de inicio</label>
@@ -117,6 +101,57 @@
                                         <span id="descripcion_evento_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="privacidad">Privacidad del Evento</label>
+                                    <select name="privacidad" class="form-control @error('privacidad') is-invalid @enderror" id="privacidad" required>
+                                        <option value="libre">Libre</option>
+                                        <option value="con-restriccion">Con Restriccion</option>
+                                    </select>
+                                    @error('privacidad')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                
+                                <div id="campos-adicionales">
+                                    
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evento
+                                        <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo" placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
+                                        @error('costo')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad mínima de participantes
+                                        <input type="text" name="cantidad_minima" class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima" placeholder="Ingrese la cantidad mínima de participantes" value="{{ old('cantidad_minima') }}">
+                                        @error('cantidad_minima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group">
+                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad máxima de participantes
+                                        <input type="text" name="cantidad_maxima" class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima" placeholder="Ingrese la cantidad máxima de participantes" value="{{ old('cantidad_maxima') }}">
+                                        @error('cantidad_maxima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+{{--                                     <div>
+                                        @livewire('eventos-dropdown')
+                                        </div> --}}
+
+
+
+
+                                </div>
+
+
                                 <div class="form-group text-center botones-juntos">
                                     <a href="#" class="btn btn-cancelar" style="width: 45%;"
                                         onclick="confirmarCancelacion()">Cancelar</a>
@@ -147,6 +182,48 @@
     </div>
 
     @include('layouts/sidebar-scripts')
+    <script>
+        $(document).ready(function () {
+            // Oculta los campos adicionales al cargar la página
+            $('#campos-adicionales input[type="text"]').hide();
+
+            // Muestra u oculta los campos adicionales según el estado de los checkboxes
+            $('input[type="checkbox"]').change(function () {
+                var campoAsociado = $(this).next('input[type="text"]');
+                campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
+            });
+
+            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable de privacidad
+            $('#privacidad').change(function () {
+                var privacidadSeleccionada = $(this).val();
+                var camposAdicionales = $('#campos-adicionales');
+                var eventoRequeridoGroup = $('#eventoRequeridoGroup');
+
+                if (privacidadSeleccionada === 'con-restriccion') {
+                    camposAdicionales.show();
+                } else {
+                    camposAdicionales.hide();
+                    eventoRequeridoGroup.hide();
+                    $('#mostrarEvento').prop('checked', false);
+                    $('#evento').hide();
+                }
+            });
+
+        });
+    </script>
+    <script>
+        
+        $(document).ready(function () {
+            $('#campos-adicionales').hide();
+            $('#privacidad').change(function () {
+                if ($(this).val() === 'con-restriccion') {
+                    $('#campos-adicionales').show();
+                } else {
+                    $('#campos-adicionales').hide();
+                }
+            });
+        });
+    </script>
     <script>
         $(function() {
             const date = new Date();
