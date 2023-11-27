@@ -67,15 +67,21 @@
                                 </select> --}}
                                 <select id="fontname" style="width: 300px">
                                     <option selected disabled>Fuente</option>
-                                    <option>Arial</option>
-                                    <option>Comic Sans MS</option>
-                                    <option>Courier New</option>
-                                    <option>Georgia</option>
-                                    <option>Impact</option>
-                                    <option>Lucida Grande</option>
-                                    <option>Times New Roman</option>
-                                    <option>Verdana</option>
+                                    <option style="font-family: Arial">Arial</option>
+                                    <option style="font-family: 'Comic Sans MS'">Comic Sans MS</option>
+                                    <option style="font-family: 'Courier New'">Courier New</option>
+                                    <option style="font-family: Georgia">Georgia</option>
+                                    <option style="font-family: Impact">Impact</option>
+                                    <option style="font-family: 'Lucida Grande', sans-serif">Lucida Grande</option>
+                                    <option style="font-family: 'Times New Roman'">Times New Roman</option>
+                                    <option style="font-family: Verdana">Verdana</option>
+                                    <!-- Fuentes adicionales -->
+                                    <option style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica Neue</option>
+                                    <option style="font-family: 'Trebuchet MS', Arial, sans-serif">Trebuchet MS</option>
+                                    <option style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino Linotype</option>
+                                    <option style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
                                 </select>
+
                                 <select id="fontsize">
                                     <option selected disabled>Tamaño</option>
                                     <option value="8px">8px</option>
@@ -121,10 +127,15 @@
                                     <option value="purple">Morado</option>
                                     <option value="orange">Naranja</option>
                                 </select>
+                                <button  type="button" id="minuscula"><i class="bi bi-alphabet"></i></button>
+                                <button  type="button" id="mayuscula"><i class="bi bi-alphabet-uppercase"></i></button>
+                                <button  type="button" id="incrementarSize"><i class="bi bi-sort-up"></i></button>
+                                <button  type="button" id="disminuirSize"><i class="bi bi-sort-down"></i></button>
                                 <button type="button" id="Negrita">B</button>
                                 <button type="button" id="Italica">I</button>
                                 <button type="button" id="Underline">U</button>
-
+                                <button type="button" class=" btn btn-light" id="btnEditText"><i
+                                    class="bi bi-pencil-fill"></i> Modificar Texto</button>
                                 {{-- <div class="input-group">
                                     <select type="button" id="colorFondo" name="color" class="">
                                         <option selected disabled>Color de Fondo</option>
@@ -143,13 +154,13 @@
                                         Texto</button>
                                 </div>
 
-                                <button type="button" class=" btn btn-light" id="btnEditText"><i
-                                        class="bi bi-pencil-fill"></i> Modificar Texto</button>
+
                                 <button type="button" id="trash-delete" class="btn btn-light">Borrar <i
                                         class="bi bi-trash3"></i></button>
 
-                                <div class="input-group">
-                                    <div class="input-group-text" id="btnGroupAddon">Color de Fondo</div>
+                                <div class="input-group d-flex align-items-center">
+                                    <label for="highlightColorPicker">Color de Fondo</label>
+
                                     <input type="color"class="form-control" id="highlightColorPicker" value="#0000">
                                 </div>
 

@@ -73,7 +73,7 @@
                                 </td>
                             @else
                                 <td width="10px">
-                                    <button class="btn btn-secondary btn-sm" disabled>Publicado</button>
+                                    <button class="btn btn-secondary btn-sm" disabled style="width: 140px">Publicado</button>
                                 </td>
                             @endif
 
