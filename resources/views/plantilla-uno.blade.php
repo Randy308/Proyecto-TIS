@@ -22,7 +22,6 @@
                     <div class="col">
 
                         <h6>Tipo de evento: <b> {{ $evento->tipo_evento }}</b></h6>
-                        <h6>Tipo de evento: <b> {{ $evento->tiempo_inicio }}</b></h6>
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">
@@ -83,16 +82,12 @@
                                             @elseif (strtoupper($evento->estado) == 'ACTIVO')
                                                 {{-- si es  un evento individual --}}
                                                 @if (true)
-                                                    <form method="POST"
-                                                        action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                                        @method('PUT')
-                                                        @csrf
 
-                                                        <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                                        <button type="submit" class="btn btn-success" id="boton-registro">
-                                                            Registrarse
-                                                        </button>
-                                                    </form>
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#modalRegistroParticipanteEvento">
+                                                        Registrarse
+                                                    </button>
+                                                    @include('layouts.modal-registro-evento')
                                                 @else
                                                     @livewire('registrar-grupo', ['evento_id' => $evento->id])
                                                 @endif
@@ -135,7 +130,7 @@
                                             <button type="button" class="btn btn-info" disabled> Ya esta <br>registrado
                                                 en el evento</button>
 
-                                        </div>                                       
+                                        </div>
                                     @else
                                         <button type="button" disabled class="btn btn-primary" id="boton-registro">
                                             Evento en progreso <br>no se admiten mas incripciones
