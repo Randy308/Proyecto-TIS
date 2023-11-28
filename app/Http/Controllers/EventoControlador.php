@@ -109,8 +109,8 @@ class EventoControlador extends Controller
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
 
-            'cantidad_minima' => 'required|integer|min:0',
-            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
+            'cantidad_minima' => 'nullable|integer|min:0',
+            'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
             'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
             'descripcion_evento' => 'nullable|string',
             'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
