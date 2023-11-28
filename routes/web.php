@@ -14,6 +14,7 @@ use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
 
 
@@ -208,3 +209,5 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/misColaboradores', [ColaboradorController::class, 'index'])->name('colaboradores.index');
 Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'asignarColaborador'])->name('colaboradores.asignar');
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
+
+Route::get('/registro-equipo/{evento_id}',[RegistroEquipoController::class,'view'])->name('registroEquipo.view');
