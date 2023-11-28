@@ -403,6 +403,7 @@ class EventoControlador extends Controller
             $nombreInstitucion = $request->input('selectedInstitucion');
             $evento->nombre_institucion = $nombreInstitucion;
         }
+        $evento->nombre_institucion = "UMSS";
         $evento->save();
 
         $inputArray = $request->input('Auspiciadores');
