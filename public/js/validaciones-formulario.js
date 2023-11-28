@@ -1,4 +1,5 @@
 $(function () {
+    
     // Validate Username
     $("#auspiciadorcheck").hide();
 
@@ -77,6 +78,54 @@ $(function () {
             $('#crearUsuarioBoton').prop("disabled", true);
         }
     });
+    
+    $('#costoCheck').hide();
+    $("#costo").on("input", function () {
+        let regex = /^[0-9]+$/; // Permitir solo números enteros
+        let s = $(this).val();
+    
+        if (regex.test(s)) {
+            $("#costoCheck").hide();
+            $("#costoCheck").html("");
+            $('#crearEventoBoton').prop("disabled", false);
+        } else {
+            $("#costoCheck").show();
+            $("#costoCheck").html("Costo del evento incorrecto. Ingrese solo números.");
+            $('#crearEventoBoton').prop("disabled", true);
+        }
+    });
+    $('#cantidadMinimaCheck').hide();
+
+    $("#cantidad_minima").on("input", function () {
+        let regex = /^[0-9]+$/;
+        let s = $(this).val();
+
+        if (regex.test(s)) {
+            $("#cantidadMinimaCheck").hide();
+            $("#cantidadMinimaCheck").html("");
+            $('#crearEventoBoton').prop("disabled", false);
+        } else {
+            $("#cantidadMinimaCheck").show();
+            $("#cantidadMinimaCheck").html("Cantidad mínima de participantes incorrecta");
+            $('#crearEventoBoton').prop("disabled", true);
+        }
+    });
+    $('#cantidadMaximaCheck').hide();
+
+    $("#cantidad_maxima").on("input", function () {
+        let regex = /^[0-9]+$/;
+        let s = $(this).val();
+
+        if (regex.test(s)) {
+            $("#cantidadMaximaCheck").hide();
+            $("#cantidadMaximaCheck").html("");
+            $('#crearEventoBoton').prop("disabled", false);
+        } else {
+            $("#cantidadMaximaCheck").show();
+            $("#cantidadMaximaCheck").html("Cantidad máxima de participantes incorrecta");
+            $('#crearEventoBoton').prop("disabled", true);
+        }
+    });
 
 
     $('#emailUserCheck').hide();
@@ -94,4 +143,5 @@ $(function () {
         }
     });
 });
+
 

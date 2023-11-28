@@ -164,6 +164,11 @@
                     <a src="tab1" href="javascript:void(0);" class="active">Informacion</a>
                 </li>
                 <li><a src="tab2" href="javascript:void(0);">Publicaciones</a></li>
+                <li>
+                    <a src="tab2" href="javascript:void(0);">Fases</a>
+                    @include('reclutamiento-fases')
+                </li>
+
             </ul>
             <div class="tabContent">
                 <div class="c2" id="tab1">

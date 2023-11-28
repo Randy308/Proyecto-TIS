@@ -67,4 +67,12 @@ class Evento extends Model
     {
         return $this->belongsTo(Institucion::class, 'institucion_id');
     }
+    public function getCombinedStartAttribute()
+    {
+        return $this->attributes['fecha_inicio'] . ' ' . $this->attributes['tiempo_inicio'];
+    }
+    public function getCombinedEndAttribute()
+    {
+        return $this->attributes['fecha_fin'] . ' ' . $this->attributes['tiempo_fin'];
+    }
 }

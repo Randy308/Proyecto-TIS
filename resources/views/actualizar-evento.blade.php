@@ -62,30 +62,26 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="form-group">
+                                    <label for="combined_start">Fecha de inicio <span class="text-danger font-weight-bold">*</span></label>
+                                    <input type="datetime-local" name="combined_start"
+                                           class="form-control @error('combined_start') is-invalid @enderror" id="combined_start"
+                                           value="{{ old('combined_start') ?: $miEvento->combined_start }}" required aria-describedby="combined_start_help">
+                                    @error('combined_start')
+                                        <span id="combined_start_help" class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 
-                            
-                            
-
                                 <div class="form-group">
-                                    <label for="fecha_inicio">Fecha de inicio</label>
-                                    <input type="date" name="fecha_inicio"
-                                        class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                        id="fecha_inicio" value="{{ $miEvento->fecha_inicio }}" required
-                                        aria-describedby="fecha_inicio_help">
-                                    @error('fecha_inicio')
-                                        <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
+                                    <label for="combined_end">Fecha de finalización <span class="text-danger font-weight-bold">*</span></label>
+                                    <input type="datetime-local" name="combined_end"
+                                           class="form-control @error('combined_end') is-invalid @enderror" id="combined_end"
+                                           value="{{ old('combined_end') ?: $miEvento->combined_end }}" required aria-describedby="combined_end_help">
+                                    @error('combined_end')
+                                        <span id="combined_end_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="fecha_fin">Fecha de finalización</label>
-                                    <input type="date" name="fecha_fin"
-                                        class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
-                                        value="{{ $miEvento->fecha_fin }}" required aria-describedby="fecha_fin_help">
-                                    @error('fecha_fin')
-                                        <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                
 
                             </div>
                             <div class="col-md-6">
@@ -145,6 +141,9 @@
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
+                                        <div>
+                                            @livewire('eventos-dropdown')
+                                        </div>
 
 
 
@@ -175,6 +174,27 @@
                 </div>
 
             </div>
+            <div class="container contact-form">
+                <br>
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-left">
+                        <H3>Gestion de fases</H3>
+                    </div>
+                    <div class="col-md-6 text-center text-md-right">
+                        <a class="btn btn-primary" href="#" role="button" data-toggle="modal"
+                            data-target="#fasesModal">
+                            Crear una fase
+                        </a>
+                    </div>
+                </div>
+                @livewire('fase-list', ['idEvento' => $miEvento->id])
+
+            </div>
+
+        </div>
+    </div>
+
+    @include('fasesForm', ['evento' => $miEvento])
 
 
         </div>
@@ -201,6 +221,7 @@
             document.getElementById('fecha_fin').setAttribute('min', currentDate);
         });
     </script>
+    
     @include('layouts.mensajes-alerta')
     <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
     <script

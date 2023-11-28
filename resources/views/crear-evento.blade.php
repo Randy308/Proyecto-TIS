@@ -67,12 +67,12 @@
                                             Competencia Individual</option>
                                         <option value="competencia_grupal"
                                             {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>
-                                            Competencia Grupal</option>
+                                            Competencia Grupal(4)</option>
                                         <option value="taller_individual"
                                             {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>Taller
                                             Individual</option>
                                         <option value="taller_grupal"
-                                            {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal
+                                            {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal(4)
                                         </option>
                                     </select>
                                     @error('tipo_evento')
@@ -301,32 +301,6 @@
     </script>
 
     <script>
-        function validarMinimo(input) {
-            // Obtener el valor mínimo permitido (0 en este caso)
-            var minimo = parseInt(input.min);
-
-            // Validar y ajustar el valor si es menor al mínimo
-            if (parseInt(input.value) < minimo) {
-                input.value = minimo;
-            }
-        }
-
-
-        function validarMaximo(input) {
-            // Obtener el valor mínimo permitido (0 en este caso)
-            var minimo = parseInt(input.min);
-
-            // Validar y ajustar el valor si es menor al mínimo
-            if (parseInt(input.value) < minimo) {
-                input.value = minimo;
-            }
-
-            // Validar y ajustar el valor si es menor al mínimo
-            var inscritosMinimosInput = document.getElementById("inscritos_minimos");
-            if (parseInt(input.value) < parseInt(inscritosMinimosInput.value)) {
-                input.value = inscritosMinimosInput.value;
-            }
-        }
 
         function confirmarCancelacion() {
             if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {

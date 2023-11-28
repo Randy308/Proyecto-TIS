@@ -13,7 +13,7 @@ class EventosDropdown extends Component
     public $selectedEvento;
     public $tipoEventoSeleccionado;
     public $showEventos;
-    public $showInstitucion = false;
+    public $showInstitucion = true;
     public $selectedInstitucion;
 
     public function mount()
