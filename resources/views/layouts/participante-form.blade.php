@@ -38,31 +38,6 @@
 
                     </div>
                     <div class="col-md-6 mb-2">
-                        <label for="formFile" class="form-label">Foto de perfil</label>
-                        <input class="form-control form-control-sm" name="foto_perfil" type="file" id="formFile"
-                            ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB"
-                            class="@error('foto_perfil') is-invalid @enderror">
-                        @error('foto_perfil')
-                            <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                        @enderror
-
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-2">
-
-                            <label for="formEmail" class="form-label">Correo electronico<span
-                                class="text-danger font-weight-bold "> *</span></label>
-                            <input type="email" id="formEmail" class="form-control" name="email"
-                                class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
-                            @error('email')
-                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-2">
 
                         <label class="form-label" for="formInstitucion">Seleccione su Pais de origen</label><br>
                         <select class="form-control form-control" class="form-select" name="pais"
@@ -81,6 +56,16 @@
                             <option value="Otra">Otra</option>
                         </select>
                     </div>
+                </div>
+                <div class="form-outline mb-2">
+                    <label for="formEmail" class="form-label">Correo electronico<span
+                        class="text-danger font-weight-bold "> *</span></label>
+                    <input type="email" id="formEmail" class="form-control" name="email"
+                        class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
+                    @error('email')
+                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                    @enderror
+
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-2">

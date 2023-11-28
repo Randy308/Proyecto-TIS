@@ -78,6 +78,34 @@
                             @endif
 
 
+                            </td>
+                            <td width="10px">
+                                @if ($evento->estado == 'Borrador')
+                                
+                                <form id="FormPublicar"
+                                        action="{{ route('evento.state.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                        method="post">
+                                        @csrf
+                                        @method('PUT')
+
+                                    </form>
+                                    <button id="BotonPublicarEvento" class="btn btn-warning"
+                                        type="button">Publicar</button>
+                                @else
+                                    <button class="btn btn-secondary" disabled>Publicado</button>
+                                @endif
+
+
+                            </td>
+                            <td width="10px">
+                                <form
+                                    action="{{ route('evento.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
+                                    method="get">
+                                    <button type="submit" class="btn btn-success">Editar</button>
+                                </form>
+
+                            </td>
+
                         </tr>
                     @endforeach
                 </tbody>

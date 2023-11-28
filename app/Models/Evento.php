@@ -75,4 +75,7 @@ class Evento extends Model
     {
         return $this->attributes['fecha_fin'] . ' ' . $this->attributes['tiempo_fin'];
     }
+    public function pertenecenGrupos(){
+        return $this->hasMany(PertenecenGrupo::class);
+    }
 }

@@ -14,6 +14,7 @@ use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
 
 
@@ -134,7 +135,8 @@ Route::group(['middleware' => ['can:admin.crear-usuario']], function () {
 });
 
 
-Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::put('/fases/editar/{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::delete('/fases/eliminar/{faseId}', [FaseController::class, 'delete'])->name('fase.delete')->middleware('checkRole:administrador,organizador');
 Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
@@ -222,3 +224,5 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/misColaboradores', [ColaboradorController::class, 'index'])->name('colaboradores.index');
 Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'asignarColaborador'])->name('colaboradores.asignar');
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
+
+Route::get('/registro-equipo/{evento_id}',[RegistroEquipoController::class,'view'])->name('registroEquipo.view');

@@ -11,5 +11,11 @@ class PertenecenGrupo extends Model
     protected $fillable = [
         'user_id',
         'grupo_id',
+        'evento_id',
     ];
+
+    public function eventos()
+    {
+        return $this->belongsTo(Evento::class);
+    }
 }
