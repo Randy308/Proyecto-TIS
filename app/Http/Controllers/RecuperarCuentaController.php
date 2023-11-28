@@ -48,7 +48,7 @@ class RecuperarCuentaController extends Controller
             ]);
             $tokenData = DB::table('password_resets')->where('email', $request->email)->first();
 
-            Mail::to('randyh308@gmail.com')->send(new EnviarMail($tokenData->token, $user->name));
+            Mail::to( $email)->send(new EnviarMail($tokenData->token, $user->name));
             return redirect()->route('actualizar-password',['email' => base64_encode($email)]);
         } else {
             return redirect()->route('index')->with('error', 'El correo electronico proporcionado no existe en el sistema.');

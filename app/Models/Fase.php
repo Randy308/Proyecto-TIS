@@ -8,15 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Fase extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'eventable_id', 'eventable_type', 'nombre', 'fecha_hora_inicio', 'fecha_hora_fin'
-        
-    ];
 
-    public function eventable()
-    {
-        return $this->morphTo();
-    }
+    protected $fillable = [
+        'evento_id',
+        'nombre',
+        'descripcion',
+        'fechaIni',
+        'fechaFin',
+    ];
     public function evento()
     {
         return $this->belongsTo(Evento::class);

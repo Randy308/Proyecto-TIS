@@ -29,7 +29,7 @@
                         <select name="tipo" class="form-control" id="tipo" required>
                             <option value="General"> General</option>
                             <option value="Calificacion"> Calificacion</option>
-                            
+
                         </select>
                     </div>
 
@@ -47,7 +47,7 @@
                         <button type="submit" id="botonfases" class="btn btn-primary" >Crear</button>
 
                     </div>
-                    
+
                 </div>
 
 

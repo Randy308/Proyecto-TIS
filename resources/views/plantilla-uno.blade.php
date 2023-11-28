@@ -25,13 +25,93 @@
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">
-                            @if (strtotime($evento->fecha_fin) > strtotime(now('GMT-4')))
+                            @php
+                                $fechaCompleta = $evento->fecha_inicio . ' ' . $evento->tiempo_inicio;
+                                $fechaFinal = $evento->fecha_fin . ' ' . $evento->tiempo_fin;
+
+                            @endphp
+                            @if (strtotime($fechaCompleta) >= strtotime(now('GMT-4')))
                                 @guest
                                     <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
                                         data-target="#loginModal">
                                         Iniciar Sesion
                                     </button>
 
+                                @endguest
+                                @auth
+                                    @if (auth()->user()->hasRole('usuario común') ||
+                                            auth()->user()->hasRole('coach'))
+                                        @php
+                                            $id_evento_pagina = $evento->id;
+                                            $id_usuario = auth()->user()->id;
+                                            $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                                ->where('evento_id', $id_evento_pagina)
+                                                ->exists();
+                                        @endphp
+                                        @if ($registroExistente)
+                                            {{-- Fases --}}
+
+
+                                            <a class="btn btn-secondary"
+                                                href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                                                Fases
+                                            </a>
+
+                                            <div class="dropdown" id="lista-registro">
+                                                <a class="btn btn-info dropdown-toggle" href="#" role="button"
+                                                    id="dropdownMenuLink boton-registro" data-toggle="dropdown"
+                                                    aria-haspopup="true" aria-expanded="false">
+                                                    Ya esta registrado<br> en el evento
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#" data-toggle="modal"
+                                                        data-target="#abandonarModal">Abandonar evento</a>
+
+                                                </div>
+                                            </div>
+                                            @include('abandonar-evento', ['evento' => $evento])
+                                        @else
+                                            @if (strtoupper($evento->estado) == 'CANCELADO')
+                                                <button type="button" disabled class="btn btn-danger" id="boton-registro">
+                                                    Evento cancelado
+                                                </button>
+                                            @elseif(strtoupper($evento->estado) == 'FINALIZADO')
+                                                <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                                    Evento finalizado
+                                                </button>
+                                            @elseif (strtoupper($evento->estado) == 'ACTIVO')
+                                                {{-- si es  un evento individual --}}
+                                                @if (true)
+
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#modalRegistroParticipanteEvento">
+                                                        Registrarse
+                                                    </button>
+                                                    @include('layouts.modal-registro-evento')
+                                                @else
+                                                    @livewire('registrar-grupo', ['evento_id' => $evento->id])
+                                                @endif
+                                            @else
+                                                <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                                    Registro no disponible
+                                                </button>
+                                            @endif
+                                        @endif
+                                    @else
+                                        <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                            Inscripción solo para<br>participantes y entrenadores.
+                                        </button>
+                                    @endif
+
+
+
+
+                                @endauth
+                            @elseif (strtotime($fechaFinal) >= strtotime(now('GMT-4')))
+                                @guest
+                                    <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                        Evento en progreso <br>no se admiten mas incripciones
+                                    </button>
                                 @endguest
                                 @auth
                                     @php
@@ -42,48 +122,20 @@
                                             ->exists();
                                     @endphp
                                     @if ($registroExistente)
-                                        <div class="dropdown" id="lista-registro">
-                                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                id="dropdownMenuLink boton-registro" data-toggle="dropdown"
-                                                aria-haspopup="true" aria-expanded="false">
-                                                Ya se encuentra <br>registrado en el evento
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a class="btn btn-secondary"
+                                                href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                                                Fases
                                             </a>
-                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                <a class="dropdown-item" href="#" data-toggle="modal"
-                                                    data-target="#abandonarModal">Abandonar evento</a>
+                                            <button type="button" class="btn btn-info" disabled> Ya esta <br>registrado
+                                                en el evento</button>
 
-                                            </div>
                                         </div>
-                                        @include('abandonar-evento', ['evento' => $evento])
                                     @else
-                                        @if (strtoupper($evento->estado) == 'CANCELADO')
-                                            <button type="button" disabled class="btn btn-danger" id="boton-registro">
-                                                Evento cancelado
-                                            </button>
-                                        @elseif(strtoupper($evento->estado) == 'FINALIZADO')
-                                            <button type="button" disabled class="btn btn-primary" id="boton-registro">
-                                                Evento finalizado
-                                            </button>
-                                        @elseif (strtoupper($evento->estado) == 'ACTIVO')
-                                            <form method="POST"
-                                                action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                                @method('PUT')
-                                                @csrf
-
-                                                <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                                <button type="submit" class="btn btn-success" id="boton-registro">
-                                                    Registrarse
-                                                </button>
-                                            </form>
-                                        @else
-                                            <button type="button" disabled class="btn btn-info" id="boton-registro">
-                                                Registro no disponible
-                                            </button>
-                                        @endif
+                                        <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                            Evento en progreso <br>no se admiten mas incripciones
+                                        </button>
                                     @endif
-
-
-
                                 @endauth
                             @else
                                 <button type="button" disabled class="btn btn-primary" id="boton-registro">
@@ -133,11 +185,11 @@
                         <div class="card">
                             <h4>Organizador</h4>
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-md-auto">
                                     <img src="{{ $evento->user->foto_perfil }}" class="card-img-top"
                                         alt="imagen no encontrada" style="width:100px; height:100px">
                                 </div>
-                                <div class="col-7">
+                                <div class="col">
                                     <span>Nombre: <b>{{ ucfirst(trans($evento->user->name)) }}</b></span>
 
                                     <span>Email: <a
@@ -153,10 +205,30 @@
 
 
                         </div>
-                        <div class="card">
-                            <h4>Colaboradores:</h4>
+                        @if ($evento->colaboradors->count())
+                            <div class="card">
+                                <h4>Colaboradores:</h4>
+                                @foreach ($evento->colaboradors as $user)
+                                    <div class="row">
+                                        <div class="col-md-auto">
+                                            <img src="{{ $user->foto_perfil }}" class="card-img-top"
+                                                alt="imagen no encontrada" style="width:50px; height:50px">
+                                        </div>
+                                        <div class="col">
+                                            <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
 
-                        </div>
+                                            <span>Email: <a
+                                                    href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
+                                                    class="btn btn-link emaillink">
+                                                    {{ $user->email }}
+                                                </a></span>
+
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
                     </div>
                     <div class="card" id="participantesContainer">
                         <h5>Ubicacion</h5>

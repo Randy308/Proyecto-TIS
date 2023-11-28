@@ -12,7 +12,8 @@
                 </div>
                 <div class="form-outline mb-4">
 
-                    <label class="form-label" for="formName">Nombre completo</label>
+                    <label class="form-label" for="formName">Nombre completo<span
+                        class="text-danger font-weight-bold "> *</span></label>
                     <input type="text" id="formName" class="form-control" name="name"
                         class="@error('name') is-invalid @enderror" value="{{ old('name') }}" />
                     @error('name')
@@ -25,7 +26,8 @@
 
                         <div class="form-outline datepicker">
                             <label for="formBirthDate" class="form-label">Fecha de
-                                nacimiento</label>
+                                nacimiento<span
+                                class="text-danger font-weight-bold "> *</span></label>
                             <input type="date" class="form-control" id="formBirthDate" name="fecha_nac"
                                 class="@error('fecha_nac') is-invalid @enderror"  value="{{ old('fecha_nac') }}" />
 
@@ -34,30 +36,6 @@
                             @enderror
                         </div>
 
-                    </div>
-                    <div class="col-md-6 mb-2">
-                        <label for="formFile" class="form-label">Foto de perfil</label>
-                        <input class="form-control form-control-sm" name="foto_perfil" type="file" id="formFile"
-                            ngf-pattern="'image/*'" accept="image/*" ngf-max-size="2MB"
-                            class="@error('foto_perfil') is-invalid @enderror">
-                        @error('foto_perfil')
-                            <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                        @enderror
-
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="mb-2">
-
-                            <label for="formEmail" class="form-label">Correo electronico</label>
-                            <input type="email" id="formEmail" class="form-control" name="email"
-                                class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
-                            @error('email')
-                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                            @enderror
-                        </div>
                     </div>
                     <div class="col-md-6 mb-2">
 
@@ -79,11 +57,22 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-outline mb-2">
+                    <label for="formEmail" class="form-label">Correo electronico<span
+                        class="text-danger font-weight-bold "> *</span></label>
+                    <input type="email" id="formEmail" class="form-control" name="email"
+                        class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
+                    @error('email')
+                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                    @enderror
+
+                </div>
                 <div class="row">
                     <div class="col-md-6 mb-2">
 
                         <div class="form-outline datepicker">
-                            <label for="formPhoneNumber" class="form-label">Telefono</label>
+                            <label for="formPhoneNumber" class="form-label">Telefono<span
+                                class="text-danger font-weight-bold "> *</span></label>
                             <input type="tel" id="formPhoneNumber" name="telefono" class="form-control"
                                 class="@error('telefono') is-invalid @enderror" value="{{ old('telefono') }}" />
 
@@ -115,7 +104,8 @@
                 </div>
 
                 <div class="form-outline mb-2">
-                    <label class="form-label" for="formAddressLocation">Direccion de domicilio</label>
+                    <label class="form-label" for="formAddressLocation">Direccion de domicilio<span
+                        class="text-danger font-weight-bold "> *</span></label>
                     <input type="text" id="formAddressLocation" class="form-control" name="direccion"
                         class="@error('direccion') is-invalid @enderror"  value="{{ old('direccion') }}"/>
                     @error('direccion')
@@ -134,7 +124,8 @@
 
                 </div>
                 <div class="form-outline">
-                    <label class="form-label" for="password">Contraseña</label>
+                    <label class="form-label" for="password">Contraseña<span
+                        class="text-danger font-weight-bold "> *</span></label>
                     <div class="input-group mb-2">
                         <input type="password" name="password" id="password" class="form-control form-control"
                             class="@error('password') is-invalid @enderror" />
@@ -149,7 +140,8 @@
                 </div>
 
                 <div class="form-outline">
-                    <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
+                    <label class="form-label" for="password_confirmation">Confirmar Contraseña<span
+                        class="text-danger font-weight-bold "> *</span></label>
                     <div class="input-group mb-2">
 
                         <input type="password" name="password_confirmation" id="password_confirmation"
@@ -163,6 +155,9 @@
                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                     @enderror
                 </div>
+                <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el
+                    campo
+                    es obligatorio</span></div>
                 <div class="pt-4 d-flex justify-content-around">
                     <a type="button" href="{{ route('index') }}" class="btn btn-secondary btn-lg mb-1">Regresar</a>
                     <button type="submit" class="btn btn-primary btn-lg mb-1">Crear usuario</button>

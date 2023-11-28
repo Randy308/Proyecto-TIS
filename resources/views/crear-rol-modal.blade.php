@@ -15,7 +15,7 @@
                       <div class="form-outline">
                           <label class="form-label" for="form3Examplev2">Nombre
                               del rol</label>
-                          <input type="text" name="rol" id="rol" class="form-control "
+                          <input type="text" name="rol" id="NombreRol" class="form-control "
                               class="@error('rol') is-invalid @enderror" />
                           @error('rol')
                           <div class="alert alert-danger">
@@ -24,11 +24,15 @@
 
                           @enderror
 
+                          <div class="alert alert-danger" role="alert" id="roleCheck">
+
+                          </div>
+
                       </div>
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                  <button type="submit" class="btn btn-primary">Crear rol</button>
+                  <button type="submit" id="crearRol"  class="btn btn-primary">Crear rol</button>
               </div>
             </form>
           </div>
