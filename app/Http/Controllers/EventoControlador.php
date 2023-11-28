@@ -311,7 +311,7 @@ class EventoControlador extends Controller
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
+                Rule::unique('eventos', 'nombre_evento')->ignore($request->input('nombre_evento'), 'nombre_evento'),
                 'regex:/^[a-zA-Z0-9\s\.\-]+$/',
                 'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
                 'not_in:registracion,registro,admin,event', 
@@ -325,9 +325,6 @@ class EventoControlador extends Controller
             'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
             'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
             'descripcion_evento' => 'nullable|string',
-            'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
-            'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
-
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
@@ -359,7 +356,6 @@ class EventoControlador extends Controller
                 'required' => 'El nombre del evento es obligatorio.',
                 'string' => 'El nombre del evento debe ser una cadena de texto.',
                 'max' => 'El nombre del evento no puede tener más de :max caracteres.',
-                'unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
                 'regex' => 'El nombre del evento solo puede contener caracteres alfanuméricos, espacios, guiones y puntos.',
                 'not_regex' => 'Evita el uso de ciertas palabras en el nombre del evento.',
                 'not_in' => 'Evita el uso de ciertas palabras o frases comunes en el nombre del evento.',
@@ -403,6 +399,10 @@ class EventoControlador extends Controller
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->costo = $request->input('costo');
+        if ($request->has('selectedInstitucion')) {
+            $nombreInstitucion = $request->input('selectedInstitucion');
+            $evento->nombre_institucion = $nombreInstitucion;
+        }
         $evento->save();
 
         $inputArray = $request->input('Auspiciadores');

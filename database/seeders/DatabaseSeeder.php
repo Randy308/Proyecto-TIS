@@ -66,7 +66,7 @@ class DatabaseSeeder extends Seeder
                 $u->assignRole('usuario común');
         }
 
-        $ev = Evento::factory(8)->create();
+        $ev = Evento::factory(20)->create();
         foreach($ev as $e){
 
             $faseInscripcion = new FaseEvento([

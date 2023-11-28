@@ -16,7 +16,8 @@ class EventoFactory extends Factory
         $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
         $eventTypes = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
         $privacyOptions = ['libre', 'con-restriccion'];
-
+        $instituciones = Institucion::pluck('nombre_institucion')->toArray();
+        $nombreInstitucion = $this->faker->randomElement($instituciones);
         $user = DB::table('users')->where('id', 1)->first();
 
         $nombreEvento = $this->faker->unique()->sentence(3);
@@ -46,6 +47,7 @@ class EventoFactory extends Factory
             'cantidad_maxima' => $inscritosMaximos,
             'tiempo_inicio' => $this->faker->time('H:i:s'),
             'tiempo_fin' => $this->faker->time('H:i:s'),
+            'nombre_institucion' => $nombreInstitucion,
         ];
     }
 }

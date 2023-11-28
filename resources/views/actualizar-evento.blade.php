@@ -81,6 +81,10 @@
                                         <span id="combined_end_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <input type="hidden" name="fecha_inicio" id="fecha_inicio">
+                                <input type="hidden" name="fecha_fin" id="fecha_fin">
+                                <input type="hidden" name="tiempo_inicio" id="tiempo_inicio">
+                                <input type="hidden" name="tiempo_fin" id="tiempo_fin">
                                 
 
                             </div>
@@ -219,6 +223,35 @@
             let currentDate = `${year}-${month}-${day}`;
             document.getElementById('fecha_inicio').setAttribute('min', currentDate);
             document.getElementById('fecha_fin').setAttribute('min', currentDate);
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Función para desglosar fechas y horas combinadas
+            function desglosarFechasYHoras() {
+                var combinedStart = $("#combined_start").val();
+                var combinedEnd = $("#combined_end").val();
+    
+                var dateInicio = combinedStart.substring(0, 10);
+                var timeInicio = combinedStart.substring(11);
+    
+                var dateFinal = combinedEnd.substring(0, 10);
+                var timeFinal = combinedEnd.substring(11);
+    
+                // Actualizar los campos de fecha y hora ocultos en el formulario
+                $("#fecha_inicio").val(dateInicio);
+                $("#fecha_fin").val(dateFinal);
+                $("#tiempo_inicio").val(timeInicio);
+                $("#tiempo_fin").val(timeFinal);
+            }
+    
+            // Llama a la función cuando cambie la fecha de inicio o la fecha de finalización
+            $("#combined_start, #combined_end").on("change", function() {
+                desglosarFechasYHoras();
+            });
+    
+            // Llama a la función al cargar la página (en caso de que haya valores iniciales)
+            desglosarFechasYHoras();
         });
     </script>
     
