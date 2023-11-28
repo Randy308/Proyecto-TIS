@@ -40,7 +40,7 @@
             <input class="@error('fechaNacimiento2') border-danger @enderror" style="width:13%; height:28px;" type="text" wire:model="fechaNacimiento2" placeholder="Fecha Nacimiento" required>
         </div>
         @if($error2)
-            <div class="row mt-3">
+            <div class="row mt-3 ">
                 <div class="col-12">
                     <p class="text-center alert alert-danger small p-2">{{ $error2 }}</p>
                 </div>
