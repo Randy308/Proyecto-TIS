@@ -14,7 +14,8 @@ class FaseList extends Component
 
     public $idEvento;
     public $faseId = '';
-
+    public $faseActual;
+    public $primeravez = true;
     public function render()
     {
         $fases = FaseEvento::where('evento_id', $this->idEvento)
@@ -25,9 +26,22 @@ class FaseList extends Component
             $fase->fechaInicio = new DateTime($fase->fechaInicio);
             $fase->fechaFin = new DateTime($fase->fechaFin);
         }
-
+        if($this->primeravez){
+            $this->faseActual = $fases[0]; 
+            $this->primeravez = false;
+        }
+        
         return view('livewire.fase-list', compact('fases'));
     }
+
+    public function abrirEditar($faseId)
+    {
+        $this->faseActual = FaseEvento::find($faseId);
+
+        
+        //$this->emit('abrirelForm', $this->faseActual);
+    }
+
 
    
 }
