@@ -1,7 +1,7 @@
 $(function () {
     // Validate Username
     $("#auspiciadorcheck").hide();
-    
+
     let auspiciadorError = true;
 
     $("#Auspiciador").on("input", function () {
@@ -32,7 +32,7 @@ $(function () {
             $('#crearRol').prop("disabled", true);
         }
     });
-    
+
 
     $('#nombreEventoCheck').hide();
     $("#nombre_evento").on("input", function () {
@@ -63,8 +63,6 @@ $(function () {
             $('#crearEventoBoton').prop("disabled", true);
         }
     });
-
-
     $('#nameCheck').hide();
     $("#formName").on("input", function () {
         let regex = /^[a-zA-Z0-9 ]*$/;
@@ -96,3 +94,4 @@ $(function () {
         }
     });
 });
+

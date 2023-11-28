@@ -204,6 +204,60 @@ $(document).ready(function () {
     var boldflag = false;
     var italicflag = false;
     var underlineflag = false;
+
+    //<button  type="button" id="mayuscula"><i class="bi bi-alphabet"></i></button>
+    $("#mayuscula").on("click", function () {
+            //text-transform: capitalize;
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            var selectedOption = $(element).css("text-transform");
+            console.log(selectedOption);
+            console.log("Hola m");
+            var option =
+                selectedOption != "uppercase" || !selectedOption ? "uppercase" : "none";
+            $(element).css("text-transform", option);
+        });
+    });
+    //<button  type="button" id="minuscula"><i class="bi bi-alphabet-uppercase"></i></button>
+    $("#minuscula").on("click", function () {
+        //text-transform: capitalize;
+    var elements = document.getElementsByClassName("activo");
+    Array.from(elements).forEach(function (element) {
+        var selectedOption = $(element).css("text-transform");
+        console.log(selectedOption);
+        console.log("Hola m");
+        var option =
+            selectedOption != "lowercase" || !selectedOption ? "lowercase" : "none";
+        $(element).css("text-transform", option);
+    });
+});
+    //<button  type="button" id="incrementarSize"><i class="bi bi-sort-up"></i></button>
+    $("#incrementarSize").on("click", function () {
+        //text-transform: capitalize;
+    var elements = document.getElementsByClassName("activo");
+    Array.from(elements).forEach(function (element) {
+        var selectedOption =parseInt($(element).css("font-size"));
+        if(selectedOption >= 100){
+            return
+        }
+        console.log(selectedOption);
+        $(element).css("font-size", selectedOption + 2 + "px");
+    });
+});
+    //<button  type="button" id="disminuirSize"><i class="bi bi-sort-down"></i></button>
+    $("#disminuirSize").on("click", function () {
+        var elements = document.getElementsByClassName("activo");
+        Array.from(elements).forEach(function (element) {
+            var selectedOption = parseInt($(element).css("font-size")); // Parse the font size as an integer
+            if(selectedOption <= 8){
+                return
+            }
+            console.log(selectedOption);
+            $(element).css("font-size", selectedOption - 2 + "px"); // Add "px" to set the new font size
+        });
+    });
+
+    //
     $("#Negrita").on("click", function () {
         boldflag = boldflag ? false : true;
         var elements = document.getElementsByClassName("activo");

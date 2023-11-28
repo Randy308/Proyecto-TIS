@@ -237,7 +237,7 @@ class EventoControlador extends Controller
 
         $faseFinalizacion->save();
 
-        return redirect()->route('index')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+        return redirect()->route('misEventos')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
     public function index()
     {

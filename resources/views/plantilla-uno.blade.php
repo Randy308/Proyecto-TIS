@@ -25,7 +25,12 @@
                     </div>
                     <div class="col ">
                         <div class="div-btn d-flex justify-content-end">
-                            @if (strtotime($evento->fecha_fin) >= strtotime(now('GMT-4')))
+                            @php
+                                $fechaCompleta = $evento->fecha_inicio . ' ' . $evento->tiempo_inicio;
+                                $fechaFinal = $evento->fecha_fin . ' ' . $evento->tiempo_fin;
+
+                            @endphp
+                            @if (strtotime($fechaCompleta) >= strtotime(now('GMT-4')))
                                 @guest
                                     <button class="btn btn-primary" id="boton-registro" role="button" data-toggle="modal"
                                         data-target="#loginModal">
@@ -117,10 +122,39 @@
 
 
                                 @endauth
+                            @elseif (strtotime($fechaFinal) >= strtotime(now('GMT-4')))
+                                @guest
+                                    <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                        Evento en progreso <br>no se admiten mas incripciones
+                                    </button>
+                                @endguest
+                                @auth
+                                    @php
+                                        $id_evento_pagina = $evento->id;
+                                        $id_usuario = auth()->user()->id;
+                                        $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
+                                            ->where('evento_id', $id_evento_pagina)
+                                            ->exists();
+                                    @endphp
+                                    @if ($registroExistente)
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <a class="btn btn-secondary"
+                                                href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                                                Fases
+                                            </a>
+                                            <button type="button" class="btn btn-info" disabled> Ya esta <br>registrado
+                                                en el evento</button>
+
+                                        </div>
+                                    @else
+                                        <button type="button" disabled class="btn btn-primary" id="boton-registro">
+                                            Evento en progreso <br>no se admiten mas incripciones
+                                        </button>
+                                    @endif
+                                @endauth
                             @else
                                 <button type="button" disabled class="btn btn-primary" id="boton-registro">
-                                    Evento finalizado <p>
-                                        {{ strtotime($evento->fecha_fin) . '  ' . strtotime(now('GMT-4')) }}</p>
+                                    Evento finalizado
                                 </button>
 
                             @endif

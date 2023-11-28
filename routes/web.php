@@ -120,7 +120,8 @@ Route::group(['middleware' => ['can:admin.crear-usuario']], function () {
 });
 
 
-Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::put('/fases/editar/{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::delete('/fases/eliminar/{faseId}', [FaseController::class, 'delete'])->name('fase.delete')->middleware('checkRole:administrador,organizador');
 Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
@@ -200,6 +201,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/perfil/{id}/editar', [UsuarioController::class, 'update'])->name('editUser.update');
     Route::put('/registroUsuario/{id}', [AsistenciaEventosController::class, 'create'])->name('registrar-evento-update');
     Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.abandonar');
+    Route::get('/perfil/{id}/cambiarPassword', [UsuarioController::class, 'editPassword'])->name('editPassword');
+    Route::put('/perfil/{id}/cambiarPassword', [UsuarioController::class, 'updatePassword'])->name('password.update');
 
 });
 

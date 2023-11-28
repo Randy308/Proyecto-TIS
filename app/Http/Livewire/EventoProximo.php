@@ -11,10 +11,28 @@ class EventoProximo extends Component
     public function render()
     {
         $todayDate = now('GMT-4')->format('Y-m-d');
-        $evento = Evento::where('fecha_inicio', '>=', $todayDate)
-            ->where('Estado', '=', 'Activo')
-            ->orderBy('fecha_inicio', 'asc')
-            ->first();
+        $todayTime = now('GMT-4')->format('H:i:s');
+
+        // $eventosCaducados = Evento::where('fecha_fin', '<=', $todayDate)->where('tiempo_fin', '<', $todayTime)->where('Estado', '=', 'Activo')->get();
+
+        // foreach ($eventosCaducados as $eventoCaducado) {
+        //     $eventoCaducado->estado = "Finalizado";
+        //     //$eventoCaducado->save();
+        // }
+
+
+        $evento = Evento::where('estado', 'Activo')
+        ->where(function ($query) use ($todayDate, $todayTime) {
+            $query->where('fecha_inicio', '>=', $todayDate)
+                  ->orWhere(function ($innerQuery) use ($todayDate, $todayTime) {
+                      $innerQuery->where('fecha_fin', '>=', $todayDate)
+                                  ->where('tiempo_fin', '>=', $todayTime);
+                  });
+        })
+        ->orderBy('fecha_inicio', 'asc')
+        ->first();
+
+
         $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         $mifechaFinal = null;
         if ($evento) {
@@ -29,6 +47,8 @@ class EventoProximo extends Component
                 $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' - ';
             }
             $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' ' . $fecha->format('Y');
+        } else {
+
         }
 
         return view('livewire.evento-proximo', compact('evento', 'mifechaFinal'));

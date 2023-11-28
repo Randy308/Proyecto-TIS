@@ -38,7 +38,6 @@ class ParticipanteController extends Controller
             'institucion' => 'required',
             'pais' => 'required',
             'historial' => '',
-            'foto_perfil' => 'image|max:2048',
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
         ]);
@@ -55,14 +54,7 @@ class ParticipanteController extends Controller
         $user->email_verified_at = now();
         $user->remember_token = Str::random(10);
         $user->estado = "Habilitado";
-
-
-        if ($request->hasFile('foto_perfil')) {
-            $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
-            $url = Storage::url($imagen);
-        } else {
-            $url = "/storage/image/default_user_image.png";
-        }
+        $url = "/storage/image/default_user_image.png";
         $user->foto_perfil = $url;
 
         $user->assignRole('usuario común');
