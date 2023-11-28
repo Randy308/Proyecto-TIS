@@ -63,5 +63,7 @@ class Evento extends Model
     {
         return $this->belongsToMany(User::class, 'colaboradors');
     }
-
+    public function pertenecenGrupos(){
+        return $this->hasMany(PertenecenGrupo::class);
+    }
 }

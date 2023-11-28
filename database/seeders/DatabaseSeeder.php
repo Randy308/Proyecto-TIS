@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\AsistenciaEvento;
+use App\Models\EstudiantesUmss;
 use App\Models\Evento;
 use App\Models\Institucion;
 use App\Models\User;
@@ -66,7 +67,9 @@ class DatabaseSeeder extends Seeder
                 $u->assignRole('usuario común');
         }
 
-        $ev = Evento::factory(8)->create();
+
+
+        $ev = Evento::factory(2)->create();
         foreach($ev as $e){
 
             $faseInscripcion = new FaseEvento([
@@ -94,5 +97,58 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->call(FaseSeeder::class);
+        $this->call(EstudiantesUmssSeeder::class);
+
+        //usuarios para probar con mis tabla umss
+        $usuario2 = new User();
+        $usuario2->name = 'n2';
+        $usuario2->email = 'n2@gmail.com';
+        $usuario2->email_verified_at = now();
+        $usuario2->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
+        $usuario2->telefono = '77777777';
+        $usuario2->direccion= 'Av. Sucre';
+        $usuario2->foto_perfil = "/storage/image/default_user_image.png";
+        $usuario2->historial_Academico = '';
+        $usuario2->fecha_nac = now();
+        $usuario2->estado = "Habilitado";
+        $usuario2->remember_token =  Str::random(10);
+        $usuario2->institucion_id = $inst->id;
+        $usuario2->remember_token = Str::random(10);
+        $usuario2->assignRole('usuario común');
+        $usuario2->save();
+
+        $usuario3 = new User();
+        $usuario3->name = 'n3';
+        $usuario3->email = 'n3@gmail.com';
+        $usuario3->email_verified_at = now();
+        $usuario3->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
+        $usuario3->telefono = '77777777';
+        $usuario3->direccion= 'Av. Sucre';
+        $usuario3->foto_perfil = "/storage/image/default_user_image.png";
+        $usuario3->historial_Academico = '';
+        $usuario3->fecha_nac = now();
+        $usuario3->estado = "Habilitado";
+        $usuario3->remember_token =  Str::random(10);
+        $usuario3->institucion_id = $inst->id;
+        $usuario3->remember_token = Str::random(10);
+        $usuario3->assignRole('usuario común');
+        $usuario3->save();
+
+        $usuario4 = new User();
+        $usuario4->name = 'n4';
+        $usuario4->email = 'n4@gmail.com';
+        $usuario4->email_verified_at = now();
+        $usuario4->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
+        $usuario4->telefono = '77777777';
+        $usuario4->direccion= 'Av. Sucre';
+        $usuario4->foto_perfil = "/storage/image/default_user_image.png";
+        $usuario4->historial_Academico = '';
+        $usuario4->fecha_nac = now();
+        $usuario4->estado = "Habilitado";
+        $usuario4->remember_token =  Str::random(10);
+        $usuario4->institucion_id = $inst->id;
+        $usuario4->remember_token = Str::random(10);
+        $usuario4->assignRole('usuario común');
+        $usuario4->save();
     }
 }

@@ -34,35 +34,47 @@
 
                                 @endguest
                                 @auth
-                                    @if (auth()->user()->hasRole('Usuario común') ||
+                                    @if (auth()->user()->hasRole('usuario común') ||
                                             auth()->user()->hasRole('Coach'))
                                         @php
+                                            //existe registro tabla individual
                                             $id_evento_pagina = $evento->id;
                                             $id_usuario = auth()->user()->id;
                                             $registroExistente = \App\Models\AsistenciaEvento::where('user_id', $id_usuario)
                                                 ->where('evento_id', $id_evento_pagina)
                                                 ->exists();
+                                            //existe registro en tabla de grupos
+                                            $participanteEngrupodelEvento = \App\Models\PertenecenGrupo::where('user_id', $id_usuario)
+                                                ->where('evento_id', $id_evento_pagina)
+                                                ->exists();
+                                            //nombre de grupo de usuario registrado
+                                            $registroExistente1 = \App\Models\PertenecenGrupo::where('user_id', $id_usuario)
+                                                ->where('evento_id', $id_evento_pagina)
+                                                ->first();
+                                            if ($registroExistente1 !== null) {
+                                                $id = $registroExistente1->grupo_id;
+                                                $grupo = App\Models\Grupo::find($id);
+                                                $nombreGrupo = $grupo->nombre;
+                                            }
                                         @endphp
-                                        @if ($registroExistente)
-                                            {{-- Fases --}}
-                                            <a class="btn btn-secondary"
-                                                href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
-                                                Fases
-                                            </a>
-                                            {{--  --}}
-                                            <div class="dropdown" id="lista-registro">
-                                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                    id="dropdownMenuLink boton-registro" data-toggle="dropdown"
-                                                    aria-haspopup="true" aria-expanded="false">
-                                                    Ya se encuentra <br>registrado en el evento
-                                                </a>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#" data-toggle="modal"
-                                                        data-target="#abandonarModal">Abandonar evento</a>
+                                        @if ($registroExistente || $participanteEngrupodelEvento)
+                                            @if ($evento->tipo_evento=='competencia_individual' || $evento->tipo_evento=='reclutamiento' || $evento->tipo_evento=='taller_individual')
+                                                <div class="dropdown" id="lista-registro">
+                                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                                        id="dropdownMenuLink boton-registro" data-toggle="dropdown"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        Ya se encuentra <br>registrado en el evento
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <a class="dropdown-item" href="#" data-toggle="modal"
+                                                            data-target="#abandonarModal">Abandonar evento</a>
 
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @include('abandonar-evento', ['evento' => $evento])
+                                                @include('abandonar-evento', ['evento' => $evento])
+                                            @else
+                                                <span class="text-center alert alert-success">Grupo: {{$nombreGrupo}}</span>
+                                            @endif
                                         @else
                                             @if (strtoupper($evento->estado) == 'CANCELADO')
                                                 <button type="button" disabled class="btn btn-danger" id="boton-registro">
@@ -73,9 +85,8 @@
                                                     Evento finalizado
                                                 </button>
                                             @elseif (strtoupper($evento->estado) == 'ACTIVO')
-                                                {{-- si es  un evento individual --}}
-                                                @if (true)
-                                                    <form method="POST"
+                                                    @if ($evento->tipo_evento=='competencia_individual' || $evento->tipo_evento=='reclutamiento' || $evento->tipo_evento=='taller_individual')
+                                                        <form method="POST"
                                                         action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
                                                         @method('PUT')
                                                         @csrf
@@ -84,10 +95,12 @@
                                                         <button type="submit" class="btn btn-success" id="boton-registro">
                                                             Registrarse
                                                         </button>
-                                                    </form>
-                                                @else
-                                                    @livewire('registrar-grupo', ['evento_id' => $evento->id])
-                                                @endif
+                                                        </form>
+                                                    @else
+                                                        <a href="{{ route('registroEquipo.view', ['evento_id'=>$evento->id]) }}" class="btn btn-success" id="">
+                                                            Registar Equipo
+                                                        </a>
+                                                    @endif
                                             @else
                                                 <button type="button" disabled class="btn btn-info" id="boton-registro">
                                                     Registro no disponible
@@ -95,9 +108,9 @@
                                             @endif
                                         @endif
                                     @else
-                                    <button type="button" disabled class="btn btn-info" id="boton-registro">
-                                        Inscripción solo para<br>participantes y entrenadores.
-                                    </button>
+                                        <button type="button" disabled class="btn btn-info" id="boton-registro">
+                                            Inscripción solo para<br>participantes y entrenadores.
+                                        </button>
                                     @endif
 
 
@@ -174,27 +187,27 @@
 
                         </div>
                         @if ($evento->colaboradors->count())
-                        <div class="card">
-                            <h4>Colaboradores:</h4>
-                            @foreach ($evento->colaboradors as $user)
-                            <div class="row">
-                                <div class="col-md-auto">
-                                    <img src="{{ $user->foto_perfil }}" class="card-img-top"
-                                        alt="imagen no encontrada" style="width:50px; height:50px">
-                                </div>
-                                <div class="col">
-                                    <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
+                            <div class="card">
+                                <h4>Colaboradores:</h4>
+                                @foreach ($evento->colaboradors as $user)
+                                    <div class="row">
+                                        <div class="col-md-auto">
+                                            <img src="{{ $user->foto_perfil }}" class="card-img-top"
+                                                alt="imagen no encontrada" style="width:50px; height:50px">
+                                        </div>
+                                        <div class="col">
+                                            <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
 
-                                    <span>Email: <a
-                                            href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
-                                            class="btn btn-link emaillink">
-                                            {{ $user->email }}
-                                        </a></span>
+                                            <span>Email: <a
+                                                    href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
+                                                    class="btn btn-link emaillink">
+                                                    {{ $user->email }}
+                                                </a></span>
 
-                                </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                            @endforeach
-                        </div>
                         @endif
 
                     </div>
