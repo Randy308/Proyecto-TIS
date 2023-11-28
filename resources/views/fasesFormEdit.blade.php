@@ -1,7 +1,7 @@
 <form  action="{{ route('faseEdit', $faseActual->id ) }}" method="POST">
     @csrf
     @method('PUT')
-    <div class="modal fade" id="fasesModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="faseModalEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -17,7 +17,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="nombre_fase">Nombre de la fase:</label>
-                        <input type="text" class="form-control" id="nombre_fase" name="nombre_fase" required value="{{ old('nombre_fase', $faseActual->nombre_fase) }}">
+                        <input type="text" class="form-control" id="nombre_fase" name="nombre_fase" required value="{{ $faseActual->nombre_fase}}">
                     </div>
 
                     <div class="form-group">
@@ -55,4 +55,3 @@
         </div>
     </div>
 </form>
-<script src="{{ asset('js/login-form.js') }}"></script>

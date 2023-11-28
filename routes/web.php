@@ -103,7 +103,8 @@ Route::get('/acceso-denegado', function () {
 })->name('acceso-denegado');
 
 
-Route::put('/fases/editar{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::put('/fases/editar/{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
+Route::delete('/fases/eliminar/{faseId}', [FaseController::class, 'delete'])->name('fase.delete')->middleware('checkRole:administrador,organizador');
 Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 

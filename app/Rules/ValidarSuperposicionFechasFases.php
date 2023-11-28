@@ -14,10 +14,11 @@ class ValidarSuperposicionFechasFases implements Rule
      */
 
     protected $eventoId;
-
-    public function __construct($eventoId)
+    protected $faseId;
+    public function __construct($eventoId,$faseId)
     {
         $this->eventoId = $eventoId;
+        $this->faseId = $faseId;
     }
 
     /**
@@ -32,23 +33,23 @@ class ValidarSuperposicionFechasFases implements Rule
         $fasesEvento = FaseEvento::where('evento_id', $this->eventoId)->get();
 
         foreach ($fasesEvento as $fase) {
-
-            if( $fase->fechaInicio == $fase->fechaFin){
-                if($value['fechaInicio'] < $fase->fechaInicio && $value['fechaFin'] > $fase->fechaFin ){
-                    return false;
+            if($fase->id != $this->faseId){
+                if( $fase->fechaInicio == $fase->fechaFin){
+                    if($value['fechaInicio'] < $fase->fechaInicio && $value['fechaFin'] > $fase->fechaFin ){
+                        return false;
+                    }
+                }else if($value['fechaInicio'] == $value['fechaFin']){
+                    if($fase->fechaInicio < $value['fechaInicio']  && $fase->fechaFin  > $value['fechaFin'] ){
+                        return false;
+                    }
+                }else{
+                    if($value['fechaInicio'] <= $fase->fechaInicio && $value['fechaFin'] > $fase->fechaInicio){//
+                        return false;
+                    }else if($value['fechaInicio'] > $fase->fechaInicio && $value['fechaInicio'] < $fase->fechaFin ){
+                        return false;
+                    }    
                 }
-            }else if($value['fechaInicio'] == $value['fechaFin']){
-                if($fase->fechaInicio < $value['fechaInicio']  && $fase->fechaFin  > $value['fechaFin'] ){
-                    return false;
-                }
-            }else{
-                if($value['fechaInicio'] <= $fase->fechaInicio && $value['fechaFin'] > $fase->fechaInicio){//
-                    return false;
-                }else if($value['fechaInicio'] > $fase->fechaInicio && $value['fechaInicio'] < $fase->fechaFin ){
-                    return false;
-                }    
-            }
-            
+            }   
         }
 
         return true; 

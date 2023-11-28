@@ -47,10 +47,9 @@
 
                             </td>
                             <td width="10px">
-                                @if ($evento->estado == 'Activo')
-                                <button class="btn btn-secondary" disabled>Publicado</button>
-                                @else
-                                    <form id="FormPublicar"
+                                @if ($evento->estado == 'Borrador')
+                                
+                                <form id="FormPublicar"
                                         action="{{ route('evento.state.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
                                         method="post">
                                         @csrf
@@ -59,6 +58,8 @@
                                     </form>
                                     <button id="BotonPublicarEvento" class="btn btn-warning"
                                         type="button">Publicar</button>
+                                @else
+                                    <button class="btn btn-secondary" disabled>Publicado</button>
                                 @endif
 
 
