@@ -47,7 +47,7 @@
             </div>
         @endif
 
-        <div class="d-flex mb-3 ">
+        <div class="d-flex mb-3">
             <div class="py-2 mr-2" style="width:10%;">Integrante 2</div>
             <input class="@error('nombre3') border-danger @enderror" style="width:25%; height:28px;" type="text" wire:model="nombre3" placeholder="Nombre Completo" required>
             <div class="col m-0 p-0">
