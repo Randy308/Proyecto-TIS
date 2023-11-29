@@ -1,44 +1,44 @@
-body {
-    background: #eee
+
+:root {
+    --main-sidebar-color: #00446a;
+    --second-sidebar-color: #1c2a3a;
+    --text-sidebar-color: #fafafa;
+    --main-sidebar-colors: #323268;
+    --second-sidebar-colors: #2d2d5e;
+    --text-sidebar-colors: #fafafa;
+    --icon-size: 1.1em;
+    --icon-size-phone: 0.65em;
+    --text-size: 0.75em;
 }
 
-#regForm {
+#FormCrearEvento {
     background-color: #ffffff;
     margin: 0px auto;
-    font-family: Raleway;
+    /* font-family: Raleway; */
     padding: 40px;
     border-radius: 10px
 }
 
 #register{
 
-  color: #6A1B9A;
+  color:  var(--main-sidebar-color);
 }
 
 h1 {
     text-align: center
 }
-
-input {
-    padding: 10px;
-    width: 100%;
-    font-size: 17px;
-    font-family: Raleway;
-    border: 1px solid #aaaaaa;
-    border-radius: 10px;
-    -webkit-appearance: none;
+.form-control {
+    border-radius: 1rem;
 }
-
-
 
 .tab input:focus{
 
-  border:1px solid #6a1b9a !important;
+  border:1px solid  var(--main-sidebar-color) !important;
   outline: none;
 }
 
 input.invalid {
- 
+
     border:1px solid #e03a0666;
 }
 
@@ -46,16 +46,7 @@ input.invalid {
     display: none
 }
 
-button {
-    background-color: #6A1B9A;
-    color: #ffffff;
-    border: none;
-    border-radius: 50%;
-    padding: 10px 20px;
-    font-size: 17px;
-    font-family: Raleway;
-    cursor: pointer
-}
+
 
 button:hover {
     opacity: 0.8
@@ -64,10 +55,6 @@ button:hover {
 button:focus{
 
   outline: none !important;
-}
-
-#prevBtn {
-    background-color: #bbbbbb
 }
 
 
@@ -79,30 +66,35 @@ button:focus{
     display: inline-flex;
     justify-content: center;
 }
+.icono-creacion{
+    color:  var(--main-sidebar-color);
+}
 
 .step {
-       height: 40px;
+    height: 40px;
     width: 40px;
     margin: 0 2px;
-    background-color: #bbbbbb;
     border: none;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
-    color: #6a1b9a;
+    font-size: 25px;
+    background-color: whitesmoke;
+    color:  var(--main-sidebar-color);
     opacity: 0.5;
 }
 
 .step.active {
-    opacity: 1
+    opacity: 1;
+    color: whitesmoke;
+    background-color:  var(--main-sidebar-color);
 }
 
 
 .step.finish {
    color: #fff;
-   background: #6a1b9a;
+   background:  var(--main-sidebar-color);
    opacity: 1;
 
 }
