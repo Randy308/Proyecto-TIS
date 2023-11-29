@@ -176,15 +176,14 @@
     </div>
 
     <div class="content">
-
         <div class="tabContainer">
             <ul class="tabs">
                 <li>
                     <a src="tab1" href="javascript:void(0);" class="active">Informacion</a>
                 </li>
-                <li><a src="tab2" href="javascript:void(0);">Cronograma</a></li>
+                <li><a src="tab2" href="javascript:void(0);">Requisitos</a></li>
                 <li>
-                    <a src="tab3" href="javascript:void(0);">Resultados</a>
+                    <a src="tab3" href="javascript:void(0);">Cronograma</a>
                 </li>
 
             </ul>
@@ -270,13 +269,13 @@
 
                 </div>
                 <div class="c2" id="tab2">
+
+                </div>
+                <div class="c2" id="tab3">
                     @php
                         $editable = false;
                     @endphp
                     @livewire('fase-list', ['idEvento' => $evento->id, 'editable' => $editable])
-                </div>
-                <div class="c2" id="tab3">
-
 
                 </div>
             </div>

@@ -54,7 +54,11 @@ class Evento extends Model
     public function fases(){
         return $this->hasMany(Fase::class);
     }
-    
+
+    public function fasesEventos(){
+        return $this->hasMany(FaseEvento::class);
+    }
+
     public function auspiciadors()
     {
         return $this->belongsToMany(Auspiciador::class, 'auspiciador_eventos');

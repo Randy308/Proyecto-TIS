@@ -78,17 +78,19 @@ class DatabaseSeeder extends Seeder
                 'fechaFin' => $e->fecha_inicio->format('Y-m-d').' 00:00:00',
                 'tipo' => 'Inscripcion',
                 'actual'=> true,
+                'secuencia'=> 1,
             ]);
 
             $faseInscripcion->save();
             $faseFinalizacion = new FaseEvento([
                 'evento_id' => $e->id,
-                'nombre_fase'=> 'Evento Finalizado',
+                'nombre_fase'=> 'Fase de  Cierre',
                 'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
                 'fechaInicio' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
                 'fechaFin' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
                 'tipo' => 'Finalizacion',
                 'actual'=> false,
+                'secuencia'=> 1000,
             ]);
 
             $faseFinalizacion->save();

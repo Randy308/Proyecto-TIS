@@ -17,7 +17,8 @@ class FaseEvento extends Model
         'fechaInicio',
         'fechaFin',
         'tipo',
-        'actual',  
+        'secuencia',
+        'actual',
     ];
 
     public function evento()

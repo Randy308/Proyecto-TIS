@@ -102,9 +102,9 @@ class EventoControlador extends Controller
                 Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
                 'regex:/^[a-zA-Z0-9\s\.\-]+$/',
                 'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
-                'not_in:registracion,registro,admin,event', 
-                'not_in:admin,user', 
-                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre', 
+                'not_in:registracion,registro,admin,event',
+                'not_in:admin,user',
+                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre',
                 'not_regex:/[!@#\$%\^&\*\(\)_\+=\[\]{};:\'",<>\?\/\\~`\|]+/',
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
@@ -242,17 +242,19 @@ class EventoControlador extends Controller
             'fechaInicio' => $request->input('fecha_inicio'),
             'fechaFin' => $request->input('fecha_inicio'),
             'tipo' => 'Inscripcion',
+            'secuencia'=> 1,
             'actual' => true,
         ]);
 
         $faseInscripcion->save();
         $faseFinalizacion = new FaseEvento([
             'evento_id' => $evento->id,
-            'nombre_fase' => 'Evento Finalizado',
+            'nombre_fase' => 'Fase de  Cierre',
             'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
             'fechaInicio' => $request->input('fecha_fin'),
             'fechaFin' => $request->input('fecha_fin'),
             'tipo' => 'Finalizacion',
+            'secuencia'=> 1000,
             'actual' => false,
         ]);
 
@@ -304,14 +306,8 @@ class EventoControlador extends Controller
     }
     public function update($user, $evento, Request $request)
     {
-        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
-        $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
 
-        $todayDate = now('GMT-4')->format('Y-m-d\TH:i');
-        //return $request;
-        //return $todayDate;
-
-        $validator = $request->validate([
+        $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',
@@ -319,9 +315,9 @@ class EventoControlador extends Controller
                 Rule::unique('eventos', 'nombre_evento')->ignore($request->input('nombre_evento'), 'nombre_evento'),
                 'regex:/^[a-zA-Z0-9\s\.\-]+$/',
                 'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
-                'not_in:registracion,registro,admin,event', 
-                'not_in:admin,user', 
-                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre', 
+                'not_in:registracion,registro,admin,event',
+                'not_in:admin,user',
+                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre',
                 'not_regex:/[!@#\$%\^&\*\(\)_\+=\[\]{};:\'",<>\?\/\\~`\|]+/',
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
