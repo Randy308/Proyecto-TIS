@@ -16,7 +16,7 @@ use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
-
+use App\Models\Evento;
 
 // Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
 // Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
@@ -226,3 +226,8 @@ Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::cla
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
 
 Route::get('/registro-equipo/{evento_id}',[RegistroEquipoController::class,'view'])->name('registroEquipo.view');
+
+
+
+
+Route::get('/crear-prueba',[EventoControlador::class,'indexPrueba'])->name('ver-crear-prueba');

@@ -265,6 +265,11 @@ class EventoControlador extends Controller
         $auspiciadores = Auspiciador::get();
         return view('crear-evento', compact('auspiciadores'));
     }
+    public function indexPrueba()
+    {
+        $auspiciadores = Auspiciador::get();
+        return view('prueba-crear-evento', compact('auspiciadores'));
+    }
     public function edit($user, $evento)
     {
         $tiposEvento = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
