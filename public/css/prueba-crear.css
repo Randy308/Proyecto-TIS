@@ -16,7 +16,7 @@
     margin: 0px auto;
     /* font-family: Raleway; */
     padding: 40px;
-    border-radius: 10px
+    border-radius: 30px
 }
 
 #register{
@@ -43,7 +43,7 @@ input.invalid {
 }
 
 .tab {
-    display: none
+    display: none;
 }
 
 

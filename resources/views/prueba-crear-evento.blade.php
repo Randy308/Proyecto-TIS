@@ -45,6 +45,7 @@
                                 <span class="step"><i class="bi bi-incognito"></i></span>
                             </div>
 
+
                             <div class="tab">
                                 <div>
                                     <div class="form-group">
@@ -98,6 +99,8 @@
                                             </span>
                                         @enderror
                                     </div>
+                                    <div class="d-flex"><span class="text-danger font-weight-bold ">* Indica que el campo
+                                        es obligatorio</span></div>
                                 </div>
 
                             </div>
@@ -124,6 +127,8 @@
                                         <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                <div class="d-flex"><span class="text-danger font-weight-bold ">* Indica que el campo
+                                    es obligatorio</span></div>
                             </div>
                             <div class="tab">
                                 <div class="form-group">
@@ -182,8 +187,11 @@
                                 <div id="campos-adicionales">
 
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evento
-                                        <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo" placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
+                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del
+                                        Evento
+                                        <input type="text" name="costo"
+                                            class="form-control @error('costo') is-invalid @enderror" id="costo"
+                                            placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
                                         @error('costo')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -191,8 +199,13 @@
 
 
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad mínima de participantes
-                                        <input type="text" name="cantidad_minima" class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima" placeholder="Ingrese la cantidad mínima de participantes" value="{{ old('cantidad_minima') }}">
+                                        <input type="checkbox" name="mostrarCantidadMinima"
+                                            id="mostrarCantidadMinima"> Cantidad mínima de participantes
+                                        <input type="text" name="cantidad_minima"
+                                            class="form-control @error('cantidad_minima') is-invalid @enderror"
+                                            id="cantidad_minima"
+                                            placeholder="Ingrese la cantidad mínima de participantes"
+                                            value="{{ old('cantidad_minima') }}">
                                         @error('cantidad_minima')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -200,8 +213,13 @@
 
 
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad máxima de participantes
-                                        <input type="text" name="cantidad_maxima" class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima" placeholder="Ingrese la cantidad máxima de participantes" value="{{ old('cantidad_maxima') }}">
+                                        <input type="checkbox" name="mostrarCantidadMaxima"
+                                            id="mostrarCantidadMaxima"> Cantidad máxima de participantes
+                                        <input type="text" name="cantidad_maxima"
+                                            class="form-control @error('cantidad_maxima') is-invalid @enderror"
+                                            id="cantidad_maxima"
+                                            placeholder="Ingrese la cantidad máxima de participantes"
+                                            value="{{ old('cantidad_maxima') }}">
                                         @error('cantidad_maxima')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -216,11 +234,11 @@
                                 </div>
                             </div>
                             <div style="overflow:auto;" id="nextprevious">
-                                <div style="float:right;">
+                                <div class="d-flex flex-row justify-content-end flex-wrap gap-3 p-3">
                                     <button type="button" class="btn btn-info" id="prevBtn" onclick="prev(1)"> <i
                                             class="fa fa-angle-double-left"></i> Anterior</button>
-                                    <button type="button" class="btn btn-primary" id="nextBtn" onclick="next(1)">Siguiente <i
-                                            class="fa fa-angle-double-right"></i></button>
+                                    <button type="button" class="btn btn-primary" id="nextBtn"
+                                        onclick="next(1)">Siguiente <i class="fa fa-angle-double-right"></i></button>
                                 </div>
                             </div>
                         </form>
@@ -234,79 +252,15 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
-    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
+
+
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
-
-
     <script src="{{ asset('js/ubicacionYauspiciador.js') }}"></script>
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHfE5-hGkrVMcsw7p6rA4AQR-r1WU3tZY&libraries=places&callback=iniciarMapa">
     </script>
     <script src="{{ asset('js/script-fecha.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            // Oculta los campos adicionales al cargar la página
-            $('#campos-adicionales input[type="text"]').hide();
-
-            // Muestra u oculta los campos adicionales según el estado de los checkboxes
-            $('input[type="checkbox"]').change(function() {
-                var campoAsociado = $(this).next('input[type="text"]');
-                campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
-            });
-
-            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable
-            $('#privacidad').change(function() {
-                if ($(this).val() === 'con-restriccion') {
-                    $('#campos-adicionales').show();
-                } else {
-                    $('#campos-adicionales').hide();
-                    // Oculta los campos adicionales si el tipo de evento no es "competencia_individual" ni "taller_individual"
-                    $('#eventoRequeridoGroup').hide();
-                    $('#mostrarEvento').prop('checked', false);
-                    $('#evento').hide();
-                }
-            });
-
-            $('#tipo_evento').change(function() {
-                var selectedTipoEvento = $(this).val();
-                var eventoRequeridoGroup = $('#eventoRequeridoGroup');
-
-                if (selectedTipoEvento === 'competencia_individual' || selectedTipoEvento ===
-                    'competencia_grupal') {
-                    eventoRequeridoGroup.show();
-                } else {
-                    camposAdicionales.hide();
-                    eventoRequeridoGroup.hide();
-                    $('#mostrarEvento').prop('checked', false);
-                    $('#evento').hide();
-                }
-            });
-
-            $('#mostrarEvento').change(function() {
-                $('#evento').toggle(this.checked);
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $('#campos-adicionales').hide();
-            $('#privacidad').change(function() {
-                if ($(this).val() === 'con-restriccion') {
-                    $('#campos-adicionales').show();
-                } else {
-                    $('#campos-adicionales').hide();
-                }
-            });
-        });
-    </script>
-
-    <script>
-        function confirmarCancelacion() {
-            if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
-                window.location.href = "{{ route('index') }}";
-            }
-        }
-    </script>
+    <script src="{{ asset('js/crear-prueba.js') }}"></script>
     <script src="{{ asset('js/script-crear-evento.js') }}"></script>
     <script>
         // Convierte el array de auspiciadores de PHP a un array de JavaScript
@@ -317,89 +271,9 @@
         // Puedes usar auspiciadoresArray en tu código JavaScript
         console.log(auspiciadoresArray);
     </script>
-
-    @include('layouts.mensajes-alerta')
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
     @livewireScripts
 
-    <script>
-        var currentTab = 0;
-        document.addEventListener("DOMContentLoaded", function(event) {
-
-
-            showTab(currentTab);
-
-        });
-
-        function showTab(n) {
-            var x = document.getElementsByClassName("tab");
-            x[n].style.display = "block";
-            if (n == 0) {
-                document.getElementById("prevBtn").style.display = "none";
-            } else {
-                document.getElementById("prevBtn").style.display = "inline";
-            }
-            if (n == (x.length - 1)) {
-                document.getElementById("nextBtn").innerHTML = 'Crear evento';
-            } else {
-                document.getElementById("nextBtn").innerHTML = 'Siguiente <i class="fa fa-angle-double-right"></i>';
-            }
-            fixStepIndicator(n)
-        }
-
-        function prev(n) {
-            var x = document.getElementsByClassName("tab");
-            if (currentTab == 0) {
-                return
-            }
-            x[currentTab].style.display = "none";
-            currentTab = currentTab - n;
-
-            if (currentTab >= x.length) {
-
-                document.getElementById("nextprevious").style.display = "none";
-                document.getElementById("all-steps").style.display = "none";
-                document.getElementById("register").style.display = "none";
-                document.getElementById("text-message").style.display = "block";
-
-
-
-
-            }
-            showTab(currentTab);
-        }
-
-        function next(n) {
-            var x = document.getElementsByClassName("tab");
-            if (currentTab == (x.length - 1)) {
-                document.getElementById("FormCrearEvento").submit();
-                return
-            }
-            x[currentTab].style.display = "none";
-            currentTab = currentTab + n;
-            if (currentTab >= x.length) {
-
-                document.getElementById("nextprevious").style.display = "none";
-                document.getElementById("all-steps").style.display = "none";
-                document.getElementById("register").style.display = "none";
-                document.getElementById("text-message").style.display = "block";
-
-
-
-
-            }
-            showTab(currentTab);
-        }
-
-
-
-        function fixStepIndicator(n) {
-            var i, x = document.getElementsByClassName("step");
-            for (i = 0; i < x.length; i++) {
-                x[i].className = x[i].className.replace(" active", "");
-            }
-            x[n].className += " active";
-        }
-    </script>
 </body>
 
 </html>

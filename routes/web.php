@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\AuspiciadorController;
+use App\Http\Controllers\CalificacionParticipanteController;
 use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\FaseController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
+use App\Models\CalificacionParticipante;
 use App\Models\Evento;
 
 // Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
@@ -231,3 +233,5 @@ Route::get('/registro-equipo/{evento_id}',[RegistroEquipoController::class,'view
 
 
 Route::get('/crear-prueba',[EventoControlador::class,'indexPrueba'])->name('ver-crear-prueba');
+Route::get('/calificar-participantes', [CalificacionParticipanteController::class, 'index'])->name('calificar.index');
+Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
