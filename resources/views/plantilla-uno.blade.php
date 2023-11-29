@@ -63,11 +63,14 @@
                                             }
                                         @endphp
                                         @if ($registroExistente || $participanteEngrupodelEvento)
-                                            @if ($evento->tipo_evento=='competencia_individual' || $evento->tipo_evento=='reclutamiento' || $evento->tipo_evento=='taller_individual')
+                                            @if (
+                                                $evento->tipo_evento == 'competencia_individual' ||
+                                                    $evento->tipo_evento == 'reclutamiento' ||
+                                                    $evento->tipo_evento == 'taller_individual')
                                                 <div class="dropdown" id="lista-registro">
-                                                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                                        id="dropdownMenuLink boton-registro" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
+                                                    <a class="btn btn-secondary dropdown-toggle" href="#"
+                                                        role="button" id="dropdownMenuLink boton-registro"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         Ya se encuentra <br>registrado en el evento
                                                     </a>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -78,7 +81,8 @@
                                                 </div>
                                                 @include('abandonar-evento', ['evento' => $evento])
                                             @else
-                                                <span class="text-center alert alert-success">Grupo: {{$nombreGrupo}}</span>
+                                                <span class="text-center alert alert-success">Grupo:
+                                                    {{ $nombreGrupo }}</span>
                                             @endif
                                         @else
                                             @if (strtoupper($evento->estado) == 'CANCELADO')
@@ -90,22 +94,21 @@
                                                     Evento finalizado
                                                 </button>
                                             @elseif (strtoupper($evento->estado) == 'ACTIVO')
-                                                    @if ($evento->tipo_evento=='competencia_individual' || $evento->tipo_evento=='reclutamiento' || $evento->tipo_evento=='taller_individual')
-                                                        <form method="POST"
-                                                        action="{{ route('registrar-evento-update', ['id' => auth()->user()->id]) }}">
-                                                        @method('PUT')
-                                                        @csrf
-
-                                                        <input type="hidden" name="evento" value="{{ $evento->id }}">
-                                                        <button type="submit" class="btn btn-success" id="boton-registro">
-                                                            Registrarse
-                                                        </button>
-                                                        </form>
-                                                    @else
-                                                        <a href="{{ route('registroEquipo.view', ['evento_id'=>$evento->id]) }}" class="btn btn-success" id="">
-                                                            Registar Equipo
-                                                        </a>
-                                                    @endif
+                                                @if (
+                                                    $evento->tipo_evento == 'competencia_individual' ||
+                                                        $evento->tipo_evento == 'reclutamiento' ||
+                                                        $evento->tipo_evento == 'taller_individual')
+                                                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                        data-target="#modalRegistroParticipanteEvento">
+                                                        Registrarse
+                                                    </button>
+                                                    @include('layouts.modal-registro-evento')
+                                                @else
+                                                    <a href="{{ route('registroEquipo.view', ['evento_id' => $evento->id]) }}"
+                                                        class="btn btn-success" id="">
+                                                        Registar Equipo
+                                                    </a>
+                                                @endif
                                             @else
                                                 <button type="button" disabled class="btn btn-info" id="boton-registro">
                                                     Registro no disponible

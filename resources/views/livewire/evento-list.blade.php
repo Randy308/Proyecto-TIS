@@ -124,6 +124,8 @@
                                         <p class="card-text"><b class=" font-weight-bold">Descripción:
                                             </b>{{ $evento->descripcion_evento }}</p>
                                     @endif
+                                    <p class="card-text"><b class=" font-weight-bold">Tipo de evento:
+                                    </b>{{ $evento->tipo_evento }}</p>
                                 </div>
                             </div>
                             <div class="row">
