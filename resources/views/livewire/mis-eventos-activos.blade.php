@@ -32,7 +32,7 @@
                                             Acción
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li><a class="dropdown-item" href="#">Ver Participantes</a></li>
+                                            <li><a class="dropdown-item" href="{{ route('ver.participantes', ['evento_id'=>$evento->id]) }}">Ver Participantes</a></li>
                                             <li><a class="dropdown-item" href="#">Ver Cronograma</a></li>
                                             <li><a class="dropdown-item" href="#">Calificar participantes</a></li>
 

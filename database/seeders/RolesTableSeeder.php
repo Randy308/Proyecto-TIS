@@ -48,34 +48,5 @@ class RolesTableSeeder extends Seeder
         Permission::create(['name' => 'admin.cancelar-evento'])->assignRole($administrador);
         Permission::create(['name' => 'admin.ver-perfil'])->assignRole($administrador);
         Permission::create(['name' => 'admin.editar-perfil'])->assignRole($administrador);
-        $admin = User::create([
-            'name' => 'Administrador',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $admin->assignRole('administrador');
-
-        $organizador = User::create([
-            'name' => 'Organizador',
-            'email' => 'organizador@example.com',
-            'password' => bcrypt('contraseña'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $organizador->assignRole('organizador');
-
-        $colaborador = User::create([
-            'name' => 'Colaborador',
-            'email' => 'colaborador@example.com',
-            'password' => bcrypt('contraseña'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $colaborador->assignRole('colaborador');
     }
 }

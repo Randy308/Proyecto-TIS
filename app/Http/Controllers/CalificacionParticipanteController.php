@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CalificacionParticipante;
+use App\Models\Evento;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,16 @@ class CalificacionParticipanteController extends Controller
 {
 
     public function index()
-    {   $users = User::paginate(20);
+    {   //$users = User::paginate(20);
+        $evento = Evento::find(1);
+
+        // Verifica si el evento existe
+        if ($evento) {
+            // Obtén los usuarios que participan en este evento
+            $users = $evento->users()->get();
+
+
+        }
         //$users = User::where('estado', 'Habilitado')->get();
         return view('calificar-participantes', compact('users'));
     }
@@ -28,9 +38,16 @@ class CalificacionParticipanteController extends Controller
     }
 
 
-    public function show(CalificacionParticipante $calificacionParticipante)
+    public function show($evento_id)
     {
-        //
+
+        $evento = Evento::find($evento_id);
+        if ($evento) {
+            $users = $evento->users()->get();
+
+
+        }
+        return view('calificar-participantes', compact('users'));
     }
 
 

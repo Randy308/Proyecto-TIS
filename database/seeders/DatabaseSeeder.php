@@ -60,12 +60,7 @@ class DatabaseSeeder extends Seeder
         $usuario->remember_token = Str::random(10);
         $usuario->assignRole('administrador');
         $usuario->save();
-        $us = User::factory(4)->create();
 
-        foreach($us as $u){
-
-                $u->assignRole('usuario común');
-        }
 
         $ev = Evento::factory(20)->create();
         foreach($ev as $e){
@@ -94,6 +89,20 @@ class DatabaseSeeder extends Seeder
             ]);
 
             $faseFinalizacion->save();
+        }
+        $us = User::factory(4)->create();
+
+        $arrayValues = ['Activo', 'Finalizado', 'Cancelado'];
+        foreach($us as $u){
+
+                $u->assignRole('usuario común');
+                $asistencia = new AsistenciaEvento();
+                $asistencia->user_id = $u->id;
+                $asistencia->evento_id = 1;
+                $asistencia->rol = "participante";
+                $asistencia->fechaInscripcion = now();
+                $asistencia->estado = $arrayValues[rand(0,2)];
+                $asistencia->save();
         }
 
         $this->call(FaseSeeder::class);

@@ -236,3 +236,5 @@ Route::get('/crear-prueba',[EventoControlador::class,'indexPrueba'])->name('ver-
 Route::get('/calificar-participantes', [CalificacionParticipanteController::class, 'index'])->name('calificar.index');
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 Route::get('/cronograma/{evento}', [FaseController::class, 'show'])->name('crear.cronograma')->middleware('checkRole:administrador,organizador');
+
+Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('ver.participantes');

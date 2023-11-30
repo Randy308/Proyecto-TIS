@@ -36,13 +36,13 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            <div class="container">
-                <h1>Laravel Table Inline Editing Example - ItSolutionStuff.com</h1>
+            <div class="container py-4">
+                <p class="h3">Lista de participantes</p>
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Name</th>
+                            <th>ID</th>
+                            <th>Nombre</th>
                             <th>Email</th>
                             <th>Estado</th>
                         </tr>
