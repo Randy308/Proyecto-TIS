@@ -23,7 +23,7 @@
                             <td>{{ $evento->estado }}</td>
                             <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
                             @if (strtoupper($evento->estado) == 'BORRADOR')
-                                <td class="d-flex">
+                                <td >
 
                                     <div class="btn-group btn-group-sm" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"

@@ -111,11 +111,11 @@ class EventoControlador extends Controller
 
             'cantidad_minima' => 'nullable|integer|min:0',
             'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
-            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
+            'tipo_evento' => 'required|string|regex:/^[a-zA-Z0-9\s\.\-]+$/', // Añadida
             'descripcion_evento' => 'nullable|string',
             'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
             'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
-
+            'modalidad' => 'required',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
@@ -131,8 +131,6 @@ class EventoControlador extends Controller
             'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
             'privacidad.required' => 'La privacidad del evento es obligatoria.',
             'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
-            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
-            'tipo_evento.in' => 'El tipo de evento no es válido.',
             'mostrarCantidadMinima.required' => 'Debe especificar si hay una cantidad mínima de participantes.',
             'mostrarCantidadMaxima.required' => 'Debe especificar si hay una cantidad máxima de participantes.',
             'cantidad_minima.required' => 'La cantidad mínima de participantes es obligatoria.',
@@ -204,7 +202,7 @@ class EventoControlador extends Controller
         $evento->estado = 'Borrador';
         $evento->fecha_inicio = $dateInicio;
         $evento->fecha_fin = $dateFinal;
-
+        $evento->modalidad = $request->input('modalidad');
         $evento->tiempo_inicio = $timeInicio;
         $evento->tiempo_fin = $timeFinal;
         $evento->direccion_banner = '/storage/banners/' . $nombreDelArchivo;
@@ -329,10 +327,11 @@ class EventoControlador extends Controller
 
             'cantidad_minima' => 'nullable|integer|min:0',
             'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
-            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
+            'tipo_evento' => 'required|string|regex:/^[a-zA-Z0-9\s\.\-]+$/',
             'descripcion_evento' => 'nullable|string',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
+            'modalidad' => 'required',
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
             'costo' => 'nullable|numeric|min:0',
@@ -346,8 +345,6 @@ class EventoControlador extends Controller
             'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
             'privacidad.required' => 'La privacidad del evento es obligatoria.',
             'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
-            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
-            'tipo_evento.in' => 'El tipo de evento no es válido.',
             'cantidad_minima.required' => 'La cantidad mínima de participantes es obligatoria.',
             'cantidad_minima.integer' => 'La cantidad mínima de participantes debe ser un número entero.',
             'cantidad_minima.min' => 'La cantidad mínima de participantes debe ser al menos :min.',
@@ -394,6 +391,7 @@ class EventoControlador extends Controller
         $evento->nombre_evento = $request->input('nombre_evento');
         $evento->descripcion_evento = $request->input('descripcion_evento');
         $evento->tipo_evento = $request->input('tipo_evento');
+        $evento->modalidad = $request->input('modalidad');
         $evento->fecha_inicio = $dateInicio;
         $evento->fecha_fin = $dateFinal;
 

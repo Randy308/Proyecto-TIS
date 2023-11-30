@@ -152,16 +152,62 @@
 
 
                             <div class="tab" id="ultimaTab">
+                                <div class="form-group py-4">
+                                    <label for="tipo_evento">Tipo de Evento<span
+                                            class="text-danger font-weight-bold ">*</span></label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select id="selectorTipo"
+                                                class="form-control @error('tipo_evento') is-invalid @enderror">
+                                                <option value="Reclutamiento">
+                                                    Reclutamiento
+                                                </option>
+                                                <option value="Competencia">
+                                                    Competencia</option>
+                                                <option value="Taller">
+                                                    Taller</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="tipo_evento"
+                                                class="form-control @error('tipo_evento') is-invalid @enderror"
+                                                id="tipo_evento" value="{{ old('tipo_evento', $miEvento->tipo_evento) }}"
+                                                placeholder="Ingrese el nombre del evento" required
+                                                aria-describedby="tipo_evento_help">
+                                            @error('tipo_evento')
+                                                <span id="tipo_evento_help" class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                            <div class="alert alert-danger" role="alert" id="tipo_eventoCheck">
+
+                                            </div>
+                                            @error('tipo_evento')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
                                 <div class="form-group">
-                                    <label for="tipo_evento">Tipo de Evento</label>
-                                    <select name="tipo_evento" class="form-control" id="tipo_evento" required>
-                                        @foreach ($tiposEvento as $tipo)
-                                            <option value="{{ $tipo }}"
-                                                {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
-                                                {{ $tipo }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <p class="h5">Modalidad del evento</p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad1" value="individual"
+                                        {{ $miEvento->modalidad == "individual" ? 'checked' : '' }} >
+                                        <label class="form-check-label" for="modalidad1">
+                                         Evento individual
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad2" value="grupal"
+                                        {{ $miEvento->modalidad == "grupal" ? 'checked' : '' }} >
+                                        <label class="form-check-label" for="modalidad2">
+                                            Evento grupal
+                                        </label>
+                                      </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad del Evento</label>
@@ -177,6 +223,7 @@
                                         </span>
                                     @enderror
                                 </div>
+
                                 <div id="campos-adicionales" class="{{ $miEvento->privacidad == "libre" ? 'sin-restriccion' : '' }}  ">
 
                                     <div class="form-group">
@@ -294,6 +341,15 @@
 
         });
     </script>
+        <script>
+            $(document).ready(function() {
+                $("#selectorTipo").selectmenu({
+                    change: function(event, data) {
+                        $("#tipo_evento").val(data.item.value);
+                    },
+                });
+            });
+        </script>
     <script>
         var currentTab = 0;
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -380,6 +436,7 @@
             }
         }
     </script>
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
 </body>
 
 </html>

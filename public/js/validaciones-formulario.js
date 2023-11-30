@@ -57,8 +57,27 @@ $(function () {
         }
     });
 
+    $('#tipo_eventoCheck').hide();
+    $('#nextBtn').prop("disabled", true);
+    $("#tipo_evento").on("input", function () {
+        let regex = /^[a-zA-Z0-9 ]*$/;
+        let s = $(this).val();
+        if (regex.test(s)) {
+            $("#tipo_eventoCheck").hide();
+            $("#tipo_eventoCheck").html("");
+            $('#nextBtn').prop("disabled", false);
+        } else {
+            $("#tipo_eventoCheck").show();
+            $("#tipo_eventoCheck").html("nombre del tipo de evento incorrecto");
+            $('#nextBtn').prop("disabled", true);
+        }
+        if (s.length < 2) {
+            $("#tipo_eventoCheck").show();
+            $("#tipo_eventoCheck").html("nombre del tipo de  evento incorrecto");
+            $('#nextBtn').prop("disabled", true);
 
-
+        }
+    });
 
     $('#descripcionEventoCheck').hide();
     $("#descripcion_evento").on("input", function () {

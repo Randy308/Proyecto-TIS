@@ -54,32 +54,45 @@
 
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tipo_evento">Tipo de Evento</label>
-                                    <select name="tipo_evento"
-                                        class="form-control @error('tipo_evento') is-invalid @enderror"
-                                        id="tipo_evento">
-                                        <option value="reclutamiento"
-                                            {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>Reclutamiento
-                                        </option>
-                                        <option value="competencia_individual"
-                                            {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>
-                                            Competencia Individual</option>
-                                        <option value="competencia_grupal"
-                                            {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>
-                                            Competencia Grupal(4)</option>
-                                        <option value="taller_individual"
-                                            {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>Taller
-                                            Individual</option>
-                                        <option value="taller_grupal"
-                                            {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller Grupal(4)
-                                        </option>
-                                    </select>
-                                    @error('tipo_evento')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                <div class="form-group py-4">
+                                    <label for="tipo_evento">Tipo de Evento<span
+                                            class="text-danger font-weight-bold ">*</span></label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select id="selectorTipo"
+                                                class="form-control @error('tipo_evento') is-invalid @enderror">
+                                                <option value="Reclutamiento">
+                                                    Reclutamiento
+                                                </option>
+                                                <option value="Competencia">
+                                                    Competencia</option>
+                                                <option value="Taller">
+                                                    Taller</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="tipo_evento"
+                                                class="form-control @error('tipo_evento') is-invalid @enderror"
+                                                id="tipo_evento" value="{{ old('tipo_evento', 'Reclutamiento') }}"
+                                                placeholder="Ingrese el nombre del evento" required
+                                                aria-describedby="tipo_evento_help">
+                                            @error('tipo_evento')
+                                                <span id="tipo_evento_help" class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                            <div class="alert alert-danger" role="alert" id="tipo_eventoCheck">
+
+                                            </div>
+                                            @error('tipo_evento')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+
                                 </div>
 
 
@@ -91,29 +104,54 @@
                                         data-target="#exampleModal"> <i class="bi bi-geo-alt-fill"></i></button>
                                     @include('modal-ubicacion')
                                 </div>
-
+                                <div class="row py-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fecha_inicio">Fecha de inicio <span
+                                                    class="text-danger font-weight-bold ">*</span></label>
+                                            <input type="datetime-local" name="fecha_inicio"
+                                                class="form-control @error('fecha_inicio') is-invalid @enderror"
+                                                id="fecha_inicio" value="{{ old('fecha_inicio') }}" required
+                                                aria-describedby="fecha_inicio_help">
+                                            @error('fecha_inicio')
+                                                <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="fecha_fin">Fecha de finalización <span
+                                                    class="text-danger font-weight-bold ">*</span></label>
+                                            <input type="datetime-local" name="fecha_fin"
+                                                class="form-control @error('fecha_fin') is-invalid @enderror"
+                                                id="fecha_fin" value="{{ old('fecha_fin') }}" required
+                                                aria-describedby="fecha_fin_help">
+                                            @error('fecha_fin')
+                                                <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    <label for="fecha_inicio">Fecha de inicio <span
-                                            class="text-danger font-weight-bold ">*</span></label>
-                                    <input type="datetime-local" name="fecha_inicio"
-                                        class="form-control @error('fecha_inicio') is-invalid @enderror"
-                                        id="fecha_inicio" value="{{ old('fecha_inicio') }}" required
-                                        aria-describedby="fecha_inicio_help">
-                                    @error('fecha_inicio')
-                                        <span id="fecha_inicio_help" class="text-danger">{{ $message }}</span>
-                                    @enderror
+                                    <p class="h6">Modalidad del evento<span
+                                        class="text-danger font-weight-bold ">*</span></p>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad1" value="individual"
+                                        {{  old('modalidad') == "individual" ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="modalidad1">
+                                         Evento individual
+                                        </label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad2" value="grupal"
+                                        {{  old('modalidad') == "grupal" ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="modalidad2">
+                                            Evento grupal
+                                        </label>
+                                      </div>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="fecha_fin">Fecha de finalización <span
-                                            class="text-danger font-weight-bold ">*</span></label>
-                                    <input type="datetime-local" name="fecha_fin"
-                                        class="form-control @error('fecha_fin') is-invalid @enderror" id="fecha_fin"
-                                        value="{{ old('fecha_fin') }}" required aria-describedby="fecha_fin_help">
-                                    @error('fecha_fin')
-                                        <span id="fecha_fin_help" class="text-danger">{{ $message }}</span>
-                                    @enderror
-                                </div>
+
 
                             </div>
                             <div class="col-md-6">
@@ -168,8 +206,11 @@
                                 <div id="campos-adicionales">
 
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evento
-                                        <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo" placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
+                                        <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del
+                                        Evento
+                                        <input type="text" name="costo"
+                                            class="form-control @error('costo') is-invalid @enderror" id="costo"
+                                            placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
                                         @error('costo')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -177,8 +218,13 @@
 
 
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad mínima de participantes
-                                        <input type="text" name="cantidad_minima" class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima" placeholder="Ingrese la cantidad mínima de participantes" value="{{ old('cantidad_minima') }}">
+                                        <input type="checkbox" name="mostrarCantidadMinima"
+                                            id="mostrarCantidadMinima"> Cantidad mínima de participantes
+                                        <input type="text" name="cantidad_minima"
+                                            class="form-control @error('cantidad_minima') is-invalid @enderror"
+                                            id="cantidad_minima"
+                                            placeholder="Ingrese la cantidad mínima de participantes"
+                                            value="{{ old('cantidad_minima') }}">
                                         @error('cantidad_minima')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -186,8 +232,13 @@
 
 
                                     <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad máxima de participantes
-                                        <input type="text" name="cantidad_maxima" class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima" placeholder="Ingrese la cantidad máxima de participantes" value="{{ old('cantidad_maxima') }}">
+                                        <input type="checkbox" name="mostrarCantidadMaxima"
+                                            id="mostrarCantidadMaxima"> Cantidad máxima de participantes
+                                        <input type="text" name="cantidad_maxima"
+                                            class="form-control @error('cantidad_maxima') is-invalid @enderror"
+                                            id="cantidad_maxima"
+                                            placeholder="Ingrese la cantidad máxima de participantes"
+                                            value="{{ old('cantidad_maxima') }}">
                                         @error('cantidad_maxima')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
@@ -208,7 +259,8 @@
                                 <div class="form-group">
                                     <a href="#" class="btn btn-cancelar"
                                         onclick="confirmarCancelacion()">Cancelar</a>
-                                    <button type="submit" class="btn btn-info" id="crearEventoBoton">Crear Evento</button>
+                                    <button type="submit" class="btn btn-info" id="nextBtn">Crear
+                                        Evento</button>
                                 </div>
                             </div>
                         </div>
@@ -297,11 +349,15 @@
                     $('#campos-adicionales').hide();
                 }
             });
+            $("#selectorTipo").selectmenu({
+                change: function(event, data) {
+                    $("#tipo_evento").val(data.item.value);
+                },
+            });
         });
     </script>
 
     <script>
-
         function confirmarCancelacion() {
             if (confirm("¿Estás seguro de que deseas cancelar el evento?")) {
                 window.location.href = "{{ route('index') }}";

@@ -27,8 +27,9 @@ class CreateEventosTable extends Migration
             $table->double('latitud');
             $table->double('longitud');
             $table->string('background_color');
-            $table->enum('tipo_evento', ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal']);
+            $table->string('tipo_evento');
             $table->enum('privacidad', ['libre', 'con-restriccion']);
+            $table->enum('modalidad', ['individual', 'grupal']);
             $table->double('costo')->nullable();
             $table->unsignedBigInteger('cantidad_minima')->nullable();
             $table->unsignedBigInteger('cantidad_maxima')->nullable();

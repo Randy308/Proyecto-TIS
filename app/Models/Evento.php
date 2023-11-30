@@ -26,6 +26,7 @@ class Evento extends Model
         'latitud',
         'longitud',
         'costo',
+        'modalidad',
         'nombre_institucion',
         'tiempo_inicio',
         'tiempo_fin',
