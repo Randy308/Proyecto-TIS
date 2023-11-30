@@ -81,9 +81,9 @@
                                         </span>
                                     @enderror
                                 </div>
-                                
-                                
-                                
+
+
+
 
                                 <div class="form-group">
                                     <label for="Ubicacion">Agregar ubicación:</label>
@@ -151,7 +151,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="privacidad">Privacidad del Evento</label>
+                                    <label for="privacidad">Requisitos del Evento</label>
                                     <select name="privacidad"
                                         class="form-control @error('privacidad') is-invalid @enderror" id="privacidad"
                                         required>
@@ -166,7 +166,7 @@
                                 </div>
 
                                 <div id="campos-adicionales">
-                                    
+
                                     <div class="form-group">
                                         <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del Evento
                                         <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo" placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
@@ -174,8 +174,8 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    
-                                    
+
+
                                     <div class="form-group">
                                         <input type="checkbox" name="mostrarCantidadMinima" id="mostrarCantidadMinima"> Cantidad mínima de participantes
                                         <input type="text" name="cantidad_minima" class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima" placeholder="Ingrese la cantidad mínima de participantes" value="{{ old('cantidad_minima') }}">
@@ -183,8 +183,8 @@
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
                                     </div>
-                                    
-                                    
+
+
                                     <div class="form-group">
                                         <input type="checkbox" name="mostrarCantidadMaxima" id="mostrarCantidadMaxima"> Cantidad máxima de participantes
                                         <input type="text" name="cantidad_maxima" class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima" placeholder="Ingrese la cantidad máxima de participantes" value="{{ old('cantidad_maxima') }}">

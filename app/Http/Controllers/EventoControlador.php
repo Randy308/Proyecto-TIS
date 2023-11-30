@@ -279,13 +279,13 @@ class EventoControlador extends Controller
 
         $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $auspiciadores = Auspiciador::get();
-
+        $instituciones = Institucion::pluck('nombre_institucion');
         $fasesUltimas = FaseEvento::where('evento_id', $evento)
             ->orderBy('secuencia', 'desc')
             ->take(2)
             ->get();
-            $fasesUltimas = $fasesUltimas->reverse();
-        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores','fasesUltimas'));
+        $fasesUltimas = $fasesUltimas->reverse();
+        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores', 'fasesUltimas', 'instituciones'));
     }
 
     public function updateEstado($user, $evento, Request $request)
@@ -312,7 +312,6 @@ class EventoControlador extends Controller
     }
     public function update($user, $evento, Request $request)
     {
-
         $request->validate([
             'nombre_evento' => [
                 'required',
@@ -328,8 +327,8 @@ class EventoControlador extends Controller
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
 
-            'cantidad_minima' => 'required|integer|min:0',
-            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
+            'cantidad_minima' => 'nullable|integer|min:0',
+            'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
             'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
             'descripcion_evento' => 'nullable|string',
             "Auspiciadores" => "array",
@@ -401,20 +400,28 @@ class EventoControlador extends Controller
         $evento->tiempo_inicio = $timeInicio;
         $evento->tiempo_fin = $timeFinal;
         $evento->privacidad = $request->input('privacidad');
-        $evento->cantidad_minima = $request->input('cantidad_minima');
-        $evento->cantidad_maxima = $request->input('cantidad_maxima');
+
+
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->costo = $request->input('costo');
-        if ($request->has('selectedInstitucion')) {
-            $nombreInstitucion = $request->input('selectedInstitucion');
+        if ($request->has('institucion')) {
+            $nombreInstitucion = $request->input('institucion');
             $evento->nombre_institucion = $nombreInstitucion;
+        } else {
+            $evento->nombre_institucion = "UMSS";
         }
-        $evento->nombre_institucion = "UMSS";
+        if ($request->filled('cantidad_minima')) {
+            $evento->cantidad_minima = $request->input('cantidad_minima');
+        }
+        if ($request->filled('cantidad_maxima')) {
+            $evento->cantidad_maxima = $request->input('cantidad_maxima');
+        }
         $evento->save();
 
         $inputArray = $request->input('Auspiciadores');
         if ($request->filled('Auspiciadores') && is_array($inputArray)) {
+            AuspiciadorEventos::where('evento_id', $evento->id)->delete();
             foreach ($inputArray as $value) {
                 $miAuspiciador = Auspiciador::where('nombre', $value)->first();
 
