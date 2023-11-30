@@ -33,7 +33,7 @@
                                         </button>
                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                                             <li><a class="dropdown-item" href="#">Ver Participantes</a></li>
-                                            <li><a class="dropdown-item" href="#">Ver Fases</a></li>
+                                            <li><a class="dropdown-item" href="#">Ver Cronograma</a></li>
                                             <li><a class="dropdown-item" href="#">Calificar participantes</a></li>
 
                                         </ul>

@@ -200,10 +200,10 @@ class EventoControlador extends Controller
             $nombreInstitucion = $request->input('selectedInstitucion');
             $evento->nombre_institucion = $nombreInstitucion;
         }
-        $evento-> user_id =  auth()->id();
-        $evento-> estado = 'Borrador';
-        $evento-> fecha_inicio =  $dateInicio;
-        $evento-> fecha_fin = $dateFinal;
+        $evento->user_id = auth()->id();
+        $evento->estado = 'Borrador';
+        $evento->fecha_inicio = $dateInicio;
+        $evento->fecha_fin = $dateFinal;
 
         $evento->tiempo_inicio = $timeInicio;
         $evento->tiempo_fin = $timeFinal;
@@ -242,7 +242,7 @@ class EventoControlador extends Controller
             'fechaInicio' => $request->input('fecha_inicio'),
             'fechaFin' => $request->input('fecha_inicio'),
             'tipo' => 'Inscripcion',
-            'secuencia'=> 1,
+            'secuencia' => 1,
             'actual' => true,
         ]);
 
@@ -254,7 +254,7 @@ class EventoControlador extends Controller
             'fechaInicio' => $request->input('fecha_fin'),
             'fechaFin' => $request->input('fecha_fin'),
             'tipo' => 'Finalizacion',
-            'secuencia'=> 1000,
+            'secuencia' => 1000,
             'actual' => false,
         ]);
 
@@ -279,7 +279,13 @@ class EventoControlador extends Controller
 
         $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $auspiciadores = Auspiciador::get();
-        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores'));
+
+        $fasesUltimas = FaseEvento::where('evento_id', $evento)
+            ->orderBy('secuencia', 'desc')
+            ->take(2)
+            ->get();
+            $fasesUltimas = $fasesUltimas->reverse();
+        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores','fasesUltimas'));
     }
 
     public function updateEstado($user, $evento, Request $request)
@@ -288,7 +294,7 @@ class EventoControlador extends Controller
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->estado = 'Activo';
         $evento->save();
-    return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+        return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
     }
     public function editBanner($user, $evento)
     {

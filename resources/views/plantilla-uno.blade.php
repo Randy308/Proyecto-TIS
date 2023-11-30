@@ -183,7 +183,8 @@
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-profile-tab" data-bs-toggle="pill" data-bs-target="#pills-profile"
-                    type="button" role="tab" aria-controls="pills-profile" aria-selected="false">Cronograma</button>
+                    type="button" role="tab" aria-controls="pills-profile"
+                    aria-selected="false">Cronograma</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
@@ -198,8 +199,13 @@
                 <div id="tab2">
                     @php
                         $editable = false;
+                        $fases = $evento->fasesEventos->sortBy('secuencia');
                     @endphp
-                    @livewire('fase-list', ['idEvento' => $evento->id, 'editable' => $editable])
+                    @include('layouts.cronograma-evento', [
+                        'fases' => $fases,
+                        'editable' => $editable,
+                    ])
+
                 </div>
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">

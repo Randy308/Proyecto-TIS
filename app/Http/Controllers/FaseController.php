@@ -18,7 +18,17 @@ use Carbon\Carbon;
 class FaseController extends Controller
 {
 
+    public function show($id)
+    {
+        $evento = Evento::find($id);
+        $fasesUltimas = FaseEvento::where('evento_id', $id)
+            ->orderBy('secuencia', 'desc')
+            ->take(2)
+            ->get();
+        $fasesUltimas = $fasesUltimas->reverse();
 
+        return view('crear-cronograma', compact('evento', 'fasesUltimas'));
+    }
     public function delete($faseId)
     {
         $fase = FaseEvento::find($faseId);
@@ -59,7 +69,7 @@ class FaseController extends Controller
         $fase->nombre_fase = $request['nombre_fase'];
         $fase->descripcion_fase = $request['descripcion_fase'];
         $fase->fechaInicio = $carbonDatetime1->toDateTimeString();
-        $fase->secuencia = $secuenciaMaxima +1;
+        $fase->secuencia = $secuenciaMaxima + 1;
         $fase->fechaFin = $carbonDatetime2->toDateTimeString();
         $fase->tipo = $request['tipo'];
         $fase->actual = false;

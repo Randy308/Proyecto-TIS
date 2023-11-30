@@ -56,27 +56,33 @@
                                     <label for="tipo_evento">Tipo de Evento</label>
                                     <select name="tipo_evento" class="form-control" id="tipo_evento" required>
                                         @foreach ($tiposEvento as $tipo)
-                                            <option value="{{ $tipo }}" {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
+                                            <option value="{{ $tipo }}"
+                                                {{ $miEvento->tipo_evento === $tipo ? 'selected' : '' }}>
                                                 {{ $tipo }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="combined_start">Fecha de inicio <span class="text-danger font-weight-bold">*</span></label>
+                                    <label for="combined_start">Fecha de inicio <span
+                                            class="text-danger font-weight-bold">*</span></label>
                                     <input type="datetime-local" name="combined_start"
-                                           class="form-control @error('combined_start') is-invalid @enderror" id="combined_start"
-                                           value="{{ old('combined_start') ?: $miEvento->combined_start }}" required aria-describedby="combined_start_help">
+                                        class="form-control @error('combined_start') is-invalid @enderror"
+                                        id="combined_start"
+                                        value="{{ old('combined_start') ?: $miEvento->combined_start }}" required
+                                        aria-describedby="combined_start_help" readonly>
                                     @error('combined_start')
                                         <span id="combined_start_help" class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="combined_end">Fecha de finalización <span class="text-danger font-weight-bold">*</span></label>
+                                    <label for="combined_end">Fecha de finalización <span
+                                            class="text-danger font-weight-bold">*</span></label>
                                     <input type="datetime-local" name="combined_end"
-                                           class="form-control @error('combined_end') is-invalid @enderror" id="combined_end"
-                                           value="{{ old('combined_end') ?: $miEvento->combined_end }}" required aria-describedby="combined_end_help">
+                                        class="form-control @error('combined_end') is-invalid @enderror"
+                                        id="combined_end" value="{{ old('combined_end') ?: $miEvento->combined_end }}"
+                                        required aria-describedby="combined_end_help" readonly>
                                     @error('combined_end')
                                         <span id="combined_end_help" class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -90,6 +96,26 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="auspiciadoresSelect">Seleccione Auspiciadores: </label>
+                                    <select id="auspiciadoresSelect" class="form-select"
+                                        aria-label="Default select example">
+                                        <option selected disabled>Lista de auspiciadores</option>
+
+                                        @if ($auspiciadores)
+                                            @foreach ($auspiciadores as $auspiciador)
+                                                <option value="{{ $auspiciador->nombre }}">{{ $auspiciador->nombre }}
+                                                </option>
+                                            @endforeach
+                                        @else
+                                            <option selected disabled>No existen auspiciadores</option>
+
+                                        @endif
+                                    </select>
+                                    <div id="recipient-list" class="d-flex">
+
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="descripcion_evento">Descripcion del Evento</label>
                                     <textarea type="text" name="descripcion_evento"
                                         class="form-control @error('descripcion_evento') is-invalid @enderror" id="descripcion_evento" required
@@ -101,9 +127,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad del Evento</label>
-                                    <select name="privacidad" class="form-control @error('privacidad') is-invalid @enderror" id="privacidad" required>
-                                        <option value="libre" {{ old('privacidad', $miEvento->privacidad) == 'libre' ? 'selected' : '' }}>Libre</option>
-                                        <option value="con-restriccion" {{ old('privacidad', $miEvento->privacidad) == 'con-restriccion' ? 'selected' : '' }}>Con Restriccion</option>
+                                    <select name="privacidad"
+                                        class="form-control @error('privacidad') is-invalid @enderror" id="privacidad"
+                                        required>
+                                        <option value="libre"
+                                            {{ old('privacidad', $miEvento->privacidad) == 'libre' ? 'selected' : '' }}>
+                                            Libre</option>
+                                        <option value="con-restriccion"
+                                            {{ old('privacidad', $miEvento->privacidad) == 'con-restriccion' ? 'selected' : '' }}>
+                                            Con Restriccion</option>
                                     </select>
                                     @error('privacidad')
                                         <span class="invalid-feedback" role="alert">
@@ -115,36 +147,42 @@
                                 <div id="campos-adicionales">
 
 
-                                        <div class="form-group">
-                                            Costo del Evento
-                                            <input type="text" name="costo" class="form-control @error('costo') is-invalid @enderror" id="costo"
-                                                placeholder="Ingrese el costo del evento" value="{{ old('costo', $miEvento->costo) }}">
-                                            @error('costo')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    <div class="form-group">
+                                        Costo del Evento
+                                        <input type="text" name="costo"
+                                            class="form-control @error('costo') is-invalid @enderror" id="costo"
+                                            placeholder="Ingrese el costo del evento"
+                                            value="{{ old('costo', $miEvento->costo) }}">
+                                        @error('costo')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
-                                        <div class="form-group">
-                                                {{ old('mostrarCantidadMinima') ? 'checked' : '' }}> Cantidad mínima de participantes
-                                            <input type="text" name="cantidad_minima"
-                                                class="form-control @error('cantidad_minima') is-invalid @enderror" id="cantidad_minima"
-                                                placeholder="Ingrese la cantidad mínima de participantes"
-                                                value="{{ old('cantidad_minima', $miEvento->cantidad_minima) }}">
-                                            @error('cantidad_minima')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    <div class="form-group">
+                                        {{ old('mostrarCantidadMinima') ? 'checked' : '' }}> Cantidad mínima de
+                                        participantes
+                                        <input type="text" name="cantidad_minima"
+                                            class="form-control @error('cantidad_minima') is-invalid @enderror"
+                                            id="cantidad_minima"
+                                            placeholder="Ingrese la cantidad mínima de participantes"
+                                            value="{{ old('cantidad_minima', $miEvento->cantidad_minima) }}">
+                                        @error('cantidad_minima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
-                                        <div class="form-group">
-                                                {{ old('mostrarCantidadMaxima') ? 'checked' : '' }}> Cantidad máxima de participantes
-                                            <input type="text" name="cantidad_maxima"
-                                                class="form-control @error('cantidad_maxima') is-invalid @enderror" id="cantidad_maxima"
-                                                placeholder="Ingrese la cantidad máxima de participantes"
-                                                value="{{ old('cantidad_maxima', $miEvento->cantidad_maxima) }}">
-                                            @error('cantidad_maxima')
-                                                <span class="text-danger">{{ $message }}</span>
-                                            @enderror
-                                        </div>
+                                    <div class="form-group">
+                                        {{ old('mostrarCantidadMaxima') ? 'checked' : '' }}> Cantidad máxima de
+                                        participantes
+                                        <input type="text" name="cantidad_maxima"
+                                            class="form-control @error('cantidad_maxima') is-invalid @enderror"
+                                            id="cantidad_maxima"
+                                            placeholder="Ingrese la cantidad máxima de participantes"
+                                            value="{{ old('cantidad_maxima', $miEvento->cantidad_maxima) }}">
+                                        @error('cantidad_maxima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
 
 
 
@@ -176,35 +214,8 @@
                 </div>
 
             </div>
-            <div class="container contact-form">
-                <br>
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-left">
-                        <H3>Gestion de fases</H3>
-                    </div>
-                    <div class="col-md-6 text-center text-md-right">
-                        <a class="btn btn-primary" href="#" role="button" data-toggle="modal"
-                            data-target="#fasesModal">
-                            Crear una fase
-                        </a>
-                    </div>
-                </div>
-                @php
-                    $editable = true;
-                @endphp
-                @livewire('fase-list', ['idEvento' => $miEvento->id , 'editable' => $editable])
-
-            </div>
-
         </div>
     </div>
-
-    @include('fasesForm', ['evento' => $miEvento])
-
-
-        </div>
-    </div>
-
     @include('layouts/sidebar-scripts')
     <script>
         $(function() {

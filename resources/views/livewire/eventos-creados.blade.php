@@ -67,6 +67,9 @@
                                                     <button type="submit" class="dropdown-item">Editar</button>
                                                 </form>
                                             </li>
+                                            <li>
+                                                <a href="{{ route('crear.cronograma', ['evento'=>$evento]) }}" class="dropdown-item">Cronograma</a>
+                                            </li>
                                         </ul>
                                     </div>
 
@@ -79,7 +82,7 @@
 
 
                             </td>
-                            
+
 
                         </tr>
                     @endforeach
