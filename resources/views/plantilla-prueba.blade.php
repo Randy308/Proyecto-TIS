@@ -176,14 +176,15 @@
     </div>
 
     <div class="content">
+
         <div class="tabContainer">
             <ul class="tabs">
                 <li>
                     <a src="tab1" href="javascript:void(0);" class="active">Informacion</a>
                 </li>
-                <li><a src="tab2" href="javascript:void(0);">Requisitos</a></li>
+                <li><a src="tab2" href="javascript:void(0);">Cronograma</a></li>
                 <li>
-                    <a src="tab3" href="javascript:void(0);">Cronograma</a>
+                    <a src="tab3" href="javascript:void(0);">Resultados</a>
                 </li>
 
             </ul>
@@ -269,13 +270,34 @@
 
                 </div>
                 <div class="c2" id="tab2">
-
-                </div>
-                <div class="c2" id="tab3">
                     @php
                         $editable = false;
                     @endphp
                     @livewire('fase-list', ['idEvento' => $evento->id, 'editable' => $editable])
+                </div>
+                <div class="c2" id="tab3">
+                    <select name="tipo_evento"
+                    class="form-control @error('tipo_evento') is-invalid @enderror"
+                    id="tipo_evento">
+                    <option value="reclutamiento"
+                        {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>
+                        Reclutamiento
+                    </option>
+                    <option value="competencia_individual"
+                        {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>
+                        Competencia Individual</option>
+                    <option value="competencia_grupal"
+                        {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>
+                        Competencia Grupal(4)</option>
+                    <option value="taller_individual"
+                        {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>
+                        Taller
+                        Individual</option>
+                    <option value="taller_grupal"
+                        {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>Taller
+                        Grupal(4)
+                    </option>
+                </select>
 
                 </div>
             </div>

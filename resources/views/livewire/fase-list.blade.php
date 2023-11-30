@@ -1,6 +1,6 @@
 <div class="container mt-4 p-4">
     <div>
-        <table class="table table-responsive-sm">
+        <table class="table table-striped table-bordered table-responsive-sm">
             <thead>
                 <tr>
                     <th>Nombre de la fase</th>
