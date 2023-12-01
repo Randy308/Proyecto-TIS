@@ -40,35 +40,18 @@
         <div id="content">
 
             @include('layouts/navbar')
-            <div class="container mt-4">
 
-                <div>
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            <strong>{{ session('status') }}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+            <div class="container my-4">
+                <div class="card p-4">
+                    @livewire('user-search', ['evento_id' => $evento->id])
                 </div>
 
-                @livewire('registrar-grupo', ['evento_id' => $evento->id])
-
-            </div>
-            <div class="container my-4">
-                @livewire('user-search', ['evento_id' => $evento->id])
             </div>
 
         </div>
 
     </div>
+
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
     @livewireScripts
