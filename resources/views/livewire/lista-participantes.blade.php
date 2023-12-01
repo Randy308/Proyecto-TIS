@@ -44,30 +44,50 @@
                                     Acción
                                 </button>
                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
+                                    <li>
+                                        <button class="dropdown-item rechazar.participacion" type="submit">Ver
+                                            perfil</button>
+                                    </li>
                                     @if ($data->estado != 'Habilitado')
                                         <li>
                                             <form method="POST"
                                                 action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
                                                 @csrf
                                                 @method('PUT')
-                                                <button class="dropdown-item habilitar.participacion"
-                                                    type="submit">Habilitar
-                                                    participacion</button>
+                                                <button class="dropdown-item habilitar_participacion"
+                                                    type="button">Habilitar
+                                                    participación</button>
+                                            </form>
+
+                                        </li>
+
+                                        <li>
+                                            <form method="POST"
+                                                action="{{ route('rechazar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button class="dropdown-item rechazar_participacion"
+                                                    type="button">Rechazar
+                                                    participación</button>
                                             </form>
 
                                         </li>
                                     @endif
 
-                                    <li>
-                                        <form method="POST"
-                                            action="{{ route('rechazar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
-                                            @csrf
-                                            @method('PUT')
-                                            <button class="dropdown-item rechazar.participacion" type="submit">Rechazar
-                                                participacion</button>
-                                        </form>
+                                    @if ($data->estado != 'Pendiente')
+                                        <li>
+                                            <form method="POST"
+                                                action="{{ route('posponer.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button class="dropdown-item posponer.posponer" type="submit">Posponer
+                                                    participación</button>
+                                            </form>
 
-                                    </li>
+                                        </li>
+                                    @endif
+
+
                                 </ul>
                             </div>
                         </td>
@@ -79,4 +99,22 @@
     <div class="row">
         {{ $combinedData->links() }}
     </div>
+    <script>
+        $(".rechazar_participacion").on("click", function(e) {
+            e.preventDefault();
+            if (confirm("¿Está seguro de eliminar la participacion este usuario?")) {
+                var form = $(this).parents('form:first');
+                form.submit();
+            }
+        });
+    </script>
+    <script>
+        $(".habilitar_participacion").on("click", function(e) {
+            e.preventDefault();
+            if (confirm("¿Está seguro de aceptar la participacion este usuario?")) {
+                var form = $(this).parents('form:first');
+                form.submit();
+            }
+        });
+    </script>
 </div>

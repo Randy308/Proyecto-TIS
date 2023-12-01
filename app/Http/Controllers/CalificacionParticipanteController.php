@@ -106,6 +106,14 @@ class CalificacionParticipanteController extends Controller
             ]);
         return redirect()->route('ver.participantes', compact('evento_id'))->with('status', 'Estado de la participacion actualizada');
     }
+    public function posponerEstado($evento_id,$asistencia_id)
+    {
+        AsistenciaEvento::find($asistencia_id)
+            ->update([
+                'estado' => "Pendiente"
+            ]);
+        return redirect()->route('ver.participantes', compact('evento_id'))->with('status', 'Estado de la participacion actualizada');
+    }
     public function update(Request $request, CalificacionParticipante $calificacionParticipante)
     {
         if ($request->ajax()) {
