@@ -270,6 +270,9 @@
 
 
                                     <div class="form-group">
+                                        <label>
+                                            <input type="checkbox"name="selectedInstitucion"> Activar restriccion por instituciones
+                                        </label>
 
                                         <label class="form-label" for="formInstitucion">Seleccione su
                                             Institucion</label><br>

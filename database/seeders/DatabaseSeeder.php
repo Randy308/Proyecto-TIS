@@ -119,6 +119,7 @@ class DatabaseSeeder extends Seeder
         $usuario2->foto_perfil = "/storage/image/default_user_image.png";
         $usuario2->historial_Academico = '';
         $usuario2->fecha_nac = now();
+        $usuario2->cod_estudiante = rand ( 201010000 , 202312012 );
         $usuario2->estado = "Habilitado";
         $usuario2->remember_token =  Str::random(10);
         $usuario2->institucion_id = $inst->id;
@@ -135,6 +136,7 @@ class DatabaseSeeder extends Seeder
         $usuario3->direccion= 'Av. Sucre';
         $usuario3->foto_perfil = "/storage/image/default_user_image.png";
         $usuario3->historial_Academico = '';
+        $usuario3->cod_estudiante = rand ( 201010000 , 202312012 );
         $usuario3->fecha_nac = now();
         $usuario3->estado = "Habilitado";
         $usuario3->remember_token =  Str::random(10);
@@ -150,6 +152,7 @@ class DatabaseSeeder extends Seeder
         $usuario4->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $usuario4->telefono = '77777777';
         $usuario4->direccion= 'Av. Sucre';
+        $usuario4->cod_estudiante = rand ( 201010000 , 202312012 );
         $usuario4->foto_perfil = "/storage/image/default_user_image.png";
         $usuario4->historial_Academico = '';
         $usuario4->fecha_nac = now();

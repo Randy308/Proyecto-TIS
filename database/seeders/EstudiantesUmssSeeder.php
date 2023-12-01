@@ -92,6 +92,7 @@ class EstudiantesUmssSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
             'institucion_id' => 1,
+            'cod_estudiante' => rand ( 201010000 , 202312012 ),
             'estado' => "Habilitado",
             'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
@@ -103,6 +104,7 @@ class EstudiantesUmssSeeder extends Seeder
             'password' => bcrypt('contraseña'),
             'institucion_id' => 1,
             'estado' => "Habilitado",
+            'cod_estudiante' => rand ( 201010000 , 202312012 ),
             'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
         $organizador->assignRole('organizador');
@@ -112,9 +114,20 @@ class EstudiantesUmssSeeder extends Seeder
             'email' => 'colaborador@example.com',
             'password' => bcrypt('contraseña'),
             'institucion_id' => 1,
+            'cod_estudiante' => rand ( 201010000 , 202312012 ),
             'estado' => "Habilitado",
             'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
         $colaborador->assignRole('colaborador');
+        $coach = User::create([
+            'name' => 'coach',
+            'email' => 'coach@gmail.com',
+            'password' => bcrypt('password'),
+            'institucion_id' => 1,
+            'estado' => "Habilitado",
+            'cod_estudiante' => rand ( 201010000 , 202312012 ),
+            'foto_perfil' => "/storage/image/default_user_image.png",
+        ]);
+        $coach->assignRole('coach');
     }
 }

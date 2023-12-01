@@ -10,6 +10,7 @@
                         <th>Nombre del Evento</th>
                         <th>Estado del Evento</th>
                         <th>Tipo de Evento</th>
+                        <th>Modalidad</th>
                         <th></th>
 
                     </tr>
@@ -22,6 +23,8 @@
                             <td>{{ $evento->nombre_evento }}</td>
                             <td>{{ $evento->estado }}</td>
                             <td>{{ $evento->tipo_evento }}</td>
+                            <td>{{ ucwords($evento->modalidad) }}</td>
+
 
                             @if (strtoupper($evento->estado) == 'ACTIVO')
                                 <td class="d-flex">
@@ -31,10 +34,22 @@
                                             data-bs-toggle="dropdown" aria-expanded="false" style="width: 140px">
                                             Acción
                                         </button>
+
                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                            <li><a class="dropdown-item" href="{{ route('ver.participantes', ['evento_id'=>$evento->id]) }}">Ver Participantes</a></li>
+
+                                            @if (strtoupper($evento->modalidad) == 'GRUPAL')
+                                                <li><a class="dropdown-item" href="#">Ver Grupos</a></li>
+                                                <li><a class="dropdown-item" href="#">Calificar Grupos</a></li>
+                                            @else
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ver.participantes', ['evento_id' => $evento->id]) }}">Ver
+                                                        Participantes</a></li>
+                                                <li><a class="dropdown-item" href="#">Calificar participantes</a>
+                                                </li>
+                                            @endif
                                             <li><a class="dropdown-item" href="#">Ver Cronograma</a></li>
-                                            <li><a class="dropdown-item" href="#">Calificar participantes</a></li>
+
+
 
                                         </ul>
                                     </div>

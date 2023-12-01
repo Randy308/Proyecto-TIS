@@ -403,11 +403,11 @@ class EventoControlador extends Controller
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->costo = $request->input('costo');
-        if ($request->has('institucion')) {
+        if ($request->has('selectedInstitucion')) {
             $nombreInstitucion = $request->input('institucion');
             $evento->nombre_institucion = $nombreInstitucion;
         } else {
-            $evento->nombre_institucion = "UMSS";
+            $evento->nombre_institucion = null;
         }
         if ($request->filled('cantidad_minima')) {
             $evento->cantidad_minima = $request->input('cantidad_minima');
