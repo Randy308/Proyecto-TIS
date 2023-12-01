@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 class ListaParticipantes extends Component
-{   
+{
     protected $paginationTheme = 'bootstrap';
 
     use WithPagination;
@@ -24,6 +24,7 @@ class ListaParticipantes extends Component
             $combinedData = DB::table('asistencia_eventos')
                 ->join('users', 'asistencia_eventos.user_id', '=', 'users.id')
                 ->where('asistencia_eventos.evento_id', $eventoId)
+                ->where('asistencia_eventos.estado', '!=',"Denegado")
                 ->select(
                     'asistencia_eventos.id as asistencia_id',
                     'users.id as user_id',

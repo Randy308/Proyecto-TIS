@@ -90,7 +90,22 @@ class CalificacionParticipanteController extends Controller
         }
     }
 
-
+    public function habilitarEstado($evento_id,$asistencia_id)
+    {
+        AsistenciaEvento::find($asistencia_id)
+            ->update([
+                'estado' => "Habilitado"
+            ]);
+        return redirect()->route('ver.participantes', compact('evento_id'))->with('status', 'Estado de la participacion actualizada.');
+    }
+    public function rechazarEstado($evento_id,$asistencia_id)
+    {
+        AsistenciaEvento::find($asistencia_id)
+            ->update([
+                'estado' => "Denegado"
+            ]);
+        return redirect()->route('ver.participantes', compact('evento_id'))->with('status', 'Estado de la participacion actualizada');
+    }
     public function update(Request $request, CalificacionParticipante $calificacionParticipante)
     {
         if ($request->ajax()) {

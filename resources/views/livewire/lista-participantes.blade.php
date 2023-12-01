@@ -35,24 +35,38 @@
                         @endif
 
                         <td>
-                            <a href="" class="update" data-name="estado" data-type="select" class="btn btn-link"
-                                data-pk="{{ $data->user_id }}" data-title="Seleccione el estado"
-                                data-source='{"habilitado": "Habilitado", "deshabilitado": "Deshabilitado"}'>
-                                {{ $data->estado }}
-                            </a>
+                            {{ $data->estado }}
                         </td>
                         <td>
                             <div class="btn-group btn-group-sm" role="group">
-                                <button id="btnGroupDrop_{{ $data->asistencia_id }}" type="button" class="btn btn-primary dropdown-toggle"
+                                <button id="btnGroupDropdown" type="button" class="btn btn-primary dropdown-toggle"
                                     data-bs-toggle="dropdown" aria-expanded="false" style="width: 140px">
                                     Acción
                                 </button>
-                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop_{{ $data->asistencia_id }}">
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
+                                    @if ($data->estado != 'Habilitado')
+                                        <li>
+                                            <form method="POST"
+                                                action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                @csrf
+                                                @method('PUT')
+                                                <button class="dropdown-item habilitar.participacion"
+                                                    type="submit">Habilitar
+                                                    participacion</button>
+                                            </form>
+
+                                        </li>
+                                    @endif
+
                                     <li>
-                                        <button class="dropdown-item enable-participation" data-asistencia_id="{{ $data->asistencia_id }}" type="button">Habilitar participacion</button>
-                                    </li>
-                                    <li>
-                                        <button class="dropdown-item reject-participation" data-asistencia_id="{{ $data->asistencia_id}}" type="button">Rechazar participacion</button>
+                                        <form method="POST"
+                                            action="{{ route('rechazar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                            @csrf
+                                            @method('PUT')
+                                            <button class="dropdown-item rechazar.participacion" type="submit">Rechazar
+                                                participacion</button>
+                                        </form>
+
                                     </li>
                                 </ul>
                             </div>

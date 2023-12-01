@@ -240,4 +240,5 @@ Route::get('/cronograma/{evento}', [FaseController::class, 'show'])->name('crear
 Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
 
-Route::post('/lista-participantes', [CalificacionParticipanteController::class, 'updateEstado'])->name('estado.update');
+Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
+Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
