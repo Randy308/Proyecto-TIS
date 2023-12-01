@@ -36,6 +36,7 @@ class UserFactory extends Factory
             'estado'=> $estados[rand(0,1)],
             'institucion_id' =>  rand(1,5),
             'pais'=>$arrayValues[rand(0,3)],
+            'cod_estudiante'=>$this->faker->randomNumber(9),
             'historial_academico' => $this->faker->text(),
             'remember_token' => Str::random(10),
             

@@ -237,4 +237,7 @@ Route::get('/calificar-participantes', [CalificacionParticipanteController::clas
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 Route::get('/cronograma/{evento}', [FaseController::class, 'show'])->name('crear.cronograma')->middleware('checkRole:administrador,organizador');
 
-Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('ver.participantes');
+Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
+Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
+
+Route::post('/lista-participantes', [CalificacionParticipanteController::class, 'updateEstado'])->name('estado.update');

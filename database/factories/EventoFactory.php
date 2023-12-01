@@ -13,7 +13,7 @@ class EventoFactory extends Factory
 
     public function definition()
     {
-        $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
+        $arrayValues = ['Borrador', 'Activo'];
         $eventTypes = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
         $privacyOptions = ['libre', 'con-restriccion'];
         $instituciones = Institucion::pluck('nombre_institucion')->toArray();
@@ -24,7 +24,7 @@ class EventoFactory extends Factory
         $descripcionEvento = $this->faker->text($this->faker->numberBetween(55, 85));
         $fechaInicio = $this->faker->dateTimeBetween('now', '+30 days');
         $fechaFin = $this->faker->dateTimeBetween($fechaInicio, '+60 days');
-        $estado = $arrayValues[rand(0, 3)];
+        $estado = $arrayValues[rand(0, 1)];
         $privacidad = $privacyOptions[rand(0, 1)];
         $inscritosMinimos = $this->faker->numberBetween(1, 50);
         $inscritosMaximos = $this->faker->numberBetween($inscritosMinimos, 100);

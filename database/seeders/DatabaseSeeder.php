@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         $usuario->save();
 
 
-        $ev = Evento::factory(20)->create();
+        $ev = Evento::factory(10)->create();
         foreach($ev as $e){
 
             $faseInscripcion = new FaseEvento([
@@ -90,9 +90,9 @@ class DatabaseSeeder extends Seeder
 
             $faseFinalizacion->save();
         }
-        $us = User::factory(4)->create();
+        $us = User::factory(15)->create();
 
-        $arrayValues = ['Activo', 'Finalizado', 'Cancelado'];
+        $arrayValues = ['Pendiente', 'Habilitado', 'Denegado'];
         foreach($us as $u){
 
                 $u->assignRole('usuario común');

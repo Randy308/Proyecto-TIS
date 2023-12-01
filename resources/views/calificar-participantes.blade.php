@@ -45,26 +45,30 @@
                             <th>Nombre</th>
                             <th>Email</th>
                             <th>Estado</th>
+                            <th>Rol</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($combinedData as $data)
                             <tr>
-                                <td>{{ $user->id }}</td>
+                                <td>{{ $data->user_id }}</td>
                                 <td>
                                     <a href="" class="update" data-name="name" data-type="text"
-                                        data-pk="{{ $user->id }}" data-title="Enter name">{{ $user->name }}</a>
+                                        data-pk="{{ $data->user_id }}" data-title="Enter name">{{ $data->name }}</a>
                                 </td>
                                 <td>
                                     <a href="" class="update" data-name="email" data-type="text"
-                                        data-pk="{{ $user->id }}" data-title="Enter email">{{ $user->email }}</a>
+                                        data-pk="{{ $data->user_id }}" data-title="Enter email">{{ $data->email }}</a>
                                 </td>
                                 <td>
                                     <a href="" class="update" data-name="estado" data-type="select"
-                                        data-pk="{{ $user->id }}" data-title="Seleccione el estado"
+                                        data-pk="{{ $data->user_id }}" data-title="Seleccione el estado"
                                         data-source='{"habilitado": "Habilitado", "deshabilitado": "Deshabilitado"}'>
-                                        {{ $user->estado }}
+                                        {{ $data->estado }}
                                     </a>
+                                </td>
+                                <td>
+                                    {{ $data->rol }}
                                 </td>
                             </tr>
                         @endforeach
