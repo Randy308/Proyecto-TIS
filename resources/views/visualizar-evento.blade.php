@@ -67,6 +67,11 @@
             var value = getColor();
             $(id).css("background-color", value);
         }
+
+        function aplicarMiColor(elemento) {
+            var value = getColor();
+            elemento.css("background-color", value);
+        }
         $(document).ready(function() {
             $("#tipo_evento").selectmenu({
                 change: function(event, data) {
@@ -74,6 +79,16 @@
                 },
             });
 
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            var tarjetas = $('.miCard');
+            var tarjeta = $('#participantesContainer');
+            aplicarMiColor($(tarjeta));
+            tarjetas.each(function() {
+                aplicarMiColor($(this));
+            });
         });
     </script>
 </body>

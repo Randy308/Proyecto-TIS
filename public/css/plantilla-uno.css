@@ -3,6 +3,11 @@ body {
     width: 100%;
     background-color: white;
 }
+.miCard{
+    background-color: #fffff9;
+    border: 2px solid lightgray;
+    border-radius: 10px;
+}
 #contenedorDeImagenAuspiciadores {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -173,6 +178,8 @@ a#boton-registro {
     width: 400px;
     max-width: 500px;
     align-items: center;
+    border: 2px solid lightgray;
+    border-radius: 20px;
 }
 #participantes {
     height: 100%;
