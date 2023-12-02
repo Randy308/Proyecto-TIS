@@ -91,8 +91,8 @@
             </div>
         </div>
     </div>
-    <div class="row pt-4">
-        <div class="col miCard p-4">
+    <div class="row pt-2">
+        <div class="col miCard p-4 m-4">
             @if ($evento->privacidad == 'con-restriccion')
                 <p class="h4">Requisitos</p>
 

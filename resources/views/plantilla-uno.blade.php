@@ -95,7 +95,7 @@
     </div>
     @if ($evento->auspiciadors->count())
         <div class="row pt-4">
-            <div class="card">
+            <div class="miCard p-4">
                 <h5>Auspiciadores</h5>
                 <div class="container p-3 ">
                     <div class="row">
