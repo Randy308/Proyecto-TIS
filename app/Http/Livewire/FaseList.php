@@ -13,6 +13,7 @@ class FaseList extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $idEvento;
+    public $editable;
     public $faseId = '';
     public $faseActual;
     public $primeravez = true;
@@ -27,21 +28,22 @@ class FaseList extends Component
             $fase->fechaFin = new DateTime($fase->fechaFin);
         }
         if($this->primeravez){
-            $this->faseActual = $fases[0]; 
+            $this->faseActual = $fases[0];
             $this->primeravez = false;
         }
-        
-        return view('livewire.fase-list', compact('fases'));
+        $editable = $this->editable;
+
+        return view('livewire.fase-list', compact('fases','editable'));
     }
 
     public function abrirEditar($faseId)
     {
         $this->faseActual = FaseEvento::find($faseId);
 
-        
+
         //$this->emit('abrirelForm', $this->faseActual);
     }
 
 
-   
+
 }

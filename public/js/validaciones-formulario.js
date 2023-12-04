@@ -1,12 +1,12 @@
 $(function () {
-    
+
     // Validate Username
     $("#auspiciadorcheck").hide();
 
     let auspiciadorError = true;
 
     $("#Auspiciador").on("input", function () {
-        let regex =/^[a-zA-Z0-9 ]*$/;
+        let regex = /^[a-zA-Z0-9 ]*$/;
         let s = $(this).val();
         if (regex.test(s)) {
             $("#auspiciadorcheck").hide();
@@ -36,17 +36,46 @@ $(function () {
 
 
     $('#nombreEventoCheck').hide();
+    $('#nextBtn').prop("disabled", true);
     $("#nombre_evento").on("input", function () {
         let regex = /^[a-zA-Z0-9 ]*$/;
         let s = $(this).val();
         if (regex.test(s)) {
             $("#nombreEventoCheck").hide();
             $("#nombreEventoCheck").html("");
-            $('#crearEventoBoton').prop("disabled", false);
+            $('#nextBtn').prop("disabled", false);
         } else {
             $("#nombreEventoCheck").show();
             $("#nombreEventoCheck").html("nombre del evento incorrecto");
-            $('#crearEventoBoton').prop("disabled", true);
+            $('#nextBtn').prop("disabled", true);
+        }
+        if (s.length < 4) {
+            $("#nombreEventoCheck").show();
+            $("#nombreEventoCheck").html("nombre del evento incorrecto");
+            $('#nextBtn').prop("disabled", true);
+
+        }
+    });
+
+    $('#tipo_eventoCheck').hide();
+    $('#nextBtn').prop("disabled", true);
+    $("#tipo_evento").on("input", function () {
+        let regex = /^[a-zA-Z0-9 ]*$/;
+        let s = $(this).val();
+        if (regex.test(s)) {
+            $("#tipo_eventoCheck").hide();
+            $("#tipo_eventoCheck").html("");
+            $('#nextBtn').prop("disabled", false);
+        } else {
+            $("#tipo_eventoCheck").show();
+            $("#tipo_eventoCheck").html("nombre del tipo de evento incorrecto");
+            $('#nextBtn').prop("disabled", true);
+        }
+        if (s.length < 2) {
+            $("#tipo_eventoCheck").show();
+            $("#tipo_eventoCheck").html("nombre del tipo de  evento incorrecto");
+            $('#nextBtn').prop("disabled", true);
+
         }
     });
 
@@ -57,11 +86,11 @@ $(function () {
         if (regex.test(s)) {
             $("#descripcionEventoCheck").hide();
             $("#descripcionEventoCheck").html("");
-            $('#crearEventoBoton').prop("disabled", false);
+            $('#nextBtn').prop("disabled", false);
         } else {
             $("#descripcionEventoCheck").show();
             $("#descripcionEventoCheck").html("descripcion del evento incorrecto");
-            $('#crearEventoBoton').prop("disabled", true);
+            $('#nextBtn').prop("disabled", true);
         }
     });
     $('#nameCheck').hide();
@@ -78,20 +107,20 @@ $(function () {
             $('#crearUsuarioBoton').prop("disabled", true);
         }
     });
-    
+
     $('#costoCheck').hide();
     $("#costo").on("input", function () {
         let regex = /^[0-9]+$/; // Permitir solo números enteros
         let s = $(this).val();
-    
+
         if (regex.test(s)) {
             $("#costoCheck").hide();
             $("#costoCheck").html("");
-            $('#crearEventoBoton').prop("disabled", false);
+            $('#nextBtn').prop("disabled", false);
         } else {
             $("#costoCheck").show();
             $("#costoCheck").html("Costo del evento incorrecto. Ingrese solo números.");
-            $('#crearEventoBoton').prop("disabled", true);
+            $('#nextBtn').prop("disabled", true);
         }
     });
     $('#cantidadMinimaCheck').hide();
@@ -103,11 +132,11 @@ $(function () {
         if (regex.test(s)) {
             $("#cantidadMinimaCheck").hide();
             $("#cantidadMinimaCheck").html("");
-            $('#crearEventoBoton').prop("disabled", false);
+            $('#nextBtn').prop("disabled", false);
         } else {
             $("#cantidadMinimaCheck").show();
             $("#cantidadMinimaCheck").html("Cantidad mínima de participantes incorrecta");
-            $('#crearEventoBoton').prop("disabled", true);
+            $('#nextBtn').prop("disabled", true);
         }
     });
     $('#cantidadMaximaCheck').hide();
@@ -119,11 +148,11 @@ $(function () {
         if (regex.test(s)) {
             $("#cantidadMaximaCheck").hide();
             $("#cantidadMaximaCheck").html("");
-            $('#crearEventoBoton').prop("disabled", false);
+            $('#nextBtn').prop("disabled", false);
         } else {
             $("#cantidadMaximaCheck").show();
             $("#cantidadMaximaCheck").html("Cantidad máxima de participantes incorrecta");
-            $('#crearEventoBoton').prop("disabled", true);
+            $('#nextBtn').prop("disabled", true);
         }
     });
 
@@ -145,3 +174,12 @@ $(function () {
 });
 
 
+$(document).ready(function () {
+    var inputValue = $("#fecha_fin").val();
+    console.log(inputValue)
+    if (inputValue === "") {
+        $('#nextBtn').prop("disabled", true);
+    } else {
+        $('#nextBtn').prop("disabled", false);
+    }
+});

@@ -20,7 +20,7 @@ class AsistenciasTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('rol');
             $table->date('fechaInscripcion');
-            $table->string('estado');
+            $table->enum('estado', ['Pendiente', 'Habilitado', 'Denegado']);
             $table->timestamps();
             $table->unique(['user_id', 'evento_id']);
             // Definir las claves foráneas

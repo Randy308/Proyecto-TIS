@@ -42,6 +42,25 @@
                                         class="btn btn-link emaillink">
                                         {{ $evento->user->email }}
                                     </a></span>
+                                @php
+                                    $fases = $evento->fasesEventos->sortBy('secuencia');
+                                @endphp
+
+
+                                {{-- @foreach ($fases as $key => $item)
+
+                                    @if ($loop->first)
+                                        <p class="h5">Inscripciones abiertas</p>
+                                        <p class="h6">Hasta: {{ \Carbon\Carbon::parse($item->fechaInicio)->format('h:i:s d/m/Y')}}</p>
+                                    @endif
+
+
+                                    @if ($loop->last)
+                                        <p class="h5">Clausura</p>
+                                        <p class="h6">Fecha de cierre: {{ \Carbon\Carbon::parse($item->fechaFin)->format('h:i:s d/m/Y')}}</p>
+                                    @endif
+                                @endforeach --}}
+
 
 
                             </div>

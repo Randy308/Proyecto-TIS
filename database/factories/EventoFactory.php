@@ -13,8 +13,9 @@ class EventoFactory extends Factory
 
     public function definition()
     {
-        $arrayValues = ['Borrador', 'Activo', 'Finalizado', 'Cancelado'];
-        $eventTypes = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
+        $arrayValues = ['Borrador', 'Activo'];
+        $eventTypes = ['Reclutamiento', 'Competencia',  'Taller'];
+        $modalidadTypes = ['Individual', 'Grupal'];
         $privacyOptions = ['libre', 'con-restriccion'];
         $instituciones = Institucion::pluck('nombre_institucion')->toArray();
         $nombreInstitucion = $this->faker->randomElement($instituciones);
@@ -24,11 +25,11 @@ class EventoFactory extends Factory
         $descripcionEvento = $this->faker->text($this->faker->numberBetween(55, 85));
         $fechaInicio = $this->faker->dateTimeBetween('now', '+30 days');
         $fechaFin = $this->faker->dateTimeBetween($fechaInicio, '+60 days');
-        $estado = $arrayValues[rand(0, 3)];
+        $estado = $arrayValues[rand(0, 1)];
         $privacidad = $privacyOptions[rand(0, 1)];
         $inscritosMinimos = $this->faker->numberBetween(1, 50);
         $inscritosMaximos = $this->faker->numberBetween($inscritosMinimos, 100);
-        $tipoEvento = $eventTypes[rand(0, 4)];
+        $tipoEvento = $eventTypes[rand(0,2)];
 
         return [
             'user_id' => $user->id,
@@ -41,6 +42,7 @@ class EventoFactory extends Factory
             'latitud' => -17.39359989348116,
             'longitud' => -66.14596353915297,
             'background_color' => '#FFFF',
+            'modalidad' => $modalidadTypes[rand(0, 1)],
             'tipo_evento' => $tipoEvento,
             'privacidad' => $privacidad,
             'cantidad_minima' => $inscritosMinimos,

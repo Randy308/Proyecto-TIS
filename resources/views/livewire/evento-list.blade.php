@@ -125,7 +125,7 @@
                                             </b>{{ $evento->descripcion_evento }}</p>
                                     @endif
                                     <p class="card-text"><b class=" font-weight-bold">Tipo de evento:
-                                    </b>{{ $evento->tipo_evento }}</p>
+                                    </b>{{ucwords( $evento->tipo_evento." ".$evento->modalidad) }}</p>
                                 </div>
                             </div>
                             <div class="row">

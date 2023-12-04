@@ -26,6 +26,7 @@ class Evento extends Model
         'latitud',
         'longitud',
         'costo',
+        'modalidad',
         'nombre_institucion',
         'tiempo_inicio',
         'tiempo_fin',
@@ -34,6 +35,7 @@ class Evento extends Model
     {
         return $this->belongsTo(User::class);
     }
+    
     public function users()
     {
         return $this->belongsToMany(User::class, 'asistencia_eventos');
@@ -54,7 +56,11 @@ class Evento extends Model
     public function fases(){
         return $this->hasMany(Fase::class);
     }
-    
+
+    public function fasesEventos(){
+        return $this->hasMany(FaseEvento::class);
+    }
+
     public function auspiciadors()
     {
         return $this->belongsToMany(Auspiciador::class, 'auspiciador_eventos');

@@ -1,5 +1,8 @@
-<form  action="{{ route('faseStore',  $evento->id) }}" method="POST">
+<form action="{{ route('faseStore', $evento->id) }}" method="POST">
     @csrf
+    @php
+
+    @endphp
     <div class="modal fade" id="fasesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -32,18 +35,30 @@
                         </select>
                     </div>
 
+                    @foreach ($fasesUltimas as $fase)
+                        @if ($loop->first)
+                            <div class="form-group">
+                                <label for="fechaInicio">Fecha de inicio:</label>
+                                <input type="datetime-local" class="form-control" id="fechaInicio" name="fechaInicio"
+                                    min="{{ $fase->fechaFin }}" value="{{ $fase->fechaFin }}" required>
+                            </div>
+                        @endif
 
-                    <div class="form-group">
-                        <label for="fechaInicio">Fecha de inicio:</label>
-                        <input type="datetime-local" class="form-control" id="fechaInicio" name="fechaInicio" required>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="fechaFin">Fecha de fin:</label>
-                        <input type="datetime-local" class="form-control" id="fechaFin" name="fechaFin" required>
-                    </div>
+                        @if ($loop->last)
+                            <div class="form-group">
+                                <label for="fechaFin">Fecha de fin:</label>
+                                <input type="datetime-local" class="form-control" id="fechaFin" name="fechaFin"
+                                max="{{  \Carbon\Carbon::parse($fase->fechaFin)->subMinutes(30) }}"   value="{{  \Carbon\Carbon::parse($fase->fechaFin)->subMinutes(30) }}" required>
+                            </div>
+                        @endif
+                    @endforeach
+
+
+
+
                     <div class="d-flex flex-column">
-                        <button type="submit" id="botonfases" class="btn btn-primary" >Crear</button>
+                        <button type="submit" id="botonfases" class="btn btn-primary">Crear</button>
 
                     </div>
 

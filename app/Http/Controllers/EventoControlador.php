@@ -102,20 +102,20 @@ class EventoControlador extends Controller
                 Rule::unique('eventos', 'nombre_evento')->ignore($request->input('id'), 'id'),
                 'regex:/^[a-zA-Z0-9\s\.\-]+$/',
                 'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
-                'not_in:registracion,registro,admin,event', 
-                'not_in:admin,user', 
-                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre', 
+                'not_in:registracion,registro,admin,event',
+                'not_in:admin,user',
+                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre',
                 'not_regex:/[!@#\$%\^&\*\(\)_\+=\[\]{};:\'",<>\?\/\\~`\|]+/',
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
 
             'cantidad_minima' => 'nullable|integer|min:0',
             'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
-            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
+            'tipo_evento' => 'required|string|regex:/^[a-zA-Z0-9\s\.\-]+$/', // Añadida
             'descripcion_evento' => 'nullable|string',
             'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
             'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
-
+            'modalidad' => 'required',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
             'latitud' => 'required|numeric|between:-90,90',
@@ -131,8 +131,6 @@ class EventoControlador extends Controller
             'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
             'privacidad.required' => 'La privacidad del evento es obligatoria.',
             'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
-            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
-            'tipo_evento.in' => 'El tipo de evento no es válido.',
             'mostrarCantidadMinima.required' => 'Debe especificar si hay una cantidad mínima de participantes.',
             'mostrarCantidadMaxima.required' => 'Debe especificar si hay una cantidad máxima de participantes.',
             'cantidad_minima.required' => 'La cantidad mínima de participantes es obligatoria.',
@@ -200,11 +198,11 @@ class EventoControlador extends Controller
             $nombreInstitucion = $request->input('selectedInstitucion');
             $evento->nombre_institucion = $nombreInstitucion;
         }
-        $evento-> user_id =  auth()->id();
-        $evento-> estado = 'Borrador';
-        $evento-> fecha_inicio =  $dateInicio;
-        $evento-> fecha_fin = $dateFinal;
-
+        $evento->user_id = auth()->id();
+        $evento->estado = 'Borrador';
+        $evento->fecha_inicio = $dateInicio;
+        $evento->fecha_fin = $dateFinal;
+        $evento->modalidad = $request->input('modalidad');
         $evento->tiempo_inicio = $timeInicio;
         $evento->tiempo_fin = $timeFinal;
         $evento->direccion_banner = '/storage/banners/' . $nombreDelArchivo;
@@ -242,17 +240,19 @@ class EventoControlador extends Controller
             'fechaInicio' => $request->input('fecha_inicio'),
             'fechaFin' => $request->input('fecha_inicio'),
             'tipo' => 'Inscripcion',
+            'secuencia' => 1,
             'actual' => true,
         ]);
 
         $faseInscripcion->save();
         $faseFinalizacion = new FaseEvento([
             'evento_id' => $evento->id,
-            'nombre_fase' => 'Evento Finalizado',
+            'nombre_fase' => 'Fase de  Cierre',
             'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
             'fechaInicio' => $request->input('fecha_fin'),
             'fechaFin' => $request->input('fecha_fin'),
             'tipo' => 'Finalizacion',
+            'secuencia' => 1000,
             'actual' => false,
         ]);
 
@@ -265,6 +265,11 @@ class EventoControlador extends Controller
         $auspiciadores = Auspiciador::get();
         return view('crear-evento', compact('auspiciadores'));
     }
+    public function indexPrueba()
+    {
+        $auspiciadores = Auspiciador::get();
+        return view('prueba-crear-evento', compact('auspiciadores'));
+    }
     public function edit($user, $evento)
     {
         $tiposEvento = ['reclutamiento', 'competencia_individual', 'competencia_grupal', 'taller_individual', 'taller_grupal'];
@@ -272,7 +277,13 @@ class EventoControlador extends Controller
 
         $miEvento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $auspiciadores = Auspiciador::get();
-        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores'));
+        $instituciones = Institucion::pluck('nombre_institucion');
+        $fasesUltimas = FaseEvento::where('evento_id', $evento)
+            ->orderBy('secuencia', 'desc')
+            ->take(2)
+            ->get();
+        $fasesUltimas = $fasesUltimas->reverse();
+        return view('actualizar-evento', compact('miEvento', 'tiposEvento', 'privacidades', 'auspiciadores', 'fasesUltimas', 'instituciones'));
     }
 
     public function updateEstado($user, $evento, Request $request)
@@ -281,7 +292,7 @@ class EventoControlador extends Controller
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->estado = 'Activo';
         $evento->save();
-    return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+        return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
     }
     public function editBanner($user, $evento)
     {
@@ -299,14 +310,7 @@ class EventoControlador extends Controller
     }
     public function update($user, $evento, Request $request)
     {
-        $nombreEvento = preg_replace('/\s+/', ' ', trim($request->input('nombre_evento')));
-        $descripcionEvento = preg_replace('/\s+/', ' ', trim($request->input('descripcion_evento')));
-
-        $todayDate = now('GMT-4')->format('Y-m-d\TH:i');
-        //return $request;
-        //return $todayDate;
-
-        $validator = $request->validate([
+        $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',
@@ -314,19 +318,20 @@ class EventoControlador extends Controller
                 Rule::unique('eventos', 'nombre_evento')->ignore($request->input('nombre_evento'), 'nombre_evento'),
                 'regex:/^[a-zA-Z0-9\s\.\-]+$/',
                 'not_regex:/\b(?:concierto|fiesta|evento)\b/i',
-                'not_in:registracion,registro,admin,event', 
-                'not_in:admin,user', 
-                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre', 
+                'not_in:registracion,registro,admin,event',
+                'not_in:admin,user',
+                'not_in:elija un nombre,seleccionar un nombre,ponga un nombre',
                 'not_regex:/[!@#\$%\^&\*\(\)_\+=\[\]{};:\'",<>\?\/\\~`\|]+/',
             ],
             'privacidad' => 'required|in:libre,con-restriccion',
 
-            'cantidad_minima' => 'required|integer|min:0',
-            'cantidad_maxima' => 'required|integer|min:' . $request->input('cantidad_minima'),
-            'tipo_evento' => 'required|in:reclutamiento,competencia_individual,competencia_grupal,taller_individual,taller_grupal', // Añadida validación para tipo de evento
+            'cantidad_minima' => 'nullable|integer|min:0',
+            'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
+            'tipo_evento' => 'required|string|regex:/^[a-zA-Z0-9\s\.\-]+$/',
             'descripcion_evento' => 'nullable|string',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
+            'modalidad' => 'required',
             'latitud' => 'required|numeric|between:-90,90',
             'longitud' => 'required|numeric|between:-180,180',
             'costo' => 'nullable|numeric|min:0',
@@ -340,8 +345,6 @@ class EventoControlador extends Controller
             'descripcion_evento.string' => 'La descripción del evento debe ser una cadena de texto.',
             'privacidad.required' => 'La privacidad del evento es obligatoria.',
             'privacidad.in' => 'La privacidad del evento debe ser "publico" o "institucional".',
-            'tipo_evento.required' => 'El tipo de evento es obligatorio.',
-            'tipo_evento.in' => 'El tipo de evento no es válido.',
             'cantidad_minima.required' => 'La cantidad mínima de participantes es obligatoria.',
             'cantidad_minima.integer' => 'La cantidad mínima de participantes debe ser un número entero.',
             'cantidad_minima.min' => 'La cantidad mínima de participantes debe ser al menos :min.',
@@ -388,26 +391,35 @@ class EventoControlador extends Controller
         $evento->nombre_evento = $request->input('nombre_evento');
         $evento->descripcion_evento = $request->input('descripcion_evento');
         $evento->tipo_evento = $request->input('tipo_evento');
+        $evento->modalidad = $request->input('modalidad');
         $evento->fecha_inicio = $dateInicio;
         $evento->fecha_fin = $dateFinal;
 
         $evento->tiempo_inicio = $timeInicio;
         $evento->tiempo_fin = $timeFinal;
         $evento->privacidad = $request->input('privacidad');
-        $evento->cantidad_minima = $request->input('cantidad_minima');
-        $evento->cantidad_maxima = $request->input('cantidad_maxima');
+
+
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->costo = $request->input('costo');
         if ($request->has('selectedInstitucion')) {
-            $nombreInstitucion = $request->input('selectedInstitucion');
+            $nombreInstitucion = $request->input('institucion');
             $evento->nombre_institucion = $nombreInstitucion;
+        } else {
+            $evento->nombre_institucion = null;
         }
-        $evento->nombre_institucion = "UMSS";
+        if ($request->filled('cantidad_minima')) {
+            $evento->cantidad_minima = $request->input('cantidad_minima');
+        }
+        if ($request->filled('cantidad_maxima')) {
+            $evento->cantidad_maxima = $request->input('cantidad_maxima');
+        }
         $evento->save();
 
         $inputArray = $request->input('Auspiciadores');
         if ($request->filled('Auspiciadores') && is_array($inputArray)) {
+            AuspiciadorEventos::where('evento_id', $evento->id)->delete();
             foreach ($inputArray as $value) {
                 $miAuspiciador = Auspiciador::where('nombre', $value)->first();
 

@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventoControlador;
 use App\Http\Controllers\AsistenciaEventosController;
 use App\Http\Controllers\AuspiciadorController;
+use App\Http\Controllers\CalificacionParticipanteController;
 use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\FaseController;
@@ -16,7 +17,8 @@ use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
-
+use App\Models\CalificacionParticipante;
+use App\Models\Evento;
 
 // Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
 // Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
@@ -226,3 +228,19 @@ Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::cla
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
 
 Route::get('/registro-equipo/{evento_id}',[RegistroEquipoController::class,'view'])->name('registroEquipo.view');
+
+
+
+
+Route::get('/crear-prueba',[EventoControlador::class,'indexPrueba'])->name('ver-crear-prueba');
+Route::get('/calificar-participantes', [CalificacionParticipanteController::class, 'index'])->name('calificar.index');
+Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
+Route::get('/cronograma/{evento}', [FaseController::class, 'show'])->name('crear.cronograma')->middleware('checkRole:administrador,organizador');
+
+Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
+Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
+
+Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
+Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
+Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
+

@@ -24,6 +24,8 @@ class RolesTableSeeder extends Seeder
         $colaborador->save();
         $usuario_comun = Role::create(['name' => 'usuario común']);
         $usuario_comun->save();
+        $coach = Role::create(['name' => 'coach']);
+        $coach->save();
         Permission::create(['name' => 'organizador.ver-mis-eventos'])->syncRoles([$administrador, $organizador, $colaborador]);
         Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador, $organizador]);
         Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
@@ -48,34 +50,6 @@ class RolesTableSeeder extends Seeder
         Permission::create(['name' => 'admin.cancelar-evento'])->assignRole($administrador);
         Permission::create(['name' => 'admin.ver-perfil'])->assignRole($administrador);
         Permission::create(['name' => 'admin.editar-perfil'])->assignRole($administrador);
-        $admin = User::create([
-            'name' => 'Administrador',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $admin->assignRole('administrador');
-
-        $organizador = User::create([
-            'name' => 'Organizador',
-            'email' => 'organizador@example.com',
-            'password' => bcrypt('contraseña'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $organizador->assignRole('organizador');
-
-        $colaborador = User::create([
-            'name' => 'Colaborador',
-            'email' => 'colaborador@example.com',
-            'password' => bcrypt('contraseña'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $colaborador->assignRole('colaborador');
+        Permission::create(['name' => 'coach.registrar-equipo'])->assignRole($coach);
     }
 }
