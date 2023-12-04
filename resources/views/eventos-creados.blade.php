@@ -26,11 +26,14 @@
                             type="button" role="tab" aria-controls="home" aria-selected="true">Eventos
                             activos</button>
                     </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                            type="button" role="tab" aria-controls="profile" aria-selected="false">Eventos en
-                            borrador</button>
-                    </li>
+                    @can('admin.editar-evento')
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                type="button" role="tab" aria-controls="profile" aria-selected="false">Eventos en
+                                borrador</button>
+                        </li>
+                    @endcan
+
 
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
@@ -42,9 +45,12 @@
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         @livewire('mis-eventos-activos')
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        @livewire('eventos-creados')
-                    </div>
+                    @can('admin.editar-evento')
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            @livewire('eventos-creados')
+                        </div>
+                    @endcan
+
 
                     <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
                 </div>

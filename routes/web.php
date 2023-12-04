@@ -32,7 +32,8 @@ Route::get('/', function () {
 
 Route::post('/home', [AjaxController::class, 'ajax'])->name('ajax');
 Route::get('/pruebas', [AjaxController::class, 'prueba'])->name('ajax-prueba');
-Route::get('/crear-evento', [EventoControlador::class, 'index'])->name('crear-evento');;
+Route::get('/crear-evento', [EventoControlador::class, 'index'])->name('crear-evento');
+;
 
 Route::post('/crear-evento', [EventoControlador::class, 'crearEvento'])->name('crear-evento');
 
@@ -115,6 +116,11 @@ Route::group(['middleware' => ['can:admin.editar-evento']], function () {
     Route::get('/editarEvento/{user}/{evento}', [EventoControlador::class, 'edit'])->name('evento.edit');
     Route::put('/editarEvento/{user}/{evento}', [EventoControlador::class, 'update'])->name('evento.update');
     Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
+    //fases
+    Route::get('/cronograma/{evento}', [FaseController::class, 'show'])->name('crear.cronograma');
+    Route::put('/fases/editar/{faseId}', [FaseController::class, 'edit'])->name('faseEdit');
+    Route::delete('/fases/eliminar/{faseId}', [FaseController::class, 'delete'])->name('fase.delete');
+    Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore');
 
 });
 
@@ -138,12 +144,10 @@ Route::group(['middleware' => ['can:admin.crear-usuario']], function () {
 });
 
 
-Route::put('/fases/editar/{faseId}', [FaseController::class, 'edit'])->name('faseEdit')->middleware('checkRole:administrador,organizador');
-Route::delete('/fases/eliminar/{faseId}', [FaseController::class, 'delete'])->name('fase.delete')->middleware('checkRole:administrador,organizador');
-Route::post('/fases/{eventoId}/crear', [FaseController::class, 'store'])->name('faseStore')->middleware('checkRole:administrador,organizador');
+
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
-Route::get('/fases/{evento}',[FaseController::class,'fasesdeEvento'])->name('fases.fasesdeEvento');
+Route::get('/fases/{evento}', [FaseController::class, 'fasesdeEvento'])->name('fases.fasesdeEvento');
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
 
@@ -171,7 +175,7 @@ Route::group(['middleware' => ['can:admin.ver-permisos']], function () {
 
 // Route::delete('/eliminar/{user}/{evento}', [AsistenciaEventosController::class, 'destroy'])->name('user.delete');
 Route::delete('/eliminar/{user}', [UsuarioController::class, 'destroy'])
-->name('user.delete');
+    ->name('user.delete');
 Route::group(['middleware' => ['can:admin.eliminar-usuarios']], function () {
 
 
@@ -228,15 +232,15 @@ Route::get('/misColaboradores', [ColaboradorController::class, 'index'])->name('
 Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'asignarColaborador'])->name('colaboradores.asignar');
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
 
-Route::get('/registro-equipo/{evento_id}',[RegistroEquipoController::class,'view'])->name('registroEquipo.view');
+Route::get('/registro-equipo/{evento_id}', [RegistroEquipoController::class, 'view'])->name('registroEquipo.view');
 
 
 
 
-Route::get('/crear-prueba',[EventoControlador::class,'indexPrueba'])->name('ver-crear-prueba');
+Route::get('/crear-prueba', [EventoControlador::class, 'indexPrueba'])->name('ver-crear-prueba');
 Route::get('/calificar-participantes', [CalificacionParticipanteController::class, 'index'])->name('calificar.index');
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
-Route::get('/cronograma/{evento}', [FaseController::class, 'show'])->name('crear.cronograma')->middleware('checkRole:administrador,organizador');
+
 
 Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
