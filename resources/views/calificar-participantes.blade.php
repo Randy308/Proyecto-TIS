@@ -37,7 +37,15 @@
         <div id="content">
             @include('layouts/navbar')
             <div class="container py-4">
+
                 <p class="h3">Lista de participantes</p>
+                <div class="py-4">
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                        Crear calificación
+                    </button>
+                    @include('layouts.modal-crear-calificacion')
+                </div>
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>

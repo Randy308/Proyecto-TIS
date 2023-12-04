@@ -46,7 +46,7 @@
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('ver.participantes', ['evento_id' => $evento->id]) }}">Ver
                                                         Participantes</a></li>
-                                                <li><a class="dropdown-item" href="#">Calificar participantes</a>
+                                                <li><a class="dropdown-item" href="{{ route('calificaciones.index', ['evento_id' => $evento->id]) }}">Calificaciones</a>
                                                 </li>
                                             @endif
                                             <li><a class="dropdown-item" href="#">Ver Cronograma</a></li>
