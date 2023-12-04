@@ -31,7 +31,7 @@
                       </div>
               </div>
               <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
                   <button type="submit" id="crearRol"  class="btn btn-primary">Crear rol</button>
               </div>
             </form>
