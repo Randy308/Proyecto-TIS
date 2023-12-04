@@ -131,6 +131,7 @@ class CalificacionParticipanteController extends Controller
                 ->where('calificacion_eventos.evento_id', $eventoId)
                 ->select(
                     'calificacion_usuarios.id as calificacion_id',
+                    'users.id as users_id',
                     'users.email',
                     'users.name',
                     'calificacions.nota_minima_aprobacion',

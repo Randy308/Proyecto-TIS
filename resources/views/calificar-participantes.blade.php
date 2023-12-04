@@ -40,11 +40,6 @@
 
                 <p class="h3">Lista de participantes</p>
                 <div class="py-4">
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-                        Crear calificación
-                    </button>
-                    @include('layouts.modal-crear-calificacion')
                 </div>
                 <table class="table table-bordered data-table">
                     <thead>
@@ -52,17 +47,17 @@
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Email</th>
-                            <th>Estado</th>
-                            <th>Rol</th>
+                            <th>Puntaje</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($combinedData as $data)
                             <tr>
-                                <td>{{ $data->user_id }}</td>
+                                {{-- <td>{{ $data->calificacion_id }}</td>
                                 <td>
                                     <a href="" class="update" data-name="name" data-type="text"
-                                        data-pk="{{ $data->user_id }}" data-title="Enter name">{{ $data->name }}</a>
+                                        data-pk="{{ $data->user_id }}" data-title="Enter name"></a>
                                 </td>
                                 <td>
                                     <a href="" class="update" data-name="email" data-type="text"
@@ -74,9 +69,18 @@
                                         data-source='{"habilitado": "Habilitado", "deshabilitado": "Deshabilitado"}'>
                                         {{ $data->estado }}
                                     </a>
+                                </td> --}}
+
+                                <td>{{ $data->calificacion_id }}</td>
+                                <td>
+                                    {{ $data->name }}
                                 </td>
                                 <td>
-                                    {{ $data->rol }}
+                                    {{ $data->email }}
+                                </td>
+                                <td>
+                                    <a href="" class="update" data-name="name" data-type="text"
+                                        data-pk="{{ $data->users_id }}" data-title="Ingrese el puntaje">{{ $data->puntaje }}</a>
                                 </td>
                             </tr>
                         @endforeach
