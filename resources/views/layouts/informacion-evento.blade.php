@@ -1,7 +1,7 @@
 <div class="tab1">
     <div class="row pb-4">
-        <div class="col p-4">
-            <div class="row">
+        <div class="col p-4" >
+            <div class="row my-3 p-4 miCard">
                 <p class="h4">Detalles</p>
                 <span><i class="bi bi-person h3"></i> Evento de
                     <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
@@ -16,7 +16,7 @@
                     </span>
                 @endif
             </div>
-            <div class="row">
+            <div class="row miCard p-4">
                 <h4>Organizador</h4>
                 <div class="row">
                     <div class="col-4">
@@ -35,7 +35,7 @@
                 </div>
             </div>
             @if ($evento->colaboradors->count())
-                <div class="row">
+                <div class="row my-4 p-4 miCard">
 
                     <h4>Colaboradores:</h4>
                     @foreach ($evento->colaboradors as $user)
@@ -67,27 +67,32 @@
                 </div>
             @endif
         </div>
-        <div class="col-md-auto d-flex justify-content-center">
-            <div id="participantesContainer">
-                <div class="d-flex">
-                    <p class="h4">Ubicación:</p>
+        <div class="col-md-auto d-flex justify-content-center m-4" >
+            <div class="row">
+                <div class="col">
+                    <div class="p-2 my-4 miCard">
+                        <p class="h4">Ubicación</p>
+                    </div>
+                    <div id="participantesContainer" class="d-flex justify-content-center align-items-center">
+                        <div class="card" id="participantes">
+        
+        
+                            <input type="hidden" class="form-control" name="latitud" id="latitud"
+                                value="{{ $evento->latitud }}">
+                            <input type="hidden" class="form-control" name="longitud" id="longitud"
+                                value="{{ $evento->longitud }}">
+                            <div id="mapa"></div>
+        
+        
+                        </div>
+                    </div>
                 </div>
-                <div class="card" id="participantes">
-
-
-                    <input type="hidden" class="form-control" name="latitud" id="latitud"
-                        value="{{ $evento->latitud }}">
-                    <input type="hidden" class="form-control" name="longitud" id="longitud"
-                        value="{{ $evento->longitud }}">
-                    <div id="mapa"></div>
-
-
-                </div>
+                
             </div>
         </div>
     </div>
-    <div class="row pt-4">
-        <div class="col">
+    <div class="row pt-2">
+        <div class="col miCard p-4 m-4">
             @if ($evento->privacidad == 'con-restriccion')
                 <p class="h4">Requisitos</p>
 
