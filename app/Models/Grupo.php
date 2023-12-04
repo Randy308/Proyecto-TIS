@@ -13,6 +13,7 @@ class Grupo extends Model
         'nombre',
         'user_id',
         'evento_id',
+        'estado',
     ];
 
     public function user()

@@ -162,6 +162,15 @@ class UsuarioController extends Controller
             'institucion' => $institucion->nombre_institucion
         ]);
     }
+    public function showParticipante($id)
+    {
+        $user = User::findOrFail($id);
+        $institucion = Institucion::findOrFail($user->institucion_id);
+        return view('visualizar-usuario', [
+            'usuario' => $user,
+            'institucion' => $institucion->nombre_institucion
+        ]);
+    }
 
     public function createForm()
     {

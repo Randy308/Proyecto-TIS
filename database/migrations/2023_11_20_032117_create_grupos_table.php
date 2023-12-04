@@ -18,6 +18,7 @@ class CreateGruposTable extends Migration
             $table->string('nombre');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('evento_id');
+            $table->enum('estado', ['Pendiente', 'Habilitado', 'Denegado']);
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');

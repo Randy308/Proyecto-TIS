@@ -149,6 +149,7 @@ class UserSearch extends Component
             'nombre' => $this->nombreEquipo,
             'user_id' => auth()->user()->id,
             'evento_id' => $this->evento_id,
+            'estado' => "Pendiente"
         ]);
         foreach ($this->users as $user) {
             PertenecenGrupo::create([
