@@ -32,18 +32,41 @@
                                     alt="Previsualización de la imagen" style="width: 200px; height: 200px;">
                                 <br>
 
-                                <div class="form-outline mb-4">
-                                    <label class="form-label" for="formName">Nombre completo</label>
-                                    <input type="text" id="formName" class="form-control" name="nombre"
-                                        class="@error('nombre') is-invalid @enderror" value="{{ old('nombre') }}" />
-                                    @error('nombre')
-                                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                                    @enderror
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-outline mb-4">
+                                            <label class="form-label" for="formName">Nombre completo<span
+                                                    class="text-danger font-weight-bold ">*</span></label>
+                                            <input type="text" id="formName" class="form-control" name="nombre"
+                                                class="@error('nombre') is-invalid @enderror"
+                                                value="{{ old('nombre') }}" />
+                                            @error('nombre')
+                                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                                            @enderror
 
-                                    <div class="alert alert-danger" role="alert" id="nameCheck">
+                                            <div class="alert alert-danger" role="alert" id="nameCheck">
 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-outline mb-4">
+                                            <label for="formEmail" class="form-label">Correo electronico<span
+                                                    class="text-danger font-weight-bold ">*</span></label>
+                                            <input type="email" id="formEmail" class="form-control" name="email"
+                                                class="@error('email') is-invalid @enderror"
+                                                value="{{ old('email') }}" />
+                                            @error('email')
+                                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                                            @enderror
+
+                                            <div class="alert alert-danger" role="alert" id="emailUserCheck">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
 
 
 
@@ -72,24 +95,14 @@
                                     </div>
                                 </div>
 
-                                <div class="form-outline mb-4">
-                                    <label for="formEmail" class="form-label">Correo electronico</label>
-                                    <input type="email" id="formEmail" class="form-control" name="email"
-                                        class="@error('email') is-invalid @enderror" value="{{ old('email') }}" />
-                                    @error('email')
-                                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                                    @enderror
-                                    
-                                    <div class="alert alert-danger" role="alert" id="emailUserCheck">
 
-                                    </div>
-                                </div>
 
                                 <div class="row">
                                     <div class="col-md-6 mb-2">
 
                                         <div class="form-outline datepicker">
-                                            <label for="formPhoneNumber" class="form-label">Telefono</label>
+                                            <label for="formPhoneNumber" class="form-label">Telefono<span
+                                                    class="text-danger font-weight-bold ">*</span></label>
                                             <input type="tel" id="formPhoneNumber" name="telefono"
                                                 class="form-control" class="@error('telefono') is-invalid @enderror"
                                                 value="{{ old('telefono') }}" />
@@ -122,47 +135,62 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="password">Contraseña<span
+                                                    class="text-danger font-weight-bold ">*</span></label>
+                                            <div class="input-group mb-2">
+                                                <input type="password" name="password" id="password"
+                                                    class="form-control form-control"
+                                                    class="@error('password') is-invalid @enderror" />
+                                                <span class="input-group-text">
+                                                    <i class="far fa-eye" id="firstToggle"
+                                                        style="cursor: pointer;"></i></span>
 
+                                            </div>
+                                            @error('password')
+                                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                                            @enderror
 
-
-                                <div class="form-outline">
-                                    <label class="form-label" for="password">Contraseña</label>
-                                    <div class="input-group mb-2">
-                                        <input type="password" name="password" id="password"
-                                            class="form-control form-control"
-                                            class="@error('password') is-invalid @enderror" />
-                                        <span class="input-group-text">
-                                            <i class="far fa-eye" id="firstToggle"
-                                                style="cursor: pointer;"></i></span>
-
+                                        </div>
                                     </div>
-                                    @error('password')
-                                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                                    @enderror
+                                    <div class="col-md-6">
+                                        <div class="form-outline">
+                                            <label class="form-label" for="password_confirmation">Confirmar
+                                                Contraseña<span class="text-danger font-weight-bold ">*</span></label>
+                                            <div class="input-group mb-2">
 
+                                                <input type="password" name="password_confirmation"
+                                                    id="password_confirmation" class="form-control form-control"
+                                                    class="@error('password_confirmation') is-invalid @enderror" />
+                                                <span class="input-group-text">
+                                                    <i class="far fa-eye" id="secondToggle"
+                                                        style="cursor: pointer;"></i></span>
+
+                                            </div>
+                                            @error('password_confirmation')
+                                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                    <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que
+                                            el
+                                            campo
+                                            es obligatorio</span></div>
                                 </div>
 
-                                <div class="form-outline">
-                                    <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
-                                    <div class="input-group mb-2">
 
-                                        <input type="password" name="password_confirmation"
-                                            id="password_confirmation" class="form-control form-control"
-                                            class="@error('password_confirmation') is-invalid @enderror" />
-                                        <span class="input-group-text">
-                                            <i class="far fa-eye" id="secondToggle"
-                                                style="cursor: pointer;"></i></span>
 
-                                    </div>
-                                    @error('password_confirmation')
-                                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                                    @enderror
-                                </div>
+
                                 <div class="pt-4 d-flex justify-content-around">
                                     <a type="button" href="{{ route('listaUsuarios') }}"
-                                        class="btn btn-secondary btn-lg mb-1">Regresar</a>
+                                        class="btn btn-secondary btn-sm mb-1">Regresar</a>
                                     <button type="submit" id="crearUsuarioBoton"
-                                        class="btn btn-primary btn-lg mb-1">Crear usuario</button>
+                                        class="btn btn-primary btn-sm mb-1">Crear usuario</button>
                                 </div>
 
 

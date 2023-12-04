@@ -10,6 +10,7 @@ use App\Http\Controllers\CalificacionParticipanteController;
 use App\Http\Controllers\ColaboradorController;
 use App\Http\Controllers\ElementosBannerController;
 use App\Http\Controllers\FaseController;
+use App\Http\Controllers\GrupoController;
 use App\Http\Controllers\ParticipanteController;
 use App\Http\Controllers\RecuperarCuentaController;
 use App\Http\Controllers\UsuarioController;
@@ -243,4 +244,11 @@ Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteControll
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
 Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
+Route::get('/lista-grupos/{evento_id}', [GrupoController::class, 'index'])->name('ver.grupos');
 
+
+Route::put('/habilitar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'habilitarEstado'])->name('habilitar.grupo.participacion');
+Route::put('/rechazar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'rechazarEstado'])->name('rechazar.grupo.participacion');
+Route::put('/posponer-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'posponerEstado'])->name('posponer.grupo.participacion');
+Route::get('/participante/{id}', [UsuarioController::class, 'showParticipante'])->name('ver.participante');
+Route::get('/lista-integrantes-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'showIntegrantes'])->name('ver.grupo.integrantes');

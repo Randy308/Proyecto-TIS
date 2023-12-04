@@ -63,7 +63,8 @@
                                 </ul>
 
                                 <div class="text-center mt-4">
-                                    <a href="{{ route('listaUsuarios') }}" class="btn btn-danger mr-2">Volver</a>
+
+                                    <button onclick="history.back()" type="submit" class="btn btn-danger mr-2">Volver</button>
                                     <a href="{{ route('editarUsuario', $usuario->id) }}"
                                         class="btn btn-primary">Editar</a>
                                 </div>
