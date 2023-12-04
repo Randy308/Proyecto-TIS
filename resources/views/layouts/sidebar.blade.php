@@ -89,6 +89,24 @@
                 </li>
             @endhasanyrole
 
+            {{--reportes--}}
+                <li>
+                    <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="bi bi-people-fill"></i>
+                        <span>Reportes</span>
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu3">
+
+                        <li>
+                            <a href="{{ route('reportes-generales') }}">Reportes Generales</a>
+                        </li>                   
+                        <li>
+                            <a href="{{ route('reportes-especificos') }}">Reportes Especificos</a>
+                        </li>
+                        
+                    </ul>
+                </li>
+            {{--  --}}
 
         @endauth
 
