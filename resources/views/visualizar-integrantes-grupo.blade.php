@@ -17,8 +17,13 @@
     @livewireStyles
 
     <style>
-        #listaIntegrantesGrupos{
+        body{
             background-color: whitesmoke;
+        }
+        #listaIntegrantesGrupos{
+            background-color: white;
+            border-radius: 20px;
+            border: solid whitesmoke;
         }
     </style>
 </head>

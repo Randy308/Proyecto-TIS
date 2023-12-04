@@ -15,7 +15,16 @@
     @include('layouts/estilos')
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     @livewireStyles
-
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+        #listaIntegrantesGrupos{
+            background-color: white;
+            border-radius: 20px;
+            border: solid whitesmoke;
+        }
+    </style>
 
 </head>
 
