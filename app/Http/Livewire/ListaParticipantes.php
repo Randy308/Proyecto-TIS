@@ -20,11 +20,10 @@ class ListaParticipantes extends Component
 
         if ($evento) {
             $eventoId = $evento->id;
-
+            //->where('asistencia_eventos.estado', '!=',"Denegado")
             $combinedData = DB::table('asistencia_eventos')
                 ->join('users', 'asistencia_eventos.user_id', '=', 'users.id')
                 ->where('asistencia_eventos.evento_id', $eventoId)
-                ->where('asistencia_eventos.estado', '!=',"Denegado")
                 ->select(
                     'asistencia_eventos.id as asistencia_id',
                     'users.id as user_id',
@@ -40,6 +39,6 @@ class ListaParticipantes extends Component
 
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
-        return view('livewire.lista-participantes', compact('evento','combinedData'));
+        return view('livewire.lista-participantes', compact('evento', 'combinedData'));
     }
 }

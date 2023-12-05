@@ -21,7 +21,7 @@
                 <div class="row">
                     <div class="col">
 
-                        <h6>Tipo de evento: <b> {{ucwords( $evento->tipo_evento." ".$evento->modalidad) }}</b></h6>
+                        <h6>Tipo de evento: <b> {{ ucwords($evento->tipo_evento . ' ' . $evento->modalidad) }}</b></h6>
                     </div>
                     @include('layouts.botont-registrarse-evento')
                 </div>
@@ -93,28 +93,5 @@
 
 
     </div>
-    @if ($evento->auspiciadors->count())
-        <div class="row pt-4">
-            <div class="miCard p-4">
-                <h5>Auspiciadores</h5>
-                <div class="container p-3 ">
-                    <div class="row">
-                        <div class="col border p-0 ml-3">
-
-                            <div id="contenedorDeImagenAuspiciadores">
-
-
-                                @foreach ($evento->auspiciadors as $item)
-                                    <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}" />
-                                @endforeach
-
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    @endif
+    
 </div>

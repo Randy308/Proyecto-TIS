@@ -240,11 +240,12 @@ Route::get('/registro-equipo/{evento_id}', [RegistroEquipoController::class, 'vi
 
 
 Route::get('/crear-prueba', [EventoControlador::class, 'indexPrueba'])->name('ver-crear-prueba');
-Route::get('/calificar-participantes', [CalificacionParticipanteController::class, 'index'])->name('calificar.index');
+Route::get('/mis-calificaciones/{evento_id}', [CalificacionParticipanteController::class, 'indexCalificaciones'])->name('calificaciones.index');
+Route::post('/crear-calificacion/{evento_id}', [CalificacionParticipanteController::class, 'create'])->name('calificaciones.create');
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 
 
-Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
+Route::get('/calificar-participantes/{evento_id}/{calificacion_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
 
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');

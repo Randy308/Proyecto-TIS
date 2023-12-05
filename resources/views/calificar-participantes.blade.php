@@ -37,24 +37,27 @@
         <div id="content">
             @include('layouts/navbar')
             <div class="container py-4">
+
                 <p class="h3">Lista de participantes</p>
+                <div class="py-4">
+                </div>
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nombre</th>
                             <th>Email</th>
-                            <th>Estado</th>
-                            <th>Rol</th>
+                            <th>Puntaje</th>
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($combinedData as $data)
                             <tr>
-                                <td>{{ $data->user_id }}</td>
+                                {{-- <td>{{ $data->calificacion_id }}</td>
                                 <td>
                                     <a href="" class="update" data-name="name" data-type="text"
-                                        data-pk="{{ $data->user_id }}" data-title="Enter name">{{ $data->name }}</a>
+                                        data-pk="{{ $data->user_id }}" data-title="Enter name"></a>
                                 </td>
                                 <td>
                                     <a href="" class="update" data-name="email" data-type="text"
@@ -66,10 +69,23 @@
                                         data-source='{"habilitado": "Habilitado", "deshabilitado": "Deshabilitado"}'>
                                         {{ $data->estado }}
                                     </a>
+                                </td> --}}
+
+                                <td>{{ $data->calificacion_id }}</td>
+                                <td>
+                                    {{ $data->name }}
+
                                 </td>
                                 <td>
-                                    {{ $data->rol }}
+                                    {{ $data->email }}
+
                                 </td>
+                                <td>
+                                    <a href="#" class="update" data-name="puntaje" data-type="text"
+                                        data-pk="{{ $data->user_id }}" data-calificacion="{{ $data->calificacion_id }}"
+                                        data-title="Enter Puntaje">{{ $data->puntaje }}</a>
+                                </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -82,6 +98,7 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+
 
     <script type="text/javascript">
         $.fn.editable.defaults.mode = 'inline';
@@ -96,10 +113,23 @@
             url: "{{ route('calificar.update') }}",
             type: 'text',
             pk: 1,
+            params: function(params) {
+                // Obtener el valor del atributo data-calificacion-id del enlace
+                params.calificacion = $(this).data('calificacion');
+                return params;
+            },
             name: 'name',
-            title: 'Enter name'
+            title: 'Enter name',
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(errors) {
+                console.error(errors); // Muestra los errores en la consola si hay alguno
+            }
         });
     </script>
+
+
 
 </body>
 
