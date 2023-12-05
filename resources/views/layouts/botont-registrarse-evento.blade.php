@@ -37,10 +37,7 @@
                         }
                     @endphp
                     @if ($registroExistente || $participanteEngrupodelEvento)
-                        @if (
-                            $evento->tipo_evento == 'competencia_individual' ||
-                                $evento->tipo_evento == 'reclutamiento' ||
-                                $evento->tipo_evento == 'taller_individual')
+                        @if ($evento->modalidad == 'individual')
                             <div class="dropdown" id="lista-registro">
                                 <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
