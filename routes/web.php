@@ -261,3 +261,6 @@ Route::get('/lista-integrantes-grupo/{evento_id}/{grupo_id}', [GrupoController::
 //Eventos:reportes
 Route::get('/reportes-generales', [ReporteController::class, 'verReportesGenerales'])->name('reportes-generales');
 Route::get('/reportes-especificos', [ReporteController::class, 'verReportesEspecificos'])->name('reportes-especificos');
+
+//route pdf
+Route::get('/reportes-generales/pdf', [ReporteController::class, 'pdf'])->name('reportes-generales.pdf');
