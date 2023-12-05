@@ -110,19 +110,7 @@ class CalificacionParticipanteController extends Controller
         if ($evento) {
             $eventoId = $evento->id;
             
-            // $combinedData = DB::table('asistencia_eventos')
-            //     ->join('users', 'asistencia_eventos.user_id', '=', 'users.id')
-            //     ->where('asistencia_eventos.evento_id', $eventoId)
-            //     ->select(
-            //         'asistencia_eventos.id as asistencia_id',
-            //         'users.id as user_id',
-            //         'users.email',
-            //         'users.name',
-            //         'asistencia_eventos.estado',
-            //         'asistencia_eventos.rol'
-            //         // Agrega más campos según sea necesario
-            //     )
-            //     ->get();
+            //$calificacion = Calificacion::where('evento_id',$evento_id)->where('id',$calificacion_id)->first();
             $combinedData = DB::table('calificacion_usuarios')
                 ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
                 ->join('users', 'calificacion_usuarios.user_id', '=', 'users.id')
@@ -189,12 +177,21 @@ class CalificacionParticipanteController extends Controller
     }
 
     public function update(Request $request)
-    {
+    {   
+        $micalificacion = Calificacion::find($request->calificacion)->first();
+        $this->validate($request, [
 
+            'pk' => 'required|numeric',
+            'calificacion' => 'required|numeric',
+            'value' => 'required|numeric|min:0|max:'.$micalificacion->nota_maxima,
+
+        ]);
+        
         $user_id = $request->input('pk');
         $calificacion_id = $request->calificacion;
         // Resto del código...
-
+        
+        //if($micalificacion->nota_maxima < )
         //return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'usuario' => $user_id,'calificacion' => $calificacion_id,]);
         //return response()->json(['success' => true, 'message' => $request->all()]);
 
