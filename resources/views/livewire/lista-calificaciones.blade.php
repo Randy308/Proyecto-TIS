@@ -46,7 +46,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
                                     <li>
 
-                                        <a href="#" class="dropdown-item"
+                                        <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}" class="dropdown-item"
                                             type="button">Calificar</a>
                                     </li>
                                 </ul>

@@ -120,4 +120,26 @@
 
         </div>
     </div>
+    @if ($evento->auspiciadors->count())
+        <div class="row pt-4 p-4">
+            <div class="miCard pt-3">
+                <h5>Auspiciadores</h5>
+                <div class="row">
+                    <div class="col p-0 ml-3">
+
+                        <div id="contenedorDeImagenAuspiciadores">
+
+
+                            @foreach ($evento->auspiciadors as $item)
+                                <img src="{{ asset($item->url) }}" alt="logo-banner-{{ $item->nombre }}" />
+                            @endforeach
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 </div>

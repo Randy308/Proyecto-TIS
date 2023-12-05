@@ -243,7 +243,7 @@ Route::post('/crear-calificacion/{evento_id}', [CalificacionParticipanteControll
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 
 
-Route::get('/calificar-participantes/{evento_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
+Route::get('/calificar-participantes/{evento_id}/{calificacion_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
 
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');

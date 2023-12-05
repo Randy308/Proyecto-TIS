@@ -79,7 +79,6 @@ class CalificacionParticipanteController extends Controller
                 'puntaje' => 0,
             ]);
             $calificacion_user->save();
-
         }
 
         // if ($request->has('mi_checkbox')) {
@@ -103,14 +102,14 @@ class CalificacionParticipanteController extends Controller
 
         return view('lista-participantes', compact('evento_id'));
     }
-    public function show($evento_id)
+    public function show($evento_id,$calificacion_id)
     {
 
         $evento = Evento::find($evento_id);
 
         if ($evento) {
             $eventoId = $evento->id;
-
+            
             // $combinedData = DB::table('asistencia_eventos')
             //     ->join('users', 'asistencia_eventos.user_id', '=', 'users.id')
             //     ->where('asistencia_eventos.evento_id', $eventoId)
@@ -124,14 +123,13 @@ class CalificacionParticipanteController extends Controller
             //         // Agrega más campos según sea necesario
             //     )
             //     ->get();
-            $combinedData = DB::table('calificacion_eventos')
-                ->join('calificacions', 'calificacion_eventos.calificacion_id', '=', 'calificacions.id')
-                ->join('calificacion_usuarios', 'calificacion_eventos.calificacion_id', '=', 'calificacion_usuarios.calificacion_id')
+            $combinedData = DB::table('calificacion_usuarios')
+                ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
                 ->join('users', 'calificacion_usuarios.user_id', '=', 'users.id')
-                ->where('calificacion_eventos.evento_id', $eventoId)
+                ->where('calificacion_usuarios.calificacion_id', $calificacion_id)
                 ->select(
-                    'calificacion_usuarios.id as calificacion_id',
-                    'users.id as users_id',
+                    'calificacion_usuarios.calificacion_id as calificacion_id',
+                    'users.id as user_id',
                     'users.email',
                     'users.name',
                     'calificacions.nota_minima_aprobacion',
@@ -189,17 +187,36 @@ class CalificacionParticipanteController extends Controller
             ]);
         return redirect()->route('ver.participantes', compact('evento_id'))->with('status', 'Estado de la participacion actualizada');
     }
-    public function update(Request $request, $calificacionParticipante)
-    {
-        if ($request->ajax()) {
-            User::find($request->pk)
-                ->update([
-                    $request->name => $request->value
-                ]);
 
-            return response()->json(['success' => true]);
+    public function update(Request $request)
+    {
+
+        $user_id = $request->input('pk');
+        $calificacion_id = $request->calificacion;
+        // Resto del código...
+
+        //return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'usuario' => $user_id,'calificacion' => $calificacion_id,]);
+        //return response()->json(['success' => true, 'message' => $request->all()]);
+
+        $calificacion = CalificacionUsuario::where('user_id', $user_id)
+            ->where('calificacion_id', $calificacion_id)
+            ->first();
+
+        // Verificar si se encontró el registro
+        if ($calificacion) {
+            // Actualizar el campo específico
+            $calificacion->update([
+                $request->name => $request->value
+            ]);
+
+            // Puedes devolver una respuesta adecuada si es necesario
+            return response()->json(['success' => true, 'message' => 'Actualización exitosa']);
+        } else {
+            // Puedes devolver un error si no se encuentra el registro
+            return response()->json(['error' => 'Registro no encontrado'], 404);
         }
     }
+
 
 
     public function destroy($calificacionParticipante)

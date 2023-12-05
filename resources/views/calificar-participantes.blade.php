@@ -74,14 +74,18 @@
                                 <td>{{ $data->calificacion_id }}</td>
                                 <td>
                                     {{ $data->name }}
+
                                 </td>
                                 <td>
                                     {{ $data->email }}
+
                                 </td>
                                 <td>
-                                    <a href="" class="update" data-name="name" data-type="text"
-                                        data-pk="{{ $data->users_id }}" data-title="Ingrese el puntaje">{{ $data->puntaje }}</a>
+                                    <a href="#" class="update" data-name="puntaje" data-type="text"
+                                        data-pk="{{ $data->user_id }}" data-calificacion="{{ $data->calificacion_id }}"
+                                        data-title="Enter Puntaje">{{ $data->puntaje }}</a>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>
@@ -94,6 +98,7 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+
 
     <script type="text/javascript">
         $.fn.editable.defaults.mode = 'inline';
@@ -108,10 +113,23 @@
             url: "{{ route('calificar.update') }}",
             type: 'text',
             pk: 1,
+            params: function(params) {
+                // Obtener el valor del atributo data-calificacion-id del enlace
+                params.calificacion = $(this).data('calificacion');
+                return params;
+            },
             name: 'name',
-            title: 'Enter name'
+            title: 'Enter name',
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(errors) {
+                console.error(errors); // Muestra los errores en la consola si hay alguno
+            }
         });
     </script>
+
+
 
 </body>
 
