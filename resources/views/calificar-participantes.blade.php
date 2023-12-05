@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/media-query.css') }}">
+
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     @include('layouts/estilos')
@@ -15,6 +16,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css"
         rel="stylesheet" />
+
     <script>
         $.fn.poshytip = {
             defaults: null
@@ -22,7 +24,7 @@
     </script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js">
     </script>
-
+    <link rel="stylesheet" href="{{ asset('css/calificaciones.css') }}">
 
 </head>
 
@@ -31,12 +33,12 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            <div class="container py-4">
+            <div class="container py-4 my-4 p-4" id="miTabla">
 
                 <p class="h3">Lista de participantes</p>
                 <div class="py-4">
                 </div>
-                <table class="table table-bordered data-table">
+                <table class="table table-bordered data-table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -97,7 +99,25 @@
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
 
+    <script>
+        $(document).ready(function() {
+            $('.update').on('click', function() {
+                $(".editable-submit").addClass("btn btn-success btn-sm");
+                $(".editable-cancel").addClass("btn btn-danger btn-sm");
+                $(".editable-submit").html('Guardar');
+                $(".editable-cancel").html('Cancelar');
+            });
+        });
 
+        function crearToast(mensaje) {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-bottom-right"
+            }
+            toastr.error(mensaje);
+        }
+    </script>
     <script type="text/javascript">
         $.fn.editable.defaults.mode = 'inline';
 
@@ -114,19 +134,19 @@
             pk: 1,
             validate: function(value) {
                 if ($.trim(value) == '') {
-                    alert('El campo es requerido' + $(this).data('minimo') + "  " + $(this).data('maximo'));
+                    crearToast('El campo es requerido');
                     return false;
                 }
                 if (!$.isNumeric(value)) {
-                    alert('Ingrese un numero');
+                    crearToast('Ingrese un numero');
                     return false;
                 }
                 if (value > $(this).data('maximo')) {
-                    alert('Ingrese un numero menor a ' + $(this).data('maximo'));
+                    crearToast('Debe ingresar un numero menor o igual a ' + $(this).data('maximo'));
                     return false;
                 }
                 if ($.trim(value) < $(this).data('minimo')) {
-                    alert('Ingrese un numero mayor a ' + $(this).data('minimo'));
+                    crearToast('Debe ingresar un numero mayor o igual a ' + $(this).data('minimo'));
                     return false;
                 }
             },
