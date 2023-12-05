@@ -1,45 +1,37 @@
 <div class="container py-4 my-4" id="listaIntegrantesGrupos">
     <div class="d-flex justify-content-end">
-        <button class="btn btn-danger" type="submit" onclick="history.back()"><i class="bi bi-x-lg"></i></button>
+        <button class="btn btn-danger btn-sm" type="submit" onclick="history.back()"><i class="bi bi-x-lg"></i></button>
     </div>
-    <p class="h3">Lista de participantes</p>
-    @if ($combinedData->count())
+    <p class="h3">Lista de grupos</p>
+    @if ($grupos->count())
         <div class="row p-4">
             <table class="table table-bordered data-table table-responsive-sm">
                 <thead>
                     <tr>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
+                        <th>Nombre del Grupo</th>
+                        <th>Coach</th>
+                        <th>Cantidad de participantes</th>
 
-                        @if ($evento->privacidad == 'con-restriccion')
-                            <th>Codigo sis</th>
-                        @endif
+
                         <th>Estado</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($combinedData as $data)
+                    @foreach ($grupos as $grupo)
                         <tr>
                             <td>
-                                {{ $data->name }}
+                                {{ $grupo->nombre }}
                             </td>
                             <td>
-                                {{ $data->email }}</a>
+                                {{ $grupo->user->email }}</a>
                             </td>
                             <td>
-                                {{ $data->telefono }}</a>
+                                {{ $grupo->users_pertenecen_grupos->count() }}</a>
                             </td>
 
-                            @if ($evento->privacidad == 'con-restriccion')
-                                <td>
-                                    {{ $data->cod_estudiante }}</a>
-                                </td>
-                            @endif
-
                             <td>
-                                {{ $data->estado }}
+                                {{ $grupo->estado }}
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm" role="group">
@@ -49,14 +41,14 @@
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
                                         <li>
-
-                                            <a href="{{ route('ver.participante', $data->user_id) }}"
-                                                class="dropdown-item" type="button">Ver Perfil</a>
+                                            <a class="dropdown-item"
+                                                href="{{ route('ver.grupo.integrantes', ['evento_id' => $evento->id, 'grupo_id' => $grupo->id]) }}">Ver
+                                                integrantes</a>
                                         </li>
-                                        @if ($data->estado != 'Habilitado')
+                                        @if ($grupo->estado != 'Habilitado')
                                             <li>
                                                 <form method="POST"
-                                                    action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                    action="{{ route('habilitar.grupo.participacion', ['evento_id' => $evento->id, 'grupo_id' => $grupo->id]) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <button class="dropdown-item habilitar_participacion"
@@ -68,7 +60,7 @@
 
                                             <li>
                                                 <form method="POST"
-                                                    action="{{ route('rechazar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                    action="{{ route('rechazar.grupo.participacion', ['evento_id' => $evento->id, 'grupo_id' => $grupo->id]) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <button class="dropdown-item rechazar_participacion"
@@ -79,10 +71,10 @@
                                             </li>
                                         @endif
 
-                                        @if ($data->estado != 'Pendiente')
+                                        @if ($grupo->estado != 'Pendiente')
                                             <li>
                                                 <form method="POST"
-                                                    action="{{ route('posponer.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                    action="{{ route('posponer.grupo.participacion', ['evento_id' => $evento->id, 'grupo_id' => $grupo->id]) }}">
                                                     @csrf
                                                     @method('PUT')
                                                     <button class="dropdown-item posponer.posponer"
@@ -103,7 +95,7 @@
             </table>
         </div>
         <div class="row">
-            {{ $combinedData->links() }}
+            {{ $grupos->links() }}
         </div>
         <script>
             $(".rechazar_participacion").on("click", function(e) {
@@ -125,7 +117,7 @@
         </script>
     @else
         <div class="card-body">
-            <strong>No hay registros</strong>
+            <strong>No hay registros de grupos</strong>
         </div>
     @endif
 

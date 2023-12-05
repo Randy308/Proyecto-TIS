@@ -38,7 +38,9 @@
                                         <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 
                                             @if (strtoupper($evento->modalidad) == 'GRUPAL')
-                                                <li><a class="dropdown-item" href="#">Ver Grupos</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('ver.grupos', ['evento_id' => $evento->id]) }}">Ver
+                                                        Grupos</a></li>
                                                 <li><a class="dropdown-item" href="#">Calificar Grupos</a></li>
                                             @else
                                                 <li><a class="dropdown-item"

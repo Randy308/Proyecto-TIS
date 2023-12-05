@@ -21,7 +21,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header text-center display-4">Detalle del Usuario</div>
+                            <div class="card-header text-center h5">Detalle del Usuario</div>
                             <div class="card-body">
                                 <div class="text-center">
                                     <img src="{{ $usuario->foto_perfil }}"
@@ -63,7 +63,8 @@
                                 </ul>
 
                                 <div class="text-center mt-4">
-                                    <a href="{{ route('listaUsuarios') }}" class="btn btn-danger mr-2">Volver</a>
+
+                                    <button onclick="history.back()" type="submit" class="btn btn-danger mr-2">Volver</button>
                                     <a href="{{ route('editarUsuario', $usuario->id) }}"
                                         class="btn btn-primary">Editar</a>
                                 </div>

@@ -101,7 +101,7 @@ class EstudiantesUmssSeeder extends Seeder
         $organizador = User::create([
             'name' => 'Organizador',
             'email' => 'organizador@example.com',
-            'password' => bcrypt('contraseña'),
+            'password' => bcrypt('password'),
             'institucion_id' => 1,
             'estado' => "Habilitado",
             'cod_estudiante' => rand ( 201010000 , 202312012 ),
@@ -112,7 +112,7 @@ class EstudiantesUmssSeeder extends Seeder
         $colaborador = User::create([
             'name' => 'Colaborador',
             'email' => 'colaborador@example.com',
-            'password' => bcrypt('contraseña'),
+            'password' => bcrypt('password'),
             'institucion_id' => 1,
             'cod_estudiante' => rand ( 201010000 , 202312012 ),
             'estado' => "Habilitado",
