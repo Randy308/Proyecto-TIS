@@ -16,4 +16,19 @@ class AsistenciaEvento extends Model
         'fechaInscripcion',
         'estado'
     ];
+
+    public function evento()
+    {
+        return $this->belongsTo(Evento::class,'evento_id');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificacion::class);
+    }
 }

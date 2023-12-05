@@ -84,8 +84,13 @@ class Evento extends Model
     public function pertenecenGrupos(){
         return $this->hasMany(PertenecenGrupo::class);
     }
+
     public function calificacions()
     {
         return $this->belongsToMany(Calificacion::class, 'calificacion_eventos');
+    }
+    public function asistencias(){
+        return $this->hasMany(AsistenciaEvento::class);
+
     }
 }

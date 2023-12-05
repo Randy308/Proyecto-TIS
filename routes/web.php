@@ -17,7 +17,9 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\NotificacionesControlador;
 use App\Models\CalificacionParticipante;
 use App\Models\Evento;
 
@@ -251,9 +253,17 @@ Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionPa
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
 Route::get('/lista-grupos/{evento_id}', [GrupoController::class, 'index'])->name('ver.grupos');
 
+Route::post('/notificar/{evento_id}', [NotificacionesControlador::class, 'notificarParticipantes'])->name('notificarParticipantes');
 
 Route::put('/habilitar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'habilitarEstado'])->name('habilitar.grupo.participacion');
 Route::put('/rechazar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'rechazarEstado'])->name('rechazar.grupo.participacion');
 Route::put('/posponer-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'posponerEstado'])->name('posponer.grupo.participacion');
 Route::get('/participante/{id}', [UsuarioController::class, 'showParticipante'])->name('ver.participante');
 Route::get('/lista-integrantes-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'showIntegrantes'])->name('ver.grupo.integrantes');
+
+//Eventos:reportes
+Route::get('/reportes-generales', [ReporteController::class, 'verReportesGenerales'])->name('reportes-generales');
+Route::get('/reportes-especificos', [ReporteController::class, 'verReportesEspecificos'])->name('reportes-especificos');
+
+//route pdf
+Route::get('/reportes-generales/pdf', [ReporteController::class, 'pdf'])->name('reportes-generales.pdf');
