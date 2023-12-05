@@ -18,6 +18,7 @@ use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\NotificacionesControlador;
 use App\Models\CalificacionParticipante;
 use App\Models\Evento;
 
@@ -250,6 +251,7 @@ Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionPa
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
 Route::get('/lista-grupos/{evento_id}', [GrupoController::class, 'index'])->name('ver.grupos');
 
+Route::post('/notificar/{evento_id}', [NotificacionesControlador::class, 'notificarParticipantes'])->name('notificarParticipantes');
 
 Route::put('/habilitar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'habilitarEstado'])->name('habilitar.grupo.participacion');
 Route::put('/rechazar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'rechazarEstado'])->name('rechazar.grupo.participacion');

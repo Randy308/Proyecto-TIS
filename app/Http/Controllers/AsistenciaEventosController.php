@@ -34,7 +34,7 @@ class AsistenciaEventosController extends Controller
             $asistencia->evento_id = $evento_id;
             $asistencia->user_id = $id;
             $asistencia->rol = 'participante';
-            $asistencia->estado = 'participante';
+            $asistencia->estado = 'Habilitado';
             $asistencia->fechaInscripcion = now();
             $asistencia->save();
             return redirect()->back()->with('status', '¡Se ha añadido exitosamente.');

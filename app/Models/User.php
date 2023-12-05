@@ -79,4 +79,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Evento::class, 'colaboradors');
     }
+
+    public function asistencias() {
+        return $this->hasMany(Asistencia::class, 'user_id');
+    }
+
+    public function notificaciones() {
+        return $this->hasManyThrough(Notificacion::class, AsistenciaEvento::class, 'user_id', 'asistencia_id');
+    }
 }
