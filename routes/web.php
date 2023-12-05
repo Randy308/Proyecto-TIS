@@ -17,6 +17,7 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NotificacionesControlador;
 use App\Models\CalificacionParticipante;
@@ -258,3 +259,10 @@ Route::put('/rechazar-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'r
 Route::put('/posponer-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'posponerEstado'])->name('posponer.grupo.participacion');
 Route::get('/participante/{id}', [UsuarioController::class, 'showParticipante'])->name('ver.participante');
 Route::get('/lista-integrantes-grupo/{evento_id}/{grupo_id}', [GrupoController::class, 'showIntegrantes'])->name('ver.grupo.integrantes');
+
+//Eventos:reportes
+Route::get('/reportes-generales', [ReporteController::class, 'verReportesGenerales'])->name('reportes-generales');
+Route::get('/reportes-especificos', [ReporteController::class, 'verReportesEspecificos'])->name('reportes-especificos');
+
+//route pdf
+Route::get('/reportes-generales/pdf', [ReporteController::class, 'pdf'])->name('reportes-generales.pdf');
