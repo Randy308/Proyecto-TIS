@@ -77,7 +77,8 @@
                                     {{ $data->email }}
 
                                 </td>
-                                <td>
+                                <td id="Puntaje{{ $data->user_id }}"
+                                    class=" {{ $data->puntaje < $data->nota_minima_aprobacion ? 'table-danger' : 'table-success' }}">
                                     <a href="#" class="update" data-name="puntaje" data-type="text"
                                         data-medio="{{ $data->nota_minima_aprobacion }}" data-minimo="0"
                                         data-maximo="{{ $data->nota_maxima }}" data-pk="{{ $data->user_id }}"
@@ -159,6 +160,17 @@
             title: 'Enter name',
             success: function(data) {
                 console.log(data);
+                var cell = $('#Puntaje' + $(this).data('pk'));
+                console.log("Puntaje "+data.puntaje);
+                console.log("Medio "+$(this).data('medio'));
+                console.log("ID "+$(this).data('pk'));
+                if (data.puntaje < $(this).data('medio')) {
+
+                    cell.removeClass('table-success').addClass('table-danger');
+                } else {
+                    cell.removeClass('table-danger').addClass('table-success');
+
+                }
             },
             error: function(errors) {
                 console.error(errors); // Muestra los errores en la consola si hay alguno

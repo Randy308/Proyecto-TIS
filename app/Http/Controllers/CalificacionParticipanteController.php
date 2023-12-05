@@ -109,7 +109,7 @@ class CalificacionParticipanteController extends Controller
 
         if ($evento) {
             $eventoId = $evento->id;
-            
+
             //$calificacion = Calificacion::where('evento_id',$evento_id)->where('id',$calificacion_id)->first();
             $combinedData = DB::table('calificacion_usuarios')
                 ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
@@ -177,7 +177,7 @@ class CalificacionParticipanteController extends Controller
     }
 
     public function update(Request $request)
-    {   
+    {
         $micalificacion = Calificacion::find($request->calificacion)->first();
         $this->validate($request, [
 
@@ -186,11 +186,11 @@ class CalificacionParticipanteController extends Controller
             'value' => 'required|numeric|min:0|max:'.$micalificacion->nota_maxima,
 
         ]);
-        
+
         $user_id = $request->input('pk');
         $calificacion_id = $request->calificacion;
         // Resto del código...
-        
+
         //if($micalificacion->nota_maxima < )
         //return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'usuario' => $user_id,'calificacion' => $calificacion_id,]);
         //return response()->json(['success' => true, 'message' => $request->all()]);
@@ -207,7 +207,7 @@ class CalificacionParticipanteController extends Controller
             ]);
 
             // Puedes devolver una respuesta adecuada si es necesario
-            return response()->json(['success' => true, 'message' => 'Actualización exitosa']);
+            return response()->json(['success' => true, 'message' => 'Actualización exitosa','puntaje' => $request->input('value')]);
         } else {
             // Puedes devolver un error si no se encuentra el registro
             return response()->json(['error' => 'Registro no encontrado'], 404);
