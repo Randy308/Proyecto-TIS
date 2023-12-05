@@ -17,6 +17,7 @@ use App\Http\Controllers\ImagenAuspiciadorController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\NotificacionesControlador;
 use App\Models\CalificacionParticipante;
 use App\Models\Evento;
 
@@ -244,3 +245,4 @@ Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionP
 Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
 
+Route::post('/notificar/{evento_id}', [NotificacionesControlador::class, 'notificarParticipantes'])->name('notificarParticipantes');
