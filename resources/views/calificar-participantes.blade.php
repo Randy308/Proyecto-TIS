@@ -6,13 +6,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-
     <link rel="stylesheet" href="{{ asset('css/index.css') }}">
     <link rel="stylesheet" href="{{ asset('css/media-query.css') }}">
-
-
-
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     @include('layouts/estilos')
@@ -82,8 +77,11 @@
                                 </td>
                                 <td>
                                     <a href="#" class="update" data-name="puntaje" data-type="text"
-                                        data-pk="{{ $data->user_id }}" data-calificacion="{{ $data->calificacion_id }}"
-                                        data-title="Enter Puntaje">{{ $data->puntaje }}</a>
+                                        data-medio="{{ $data->nota_minima_aprobacion }}" data-minimo="0"
+                                        data-maximo="{{ $data->nota_maxima }}" data-pk="{{ $data->user_id }}"
+                                        data-calificacion="{{ $data->calificacion_id }}"
+                                        data-title="Ingrese Puntaje">{{ $data->puntaje }}</a>
+
                                 </td>
 
                             </tr>
@@ -111,8 +109,27 @@
 
         $('.update').editable({
             url: "{{ route('calificar.update') }}",
+            showbuttons: 'bottom', // Muestra los botones en la parte inferior
             type: 'text',
             pk: 1,
+            validate: function(value) {
+                if ($.trim(value) == '') {
+                    alert('El campo es requerido' + $(this).data('minimo') + "  " + $(this).data('maximo'));
+                    return false;
+                }
+                if (!$.isNumeric(value)) {
+                    alert('Ingrese un numero');
+                    return false;
+                }
+                if (value > $(this).data('maximo')) {
+                    alert('Ingrese un numero menor a ' + $(this).data('maximo'));
+                    return false;
+                }
+                if ($.trim(value) < $(this).data('minimo')) {
+                    alert('Ingrese un numero mayor a ' + $(this).data('minimo'));
+                    return false;
+                }
+            },
             params: function(params) {
                 // Obtener el valor del atributo data-calificacion-id del enlace
                 params.calificacion = $(this).data('calificacion');
