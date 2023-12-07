@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ asset('css/recupera-cuenta.css') }}">
+
     @include('layouts/estilos')
+    <link rel="stylesheet" href="{{ asset('css/recupera-cuenta.css') }}">
 </head>
 
 <body>
@@ -27,7 +28,9 @@
             </ul>
         </div>
     @endif
-    <div class="container mt-5">
+    <div class="container mt-5 p-4" id="miContenedor">
+        <div class="d-flex justify-content-end"><a href="{{ route('index') }}" id="btnSalir"
+                class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></a></div>
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8">
 
@@ -39,7 +42,7 @@
                 </div>
 
 
-                <div class="tab">
+                <div class="tab py-4 my-4">
                     <h4>Ingrese su Correo Electrónico</h4>
                     <h6>Por favor, ingrese la dirección de correo electrónico asociada a su cuenta.</h6>
                     @if ($email)
@@ -53,7 +56,7 @@
 
 
                 </div>
-                <div class="tab">
+                <div class="tab py-4 my-4 ">
                     <h4>Confirmación de Correo Electrónico</h4>
                     <form action="{{ route('enviar-email') }}" method="POST" id="FormularioEnviarEmail">
                         @csrf
@@ -64,7 +67,7 @@
 
 
                 </div>
-                <div class="tab">
+                <div class="tab py-4 my-4">
                     <h4>Restablecer la Contraseña</h4>
                     <h6>Ingrese el código de confirmación que le enviamos a su correo electrónico y establezca una
                         nueva contraseña para su cuenta.</h6>
@@ -116,11 +119,11 @@
 
 
                 <div style="overflow:auto;" id="nextprevious">
-                    <div class="buttonsgroup" style="float:right;">
+                    <div class="grupoBotones" style="float:right;">
                         <button type="button" id="prevBtn" onclick="nextPrevR(-1)"><i
-                                class="bi bi-arrow-left-circle-fill"></i></button>
+                                class="bi bi-arrow-left"></i></button>
                         <button type="button" id="nextBtn" onclick="nextPrev(1)"><i
-                                class="bi bi-arrow-right-circle-fill"></i></button>
+                                class="bi bi-arrow-right"></i></button>
                     </div>
                 </div>
 
@@ -154,7 +157,7 @@
                 $('#emailConfirmation').val(email);
 
             });
-            if(variable){
+            if (variable) {
 
                 var email = $('#EmailVinculado').val();
                 $('#spanEmail').html(email);
@@ -163,6 +166,17 @@
                 variable = false;
             }
 
+        });
+    </script>
+    <script>
+        document.getElementById("btnSalir").addEventListener("click", function(event) {
+            // Mostrar el cuadro de diálogo de confirmación
+            var confirmacion = confirm("¿Estás seguro de que deseas salir?");
+
+            // Si el usuario hace clic en "Aceptar" en el cuadro de diálogo, redirige
+            if (!confirmacion) {
+                event.preventDefault(); // Cancela la acción predeterminada (en este caso, la redirección)
+            }
         });
     </script>
 </body>

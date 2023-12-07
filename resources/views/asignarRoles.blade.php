@@ -89,7 +89,7 @@
                                             <div class="d-flex gap-3 flex-column p-4">
                                                 @foreach ($roles as $role)
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault{{$role->id }}"
+                                                    <input class="form-check-input" type="radio" id="flexCheckDefault{{$role->id }}"
                                                         value="{{ $role->name }}" name="name[]"
                                                         @if ($user->getRoleNames()->contains($role->name)) checked @endif>
                                                     <label class="form-check-label" for="flexCheckDefault{{$role->id }}">

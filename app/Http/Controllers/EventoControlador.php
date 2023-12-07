@@ -65,7 +65,8 @@ class EventoControlador extends Controller
             $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
         }
         $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-        return view('visualizar-evento', compact('evento', 'mifechaFinal'));
+        $participantes = count($evento->users);
+        return view('visualizar-evento', compact('evento', 'mifechaFinal','participantes'));
     }
 
     public function listaEventos()

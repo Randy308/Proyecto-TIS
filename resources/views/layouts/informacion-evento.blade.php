@@ -7,7 +7,7 @@
                     <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
                 <span><i class="bi bi-tools h3"></i> Estado: <b class="{{ $evento->estado }}">{{ $evento->estado }}</b>
                 </span>
-                <span><i class="bi bi-people-fill h3"></i> <span>{{ count($evento->users) }} personas
+                <span><i class="bi bi-people-fill h3"></i> <span>{{ $participantes }} personas
                         participan</span></span>
 
                 @if (!empty($evento->descripcion_evento))
@@ -26,10 +26,7 @@
                     <div class="col-6">
                         <span>Nombre: <b>{{ ucfirst(trans($evento->user->name)) }}</b></span>
 
-                        <span>Email: <a href = "mailto:{{ $evento->user->email }}?subject = Feedback&body = Message"
-                                class="btn btn-link emaillink">
-                                {{ $evento->user->email }}
-                            </a></span>
+                        <span>Email: {{ $evento->user->email }}</span>
 
                     </div>
                 </div>
@@ -49,11 +46,12 @@
                                     <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
                                 </div>
                                 <div class="row">
-                                    <span>Email: <a
+                                    {{-- <span>Email: <a
                                             href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
                                             class="btn btn-link emaillink">
                                             {{ $user->email }}
-                                        </a></span>
+                                        </a></span> --}}
+                                        <span>Email:  {{ $user->email }}</span>
                                 </div>
 
 
@@ -70,24 +68,30 @@
         <div class="col-md-auto d-flex justify-content-center m-4" >
             <div class="row">
                 <div class="col">
-                    <div class="p-2 my-4 miCard">
+                    {{-- <div class="p-2 my-4 miCard">
                         <p class="h4">Ubicación</p>
-                    </div>
+                    </div> --}}
+                   <div class="row">
+                    <p class="h4">Ubicación</p>
+                   </div>
+                   <div class="row">
                     <div id="participantesContainer" class="d-flex justify-content-center align-items-center">
+
                         <div class="card" id="participantes">
-        
-        
+
+
                             <input type="hidden" class="form-control" name="latitud" id="latitud"
                                 value="{{ $evento->latitud }}">
                             <input type="hidden" class="form-control" name="longitud" id="longitud"
                                 value="{{ $evento->longitud }}">
                             <div id="mapa"></div>
-        
-        
+
+
                         </div>
                     </div>
+                   </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
