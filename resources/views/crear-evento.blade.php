@@ -37,8 +37,8 @@
                             $misValores = session()->getOldInput();
                             $miAuspiciadores = isset($misValores['Auspiciadores']) ? $misValores['Auspiciadores'] : [];
                         @endphp
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row pb-4">
+                            <div class="col-md">
                                 <div class="form-group">
                                     <label for="nombre_evento">Nombre del Evento <span
                                             class="text-danger font-weight-bold ">*</span></label>
@@ -58,7 +58,7 @@
                                     <label for="tipo_evento">Tipo de Evento<span
                                             class="text-danger font-weight-bold ">*</span></label>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-auto py-2">
                                             <select id="selectorTipo"
                                                 class="form-control @error('tipo_evento') is-invalid @enderror">
                                                 <option value="Reclutamiento">
@@ -71,7 +71,7 @@
 
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-auto">
                                             <input type="text" name="tipo_evento"
                                                 class="form-control @error('tipo_evento') is-invalid @enderror"
                                                 id="tipo_evento" value="{{ old('tipo_evento', 'Reclutamiento') }}"
@@ -134,21 +134,23 @@
                                 </div>
                                 <div class="form-group">
                                     <p class="h6">Modalidad del evento<span
-                                        class="text-danger font-weight-bold ">*</span></p>
+                                            class="text-danger font-weight-bold ">*</span></p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad1" value="individual"
-                                        {{  old('modalidad') == "individual" ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="modalidad"
+                                            id="modalidad1" value="individual"
+                                            {{ old('modalidad') == 'individual' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="modalidad1">
-                                         Evento individual
+                                            Evento individual
                                         </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad2" value="grupal"
-                                        {{  old('modalidad') == "grupal" ? 'checked' : '' }}>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modalidad"
+                                            id="modalidad2" value="grupal"
+                                            {{ old('modalidad') == 'grupal' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="modalidad2">
                                             Evento grupal
                                         </label>
-                                      </div>
+                                    </div>
                                 </div>
 
 
@@ -219,7 +221,11 @@
 
                                     <div class="form-group">
                                         <input type="checkbox" name="mostrarCantidadMinima"
-                                            id="mostrarCantidadMinima"> Cantidad mínima de participantes
+                                            id="mostrarCantidadMinima">
+                                        <label class="form-check-label" id="mostrarCantidadMinimaL"
+                                            for="mostrarCantidadMinima">
+                                            Cantidad mínima de participantes
+                                        </label>
                                         <input type="text" name="cantidad_minima"
                                             class="form-control @error('cantidad_minima') is-invalid @enderror"
                                             id="cantidad_minima"
@@ -233,7 +239,11 @@
 
                                     <div class="form-group">
                                         <input type="checkbox" name="mostrarCantidadMaxima"
-                                            id="mostrarCantidadMaxima"> Cantidad máxima de participantes
+                                            id="mostrarCantidadMaxima">
+                                        <label class="form-check-label" id="mostrarCantidadMaximaL"
+                                            for="mostrarCantidadMaxima">
+                                            Cantidad máxima de participantes
+                                        </label>
                                         <input type="text" name="cantidad_maxima"
                                             class="form-control @error('cantidad_maxima') is-invalid @enderror"
                                             id="cantidad_maxima"
@@ -253,6 +263,9 @@
                                 </div>
 
                             </div>
+
+                        </div>
+                        <div class="row pt-4">
                             <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo
                                     es obligatorio</span></div>
                             <div class="col d-flex justify-content-end">
@@ -297,46 +310,24 @@
     <script src="{{ asset('js/script-fecha.js') }}"></script>
     <script>
         $(document).ready(function() {
-            // Oculta los campos adicionales al cargar la página
+
             $('#campos-adicionales input[type="text"]').hide();
 
-            // Muestra u oculta los campos adicionales según el estado de los checkboxes
+
             $('input[type="checkbox"]').change(function() {
-                var campoAsociado = $(this).next('input[type="text"]');
+                var campoAsociado = $(this).siblings('input[type="text"]');
                 campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
             });
 
-            // Muestra u oculta los campos adicionales al cambiar la opción en el menú desplegable
+
             $('#privacidad').change(function() {
                 if ($(this).val() === 'con-restriccion') {
                     $('#campos-adicionales').show();
                 } else {
                     $('#campos-adicionales').hide();
-                    // Oculta los campos adicionales si el tipo de evento no es "competencia_individual" ni "taller_individual"
-                    $('#eventoRequeridoGroup').hide();
-                    $('#mostrarEvento').prop('checked', false);
-                    $('#evento').hide();
                 }
             });
 
-            $('#tipo_evento').change(function() {
-                var selectedTipoEvento = $(this).val();
-                var eventoRequeridoGroup = $('#eventoRequeridoGroup');
-
-                if (selectedTipoEvento === 'competencia_individual' || selectedTipoEvento ===
-                    'competencia_grupal') {
-                    eventoRequeridoGroup.show();
-                } else {
-                    camposAdicionales.hide();
-                    eventoRequeridoGroup.hide();
-                    $('#mostrarEvento').prop('checked', false);
-                    $('#evento').hide();
-                }
-            });
-
-            $('#mostrarEvento').change(function() {
-                $('#evento').toggle(this.checked);
-            });
         });
     </script>
     <script>
@@ -374,7 +365,29 @@
         // Puedes usar auspiciadoresArray en tu código JavaScript
         console.log(auspiciadoresArray);
     </script>
+    <script>
+        // Verificar si ninguno de los radio buttons está seleccionado
+        $(document).ready(function() {
+            if ($('input[name="modalidad"]:checked').length === 0) {
+                // Ninguno está seleccionado, seleccionar por defecto "individual"
+                $('#modalidad1').prop('checked', true);
+            }
+        });
+        $('input:radio[name="modalidad"]').change(
+            function() {
+                if (this.checked) {
+                    console.log(this.value)
+                    if (this.value == 'individual') {
+                        $('#mostrarCantidadMinimaL').text("Cantidad máxima de participantes");
+                        $('#mostrarCantidadMaximaL').text("Cantidad minima de participantes");
+                    } else {
+                        $('#mostrarCantidadMinimaL').text("Cantidad máxima de grupos");
+                        $('#mostrarCantidadMaximaL').text("Cantidad minima de grupos");
+                    }
 
+                }
+            });
+    </script>
     @include('layouts.mensajes-alerta')
     @livewireScripts
 </body>

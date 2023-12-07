@@ -34,7 +34,7 @@
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-8">
 
-                <h1 id="register">Recuperar Cuenta</h1>
+                <h1 id="register">Restablecer contraseña</h1>
                 <div class="all-steps" id="all-steps">
                     <span class="step"><i class="bi bi-person-circle"></i></span>
                     <span class="step"><i class="bi bi-send-exclamation-fill"></i></span>
