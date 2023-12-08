@@ -95,7 +95,7 @@
         @foreach ($eventos as $evento)
             <div class="col-md-4 mb-3">
                 <a href="{{ route('verEvento', $evento->id) }}">
-                    <div class="card position-relative {{ $evento->estado }}">
+                    <div class="contenedor card position-relative {{ $evento->estado }}">
                         <div class="card-header">
                             <div class="cintaCategoria">{{ $evento->tipo_eventoo }}</div>
                         </div>

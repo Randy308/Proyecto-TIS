@@ -37,6 +37,9 @@
 
                 <p class="h3">Lista de participantes</p>
                 <div class="py-4">
+                    <p class="h6">Nota minima: <span class="text-danger">0</span></p>
+                    <p class="h6">Nota minima de aprobacion: <span class="text-warning">{{$calificacion->nota_minima_aprobacion}}</span></p>
+                    <p class="h6">Nota maxima: <span class="text-success">{{$calificacion->nota_maxima}}</span></p>
                 </div>
                 <table class="table table-bordered data-table table-striped">
                     <thead>

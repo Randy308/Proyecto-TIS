@@ -7,31 +7,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Fases del evento</title>
     @include('layouts/estilos')
+    @livewireStyles
     <style>
-        .input,
-        .textarea {
-            border: 1px solid #ccc;
-            font-family: inherit;
-            font-size: inherit;
-            padding: 1px 6px;
+        body{
+            background-color: whitesmoke;
         }
-
-        .input-wrap {
-            position: relative;
-        }
-
-        .input-wrap .input {
-            position: absolute;
-            width: 100%;
-            left: 0;
-        }
-
-        .width-machine {
-            /*   Sort of a magic number to add extra space for number spinner */
-            padding: 0 1rem;
+        #contenedor{
+            border-radius: 20px;
+            background-color: white;
         }
     </style>
-    @livewireStyles
 </head>
 
 <body>
@@ -41,10 +26,9 @@
 
             @include('layouts/navbar')
 
-            <div class="container my-4">
-                <div class="card p-4">
-                    @livewire('user-search', ['evento_id' => $evento->id])
-                </div>
+            <div class="container my-4 py-4" id="contenedor">
+                <div class="d-flex justify-content-end"><a href="{{ route('verEvento', $evento->id) }}" class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></a></div>
+                @livewire('user-search', ['evento_id' => $evento->id])
 
             </div>
 

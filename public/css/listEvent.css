@@ -5,6 +5,11 @@
     height: 100%;
     width: 100%;
 }
+.contenedor {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
 .Cancelado .card-header {
     background-color: #c73633; /* Tono más oscuro de rojo */
 }

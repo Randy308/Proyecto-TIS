@@ -110,7 +110,7 @@ class CalificacionParticipanteController extends Controller
         if ($evento) {
             $eventoId = $evento->id;
 
-            //$calificacion = Calificacion::where('evento_id',$evento_id)->where('id',$calificacion_id)->first();
+            $calificacion = Calificacion::where('id',$calificacion_id)->first();
             $combinedData = DB::table('calificacion_usuarios')
                 ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
                 ->join('users', 'calificacion_usuarios.user_id', '=', 'users.id')
@@ -130,7 +130,7 @@ class CalificacionParticipanteController extends Controller
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
 
-        return view('calificar-participantes', compact('combinedData'));
+        return view('calificar-participantes', compact('combinedData','calificacion'));
     }
 
 

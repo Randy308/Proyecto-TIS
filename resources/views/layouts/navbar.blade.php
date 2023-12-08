@@ -11,7 +11,7 @@
 
 
 
-            @livewire('notificaciones-resumen')
+            {{-- @livewire('notificaciones-resumen') --}}
 
             <li class="nav-item dropdown" id="navdropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
