@@ -25,7 +25,7 @@
                     <th>Nota minima</th>
                     <th>Nota maxima</th>
 
-                    <th></th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,10 +46,10 @@
                         <td>
                             @if (strtoupper($evento->modalidad) == 'GRUPAL')
                                 <a href="{{ route('calificar.grupos', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
-                                    class="dropdown-item" type="button">Calificar grupos</a>
+                                    class="btn btn-primary btn-sm" type="button">Calificar grupos</a>
                             @else
                                 <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
-                                    class="dropdown-item" type="button">Calificar</a>
+                                    class="btn btn-primary btn-sm" type="button">Calificar</a>
                             @endif
                         </td>
                     </tr>

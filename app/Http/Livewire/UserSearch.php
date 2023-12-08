@@ -9,6 +9,7 @@ use App\Models\PertenecenGrupo;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserSearch extends Component
 {
@@ -132,8 +133,15 @@ class UserSearch extends Component
     public function save()
     {
         $this->validate([
-            'nombreEquipo' => 'required|unique:grupos,nombre|regex:/^[a-zA-Z0-9\s\.\-]+$/',
+            'nombreEquipo' => [
+                'required',
+                Rule::unique('grupos', 'nombre')->where(function ($query) {
+                    return $query->where('evento_id', $this->evento_id);
+                }),
+                'regex:/^[a-zA-Z0-9\s\.\-]+$/',
+            ],
         ]);
+
 
         if ($this->users->count() == 4) {
             $nuevoGrupo = Grupo::create([

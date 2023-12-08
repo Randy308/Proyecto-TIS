@@ -3,6 +3,7 @@
         <a class="btn btn-danger"  href="{{ route('misEventos',['tab' => 1]) }}" type="submit"><i
             class="bi bi-x-lg"></i></a>
     </div>
+    <p>{{ $evento->calificacions->count() }}</p>
     <p class="h3">Lista de grupos</p>
     @if ($grupos->count())
         <div class="row p-4">
@@ -12,8 +13,6 @@
                         <th>Nombre del Grupo</th>
                         <th>Coach</th>
                         <th>Cantidad de participantes</th>
-
-
                         <th>Estado</th>
                         <th></th>
                     </tr>
