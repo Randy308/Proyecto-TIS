@@ -129,5 +129,25 @@ class EstudiantesUmssSeeder extends Seeder
             'foto_perfil' => "/storage/image/default_user_image.png",
         ]);
         $coach->assignRole('coach');
+        $coach1 = User::create([
+            'name' => 'coach1',
+            'email' => 'coach1@gmail.com',
+            'password' => bcrypt('password'),
+            'institucion_id' => 1,
+            'estado' => "Habilitado",
+            'cod_estudiante' => rand ( 201010000 , 202312012 ),
+            'foto_perfil' => "/storage/image/default_user_image.png",
+        ]);
+        $coach1->assignRole('coach');
+        $coach2 = User::create([
+            'name' => 'coach2',
+            'email' => 'coach2@gmail.com',
+            'password' => bcrypt('password'),
+            'institucion_id' => 1,
+            'estado' => "Habilitado",
+            'cod_estudiante' => rand ( 201010000 , 202312012 ),
+            'foto_perfil' => "/storage/image/default_user_image.png",
+        ]);
+        $coach2->assignRole('coach');
     }
 }

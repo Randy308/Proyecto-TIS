@@ -9,7 +9,13 @@
         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
             Crear calificación
         </button>
-        @include('layouts.modal-crear-calificacion',['evento_id'=> $evento_id ])
+        @if (strtoupper($evento->modalidad) == 'GRUPAL')
+            @include('layouts.modal-crear-calificacion-grupal', ['evento_id' => $evento_id])
+        @else
+            @include('layouts.modal-crear-calificacion', ['evento_id' => $evento_id])
+        @endif
+
+
     </div>
     <div class="row p-4">
         <table class="table table-bordered data-table table-responsive-sm">
@@ -38,19 +44,13 @@
 
 
                         <td>
-                            <div class="btn-group btn-group-sm" role="group">
-                                <button id="btnGroupDropdown" type="button" class="btn btn-primary dropdown-toggle"
-                                    data-bs-toggle="dropdown" aria-expanded="false" style="width: 140px">
-                                    Acción
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
-                                    <li>
-
-                                        <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}" class="dropdown-item"
-                                            type="button">Calificar</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            @if (strtoupper($evento->modalidad) == 'GRUPAL')
+                                <a href="{{ route('calificar.grupos', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
+                                    class="dropdown-item" type="button">Calificar grupos</a>
+                            @else
+                                <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
+                                    class="dropdown-item" type="button">Calificar</a>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

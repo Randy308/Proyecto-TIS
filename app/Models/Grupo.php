@@ -28,4 +28,8 @@ class Grupo extends Model
     {
         return $this->belongsToMany(User::class, 'pertenecen_grupos');
     }
+    public function calificacions()
+    {
+        return $this->belongsToMany(Calificacion::class, 'calificacion_grupos');
+    }
 }
