@@ -35,24 +35,29 @@
                         </select>
                     </div>
 
-                    @foreach ($fasesUltimas as $fase)
-                        @if ($loop->first)
+
+
+                        @if ($mifaseUltima)
                             <div class="form-group">
                                 <label for="fechaInicio">Fecha de inicio:</label>
                                 <input type="datetime-local" class="form-control" id="fechaInicio" name="fechaInicio"
-                                    min="{{ $fase->fechaFin }}" value="{{ $fase->fechaFin }}" required>
+                                    min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(10) }}"
+                                    max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(30) }}"
+                                    value="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(30) }}" required>
                             </div>
                         @endif
 
 
-                        @if ($loop->last)
+                        @if ($mifaseFinal)
                             <div class="form-group">
                                 <label for="fechaFin">Fecha de fin:</label>
                                 <input type="datetime-local" class="form-control" id="fechaFin" name="fechaFin"
-                                max="{{  \Carbon\Carbon::parse($fase->fechaFin)->subMinutes(30) }}"   value="{{  \Carbon\Carbon::parse($fase->fechaFin)->subMinutes(30) }}" required>
+                                min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->subMinutes(30) }}"
+                                max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(30) }}"
+                                    value="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(30) }}" required>
                             </div>
                         @endif
-                    @endforeach
+
 
 
 

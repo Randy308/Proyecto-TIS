@@ -447,7 +447,7 @@
     <script>
         function confirmarCancelacion() {
             if (confirm("¿Estás seguro de que deseas salir? Todos los cambios no guardados se perderán.")) {
-                window.location.href = "{{ route('misEventos') }}";
+                window.location.href = "{{ route('misEventos',['tab' => 2]) }}";
             }
         }
     </script>

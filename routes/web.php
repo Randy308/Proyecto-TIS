@@ -91,9 +91,7 @@ Route::group(['middleware' => ['can:organizador.crear-evento']], function () {
 
 
 Route::group(['middleware' => ['can:organizador.ver-mis-eventos']], function () {
-    Route::get('/misEventos', function () {
-        return view('eventos-creados');
-    })->name('misEventos');
+    Route::get('/misEventos/{tab}', [EventoControlador::class, 'misEventos'] )->name('misEventos');
 });
 
 
@@ -267,3 +265,8 @@ Route::get('/reportes-especificos', [ReporteController::class, 'verReportesEspec
 
 //route pdf
 Route::get('/reportes-generales/pdf', [ReporteController::class, 'pdf'])->name('reportes-generales.pdf');
+
+
+Route::get('/actualizar-cronograma/{evento}', [FaseController::class, 'showCronograma'])->name('ver.cronograma');
+
+Route::put('/actualizar-cronograma/{evento_id}', [FaseController::class, 'actualizarFaseActual'])->name('actualizar.fase.actual');
