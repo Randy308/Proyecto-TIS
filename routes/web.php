@@ -91,9 +91,7 @@ Route::group(['middleware' => ['can:organizador.crear-evento']], function () {
 
 
 Route::group(['middleware' => ['can:organizador.ver-mis-eventos']], function () {
-    Route::get('/misEventos', function () {
-        return view('eventos-creados');
-    })->name('misEventos');
+    Route::get('/misEventos/{tab}', [EventoControlador::class, 'misEventos'] )->name('misEventos');
 });
 
 
@@ -241,11 +239,19 @@ Route::get('/registro-equipo/{evento_id}', [RegistroEquipoController::class, 'vi
 
 Route::get('/crear-prueba', [EventoControlador::class, 'indexPrueba'])->name('ver-crear-prueba');
 Route::get('/mis-calificaciones/{evento_id}', [CalificacionParticipanteController::class, 'indexCalificaciones'])->name('calificaciones.index');
+Route::get('/mis-calificaciones-grupal/{evento_id}', [CalificacionParticipanteController::class, 'indexCalificacionesGrupo'])->name('calificaciones.grupo.index');
 Route::post('/crear-calificacion/{evento_id}', [CalificacionParticipanteController::class, 'create'])->name('calificaciones.create');
-Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 
+Route::post('/crear-promedio/{evento_id}', [CalificacionParticipanteController::class, 'createPromedio'])->name('promedio.create');
+
+Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
+Route::post('/calificar-grupos', [CalificacionParticipanteController::class, 'updateGrupos'])->name('calificar.grupos.update');
+Route::post('/crear-calificacion-grupal/{evento_id}', [CalificacionParticipanteController::class, 'createGrupal'])->name('calificaciones.grupal.create');
 
 Route::get('/calificar-participantes/{evento_id}/{calificacion_id}', [CalificacionParticipanteController::class, 'show'])->name('calificar.participantes');
+
+Route::get('/calificar-grupos/{evento_id}/{calificacion_id}', [CalificacionParticipanteController::class, 'showGrupos'])->name('calificar.grupos');
+
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
 
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
@@ -267,3 +273,8 @@ Route::get('/reportes-especificos', [ReporteController::class, 'verReportesEspec
 
 //route pdf
 Route::get('/reportes-generales/pdf', [ReporteController::class, 'pdf'])->name('reportes-generales.pdf');
+
+
+Route::get('/actualizar-cronograma/{evento}', [FaseController::class, 'showCronograma'])->name('ver.cronograma');
+
+Route::put('/actualizar-cronograma/{evento_id}', [FaseController::class, 'actualizarFaseActual'])->name('actualizar.fase.actual');

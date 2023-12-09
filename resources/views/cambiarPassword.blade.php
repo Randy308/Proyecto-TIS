@@ -68,11 +68,11 @@
                                             <i class="far fa-eye" id="myToogle" style="cursor: pointer;"></i></span>
 
                                     </div>
-                                    <span class="form-text small text-muted">
+                                    {{-- <span class="form-text small text-muted">
 
                                         La contraseña debe tener entre 8 y 20 caracteres y <em>no</em> debe contener
                                         espacios.
-                                    </span>
+                                    </span> --}}
                                 </div>
                                 <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el
                                         campo

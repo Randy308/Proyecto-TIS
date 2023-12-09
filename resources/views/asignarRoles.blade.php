@@ -89,7 +89,7 @@
                                             <div class="d-flex gap-3 flex-column p-4">
                                                 @foreach ($roles as $role)
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" id="flexCheckDefault{{$role->id }}"
+                                                    <input class="form-check-input" type="radio" id="flexCheckDefault{{$role->id }}"
                                                         value="{{ $role->name }}" name="name[]"
                                                         @if ($user->getRoleNames()->contains($role->name)) checked @endif>
                                                     <label class="form-check-label" for="flexCheckDefault{{$role->id }}">
@@ -99,7 +99,7 @@
                                             @endforeach
                                             </div>
                                             <div class="d-flex flex-wrap  gap-3 justify-content-around">
-                                                <button type="submit" class="btn btn-primary">Asignar roles</button>
+                                                <button type="submit" id="btnAssignRole" class="btn btn-primary">Asignar roles</button>
                                                 <input type="button" value="Regresar" class="btn btn-secondary"
                                                     onclick="history.back()">
                                             </div>
@@ -126,6 +126,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script>
+        $("#btnAssignRole").on("click", function(e) {
+            e.preventDefault();
+            if (confirm("¿Está seguro de cambiar el rol a este usuario?")) {
+                var form = $(this).parents('form:first');
+                form.submit();
+            }
+        });
+    </script>
 </body>
 
 </html>

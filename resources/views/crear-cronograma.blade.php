@@ -39,7 +39,7 @@
         </div>
     </div>
 
-    @include('fasesForm', ['evento' => $evento, 'fasesUltimas' => $fasesUltimas])
+    @include('fasesForm', ['evento' => $evento, 'mifaseUltima' => $mifaseUltima ,'mifaseFinal' => $mifaseFinal])
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
 

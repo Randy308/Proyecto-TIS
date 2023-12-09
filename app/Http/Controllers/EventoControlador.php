@@ -24,6 +24,10 @@ use App\Models\Institucion;
 
 class EventoControlador extends Controller
 {
+    public function misEventos($tab) {
+        //$tab = 1;
+        return view('eventos-creados',compact('tab'));
+    }
     public function generarBanner($nombreEvento, $fechaInicio, $fechaFin, $background_color)
     {
         $textoBanner = "Evento: $nombreEvento\nFecha de inicio: $fechaInicio\nFecha de finalización: $fechaFin";
@@ -65,7 +69,8 @@ class EventoControlador extends Controller
             $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
         }
         $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-        return view('visualizar-evento', compact('evento', 'mifechaFinal'));
+        $participantes = count($evento->users);
+        return view('visualizar-evento', compact('evento', 'mifechaFinal','participantes'));
     }
 
     public function listaEventos()
@@ -258,7 +263,7 @@ class EventoControlador extends Controller
 
         $faseFinalizacion->save();
 
-        return redirect()->route('misEventos')->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+        return redirect()->route('misEventos',['tab' => 2])->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
     public function index()
     {
@@ -292,7 +297,7 @@ class EventoControlador extends Controller
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->estado = 'Activo';
         $evento->save();
-        return redirect()->route('misEventos')->with('status', '¡Se ha publicado el Evento exitosamente!.');
+        return redirect()->route('misEventos',['tab' => 2])->with('status', '¡Se ha publicado el Evento exitosamente!.');
     }
     public function editBanner($user, $evento)
     {
@@ -435,7 +440,7 @@ class EventoControlador extends Controller
         }
 
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
-        return redirect()->route('misEventos');
+        return redirect()->route('misEventos',['tab' => 2]);
     }
 
 
@@ -453,7 +458,7 @@ class EventoControlador extends Controller
 
         $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();
-        return redirect()->route('misEventos')->with('status', '¡Banner actualizado exitosamente!.');
+        return redirect()->route('misEventos',['tab' => 2])->with('status', '¡Banner actualizado exitosamente!.');
     }
 
     public function destroy($user, $evento)
@@ -462,7 +467,7 @@ class EventoControlador extends Controller
         $eventoActual = Evento::FindOrFail($evento);
         $eventoActual->estado = 'Cancelado';
         $eventoActual->update();
-        return redirect()->route('misEventos')->with('info', 'Se cancelo el evento');
+        return redirect()->route('misEventos',['tab' => 2])->with('info', 'Se cancelo el evento');
     }
 
     public function guardarMap(Request $request, $id)

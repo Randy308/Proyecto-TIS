@@ -12,10 +12,10 @@ function showTab(n) {
     }
     if (n == x.length - 1) {
         document.getElementById("nextBtn").innerHTML =
-            '<i class="bi bi-arrow-right-circle-fill"></i>';
+            '<i class="bi bi-arrow-right"></i>';
     } else {
         document.getElementById("nextBtn").innerHTML =
-            '<i class="bi bi-arrow-right-circle-fill"></i>';
+            '<i class="bi bi-arrow-right"></i>';
     }
     fixStepIndicator(n);
 }

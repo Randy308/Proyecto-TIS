@@ -22,13 +22,13 @@
             <div class="container-sm mt-4">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                        <button class="nav-link {{ $tab == 1 ? 'active' : '' }}" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                             type="button" role="tab" aria-controls="home" aria-selected="true">Eventos
                             activos</button>
                     </li>
                     @can('admin.editar-evento')
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                            <button class="nav-link {{ $tab == 2 ? 'active' : '' }}" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
                                 type="button" role="tab" aria-controls="profile" aria-selected="false">Eventos en
                                 borrador</button>
                         </li>
@@ -36,23 +36,23 @@
 
 
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                        <button class="nav-link {{ $tab == 3 ? 'active' : '' }}" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
                             type="button" role="tab" aria-controls="contact" aria-selected="false">Todos mis
                             eventos</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="tab-pane fade {{ $tab == 1 ? 'show active' : '' }}" id="home" role="tabpanel" aria-labelledby="home-tab">
                         @livewire('mis-eventos-activos')
                     </div>
                     @can('admin.editar-evento')
-                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="tab-pane fade {{ $tab == 2 ? 'show active' : '' }}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                             @livewire('eventos-creados')
                         </div>
                     @endcan
 
 
-                    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                    <div class="tab-pane fade {{ $tab == 3 ? 'show active' : '' }}" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
                 </div>
 
             </div>

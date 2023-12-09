@@ -24,13 +24,13 @@
     document.addEventListener('livewire:load', function () {
         setInterval(function () {
             Livewire.emit('actualizarDatos');
-        }, 5000);
+        }, 25000);
 
         Livewire.on('mantenerDropdownAbierto', () => {
             const dropdown = document.getElementById('navdropdownNoti');
             const dropdownMenu = dropdown.querySelector('.dropdown-menu');
 
-            
+
             dropdownMenu.classList.add('show');
         });
     });

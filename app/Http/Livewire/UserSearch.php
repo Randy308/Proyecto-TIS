@@ -9,6 +9,7 @@ use App\Models\PertenecenGrupo;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserSearch extends Component
 {
@@ -40,7 +41,6 @@ class UserSearch extends Component
         } else {
             $this->requiereCodSis = false;
         }
-
     }
 
     public function render()
@@ -81,11 +81,7 @@ class UserSearch extends Component
                     } else {
                         $this->error = 'Estudiante no encontrado en la base de datos o datos incompletos.';
                     }
-
-
-
                 }
-
             } else {
 
                 $newUsers = User::where('email', $this->email)->first();
@@ -107,15 +103,10 @@ class UserSearch extends Component
                 } else {
                     $this->error = 'Estudiante no encontrado en la base de datos o datos incompletos.';
                 }
-
-
             }
-
         } else {
             $this->error = 'Usuario superan el limite de cantidad.';
         }
-
-
     }
 
 
@@ -142,25 +133,35 @@ class UserSearch extends Component
     public function save()
     {
         $this->validate([
-            'nombreEquipo' => 'required|unique:grupos,nombre',
+            'nombreEquipo' => [
+                'required',
+                Rule::unique('grupos', 'nombre')->where(function ($query) {
+                    return $query->where('evento_id', $this->evento_id);
+                }),
+                'regex:/^[a-zA-Z0-9\s\.\-]+$/',
+            ],
         ]);
 
-        $nuevoGrupo = Grupo::create([
-            'nombre' => $this->nombreEquipo,
-            'user_id' => auth()->user()->id,
-            'evento_id' => $this->evento_id,
-            'estado' => "Pendiente"
-        ]);
-        foreach ($this->users as $user) {
-            PertenecenGrupo::create([
-                'user_id' => $user->id,
-                'grupo_id' => $nuevoGrupo->id,
+
+        if ($this->users->count() == 4) {
+            $nuevoGrupo = Grupo::create([
+                'nombre' => $this->nombreEquipo,
+                'user_id' => auth()->user()->id,
                 'evento_id' => $this->evento_id,
+                'estado' => "Pendiente"
             ]);
-
+            foreach ($this->users as $user) {
+                PertenecenGrupo::create([
+                    'user_id' => $user->id,
+                    'grupo_id' => $nuevoGrupo->id,
+                    'evento_id' => $this->evento_id,
+                ]);
+            }
+            //$this->error = 'Los datos del evento se han actualizado con éxito.';
+            return redirect()->route('verEvento', ['id' => $this->evento_id ])->with('status', 'Se ha registrado el grupo al evento con éxito.');
+        }else{
+            $this->error = 'Cantidad de participantes incorrecta.';
         }
-        $this->error = 'Los datos del evento se han actualizado con éxito.';
-        return redirect()->route('listaEventos')->with('status', 'Los datos del evento se han creado con éxito.');
     }
 
     public function removeUser($index)
@@ -170,5 +171,4 @@ class UserSearch extends Component
             $this->users->forget($index);
         }
     }
-
 }

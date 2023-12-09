@@ -33,7 +33,7 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            @livewire('lista-calificaciones', ['evento_id' => $evento_id])
+            @livewire('lista-calificaciones', ['evento_id' => $evento_id , 'anterior' => $anterior])
         </div>
 
     </div>

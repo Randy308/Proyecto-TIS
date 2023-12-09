@@ -15,6 +15,7 @@ class ListaCalificaciones extends Component
     use WithPagination;
 
     public $evento_id;
+    public $anterior;
     public function render()
     {
         $evento = Evento::find($this->evento_id);

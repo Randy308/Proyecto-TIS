@@ -70,7 +70,7 @@ class RoleController extends Controller
     {
         //
         $user->syncRoles($request->name);
-        return back();
+        return back()->with('success', 'Se ha cambiado de rol Exitosamente');
     }
 
 
@@ -78,6 +78,9 @@ class RoleController extends Controller
     {
         //
         $role = Role::findOrFail($id);
+        if($role->name == "administrador" || $role->name == "organizador"){
+            return back()->with('warning', 'Rol protegido, no se permiten borrar');
+        }
         $role->delete();
         return back()->with('success', 'Rol Eliminado Exitosamente');
     }

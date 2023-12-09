@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>Usuario</title>
     @include('layouts/estilos')
 
@@ -221,8 +221,8 @@
                                 </div>
 
                                 <div class="pt-4 d-flex justify-content-around">
-                                    <a type="button" href="{{ route('verUsuario', $usuario->id) }}" class="btn btn-secondary btn-lg mb-1">Regresar</a>
-                                    <button type="submit" class="btn btn-primary btn-lg mb-1">Editar usuario</button>
+                                    <a type="button" href="{{ route('verUsuario', $usuario->id) }}" class="btn btn-secondary">Regresar</a>
+                                    <button type="submit" class="btn btn-primary">Editar usuario</button>
                                 </div>
 
 

@@ -18,9 +18,13 @@
             @include('layouts.mensajes-alerta')
             @include('layouts/navbar')
             <div class="container">
+
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-danger btn-sm" type="submit" onclick="history.back()"><i class="bi bi-x-lg"></i></button>
+                            </div>
                             <div class="card-header text-center h5">Detalle del Usuario</div>
                             <div class="card-body">
                                 <div class="text-center">
@@ -61,13 +65,6 @@
                                     <li class="list-group-item"><strong>Historial Academico:</strong>
                                         {{ $usuario->historial_academico }}</li>
                                 </ul>
-
-                                <div class="text-center mt-4">
-
-                                    <a href="{{ route('listaUsuarios') }}" class="btn btn-danger btn-sm">Volver</a>
-                                    <a href="{{ route('editarUsuario', $usuario->id) }}"
-                                        class="btn btn-primary btn-sm">Editar</a>
-                                </div>
 
                             </div>
                         </div>
