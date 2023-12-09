@@ -80,6 +80,17 @@
                                                     </form>
 
                                                 </li>
+                                                <li>
+                                                    <form method="POST"
+                                                        action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="dropdown-item habilitar_participacion"
+                                                            type="button">Habilitar
+                                                            participación</button>
+                                                    </form>
+
+                                                </li>
                                             @else
                                                 <li>
                                                     <form method="POST"

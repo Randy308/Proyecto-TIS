@@ -1,7 +1,7 @@
 <div class="container py-4 my-4" id="listaIntegrantesGrupos">
     <div class="d-flex justify-content-end">
-        <a class="btn btn-danger"  href="{{ route('misEventos',['tab' => 1]) }}" type="submit"><i
-            class="bi bi-x-lg"></i></a>
+        <a class="btn btn-danger" href="{{ route('misEventos', ['tab' => 1]) }}" type="submit"><i
+                class="bi bi-x-lg"></i></a>
     </div>
     <p>{{ $evento->calificacions->count() }}</p>
     <p class="h3">Lista de grupos</p>

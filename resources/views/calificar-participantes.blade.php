@@ -34,12 +34,17 @@
         <div id="content">
             @include('layouts/navbar')
             <div class="container py-4 my-4 p-4" id="miTabla">
-
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-danger" href="{{ route('calificaciones.index', ['evento_id' => $evento->id]) }}"
+                        type="submit"><i class="bi bi-x-lg"></i></a>
+                </div>
                 <p class="h3">Lista de participantes</p>
                 <div class="py-4">
-                    <p class="h6">Nota minima: <span class="text-danger">0</span></p>
-                    <p class="h6">Nota minima de aprobacion: <span class="text-warning">{{$calificacion->nota_minima_aprobacion}}</span></p>
-                    <p class="h6">Nota maxima: <span class="text-success">{{$calificacion->nota_maxima}}</span></p>
+                    <p class="h6">Nota minima de reprobacion: <span class="text-danger">0</span></p>
+                    <p class="h6">Nota minima de aprobacion: <span
+                            class="text-warning">{{ $calificacion->nota_minima_aprobacion }}</span></p>
+                    <p class="h6">Nota maxima: <span class="text-success">{{ $calificacion->nota_maxima }}</span>
+                    </p>
                 </div>
                 <table class="table table-bordered data-table table-striped">
                     <thead>
@@ -164,9 +169,9 @@
             success: function(data) {
                 console.log(data);
                 var cell = $('#Puntaje' + $(this).data('pk'));
-                console.log("Puntaje "+data.puntaje);
-                console.log("Medio "+$(this).data('medio'));
-                console.log("ID "+$(this).data('pk'));
+                console.log("Puntaje " + data.puntaje);
+                console.log("Medio " + $(this).data('medio'));
+                console.log("ID " + $(this).data('pk'));
                 if (data.puntaje < $(this).data('medio')) {
 
                     cell.removeClass('table-success').addClass('table-danger');

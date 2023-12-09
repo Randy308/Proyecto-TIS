@@ -227,7 +227,7 @@ class CalificacionParticipanteController extends Controller
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
 
-        return view('calificar-participantes', compact('combinedData','calificacion'));
+        return view('calificar-participantes', compact('combinedData','calificacion','evento'));
     }
 
 
