@@ -44,14 +44,16 @@
                 <table class="table table-bordered data-table table-striped">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>#</th>
                             <th>Nombre Grupo</th>
                             <th>Email coach</th>
                             <th>Puntaje</th>
                         </tr>
                     </thead>
                     <tbody>
-
+                        @php
+                            $contador = 1;
+                        @endphp
                         @foreach ($combinedData as $data)
                             <tr>
                                 {{-- <td>{{ $data->calificacion_id }}</td>
@@ -71,7 +73,7 @@
                                     </a>
                                 </td> --}}
 
-                                <td>{{ $data->calificacion_id }}</td>
+                                <td>{{ $contador }}</td>
                                 <td>
                                     {{ $data->nombre }}
 
@@ -91,6 +93,9 @@
                                 </td>
 
                             </tr>
+                            @php
+                                $contador++;
+                            @endphp
                         @endforeach
                     </tbody>
                 </table>

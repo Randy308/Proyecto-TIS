@@ -30,12 +30,16 @@ class CalificacionParticipanteController extends Controller
     }
     public function indexCalificaciones($evento_id)
     {   //$users = User::paginate(20);
-        return view('lista-de-calificaciones', compact('evento_id'));
+        $evento = Evento::find($evento_id);
+        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
+        return view('lista-de-calificaciones', compact('evento_id','anterior'));
     }
 
     public function indexCalificacionesGrupo($evento_id)
     {   //$users = User::paginate(20);
-        return view('lista-de-calificaciones', compact('evento_id'));
+        $evento = Evento::find($evento_id);
+        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
+        return view('lista-de-calificaciones', compact('evento_id','anterior'));
     }
 
 
@@ -96,6 +100,76 @@ class CalificacionParticipanteController extends Controller
         return redirect()->back()->with('success', 'Calificación agregada con éxito');
     }
 
+
+    public function createPromedio(Request $request, $evento_id)
+    {
+        $evento = Evento::find($evento_id);
+
+        $existeCalificacionConPromedio = CalificacionEvento::where('es_promedio', true)
+            ->where('evento_id', $evento_id)->exists();
+        if ($existeCalificacionConPromedio) {
+
+            return redirect()->back()->with('warning', 'Ya se ha asignado una calificacion final al evento');
+        }
+        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
+        if (!$anterior) {
+
+            return redirect()->back()->with('warning', 'No se pudo realizar la accion porque no existen calificaciones asociadas a este evento');
+        }
+        $calificacion = new Calificacion([
+            'nombre' => "Resultado Final",
+            'nota_minima_aprobacion' => $anterior->nota_minima_aprobacion,
+            'nota_maxima' => $anterior->nota_maxima,
+        ]);
+
+
+        $calificacion->save();
+
+
+        $calificacion_evento = new CalificacionEvento([
+            'evento_id' => $evento_id,
+            'calificacion_id' => $calificacion->id,
+            'es_promedio' => true,
+        ]);
+
+
+        $calificaciones = $evento->calificacions;
+        if ($calificaciones) {
+            $calificacion_evento->orden_secuencia = $calificaciones->count() + 1;
+        } else {
+            $calificacion_evento->orden_secuencia = 1;
+        }
+
+        $calificacion_evento->save();
+
+        $usuarios = $evento->users()->where('asistencia_eventos.estado', 'Habilitado')->get();
+        //$promedios = [];
+
+        foreach ($usuarios as $usuario) {
+            $promedio = CalificacionUsuario::where('user_id', $usuario->id)->where('evento_id', $evento->id)->avg('puntaje');
+
+            $calificacion_user = new CalificacionUsuario([
+                'calificacion_id' => $calificacion->id,
+                'user_id' => $usuario->id,
+                'evento_id' =>  $evento->id,
+                'puntaje' => $promedio,
+            ]);
+            $calificacion_user->save();
+
+            //$promedios[$usuario->id] = $promedio;
+        }
+
+        //return response()->json(['promedios' => $promedios]);
+
+        // if ($request->has('mi_checkbox')) {
+
+        //     $calificacion_evento->es_promedio = true;
+        //     return "El checkbox ha sido marcado";
+        // }
+        return redirect()->back()->with('success', 'Promedio creado con éxito');
+    }
+
+
     public function create(Request $request, $evento_id)
     {
         //
@@ -107,7 +181,12 @@ class CalificacionParticipanteController extends Controller
 
         ]);
         $evento = Evento::find($evento_id);
+        $existeCalificacionConPromedio = CalificacionEvento::where('es_promedio', true)
+            ->where('evento_id', $evento_id)->exists();
+        if ($existeCalificacionConPromedio) {
 
+            return redirect()->back()->with('warning', 'Ya existe una calificacion final al evento,no se permiten crear mas calificaciones');
+        }
 
         $calificacion = new Calificacion([
             'nombre' => $request->input('nombre'),
@@ -140,6 +219,7 @@ class CalificacionParticipanteController extends Controller
             $calificacion_user = new CalificacionUsuario([
                 'calificacion_id' => $calificacion->id,
                 'user_id' => $user->id,
+                'evento_id' =>  $evento->id,
                 'puntaje' => 0,
             ]);
             $calificacion_user->save();
@@ -167,7 +247,7 @@ class CalificacionParticipanteController extends Controller
         return view('lista-participantes', compact('evento_id'));
     }
 
-    public function showGrupos($evento_id,$calificacion_id)
+    public function showGrupos($evento_id, $calificacion_id)
     {
 
         $evento = Evento::find($evento_id);
@@ -175,7 +255,7 @@ class CalificacionParticipanteController extends Controller
         if ($evento) {
             $eventoId = $evento->id;
 
-            $calificacion = Calificacion::where('id',$calificacion_id)->first();
+            $calificacion = Calificacion::where('id', $calificacion_id)->first();
             $combinedData = DB::table('calificacion_grupos')
                 ->join('calificacions', 'calificacion_grupos.calificacion_id', '=', 'calificacions.id')
                 ->join('grupos', 'calificacion_grupos.grupo_id', '=', 'grupos.id')
@@ -196,10 +276,10 @@ class CalificacionParticipanteController extends Controller
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
 
-        return view('calificar-grupos-evento', compact('combinedData','calificacion'));
+        return view('calificar-grupos-evento', compact('combinedData', 'calificacion'));
     }
 
-    public function show($evento_id,$calificacion_id)
+    public function show($evento_id, $calificacion_id)
     {
 
         $evento = Evento::find($evento_id);
@@ -207,7 +287,7 @@ class CalificacionParticipanteController extends Controller
         if ($evento) {
             $eventoId = $evento->id;
 
-            $calificacion = Calificacion::where('id',$calificacion_id)->first();
+            $calificacion = Calificacion::where('id', $calificacion_id)->first();
             $combinedData = DB::table('calificacion_usuarios')
                 ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
                 ->join('users', 'calificacion_usuarios.user_id', '=', 'users.id')
@@ -227,7 +307,7 @@ class CalificacionParticipanteController extends Controller
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
 
-        return view('calificar-participantes', compact('combinedData','calificacion','evento'));
+        return view('calificar-participantes', compact('combinedData', 'calificacion', 'evento'));
     }
 
 
@@ -280,7 +360,7 @@ class CalificacionParticipanteController extends Controller
 
             'pk' => 'required|numeric',
             'calificacion' => 'required|numeric',
-            'value' => 'required|numeric|min:0|max:'.$micalificacion->nota_maxima,
+            'value' => 'required|numeric|min:0|max:' . $micalificacion->nota_maxima,
 
         ]);
 
@@ -304,7 +384,7 @@ class CalificacionParticipanteController extends Controller
             ]);
 
             // Puedes devolver una respuesta adecuada si es necesario
-            return response()->json(['success' => true, 'message' => 'Actualización exitosa','puntaje' => $request->input('value')]);
+            return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'puntaje' => $request->input('value')]);
         } else {
             // Puedes devolver un error si no se encuentra el registro
             return response()->json(['error' => 'Registro no encontrado'], 404);
@@ -318,7 +398,7 @@ class CalificacionParticipanteController extends Controller
 
             'pk' => 'required|numeric',
             'calificacion' => 'required|numeric',
-            'value' => 'required|numeric|min:0|max:'.$micalificacion->nota_maxima,
+            'value' => 'required|numeric|min:0|max:' . $micalificacion->nota_maxima,
 
         ]);
 
@@ -342,7 +422,7 @@ class CalificacionParticipanteController extends Controller
             ]);
 
             // Puedes devolver una respuesta adecuada si es necesario
-            return response()->json(['success' => true, 'message' => 'Actualización exitosa','puntaje' => $request->input('value')]);
+            return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'puntaje' => $request->input('value')]);
         } else {
             // Puedes devolver un error si no se encuentra el registro
             return response()->json(['error' => 'Registro no encontrado'], 404);

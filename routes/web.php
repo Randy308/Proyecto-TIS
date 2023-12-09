@@ -241,6 +241,9 @@ Route::get('/crear-prueba', [EventoControlador::class, 'indexPrueba'])->name('ve
 Route::get('/mis-calificaciones/{evento_id}', [CalificacionParticipanteController::class, 'indexCalificaciones'])->name('calificaciones.index');
 Route::get('/mis-calificaciones-grupal/{evento_id}', [CalificacionParticipanteController::class, 'indexCalificacionesGrupo'])->name('calificaciones.grupo.index');
 Route::post('/crear-calificacion/{evento_id}', [CalificacionParticipanteController::class, 'create'])->name('calificaciones.create');
+
+Route::post('/crear-promedio/{evento_id}', [CalificacionParticipanteController::class, 'createPromedio'])->name('promedio.create');
+
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 Route::post('/calificar-grupos', [CalificacionParticipanteController::class, 'updateGrupos'])->name('calificar.grupos.update');
 Route::post('/crear-calificacion-grupal/{evento_id}', [CalificacionParticipanteController::class, 'createGrupal'])->name('calificaciones.grupal.create');

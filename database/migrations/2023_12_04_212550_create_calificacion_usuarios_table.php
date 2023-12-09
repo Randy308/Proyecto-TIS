@@ -18,6 +18,7 @@ class CreateCalificacionUsuariosTable extends Migration
             $table->unsignedBigInteger('calificacion_id');
             $table->unsignedBigInteger('user_id');
             $table->integer('puntaje');
+            $table->integer('evento_id');          
             $table->foreign('calificacion_id')->references('id')->on('calificacions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             // Otros campos relacionados con el puntaje del usuario

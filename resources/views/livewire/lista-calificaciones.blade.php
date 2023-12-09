@@ -11,9 +11,15 @@
             Crear calificación
         </button>
         @if (strtoupper($evento->modalidad) == 'GRUPAL')
-            @include('layouts.modal-crear-calificacion-grupal', ['evento_id' => $evento_id])
+            @include('layouts.modal-crear-calificacion-grupal', [
+                'evento_id' => $evento_id,
+                'anterior' => $anterior,
+            ])
         @else
-            @include('layouts.modal-crear-calificacion', ['evento_id' => $evento_id])
+            @include('layouts.modal-crear-calificacion', [
+                'evento_id' => $evento_id,
+                'anterior' => $anterior,
+            ])
         @endif
 
 
@@ -47,10 +53,10 @@
                         <td>
                             @if (strtoupper($evento->modalidad) == 'GRUPAL')
                                 <a href="{{ route('calificar.grupos', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
-                                    class="btn btn-primary btn-sm" type="button">Calificar grupos</a>
+                                    class="btn btn-primary btn-sm" type="button">Visualizar grupos</a>
                             @else
                                 <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
-                                    class="btn btn-primary btn-sm" type="button">Calificar</a>
+                                    class="btn btn-primary btn-sm" type="button">Visualizar</a>
                             @endif
                         </td>
                     </tr>
@@ -58,5 +64,15 @@
             </tbody>
         </table>
     </div>
+    <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#promedioModal">
+            Finalizar calificaciones
+        </button>
+        @if (strtoupper($evento->modalidad) == 'GRUPAL')
+        @else
+            @include('layouts.modal-crear-promedio', ['evento_id' => $evento_id])
+        @endif
 
+
+    </div>
 </div>
