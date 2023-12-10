@@ -65,7 +65,7 @@
             </div>
             <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
                 <div id="tab3">
-
+                    <p class="h5">Tabla de posiciones</p>
 
                     @if ($calificaciones_final)
 
@@ -107,7 +107,7 @@
                             </div>
 
                             <!-- Mostrar los demás en una lista -->
-                            @if(count($otros))
+                            @if ($calificaciones_final->count())
                                 <div class="d-flex justify-content-center p-4 list">
                                     <table class="table table-bordered data-table table-responsive-sm">
                                         <thead>
@@ -118,10 +118,10 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($otros as $data)
+                                            @foreach ($calificaciones_final as $data)
                                                 <tr>
                                                     <td>
-                                                        {{ $loop->index + 4 }}
+                                                        {{ $loop->index + 1 }}
                                                     </td>
                                                     <td>
                                                         {{ $data->nombre_grupo }}</a>
@@ -172,7 +172,7 @@
                             </div>
 
                             <!-- Mostrar los demás en una lista -->
-                            @if (count($otros))
+                            @if ($calificaciones_final->count())
                                 <div class="d-flex justify-content-center p-4 list">
                                     <table class="table table-bordered data-table table-responsive-sm">
                                         <thead>
