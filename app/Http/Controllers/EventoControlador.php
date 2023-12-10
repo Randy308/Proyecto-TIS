@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CalificacionUsuario;
 use App\Models\CoordenadaEvento;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
@@ -16,6 +17,9 @@ use Illuminate\Support\Str;
 use App\Models\AsistenciaEvento;
 use App\Models\Auspiciador;
 use App\Models\AuspiciadorEventos;
+use App\Models\Calificacion;
+use App\Models\CalificacionEvento;
+use App\Models\CalificacionGrupo;
 use App\Models\ImagenAuspiciador;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -24,9 +28,10 @@ use App\Models\Institucion;
 
 class EventoControlador extends Controller
 {
-    public function misEventos($tab) {
+    public function misEventos($tab)
+    {
         //$tab = 1;
-        return view('eventos-creados',compact('tab'));
+        return view('eventos-creados', compact('tab'));
     }
     public function generarBanner($nombreEvento, $fechaInicio, $fechaFin, $background_color)
     {
@@ -70,7 +75,60 @@ class EventoControlador extends Controller
         }
         $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
         $participantes = count($evento->users);
-        return view('visualizar-evento', compact('evento', 'mifechaFinal','participantes'));
+
+
+        $calificacion_final = CalificacionEvento::where('evento_id', $evento->id)->where('es_promedio', 1)->first();
+        if ($calificacion_final) {
+            $calificacion = Calificacion::find($calificacion_final->calificacion_id);
+            if (strtoupper($evento->modalidad) == 'GRUPAL') {
+                $calificaciones_final = DB::table('calificacion_grupos')
+                    ->join('calificacions', 'calificacion_grupos.calificacion_id', '=', 'calificacions.id')
+                    ->join('grupos', 'calificacion_grupos.grupo_id', '=', 'grupos.id')
+                    ->join('pertenecen_grupos', 'grupos.id', '=', 'pertenecen_grupos.grupo_id')
+                    ->leftJoin('users as lider', 'grupos.user_id', '=', 'lider.id')
+                    ->leftJoin('users as integrante', 'pertenecen_grupos.user_id', '=', 'integrante.id')
+                    ->where('calificacion_grupos.calificacion_id', $calificacion_final->id)
+                    ->whereRaw('calificacion_grupos.puntaje >= calificacions.nota_minima_aprobacion')
+                    ->whereRaw('integrante.id != lider.id')
+                    ->select(
+                        'grupos.id as grupo_id',
+                        'lider.id as lider_grupo_id',
+                        'lider.name as nombre_lider_grupo',
+                        'grupos.nombre as nombre_grupo',
+                        'calificacion_grupos.puntaje',
+                        DB::raw('GROUP_CONCAT(DISTINCT integrante.name) as integrantes')
+                    )
+                    ->groupBy('grupos.id', 'lider_grupo_id', 'nombre_lider_grupo', 'nombre_grupo', 'calificacion_grupos.puntaje')
+                    ->orderBy('calificacion_grupos.puntaje', 'desc')
+                    ->get();
+
+
+
+
+
+            } else {
+
+                $calificaciones_final = DB::table('calificacion_usuarios')
+                    ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
+                    ->join('users', 'calificacion_usuarios.user_id', '=', 'users.id')
+                    ->where('calificacion_usuarios.calificacion_id', $calificacion_final->id)
+                    ->whereRaw('calificacion_usuarios.puntaje >= calificacions.nota_minima_aprobacion')
+                    ->select(
+                        'users.id as user_id',
+                        'users.email',
+                        'users.name',
+                        'calificacion_usuarios.puntaje'
+                    )
+                    ->orderBy('calificacion_usuarios.puntaje', 'desc')->get();
+
+            }
+        } else {
+            $calificaciones_final = null;
+        }
+
+
+
+        return view('visualizar-evento', compact('evento', 'mifechaFinal', 'participantes', 'calificaciones_final'));
     }
 
     public function listaEventos()
@@ -263,7 +321,7 @@ class EventoControlador extends Controller
 
         $faseFinalizacion->save();
 
-        return redirect()->route('misEventos',['tab' => 2])->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
+        return redirect()->route('misEventos', ['tab' => 2])->with('status', '¡Evento creado exitosamente! Puedes seguir creando más eventos.');
     }
     public function index()
     {
@@ -297,7 +355,7 @@ class EventoControlador extends Controller
         $evento = Evento::where('user_id', '=', $user)->where('id', '=', $evento)->first();
         $evento->estado = 'Activo';
         $evento->save();
-        return redirect()->route('misEventos',['tab' => 2])->with('status', '¡Se ha publicado el Evento exitosamente!.');
+        return redirect()->route('misEventos', ['tab' => 2])->with('status', '¡Se ha publicado el Evento exitosamente!.');
     }
     public function editBanner($user, $evento)
     {
@@ -440,7 +498,7 @@ class EventoControlador extends Controller
         }
 
         session()->flash('status', 'Los datos del evento se han actualizado con éxito.');
-        return redirect()->route('misEventos',['tab' => 2]);
+        return redirect()->route('misEventos', ['tab' => 2]);
     }
 
 
@@ -458,7 +516,7 @@ class EventoControlador extends Controller
 
         $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
         $eventoActual->update();
-        return redirect()->route('misEventos',['tab' => 2])->with('status', '¡Banner actualizado exitosamente!.');
+        return redirect()->route('misEventos', ['tab' => 2])->with('status', '¡Banner actualizado exitosamente!.');
     }
 
     public function destroy($user, $evento)
@@ -467,7 +525,7 @@ class EventoControlador extends Controller
         $eventoActual = Evento::FindOrFail($evento);
         $eventoActual->estado = 'Cancelado';
         $eventoActual->update();
-        return redirect()->route('misEventos',['tab' => 2])->with('info', 'Se cancelo el evento');
+        return redirect()->route('misEventos', ['tab' => 2])->with('info', 'Se cancelo el evento');
     }
 
     public function guardarMap(Request $request, $id)

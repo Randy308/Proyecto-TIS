@@ -211,6 +211,70 @@ p {
     color: #345d8d; /* Tono más oscuro de azul */
 }
 
+.container_podium {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .podium__item {
+    width: 200px;
+  }
+
+  .podium__rank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #fff;
+  }
+
+  .podium__city {
+    text-align: center;
+    padding: 0 .5rem;
+  }
+
+  .podium .first {
+    min-height: 300px;
+    background: rgb(255,172,37);
+  background:
+    linear-gradient(333deg,
+    rgba(255,172,37,1) 0%,
+    rgba(254,207,51,1) 13%,
+    rgba(254,224,51,1) 53%,
+    rgba(255,172,37,1) 100%);
+  }
+
+  .podium .second {
+    min-height: 200px;
+    background: blue;
+  }
+
+  .podium .third {
+    min-height: 100px;
+    background: green;
+  }
+
+  .podium .podium1 {
+    min-height: 300px;
+    background: rgb(255, 172, 37);
+    background: linear-gradient(333deg, rgba(255, 172, 37, 1) 0%, rgba(254, 207, 51, 1) 13%, rgba(254, 224, 51, 1) 53%, rgba(255, 172, 37, 1) 100%);
+
+  }
+
+  .podium .podium2 {
+    min-height: 200px;
+    background: rgb(192, 192, 192);
+background: linear-gradient(333deg, rgba(192, 192, 192, 1) 0%, rgba(204, 204, 204, 1) 13%, rgba(217, 217, 217, 1) 53%, rgba(192, 192, 192, 1) 100%);
+
+  }
+
+  .podium .podium3 {
+    min-height: 100px;
+    background: rgb(205, 127, 50);
+    background: linear-gradient(333deg, rgba(205, 127, 50, 1) 0%, rgba(219, 155, 80, 1) 13%, rgba(204, 142, 68, 1) 53%, rgba(205, 127, 50, 1) 100%);
+
+  }
+
 @media screen and (max-width: 880px) {
     .c2 {
        display: grid;

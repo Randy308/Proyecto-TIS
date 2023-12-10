@@ -12,5 +12,6 @@ class CalificacionGrupo extends Model
         'calificacion_id',
         'grupo_id',
         'puntaje',
+        'evento_id',
     ];
 }
