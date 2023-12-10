@@ -5,6 +5,10 @@
     </div>
     <p>{{ $evento->calificacions->count() }}</p>
     <p class="h3">Lista de participantes</p>
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-sm btn-success" type="button">Aceptar a todos los participantes</button>
+    </div>
+
     @if ($combinedData->count())
         <div class="row p-4">
             <table class="table table-bordered data-table table-responsive-sm">
