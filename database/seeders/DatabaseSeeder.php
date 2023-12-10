@@ -105,7 +105,6 @@ class DatabaseSeeder extends Seeder
                 $asistencia->save();
         }
 
-        $this->call(FaseSeeder::class);
         $this->call(EstudiantesUmssSeeder::class);
 
         //usuarios para probar con mis tabla umss

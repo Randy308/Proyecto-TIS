@@ -147,7 +147,7 @@ Route::group(['middleware' => ['can:admin.crear-usuario']], function () {
 
 Route::put('/editarEstado/{user}/{evento}', [EventoControlador::class, 'updateEstado'])->name('evento.state.update');
 
-Route::get('/fases/{evento}', [FaseController::class, 'fasesdeEvento'])->name('fases.fasesdeEvento');
+
 Route::get('/editarBanner/{user}/{evento}', [EventoControlador::class, 'editBanner'])->name('evento.banner.edit');
 Route::put('/editarBanner/{user}/{evento}', [EventoControlador::class, 'updateBanner'])->name('evento.banner.update');
 
