@@ -7,8 +7,15 @@
                     <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
                 <span><i class="bi bi-tools h3"></i> Estado: <b class="{{ $evento->estado }}">{{ $evento->estado }}</b>
                 </span>
+                @if ($evento->modalidad == 'individual')
                 <span><i class="bi bi-people-fill h3"></i> <span>{{ $participantes }} personas
-                        participan</span></span>
+                    participan</span></span>
+                @else
+                <span><i class="bi bi-people-fill h3"></i> <span>{{ $participantes }} grupos
+                    participan</span></span>
+                @endif
+
+
 
                 @if (!empty($evento->descripcion_evento))
                     <span><b>Descripción:</b>
@@ -106,14 +113,14 @@
                         <span>Costo de inscripcion: <span><b>{{ $evento->costo }}</b> Bs</span>
                         </span>
                     @endif
-                    @if (!empty($evento->cantidad_minima))
+                    @if (!empty($evento->cantidad_maxima))
                         @if ($evento->modalidad == 'individual')
                             <span>Plazas limitadas, unicamenete para
-                                <span><b>{{ $evento->cantidad_minima }}</b> participantes</span>
+                                <span><b>{{ $evento->cantidad_maxima }}</b> participantes</span>
                             </span>
                         @else
                             <span>Plazas limitadas, unicamenete para
-                                <span><b>{{ $evento->cantidad_minima }}</b> grupos</span>
+                                <span><b>{{ $evento->cantidad_maxima }}</b> grupos</span>
                             </span>
                         @endif
 

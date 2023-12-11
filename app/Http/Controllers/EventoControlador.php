@@ -74,13 +74,14 @@ class EventoControlador extends Controller
             $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
         }
         $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-        $participantes = count($evento->users);
+
 
 
         $calificacion_final = CalificacionEvento::where('evento_id', $evento->id)->where('es_promedio', 1)->first();
         if ($calificacion_final) {
             $calificacion = Calificacion::find($calificacion_final->calificacion_id);
             if (strtoupper($evento->modalidad) == 'GRUPAL') {
+                $participantes = $evento->grupos()->where('estado', 'Habilitado')->count();
                 $calificaciones_final = DB::table('calificacion_grupos')
                     ->join('calificacions', 'calificacion_grupos.calificacion_id', '=', 'calificacions.id')
                     ->join('grupos', 'calificacion_grupos.grupo_id', '=', 'grupos.id')
@@ -107,6 +108,7 @@ class EventoControlador extends Controller
 
 
             } else {
+                $participantes = $evento->users()->where('asistencia_eventos.estado', 'Habilitado')->count();
 
                 $calificaciones_final = DB::table('calificacion_usuarios')
                     ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
@@ -141,6 +143,14 @@ class EventoControlador extends Controller
 
         return $eventos;
     }
+    public function finalizarEvento($id)
+    {
+        $evento = Evento::find($id);
+        $evento->estado = "Finalizado";
+        $evento->save();
+        return redirect()->route('misEventos', ['tab' => 1])->with('status', '¡Evento finalizado exitosamente!.');
+    }
+
 
     public function crearEventoForm()
     {

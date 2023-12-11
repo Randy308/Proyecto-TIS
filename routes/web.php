@@ -61,6 +61,7 @@ Route::get('/eventos-reclutamiento', [EventoControlador::class, 'obtenerEventosR
 
 Route::get('/lista-eventos', [EventoControlador::class, 'listaEventos'])->name('listaEventos');
 
+
 Route::get('/registrarParticipante', [ParticipanteController::class, 'index'])->name('registrar-participante');
 
 Route::post('/registrarParticipante', [ParticipanteController::class, 'store'])->name('registroParticipante.store');
@@ -281,3 +282,5 @@ Route::get('/reportes-generales/pdf', [ReporteController::class, 'pdf'])->name('
 Route::get('/actualizar-cronograma/{evento}', [FaseController::class, 'showCronograma'])->name('ver.cronograma');
 
 Route::put('/actualizar-cronograma/{evento_id}', [FaseController::class, 'actualizarFaseActual'])->name('actualizar.fase.actual');
+
+Route::put('/finalizar-evento/{id}', [EventoControlador::class, 'finalizarEvento'])->name('finalizar.evento');

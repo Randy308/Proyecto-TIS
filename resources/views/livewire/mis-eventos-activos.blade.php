@@ -41,7 +41,9 @@
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('ver.grupos', ['evento_id' => $evento->id]) }}">Ver
                                                         Grupos</a></li>
-                                                <li><a class="dropdown-item" href="{{ route('calificaciones.grupo.index', ['evento_id' => $evento->id]) }}">Calificar Grupos</a></li>
+                                                <li><a class="dropdown-item"
+                                                        href="{{ route('calificaciones.grupo.index', ['evento_id' => $evento->id]) }}">Calificar
+                                                        Grupos</a></li>
                                             @else
                                                 <li><a class="dropdown-item"
                                                         href="{{ route('ver.participantes', ['evento_id' => $evento->id]) }}">Ver
@@ -53,6 +55,18 @@
                                             <li><a class="dropdown-item"
                                                     href="{{ route('ver.cronograma', ['evento' => $evento->id]) }}">Ver
                                                     Cronograma</a></li>
+                                            <li>
+
+                                                <form action="{{ route('finalizar.evento', ['id' => $evento->id]) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button class="dropdown-item boton-finalizar" type="button">Finalizar
+                                                        Evento</button>
+                                                </form>
+
+                                            </li>
+
                                             @if (strtoupper($evento->estado) == 'ACTIVO')
                                                 <li>
                                                     <a href="#" class="dropdown-item"
@@ -64,6 +78,7 @@
 
                                         </ul>
                                     </div>
+
 
                                 </td>
                             @endif
@@ -146,6 +161,15 @@
             $(".boton-cancelar").on("click", function(e) {
                 e.preventDefault();
                 if (confirm("¿Está seguro de que deseas cancelar el evento?")) {
+                    var form = $(this).parents('form:first');
+                    console.log('enviando form')
+                    form.submit();
+                }
+            });
+
+            $(".boton-finalizar").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que deseas finalizar el evento?")) {
                     var form = $(this).parents('form:first');
                     console.log('enviando form')
                     form.submit();
