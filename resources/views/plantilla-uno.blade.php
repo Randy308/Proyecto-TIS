@@ -41,11 +41,14 @@
                     type="button" role="tab" aria-controls="pills-profile"
                     aria-selected="false">Cronograma</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                    type="button" role="tab" aria-controls="pills-contact"
-                    aria-selected="false">Resultados</button>
-            </li>
+            @if ($calificaciones_final)
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">Resultados</button>
+                </li>
+            @endif
+
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -63,12 +66,12 @@
 
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div id="tab3">
-                    <p class="h5">Tabla de posiciones</p>
 
-                    @if ($calificaciones_final)
 
+            @if ($calificaciones_final)
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div id="tab3">
+                        <p class="h5">Tabla de posiciones</p>
                         @if (strtoupper($evento->modalidad) == 'GRUPAL')
 
                             <div class="d-flex py-4 my-4  justify-content-center container_podium podium">
@@ -205,9 +208,10 @@
                         @endif
 
 
-                    @endif
+                    </div>
                 </div>
-            </div>
+            @endif
+
 
 
 

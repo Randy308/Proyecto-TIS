@@ -4,7 +4,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Crear calificación</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -50,9 +50,6 @@
                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                             @enderror
 
-                            <div class="alert alert-danger" role="alert" id="nameCheck">
-
-                            </div>
                         </div>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="formMaximo">Nota maxima<span
@@ -63,9 +60,9 @@
                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                             @enderror
 
-                            <div class="alert alert-danger" role="alert" id="nameCheck">
-
-                            </div>
+                        </div>
+                        <div>
+                            <p class="fs-6">Si crea una calificacion , se deshabilitara la opcion para aceptar la solicitud de mas participantes al evento</p>
                         </div>
                     @endif
 
