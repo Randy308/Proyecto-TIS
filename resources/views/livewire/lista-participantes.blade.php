@@ -5,6 +5,18 @@
     </div>
     <p>{{ $evento->calificacions->count() }}</p>
     <p class="h3">Lista de participantes</p>
+    <div class="d-flex justify-content-end">
+        <form
+            action="{{ route('aceptar.all.participantes', ['evento_id' => $evento->id]) }}"
+            method="POST">
+
+            @csrf
+            @method('PUT')
+            <button class="btn btn-sm btn-success" type="submit">Aceptar a todos los participantes</button>
+        </form>
+
+    </div>
+
     @if ($combinedData->count())
         <div class="row p-4">
             <table class="table table-bordered data-table table-responsive-sm">

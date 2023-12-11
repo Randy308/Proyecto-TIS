@@ -87,6 +87,7 @@ class CalificacionParticipanteController extends Controller
             $calificacion_user = new CalificacionGrupo([
                 'calificacion_id' => $calificacion->id,
                 'grupo_id' => $grupo->id,
+                'evento_id' => $evento->id,
                 'puntaje' => 0,
             ]);
             $calificacion_user->save();
@@ -100,6 +101,73 @@ class CalificacionParticipanteController extends Controller
         return redirect()->back()->with('success', 'Calificación agregada con éxito');
     }
 
+    public function createPromedioGrupos(Request $request, $evento_id)
+    {
+        $evento = Evento::find($evento_id);
+
+        $existeCalificacionConPromedio = CalificacionEvento::where('es_promedio', true)
+            ->where('evento_id', $evento_id)->exists();
+        if ($existeCalificacionConPromedio) {
+
+            return redirect()->back()->with('warning', 'Ya se ha asignado una calificacion final al evento');
+        }
+        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
+        if (!$anterior) {
+
+            return redirect()->back()->with('warning', 'No se pudo realizar la accion porque no existen calificaciones asociadas a este evento');
+        }
+        $calificacion = new Calificacion([
+            'nombre' => "Resultado Final",
+            'nota_minima_aprobacion' => $anterior->nota_minima_aprobacion,
+            'nota_maxima' => $anterior->nota_maxima,
+        ]);
+
+
+        $calificacion->save();
+
+
+        $calificacion_evento = new CalificacionEvento([
+            'evento_id' => $evento_id,
+            'calificacion_id' => $calificacion->id,
+            'es_promedio' => true,
+        ]);
+
+
+        $calificaciones = $evento->calificacions;
+        if ($calificaciones) {
+            $calificacion_evento->orden_secuencia = $calificaciones->count() + 1;
+        } else {
+            $calificacion_evento->orden_secuencia = 1;
+        }
+
+        $calificacion_evento->save();
+
+        $grupos = $evento->grupos()->where('estado', 'Habilitado')->get();
+        //$promedios = [];
+
+        foreach ($grupos as $grupo) {
+            $promedio = CalificacionGrupo::where('grupo_id', $grupo->id)->where('evento_id', $evento->id)->avg('puntaje');
+
+            $calificacion_user = new CalificacionGrupo([
+                'calificacion_id' => $calificacion->id,
+                'grupo_id' => $grupo->id,
+                'evento_id' =>  $evento->id,
+                'puntaje' => $promedio,
+            ]);
+            $calificacion_user->save();
+
+            //$promedios[$usuario->id] = $promedio;
+        }
+
+        //return response()->json(['promedios' => $promedios]);
+
+        // if ($request->has('mi_checkbox')) {
+
+        //     $calificacion_evento->es_promedio = true;
+        //     return "El checkbox ha sido marcado";
+        // }
+        return redirect()->back()->with('success', 'Promedio creado con éxito');
+    }
 
     public function createPromedio(Request $request, $evento_id)
     {

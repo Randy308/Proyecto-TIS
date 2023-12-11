@@ -41,6 +41,7 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
     @livewireScripts
 </body>
 

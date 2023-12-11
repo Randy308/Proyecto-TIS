@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\AsistenciaEvento;
+use App\Models\Evento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+
 class AsistenciaEventosController extends Controller
 {
     //
-    function destroy($user ,$evento){
+    function destroy($user, $evento)
+    {
         $asistencia = AsistenciaEvento::where('user_id', $user)->where('evento_id', $evento)->first();
         if ($asistencia) {
             $asistencia->delete();
             return redirect()->back()->with('status', '¡Se ha abandonado el evento exitosamente.');
-          }else{
+        } else {
 
             return redirect()->back()->with('error', 'El usuario no esta registrado en el evento.');
-          }
-        
+        }
+
     }
     public function create($id, Request $request)
     {
@@ -34,7 +37,7 @@ class AsistenciaEventosController extends Controller
             $asistencia->evento_id = $evento_id;
             $asistencia->user_id = $id;
             $asistencia->rol = 'participante';
-            $asistencia->estado = 'Habilitado';
+            $asistencia->estado = 'Pendiente';
             $asistencia->fechaInscripcion = now();
             $asistencia->save();
             return redirect()->back()->with('status', '¡Se ha añadido exitosamente.');
@@ -48,7 +51,7 @@ class AsistenciaEventosController extends Controller
             $asistencia = AsistenciaEvento::where('user_id', $user)
                 ->where('evento_id', $evento)
                 ->first();
-    
+
             if ($asistencia) {
                 $mensaje = 'Participante eliminado por conducta indebida.';
                 $asistencia->delete();
@@ -59,6 +62,21 @@ class AsistenciaEventosController extends Controller
         } else {
             return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
         }
+    }
+    public function incluirParticipantes($evento_id)
+    {
+        $evento = Evento::find($evento_id);
+        $participantes = $evento->users;
+        foreach ($participantes as $participante){
+            $asistencia = AsistenciaEvento::where('evento_id', $evento_id)->where('user_id',$participante->id)->first();
+            if($asistencia->estado != 'Habilitado'){
+                $asistencia->estado = 'Habilitado';
+                $asistencia->save();
+            }
+        }
+        //return $participantes;
+        return redirect()->back()->with('status', 'Se han habilitado a todos los participantes al evento.');
+
     }
 
 }

@@ -243,6 +243,7 @@ Route::get('/mis-calificaciones-grupal/{evento_id}', [CalificacionParticipanteCo
 Route::post('/crear-calificacion/{evento_id}', [CalificacionParticipanteController::class, 'create'])->name('calificaciones.create');
 
 Route::post('/crear-promedio/{evento_id}', [CalificacionParticipanteController::class, 'createPromedio'])->name('promedio.create');
+Route::post('/crear-promedio-grupos/{evento_id}', [CalificacionParticipanteController::class, 'createPromedioGrupos'])->name('promedio.grupos.create');
 
 Route::post('/calificar-participantes', [CalificacionParticipanteController::class, 'update'])->name('calificar.update');
 Route::post('/calificar-grupos', [CalificacionParticipanteController::class, 'updateGrupos'])->name('calificar.grupos.update');
@@ -257,6 +258,8 @@ Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteControll
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
 Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
+
+Route::put('/incluir-participantes/{evento_id}', [AsistenciaEventosController::class, 'incluirParticipantes'])->name('aceptar.all.participantes');
 Route::get('/lista-grupos/{evento_id}', [GrupoController::class, 'index'])->name('ver.grupos');
 
 Route::post('/notificar/{evento_id}', [NotificacionesControlador::class, 'notificarParticipantes'])->name('notificarParticipantes');
