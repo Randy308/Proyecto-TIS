@@ -93,4 +93,8 @@ class Evento extends Model
         return $this->hasMany(AsistenciaEvento::class);
 
     }
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificacion::class);
+    }
 }

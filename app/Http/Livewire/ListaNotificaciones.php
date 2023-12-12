@@ -1,25 +1,19 @@
 <?php
 
 namespace App\Http\Livewire;
-use App\Models\Notificacion;
-use App\Models\User;
-use App\Models\AsistenciaEvento;
-use App\Models\Evento;
+
 use Livewire\Component;
-use Illuminate\Support\Str;
-
+use App\Models\Notificacion;
 use Carbon\Carbon;
-
-
-class NotificacionesResumen extends Component
+class ListaNotificaciones extends Component
 {
+
+
     public $notificaciones;
     public $us;
     public $nombresEventos = [];   
-    public $desplegado = false;
-    protected $listeners = ['actualizarDatos', 'mantenerDropdownAbierto' => '$refresh'];
     public $tiempTrans = [];
-    public $tieneNotificacionesNoVistas= true;
+
 
     public function tiempoTranscurrido($fechaHora)
     {
@@ -57,23 +51,7 @@ class NotificacionesResumen extends Component
 
 
 
-    public function cambiarEstadoNoti(){
-        $this->desplegado = !$this->desplegado;
 
-    }
-    public function mount(){
-        $this->actualizarDatos();
-    }
-
-    public function render()
-    {
-        return view('livewire.notificaciones-resumen');
-    }
-
-
-    public function irNotificaciones(){
-        return redirect()->route('notificaciones');
-    }
     public function irEvento($notificacionindex){
         $notificacion = $this->notificaciones[$notificacionindex];
         $notificacion->visto = true;
@@ -81,6 +59,25 @@ class NotificacionesResumen extends Component
         return redirect()->route('verEvento',$notificacion->evento_id);
         
     }
+
+    public function render()
+    {
+        return view('livewire.lista-notificaciones');
+    }
+
+    public function vista(){
+        return view('lista-notificaciones');
+    }
+
+    public function mount(){
+        $this->actualizarDatos();
+    }
+
+
+
+
+
+
     public function actualizarDatos()
     {
         $this->us = auth()->user()->name;
@@ -88,12 +85,12 @@ class NotificacionesResumen extends Component
         $this->tiempTrans = [];
         $this->nombresEventos = [];
         $this->notificaciones = Notificacion::where('user_id',auth()->user()->id)->orderBy('fechaHora','desc')->get();
-        $this->tieneNotificacionesNoVistas = $this->notificaciones->contains('visto', false);
         foreach($this->notificaciones as $noti){
             $this->tiempTrans[] = $this->tiempoTranscurrido($noti->fechaHora);
             $ev = $noti->evento()->first();
             $this->nombresEventos[] = $ev->nombre_evento;
         }
     }
+
 
 }
