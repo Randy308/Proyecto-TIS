@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Evento;
-use App\Models\Fase;
 use App\Models\FaseEvento;
 use Illuminate\Http\Request;
 use App\Rules\ValidarSuperposicionFechasFases;
@@ -21,13 +20,20 @@ class FaseController extends Controller
     public function show($id)
     {
         $evento = Evento::find($id);
-        $fasesUltimas = FaseEvento::where('evento_id', $id)
+        $mifaseUltima = FaseEvento::where('evento_id', $id)->where('secuencia', '<>', '1000')
             ->orderBy('secuencia', 'desc')
-            ->take(2)
-            ->get();
-        $fasesUltimas = $fasesUltimas->reverse();
+            ->first();
+        $mifaseFinal = FaseEvento::where('evento_id', $id)->where('secuencia', '1000')
+            ->first();
+        $limiteInicio = $mifaseFinal->fechaInicio;
+        return view('crear-cronograma', compact('evento', 'mifaseUltima', 'mifaseFinal'));
+    }
 
-        return view('crear-cronograma', compact('evento', 'fasesUltimas'));
+    public function showCronograma($id)
+    {
+        $evento = Evento::find($id);
+        $miFaseActual = FaseEvento::where('evento_id', $id)->where('actual','=','1')->first();
+        return view('layouts.ver-cronograma', compact('evento','miFaseActual'));
     }
     public function delete($faseId)
     {
@@ -35,21 +41,53 @@ class FaseController extends Controller
         $fase->delete();
         return back()->with('success', 'Fase Eliminado Exitosamente');
     }
+    public function actualizarFaseActual(Request $request, $eventoId)
+    {
+
+        $fases = FaseEvento::where('evento_id', $eventoId)->orderBy('secuencia', 'asc')->get();
+
+        foreach($fases as $fase){
+            if($fase->id == $request['exampleRadios']){
+                $fase->actual = 1;
+            }else{
+                $fase->actual = 0;
+            }
+            $fase->save();
+        }
+        $datos = [
+            'request' => $request->all(),
+            'fases' => $fases->toArray(),
+        ];
+
+
+        //return response()->json($datos);
+        return redirect()->back()->with('status', 'Se actualizaron las fases correctamente');
+    }
 
 
     public function store(Request $request, $eventoId)
     {
+        // Obtener las dos últimas fases del evento
 
+        $mifaseUltima = FaseEvento::where('evento_id', $eventoId)->where('secuencia', '<>', '1000')
+            ->orderBy('secuencia', 'desc')
+            ->first();
+        $mifaseFinal = FaseEvento::where('evento_id', $eventoId)->where('secuencia', '1000')
+            ->first();
         $this->validate($request, [
             'nombre_fase' => ['required', 'min:4', 'regex:/^[\p{L}0-9_ ]+$/u', 'max:50'],
             'descripcion_fase' => 'required',
-            new ValidarSuperposicionFechasFases($eventoId, -1),
             'fechaInicio' => [
                 'required',
-                new FechaMenorQue($request['fechaFin']),
-                new FechaMinimaFase($eventoId)
+                'after_or_equal:' . $mifaseUltima->fechaFin,
+                'before_or_equal:' . $mifaseFinal->fechaInicio,
+
             ],
-            'fechaFin' => ['required', new FechaMaximaFase($eventoId)],
+            'fechaFin' => ['required',
+                'before_or_equal:' . $mifaseFinal->fechaInicio,
+                'before_or_equal:' . $mifaseFinal->fechaFin,
+
+            ],
             'tipo' => 'required',
 
         ]);
@@ -183,9 +221,4 @@ class FaseController extends Controller
         return redirect()->back()->with('status', 'La fase se edito exitosamente');
     }
 
-    public function fasesdeEvento($evento_id)
-    {
-        $fases = Fase::where('evento_id', 1)->get();
-        return view('fase', ['fases' => $fases]);
-    }
 }

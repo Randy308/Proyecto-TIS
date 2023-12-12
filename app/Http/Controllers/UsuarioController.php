@@ -146,7 +146,7 @@ class UsuarioController extends Controller
         if (Hash::check($request['old_password'], $user->password)) {
             $user->password = $my_new_password;
             $user->save();
-            return redirect()->route('editUser',['id' => $id])->with('status', 'Se ha cambiado exitosamente su contraseña.');
+            return redirect()->route('editarPerfil')->with('status', 'Se ha cambiado la contraseña exitosamente.');
         } else {
             return redirect()->back()->with('error', 'La contraseña actual no coincide con la del sistema .');
         }
@@ -166,7 +166,7 @@ class UsuarioController extends Controller
     {
         $user = User::findOrFail($id);
         $institucion = Institucion::findOrFail($user->institucion_id);
-        return view('visualizar-usuario', [
+        return view('layouts.ver-perfil-participante', [
             'usuario' => $user,
             'institucion' => $institucion->nombre_institucion
         ]);
@@ -269,6 +269,6 @@ class UsuarioController extends Controller
         $user->foto_perfil = $url;
         $user->update();
 
-        return view('editar-perfil');
+        return redirect()->route('editarPerfil')->with('status', 'Perfil actualizado exitosamente!.');
     }
 }

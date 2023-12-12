@@ -12,5 +12,6 @@ class CalificacionUsuario extends Model
         'calificacion_id',
         'user_id',
         'puntaje',
+        'evento_id'
     ];
 }

@@ -17,6 +17,18 @@
         integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{ asset('css/ubicacionevento.css') }}">
+    <style>
+        body {
+            background-color: whitesmoke;
+            transition: background-color 0.3s ease;
+        }
+
+        #miContenedor {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+    </style>
 </head>
 
 <body>
@@ -24,9 +36,9 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            <div class="container-sm mt-5">
-                <div class="row d-flex justify-content-center align-items-center">
-                    <div class="col-md-8">
+            <div class="container-sm my-4">
+                <div class="row justify-content-center">
+                    <div class="col-md-8" id="miContenedor">
                         <form method="POST"
                             action="{{ route('evento.update', ['user' => auth()->user()->id, 'evento' => $miEvento->id]) }}"
                             id="FormCrearEvento">
@@ -105,7 +117,7 @@
 
                                         <div class="form-group">
                                             <div class="row pb-4">
-                                                <div class="col-md-6"> <label for="combined_start">Fecha de
+                                                <div class="col-md-auto"> <label for="combined_start">Fecha de
                                                         inicio</label>
                                                     <input type="datetime-local" name="combined_start"
                                                         class="form-control @error('combined_start') is-invalid @enderror"
@@ -113,7 +125,7 @@
                                                         value="{{ $miEvento->fecha_inicio }} {{ $miEvento->tiempo_inicio }}"
                                                         readonly>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-auto">
                                                     <label for="combined_end">Fecha de finalización</label>
                                                     <input type="datetime-local" name="combined_end"
                                                         class="form-control @error('combined_end') is-invalid @enderror"
@@ -435,7 +447,7 @@
     <script>
         function confirmarCancelacion() {
             if (confirm("¿Estás seguro de que deseas salir? Todos los cambios no guardados se perderán.")) {
-                window.location.href = "{{ route('misEventos') }}";
+                window.location.href = "{{ route('misEventos',['tab' => 2]) }}";
             }
         }
     </script>

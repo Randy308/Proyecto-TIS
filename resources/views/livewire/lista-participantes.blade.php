@@ -1,8 +1,22 @@
 <div class="container py-4 my-4" id="listaIntegrantesGrupos">
     <div class="d-flex justify-content-end">
-        <button class="btn btn-danger" type="submit" onclick="history.back()"><i class="bi bi-x-lg"></i></button>
+        <a class="btn btn-danger" href="{{ route('misEventos', ['tab' => 1]) }}" type="submit"><i
+                class="bi bi-x-lg"></i></a>
     </div>
+    <p>{{ $evento->calificacions->count() }}</p>
     <p class="h3">Lista de participantes</p>
+    <div class="d-flex justify-content-end">
+        <form
+            action="{{ route('aceptar.all.participantes', ['evento_id' => $evento->id]) }}"
+            method="POST">
+
+            @csrf
+            @method('PUT')
+            <button class="btn btn-sm btn-success" type="submit">Aceptar a todos los participantes</button>
+        </form>
+
+    </div>
+
     @if ($combinedData->count())
         <div class="row p-4">
             <table class="table table-bordered data-table table-responsive-sm">
@@ -47,54 +61,87 @@
                                         data-bs-toggle="dropdown" aria-expanded="false" style="width: 140px">
                                         Acción
                                     </button>
-                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
-                                        <li>
-
-                                            <a href="{{ route('ver.participante', $data->user_id) }}"
-                                                class="dropdown-item" type="button">Ver Perfil</a>
-                                        </li>
-                                        @if ($data->estado != 'Habilitado')
+                                    @if ($evento->calificacions->count() == 0)
+                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
                                             <li>
-                                                <form method="POST"
-                                                    action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button class="dropdown-item habilitar_participacion"
-                                                        type="button">Habilitar
-                                                        participación</button>
-                                                </form>
 
+                                                <a href="{{ route('ver.participante', $data->user_id) }}"
+                                                    class="dropdown-item" type="button">Ver Perfil</a>
                                             </li>
+                                            @if ($data->estado == 'Habilitado')
+                                                <li>
+                                                    <form method="POST"
+                                                        action="{{ route('posponer.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="dropdown-item posponer.posponer"
+                                                            type="submit">Posponer
+                                                            participación</button>
+                                                    </form>
 
+                                                </li>
+                                            @elseif ($data->estado == 'Denegado')
+                                                <li>
+                                                    <form method="POST"
+                                                        action="{{ route('posponer.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="dropdown-item posponer.posponer"
+                                                            type="submit">Posponer
+                                                            participación</button>
+                                                    </form>
+
+                                                </li>
+                                                <li>
+                                                    <form method="POST"
+                                                        action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="dropdown-item habilitar_participacion"
+                                                            type="button">Habilitar
+                                                            participación</button>
+                                                    </form>
+
+                                                </li>
+                                            @else
+                                                <li>
+                                                    <form method="POST"
+                                                        action="{{ route('habilitar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="dropdown-item habilitar_participacion"
+                                                            type="button">Habilitar
+                                                            participación</button>
+                                                    </form>
+
+                                                </li>
+
+                                                <li>
+                                                    <form method="POST"
+                                                        action="{{ route('rechazar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <button class="dropdown-item rechazar_participacion"
+                                                            type="button">Rechazar
+                                                            participación</button>
+                                                    </form>
+
+                                                </li>
+                                            @endif
+
+
+
+                                        </ul>
+                                    @else
+                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDropdown">
                                             <li>
-                                                <form method="POST"
-                                                    action="{{ route('rechazar.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button class="dropdown-item rechazar_participacion"
-                                                        type="button">Rechazar
-                                                        participación</button>
-                                                </form>
 
+                                                <a href="{{ route('ver.participante', $data->user_id) }}"
+                                                    class="dropdown-item" type="button">Ver Perfil</a>
                                             </li>
-                                        @endif
+                                        </ul>
+                                    @endif
 
-                                        @if ($data->estado != 'Pendiente')
-                                            <li>
-                                                <form method="POST"
-                                                    action="{{ route('posponer.participacion', ['evento_id' => $evento->id, 'asistencia_id' => $data->asistencia_id]) }}">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button class="dropdown-item posponer.posponer"
-                                                        type="submit">Posponer
-                                                        participación</button>
-                                                </form>
-
-                                            </li>
-                                        @endif
-
-
-                                    </ul>
                                 </div>
                             </td>
                         </tr>

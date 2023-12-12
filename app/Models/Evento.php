@@ -53,9 +53,7 @@ class Evento extends Model
     {
         return $this->hasMany(Grupo::class);
     }
-    public function fases(){
-        return $this->hasMany(Fase::class);
-    }
+
 
     public function fasesEventos(){
         return $this->hasMany(FaseEvento::class);

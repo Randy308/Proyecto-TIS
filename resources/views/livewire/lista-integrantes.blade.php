@@ -1,6 +1,7 @@
 <div class="container py-4 my-4" id="listaIntegrantesGrupos">
     <div class="d-flex justify-content-end">
-        <button class="btn btn-danger" type="submit" onclick="history.back()"><i class="bi bi-x-lg"></i></button>
+        <a class="btn btn-danger"  href="{{ route('misEventos',['tab' => 1]) }}" type="submit"><i
+            class="bi bi-x-lg"></i></a>
     </div>
     <p class="h4">{{ $grupo->nombre }}</p>
     <p class="h6">Lista de integrantes</p>

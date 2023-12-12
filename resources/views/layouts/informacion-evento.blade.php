@@ -1,14 +1,21 @@
 <div class="tab1">
     <div class="row pb-4">
-        <div class="col p-4" >
+        <div class="col p-4">
             <div class="row my-3 p-4 miCard">
                 <p class="h4">Detalles</p>
                 <span><i class="bi bi-person h3"></i> Evento de
                     <b>{{ ucfirst(trans($evento->user->name)) }}</b> </span>
                 <span><i class="bi bi-tools h3"></i> Estado: <b class="{{ $evento->estado }}">{{ $evento->estado }}</b>
                 </span>
-                <span><i class="bi bi-people-fill h3"></i> <span>{{ count($evento->users) }} personas
-                        participan</span></span>
+                @if ($evento->modalidad == 'individual')
+                <span><i class="bi bi-people-fill h3"></i> <span>{{ $participantes }} personas
+                    participan</span></span>
+                @else
+                <span><i class="bi bi-people-fill h3"></i> <span>{{ $participantes }} grupos
+                    participan</span></span>
+                @endif
+
+
 
                 @if (!empty($evento->descripcion_evento))
                     <span><b>Descripción:</b>
@@ -26,10 +33,7 @@
                     <div class="col-6">
                         <span>Nombre: <b>{{ ucfirst(trans($evento->user->name)) }}</b></span>
 
-                        <span>Email: <a href = "mailto:{{ $evento->user->email }}?subject = Feedback&body = Message"
-                                class="btn btn-link emaillink">
-                                {{ $evento->user->email }}
-                            </a></span>
+                        <span>Email: {{ $evento->user->email }}</span>
 
                     </div>
                 </div>
@@ -49,11 +53,12 @@
                                     <span>Nombre: <b>{{ ucfirst(trans($user->name)) }}</b></span>
                                 </div>
                                 <div class="row">
-                                    <span>Email: <a
+                                    {{-- <span>Email: <a
                                             href = "mailto:{{ $user->email }}?subject = Feedback&body = Message"
                                             class="btn btn-link emaillink">
                                             {{ $user->email }}
-                                        </a></span>
+                                        </a></span> --}}
+                                    <span>Email: {{ $user->email }}</span>
                                 </div>
 
 
@@ -67,27 +72,33 @@
                 </div>
             @endif
         </div>
-        <div class="col-md-auto d-flex justify-content-center m-4" >
+        <div class="col-md-auto d-flex justify-content-center m-4">
             <div class="row">
                 <div class="col">
-                    <div class="p-2 my-4 miCard">
+                    {{-- <div class="p-2 my-4 miCard">
+                        <p class="h4">Ubicación</p>
+                    </div> --}}
+                    <div class="row">
                         <p class="h4">Ubicación</p>
                     </div>
-                    <div id="participantesContainer" class="d-flex justify-content-center align-items-center">
-                        <div class="card" id="participantes">
-        
-        
-                            <input type="hidden" class="form-control" name="latitud" id="latitud"
-                                value="{{ $evento->latitud }}">
-                            <input type="hidden" class="form-control" name="longitud" id="longitud"
-                                value="{{ $evento->longitud }}">
-                            <div id="mapa"></div>
-        
-        
+                    <div class="row">
+                        <div id="participantesContainer" class="d-flex justify-content-center align-items-center">
+
+                            <div class="card" id="participantes">
+
+
+                                <input type="hidden" class="form-control" name="latitud" id="latitud"
+                                    value="{{ $evento->latitud }}">
+                                <input type="hidden" class="form-control" name="longitud" id="longitud"
+                                    value="{{ $evento->longitud }}">
+                                <div id="mapa"></div>
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -100,12 +111,19 @@
 
                     @if (!empty($evento->costo))
                         <span>Costo de inscripcion: <span><b>{{ $evento->costo }}</b> Bs</span>
-                            </span>
-                    @endif
-                    @if (!empty($evento->cantidad_minima))
-                        <span>Plazas limitadas, unicamenete para
-                            <span><b>{{ $evento->cantidad_minima }}</b> participantes</span>
                         </span>
+                    @endif
+                    @if (!empty($evento->cantidad_maxima))
+                        @if ($evento->modalidad == 'individual')
+                            <span>Plazas limitadas, unicamenete para
+                                <span><b>{{ $evento->cantidad_maxima }}</b> participantes</span>
+                            </span>
+                        @else
+                            <span>Plazas limitadas, unicamenete para
+                                <span><b>{{ $evento->cantidad_maxima }}</b> grupos</span>
+                            </span>
+                        @endif
+
                     @endif
                     @if (!empty($evento->nombre_institucion))
                         <span>Ser estudiante regulara de la
@@ -114,7 +132,7 @@
                     @endif
                 </div>
             @else
-            <p class="h4">Inscripciones abiertas</p>
+                <p class="h4">Inscripciones abiertas</p>
 
             @endif
 

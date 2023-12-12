@@ -5,19 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Fase extends Model
+class CalificacionGrupo extends Model
 {
     use HasFactory;
-
     protected $fillable = [
+        'calificacion_id',
+        'grupo_id',
+        'puntaje',
         'evento_id',
-        'nombre',
-        'descripcion',
-        'fechaIni',
-        'fechaFin',
     ];
-    public function evento()
-    {
-        return $this->belongsTo(Evento::class);
-    }
 }

@@ -7,7 +7,8 @@
         @endphp
         @if (strtotime($fechaCompleta) >= strtotime(now('GMT-4')))
             @guest
-                <button class="btn btn-sm btn-primary" id="boton-registro" role="button" data-toggle="modal" data-target="#loginModal">
+                <button class="btn btn-sm btn-primary" id="boton-registro" role="button" data-toggle="modal"
+                    data-target="#loginModal">
                     Iniciar Sesion
                 </button>
 
@@ -66,11 +67,16 @@
                             </button>
                         @elseif (strtoupper($evento->estado) == 'ACTIVO')
                             @if ($evento->modalidad == 'individual')
-                                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-                                    data-target="#modalRegistroParticipanteEvento">
-                                    Registrarse
-                                </button>
-                                @include('layouts.modal-registro-evento')
+                                @if (auth()->user()->hasRole('usuario común'))
+                                    <button type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#modalRegistroParticipanteEvento">
+                                        Registrarse
+                                    </button>
+                                    @include('layouts.modal-registro-evento')
+                                @else
+                                    <button disabled class="btn btn-warning btn-sm"> Registro unicamente <br> para
+                                        participantes</button>
+                                @endif
                             @else
                                 @if (auth()->user()->can('coach.registrar-equipo'))
                                     <a href="{{ route('registroEquipo.view', ['evento_id' => $evento->id]) }}"
@@ -78,22 +84,8 @@
                                         Registra tu equipo
                                     </a>
                                 @else
-                                    <div class="btn-group btn-group-sm" role="group">
-                                        <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-warning btn-sm dropdown-toggle"
-                                            data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%">
-                                            Registro disponible <br> para entrenadores
-                                        </button>
-
-                                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-
-
-                                            <li><a class="dropdown-item" href="#">Solicitar permiso</a></li>
-
-
-
-                                        </ul>
-                                    </div>
-
+                                    <button disabled class="btn btn-warning btn-sm"> Registro unicamente <br> para
+                                        entrenadores</button>
                                 @endif
                             @endif
                         @else
@@ -128,7 +120,8 @@
                 @endphp
                 @if ($registroExistente)
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-sm btn-secondary" href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
+                        <a class="btn btn-sm btn-secondary"
+                            href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
                             Fases
                         </a>
                         <button type="button" class="btn btn-sm btn-info" disabled> Ya esta <br>registrado

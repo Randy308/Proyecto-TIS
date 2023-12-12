@@ -41,11 +41,14 @@
                     type="button" role="tab" aria-controls="pills-profile"
                     aria-selected="false">Cronograma</button>
             </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill" data-bs-target="#pills-contact"
-                    type="button" role="tab" aria-controls="pills-contact"
-                    aria-selected="false">Resultados</button>
-            </li>
+            @if ($calificaciones_final)
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-contact-tab" data-bs-toggle="pill"
+                        data-bs-target="#pills-contact" type="button" role="tab" aria-controls="pills-contact"
+                        aria-selected="false">Resultados</button>
+                </li>
+            @endif
+
         </ul>
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -63,35 +66,155 @@
 
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                <div id="tab3">
-                    <select name="tipo_evento" class="form-control @error('tipo_evento') is-invalid @enderror"
-                        id="tipo_evento">
-                        <option value="reclutamiento" {{ old('tipo_evento') == 'reclutamiento' ? 'selected' : '' }}>
-                            Reclutamiento
-                        </option>
-                        <option value="competencia_individual"
-                            {{ old('tipo_evento') == 'competencia_individual' ? 'selected' : '' }}>
-                            Competencia Individual</option>
-                        <option value="competencia_grupal"
-                            {{ old('tipo_evento') == 'competencia_grupal' ? 'selected' : '' }}>
-                            Competencia Grupal(4)</option>
-                        <option value="taller_individual"
-                            {{ old('tipo_evento') == 'taller_individual' ? 'selected' : '' }}>
-                            Taller
-                            Individual</option>
-                        <option value="taller_grupal" {{ old('tipo_evento') == 'taller_grupal' ? 'selected' : '' }}>
-                            Taller
-                            Grupal(4)
-                        </option>
-                    </select>
 
+
+            @if ($calificaciones_final)
+                <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
+                    <div id="tab3">
+                        <p class="h5">Tabla de posiciones</p>
+                        @if (strtoupper($evento->modalidad) == 'GRUPAL')
+
+                            <div class="d-flex py-4 my-4  justify-content-center container_podium podium">
+                                @php
+                                    $contador = 1;
+                                    $primeros_tres = [];
+                                    $otros = [];
+                                @endphp
+
+                                @foreach ($calificaciones_final as $item)
+                                    @if ($contador <= 3)
+                                        <!-- Almacenar los primeros 3 en un array -->
+                                        @php
+                                            $primeros_tres[] = $item;
+                                        @endphp
+                                    @else
+                                        <!-- Almacenar los demás en otro array -->
+                                        @php
+                                            $otros[] = $item;
+                                        @endphp
+                                    @endif
+
+                                    @php
+                                        $contador++;
+                                    @endphp
+                                @endforeach
+
+                                <!-- Mostrar los primeros 3 en el podio -->
+                                @foreach ($primeros_tres as $item)
+                                    <div class="podium__item">
+                                        <p class="podium__city">{{ $item->nombre_grupo }}</p>
+                                        <div class="podium__rank podium{{ $loop->index + 1 }}">{{ $loop->index + 1 }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Mostrar los demás en una lista -->
+                            @if ($calificaciones_final->count())
+                                <div class="d-flex justify-content-center p-4 list">
+                                    <table class="table table-bordered data-table table-responsive-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Nombre del Grupo</th>
+                                                <th>Puntaje</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($calificaciones_final as $data)
+                                                <tr>
+                                                    <td>
+                                                        {{ $loop->index + 1 }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $data->nombre_grupo }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {{ $data->puntaje }}</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+                        @else
+                            <div class="d-flex py-4 my-4 justify-content-center container_podium podium">
+                                @php
+                                    $contador = 1;
+                                    $primeros_tres = [];
+                                    $otros = [];
+                                @endphp
+
+                                @foreach ($calificaciones_final as $item)
+                                    @if ($contador <= 3)
+                                        <!-- Almacenar los primeros 3 en un array -->
+                                        @php
+                                            $primeros_tres[] = $item;
+                                        @endphp
+                                    @else
+                                        <!-- Almacenar los demás en otro array -->
+                                        @php
+                                            $otros[] = $item;
+                                        @endphp
+                                    @endif
+
+                                    @php
+                                        $contador++;
+                                    @endphp
+                                @endforeach
+
+                                <!-- Mostrar los primeros 3 en el podio -->
+                                @foreach ($primeros_tres as $item)
+                                    <div class="podium__item">
+                                        <p class="podium__city">{{ $item->name }}</p>
+                                        <div class="podium__rank podium{{ $loop->index + 1 }}">{{ $loop->index + 1 }}
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Mostrar los demás en una lista -->
+                            @if ($calificaciones_final->count())
+                                <div class="d-flex justify-content-center p-4 list">
+                                    <table class="table table-bordered data-table table-responsive-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Integrante</th>
+                                                <th>Puntaje</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($calificaciones_final as $data)
+                                                <tr>
+                                                    <td>
+                                                        {{ $loop->index + 1 }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $data->name }}</a>
+                                                    </td>
+                                                    <td>
+                                                        {{ $data->puntaje }}</a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            @endif
+
+
+                        @endif
+
+
+                    </div>
                 </div>
-            </div>
+            @endif
+
+
+
+
         </div>
 
-
-
     </div>
-    
-</div>

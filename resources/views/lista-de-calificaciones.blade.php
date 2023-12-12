@@ -33,7 +33,7 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            @livewire('lista-calificaciones', ['evento_id' => $evento_id])
+            @livewire('lista-calificaciones', ['evento_id' => $evento_id , 'anterior' => $anterior])
         </div>
 
     </div>
@@ -41,6 +41,7 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script>
     @livewireScripts
 </body>
 

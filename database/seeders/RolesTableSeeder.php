@@ -54,5 +54,8 @@ class RolesTableSeeder extends Seeder
         Permission::create(['name' => 'admin.editar-perfil'])->assignRole($administrador);
         Permission::create(['name' => 'coach.registrar-equipo'])->assignRole($coach);
         Permission::create(['name' => 'colaborador.ver-mis-eventos'])->assignRole([$colaborador]);
+        //inscirbir
+        Permission::create(['name' => 'participar.evento'])->syncRoles([$coach, $usuario_comun]);
+        Permission::create(['name' => 'usuario.inscripcion'])->assignRole([$colaborador]);
     }
 }

@@ -9,7 +9,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('calificaciones.create', ['evento_id' => $evento_id]) }}" method="POST">
+            <form action="{{ route('calificaciones.grupal.create', ['evento_id' => $evento_id]) }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="form-outline mb-4">
@@ -32,13 +32,13 @@
                             <input type="number" min="1" id="formMinimo" class="form-control"
                                 name="nota_minima_aprobacion"
                                 class="@error('nota_minima_aprobacion') is-invalid @enderror"
-                                value="{{ $anterior->nota_minima_aprobacion }}" readonly/>
+                                value="{{ $anterior->nota_minima_aprobacion }}" readonly />
                         </div>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="formMaximo">Nota maxima<span
                                     class="text-danger font-weight-bold ">*</span></label>
                             <input type="number" id="formMaximo" class="form-control" name="nota_maxima"
-                                value="{{ $anterior->nota_maxima }}"  readonly/>
+                                value="{{ $anterior->nota_maxima }}" readonly />
                         </div>
                     @else
                         <div class="form-outline mb-4">
@@ -49,7 +49,6 @@
                             @error('nota_minima_aprobacion')
                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                             @enderror
-
                         </div>
                         <div class="form-outline mb-4">
                             <label class="form-label" for="formMaximo">Nota maxima<span
@@ -59,10 +58,9 @@
                             @error('nota_maxima')
                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                             @enderror
-
                         </div>
                         <div>
-                            <p class="fs-6">Si crea una calificacion , se deshabilitara la opcion para aceptar la solicitud de mas participantes al evento</p>
+                            <p class="fs-4 fw-normal">Si crea una calificacion ,  se deshabilitara la opcion para aceptar la solicitud de mas grupos al evento</p>
                         </div>
                     @endif
 

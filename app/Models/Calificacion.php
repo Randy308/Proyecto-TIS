@@ -18,6 +18,10 @@ class Calificacion extends Model
     {
         return $this->belongsToMany(User::class, 'calificacion_usuarios');
     }
+    public function grupos()
+    {
+        return $this->belongsToMany(Grupo::class, 'calificacion_grupos');
+    }
     public function eventos()
     {
         return $this->belongsToMany(Evento::class, 'calificacion_eventos');

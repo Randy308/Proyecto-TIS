@@ -29,7 +29,7 @@
                     @endcan
                     @can('organizador.ver-mis-eventos')
                         <li>
-                            <a href="{{ route('misEventos') }}">Mis eventos</a>
+                            <a href="{{ route('misEventos',['tab' => 1]) }}">Mis eventos</a>
                         </li>
                     @endcan
                 @endauth
@@ -99,11 +99,11 @@
 
                         <li>
                             <a href="{{ route('reportes-generales') }}">Reportes Generales</a>
-                        </li>                   
+                        </li>
                         <li>
                             <a href="{{ route('reportes-especificos') }}">Reportes Especificos</a>
                         </li>
-                        
+
                     </ul>
                 </li>
             {{--  --}}

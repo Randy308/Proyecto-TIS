@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,7 +69,7 @@
 
         function aplicarMiColor(elemento) {
             var value = getColor();
-            elemento.css("background-color", value);
+            elemento.css("background-color", "#F9F9F9");
         }
         $(document).ready(function() {
             $("#tipo_evento").selectmenu({
