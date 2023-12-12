@@ -1,0 +1,77 @@
+.notificaciones-container {
+    position: absolute;
+    top: 100%; 
+    right: 0; 
+   
+    z-index: 999;
+
+    min-width: 350px;
+    width: 100%;
+    background-color: #f0f0f0; 
+    padding: 10px;
+}
+
+.notificaciones-containerList {
+
+    top: 100%; 
+    right: 0; 
+   
+    z-index: 999;
+
+    min-width: 350px;
+    width: 100%;
+    background-color: #f0f0f0; 
+    padding: 10px;
+}
+
+
+.card:hover {
+    background-color: #f3f3f3; /* Cambia el color al pasar el cursor */
+    /* Agrega otras propiedades de estilo para el hover */
+}
+
+.notificacion-item {
+    border: none; 
+        margin-bottom: 10px;
+}            
+
+.no-notificaciones {
+    border: none; 
+    margin: 10px;
+}
+
+.no-notificaciones p {
+    margin: 0; /* Eliminar el margen del párrafo dentro del div */
+    color: #6c757d; /* Color del texto */
+    font-size: 16px;
+}
+
+.icon-container {
+    position: relative;
+    display: inline-block;
+}
+
+.notificacion-punto-rojo {
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    bottom: -3px; /* Ajusta según necesites */
+    right: -3px; /* Ajusta según necesites */
+}
+
+.notificacion-punto-rojo-individual {
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+.notificaciones-scroll-container {
+    max-height: calc(90vh - 100px);
+    overflow-y: auto;
+}

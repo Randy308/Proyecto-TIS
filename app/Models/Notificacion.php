@@ -10,15 +10,19 @@ class Notificacion extends Model
     use HasFactory;
 
     protected $fillable = [
-        'asistencia_id',
         'asunto',
         'detalle',
         'fechaHora',
         'visto',
     ];
 
-    public function asistenciaEvento()
+    public function user()
     {
-        return $this->belongsTo(AsistenciaEvento::class);
+        return $this->belongsTo(User::class);
     }
+    public function evento()
+    {
+        return $this->belongsTo(Evento::class);
+    }
+
 }
