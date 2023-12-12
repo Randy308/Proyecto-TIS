@@ -110,10 +110,10 @@ class NotificacionesForm extends Component
                             }
                         }
               
-                        return redirect()->route('misEventos')->with('status', 'se enviaron las notificaciones correctamente');
+                        return redirect()->route('misEventos',['tab' => 1])->with('status', 'se enviaron las notificaciones correctamente');
 
                     }else{
-                        return redirect()->route('misEventos')->with('inf', 'no hubieron destinatarios');
+                        return redirect()->route('misEventos',['tab' => 1])->with('inf', 'no hubieron destinatarios');
                     }
                     
         
