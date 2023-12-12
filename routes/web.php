@@ -264,6 +264,7 @@ Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionPa
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
 
 Route::put('/incluir-participantes/{evento_id}', [AsistenciaEventosController::class, 'incluirParticipantes'])->name('aceptar.all.participantes');
+Route::put('/incluir-grupos/{evento_id}', [AsistenciaEventosController::class, 'incluirGrupos'])->name('aceptar.all.grupos');
 Route::get('/lista-grupos/{evento_id}', [GrupoController::class, 'index'])->name('ver.grupos');
 
 Route::post('/notificar/{evento_id}', [NotificacionesControlador::class, 'notificarParticipantes'])->name('notificarParticipantes');

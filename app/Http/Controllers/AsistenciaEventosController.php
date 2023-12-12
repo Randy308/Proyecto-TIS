@@ -22,7 +22,6 @@ class AsistenciaEventosController extends Controller
 
             return redirect()->back()->with('error', 'El usuario no esta registrado en el evento.');
         }
-
     }
     public function create($id, Request $request)
     {
@@ -45,7 +44,6 @@ class AsistenciaEventosController extends Controller
                 $asistencia->fechaInscripcion = now();
                 $asistencia->save();
                 return redirect()->back()->with('status', '¡Se ha añadido exitosamente.');
-
             } else {
                 // Verificar cantidad máxima de participantes
                 $bandera1 = false;
@@ -84,12 +82,8 @@ class AsistenciaEventosController extends Controller
 
                     return redirect()->back()->with('status', '¡Se ha añadido exitosamente.');
                 }
-
             }
-
-
         }
-
     }
     public function eliminarParticipante(Request $request, $user, $evento)
     {
@@ -109,6 +103,21 @@ class AsistenciaEventosController extends Controller
             return redirect()->back()->with('error', 'No tienes permisos para eliminar participantes por conducta indebida.');
         }
     }
+
+    public function incluirGrupos($evento_id)
+    {
+        $evento = Evento::find($evento_id);
+        $grupos = $evento->grupos;
+        foreach ($grupos as $grupo) {
+            if ($grupo->estado != 'Habilitado') {
+                $grupo->estado = 'Habilitado';
+                $grupo->save();
+            }
+        }
+        //return $participantes;
+        return redirect()->back()->with('status', 'Se han habilitado a todos los grupos del evento.');
+    }
+
     public function incluirParticipantes($evento_id)
     {
         $evento = Evento::find($evento_id);
@@ -122,7 +131,5 @@ class AsistenciaEventosController extends Controller
         }
         //return $participantes;
         return redirect()->back()->with('status', 'Se han habilitado a todos los participantes al evento.');
-
     }
-
 }

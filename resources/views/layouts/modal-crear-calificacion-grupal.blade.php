@@ -60,7 +60,7 @@
                             @enderror
                         </div>
                         <div>
-                            <p class="fs-4 fw-normal">Si crea una calificacion ,  se deshabilitara la opcion para aceptar la solicitud de mas grupos al evento</p>
+                            <p class="fs-6 fw-normal">Si crea una calificacion ,  se deshabilitara la opcion para aceptar la solicitud de mas grupos al evento</p>
                         </div>
                     @endif
 

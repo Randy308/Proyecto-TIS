@@ -344,7 +344,7 @@ class CalificacionParticipanteController extends Controller
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
 
-        return view('calificar-grupos-evento', compact('combinedData', 'calificacion'));
+        return view('calificar-grupos-evento', compact('combinedData', 'calificacion', 'evento'));
     }
 
     public function show($evento_id, $calificacion_id)
