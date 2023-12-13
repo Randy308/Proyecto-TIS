@@ -41,9 +41,9 @@
                             <div class="form-group">
                                 <label for="fechaInicio">Fecha de inicio:</label>
                                 <input type="datetime-local" class="form-control" id="fechaInicio" name="fechaInicio"
-                                    min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(10) }}"
-                                    max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(30) }}"
-                                    value="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(30) }}" required>
+                                    min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(5) }}"
+                                    max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(5) }}"
+                                    value="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(15) }}" required>
                             </div>
                         @endif
 
@@ -52,9 +52,9 @@
                             <div class="form-group">
                                 <label for="fechaFin">Fecha de fin:</label>
                                 <input type="datetime-local" class="form-control" id="fechaFin" name="fechaFin"
-                                min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->subMinutes(30) }}"
-                                max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(30) }}"
-                                    value="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(30) }}" required>
+                                min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->subMinutes(5) }}"
+                                max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(5) }}"
+                                    value="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(15) }}" required>
                             </div>
                         @endif
 

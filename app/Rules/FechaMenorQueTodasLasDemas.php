@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\FaseEvento;
+use Carbon\Carbon;
 class FechaMenorQueTodasLasDemas implements Rule
 {
     /**
@@ -16,7 +17,7 @@ class FechaMenorQueTodasLasDemas implements Rule
     public function __construct($eventoId, $fechaFin)
     {
         $this->fases = FaseEvento::where('evento_id', $eventoId)->where('tipo','!=','Inscripcion')->get();
-        $this->fechaFin = $fechaFin;
+        $this->fechaFin = Carbon::parse($fechaFin);
     }
 
     /**
@@ -30,7 +31,7 @@ class FechaMenorQueTodasLasDemas implements Rule
     {
         $esMenor = true;
         foreach($this->fases as $fase){
-            if(!($this->fechaFin <= $fase->fechaInicio) ){
+            if(!($this->fechaFin <= Carbon::parse($fase->fechaInicio)) ){
                 $esMenor = false;
             }
         }

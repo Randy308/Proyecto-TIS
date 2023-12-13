@@ -12,6 +12,8 @@ use App\Models\AsistenciaEvento;
 use App\Models\Colaborador;
 use App\Models\PertenecenGrupo;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NotificacionEventoEmail;
 class NotificacionesForm extends Component
 {
 
@@ -83,6 +85,7 @@ class NotificacionesForm extends Component
                                         $not->evento()->associate($this->evento);
                                         $not->user()->associate($admin);
                                         $not->save();
+                                        Mail::to($admin->email)->send(new NotificacionEventoEmail($this->asunto,$this->detalle, $admin->name, $this->evento->nombre_evento));
                                     }
                                 }else{
                                     $rolname = $this->roles[$index]->name;
@@ -101,6 +104,7 @@ class NotificacionesForm extends Component
                                         $not->evento()->associate($this->evento);
                                         $not->user()->associate($user);
                                         $not->save();
+                                        Mail::to($user->email)->send(new NotificacionEventoEmail($this->asunto,$this->detalle, $user->name, $this->evento->nombre_evento));
                                     }
                                     
                                 }

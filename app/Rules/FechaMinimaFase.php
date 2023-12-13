@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\FaseEvento;
+use Carbon\Carbon;
 class FechaMinimaFase implements Rule
 {
     /**
@@ -16,7 +17,7 @@ class FechaMinimaFase implements Rule
     public function __construct($eventoId)
     {
         $faseInsc = FaseEvento::where('evento_id', $eventoId)->where('tipo','Inscripcion')->first();
-        $this->fechaMinima = $faseInsc->fechaFin;
+        $this->fechaMinima = Carbon::parse($faseInsc->fechaFin);
     }
 
     /**
@@ -29,7 +30,7 @@ class FechaMinimaFase implements Rule
     public function passes($attribute, $value)
     {
         
-        return $value >= $this->fechaMinima;
+        return Carbon::parse($value) >= $this->fechaMinima;
     }
 
     /**
