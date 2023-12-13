@@ -39,7 +39,7 @@
                                     <form action="{{ route('asignarRoles.delete', $role->id) }}" method="post">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn btn-danger" type="submit">Eliminar</button>
+                                        <button class="btn btn-danger eliminar_rol" type="button">Eliminar</button>
 
                                     </form>
 
@@ -60,6 +60,16 @@
             <div class="card-footer">
                 {{ $roles->links() }}
             </div>
+            <script>
+                $(".eliminar_rol").on("click", function(e) {
+                    e.preventDefault();
+                    if (confirm("¿Está seguro de que deseas eliminar el rol?")) {
+                        var form = $(this).parents('form:first');
+                        console.log('enviando form')
+                        form.submit();
+                    }
+                });
+            </script>
         @else
             <div class="card-body">
                 <strong>No hay registros</strong>
