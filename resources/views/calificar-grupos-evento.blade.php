@@ -34,7 +34,10 @@
         <div id="content">
             @include('layouts/navbar')
             <div class="container py-4 my-4 p-4" id="miTabla">
-
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-danger" href="{{ route('calificaciones.index', ['evento_id' => $evento->id]) }}"
+                        type="submit"><i class="bi bi-x-lg"></i></a>
+                </div>
                 <p class="h3">Lista de participantes</p>
                 <div class="py-4">
                     <p class="h6">Nota minima: <span class="text-danger">0</span></p>

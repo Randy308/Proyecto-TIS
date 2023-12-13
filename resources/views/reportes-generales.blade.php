@@ -43,6 +43,7 @@
     </div>
 
     @include('layouts/sidebar-scripts')
+    @livewireScripts
 
     {{-- <script>
         $("#BottonFiltrado").on("click", function() {
