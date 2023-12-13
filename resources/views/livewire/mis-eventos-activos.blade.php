@@ -69,9 +69,7 @@
 
                                             @if (strtoupper($evento->estado) == 'ACTIVO')
                                                 <li>
-                                                    <a href="#" class="dropdown-item"
-                                                        id="modalNotificarButton{{ $evento->id }}">Notificar
-                                                        Participantes</a>
+                                                    <a href="#" class="dropdown-item" id="modalNotificarButton{{$evento->id}}">Notificar Usuarios</a>
                                                 </li>
                                             @endif
 
@@ -86,59 +84,10 @@
 
                             </td>
 
-
+                            
                         </tr>
-                        <form action="{{ route('notificarParticipantes', $evento->id) }}" method="POST">
-                            @csrf
-
-                            <div class="modal fade" id="notificarModal{{ $evento->id }}" tabindex="-1"
-                                role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">
-                                                <center>Notificar a los Participantes</center>
-                                            </h5>
-                                            <button type="button" class="close" data-dismiss="modal"
-                                                aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="nombre_fase">Asunto:</label>
-                                                <input type="text" class="form-control" id="asunto" name="asunto"
-                                                    required>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="descripcion_fase">Detalle:</label>
-                                                <textarea class="form-control" id="detalle" name="detalle" rows="4" required></textarea>
-                                            </div>
-
-
-                                            <div class="d-flex flex-column">
-                                                <button type="submit" id="botonNotificaciones"
-                                                    class="btn btn-primary">Crear</button>
-
-                                            </div>
-
-                                        </div>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <script>
-                            document.getElementById('modalNotificarButton{{ $evento->id }}').addEventListener('click', function(event) {
-                                event.preventDefault();
-
-                                // Abre el modal
-                                $('#notificarModal{{ $evento->id }}').modal('show');
-                            });
-                        </script>
+                        @livewire('notificaciones-form',['evento'=>$evento])
+                        
                     @endforeach
                 </tbody>
             </table>
@@ -181,4 +130,5 @@
             <strong>No existen eventos activos</strong>
         </div>
     @endif
+   
 </div>

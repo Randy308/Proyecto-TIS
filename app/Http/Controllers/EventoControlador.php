@@ -76,12 +76,15 @@ class EventoControlador extends Controller
         $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
 
 
-
+        if (strtoupper($evento->modalidad) == 'GRUPAL') {
+            $participantes = $evento->grupos()->where('estado', 'Habilitado')->count();
+        } else {
+            $participantes = $evento->users()->where('asistencia_eventos.estado', 'Habilitado')->count();
+        }
         $calificacion_final = CalificacionEvento::where('evento_id', $evento->id)->where('es_promedio', 1)->first();
         if ($calificacion_final) {
             $calificacion = Calificacion::find($calificacion_final->calificacion_id);
             if (strtoupper($evento->modalidad) == 'GRUPAL') {
-                $participantes = $evento->grupos()->where('estado', 'Habilitado')->count();
                 $calificaciones_final = DB::table('calificacion_grupos')
                     ->join('calificacions', 'calificacion_grupos.calificacion_id', '=', 'calificacions.id')
                     ->join('grupos', 'calificacion_grupos.grupo_id', '=', 'grupos.id')
@@ -102,13 +105,8 @@ class EventoControlador extends Controller
                     ->groupBy('grupos.id', 'lider_grupo_id', 'nombre_lider_grupo', 'nombre_grupo', 'calificacion_grupos.puntaje')
                     ->orderBy('calificacion_grupos.puntaje', 'desc')
                     ->get();
-
-
-
-
-
             } else {
-                $participantes = $evento->users()->where('asistencia_eventos.estado', 'Habilitado')->count();
+                
 
                 $calificaciones_final = DB::table('calificacion_usuarios')
                     ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
@@ -122,7 +120,6 @@ class EventoControlador extends Controller
                         'calificacion_usuarios.puntaje'
                     )
                     ->orderBy('calificacion_usuarios.puntaje', 'desc')->get();
-
             }
         } else {
             $calificaciones_final = null;

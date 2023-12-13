@@ -86,11 +86,11 @@ class User extends Authenticatable
     }
 
     public function asistencias() {
-        return $this->hasMany(Asistencia::class, 'user_id');
+        return $this->hasMany(AsistenciaEvento::class, 'user_id');
     }
 
-    public function notificaciones() {
-        return $this->hasManyThrough(Notificacion::class, AsistenciaEvento::class, 'user_id', 'asistencia_id');
-
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificacion::class);
     }
 }

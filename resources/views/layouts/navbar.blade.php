@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('css/notificaciones.css') }}">
 <nav class="navbar navbar-expand" id="miNavbar">
     <!-- Brand -->
     <button type="button" id="sidebarCollapse" class="btn btn-dark">
@@ -11,7 +12,7 @@
 
 
 
-            {{-- @livewire('notificaciones-resumen') --}}
+             @livewire('notificaciones-resumen')
 
             <li class="nav-item dropdown" id="navdropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"

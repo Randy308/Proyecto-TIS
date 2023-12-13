@@ -53,10 +53,10 @@
                         <td>
                             @if (strtoupper($evento->modalidad) == 'GRUPAL')
                                 <a href="{{ route('calificar.grupos', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
-                                    class="btn btn-primary btn-sm" type="button">Visualizar grupos</a>
+                                    class="btn btn-link btn-sm" type="button">Visualizar grupos</a>
                             @else
                                 <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
-                                    class="btn btn-primary btn-sm" type="button">Visualizar</a>
+                                    class="btn btn-link btn-sm" type="button">Visualizar</a>
                             @endif
                         </td>
                     </tr>
@@ -69,8 +69,7 @@
             Finalizar calificaciones
         </button>
         @if (strtoupper($evento->modalidad) == 'GRUPAL')
-        @include('layouts.modal-crear-promedio-grupos', ['evento_id' => $evento_id])
-
+            @include('layouts.modal-crear-promedio-grupos', ['evento_id' => $evento_id])
         @else
             @include('layouts.modal-crear-promedio', ['evento_id' => $evento_id])
         @endif
@@ -78,4 +77,3 @@
 
     </div>
 </div>
-

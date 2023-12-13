@@ -9,6 +9,7 @@ use Carbon\Carbon;
 
 class NotificacionesControlador extends Controller
 {
+    
     //'asistencia_id',
     /*'asunto',
     'detalle',
@@ -26,6 +27,6 @@ class NotificacionesControlador extends Controller
             $not->visto = false;
             $not->save();
         }
-        return redirect()->back()->with('status', 'Notificacion eviada exitosamente');
+        return redirect()->route('misEventos');
     }
 }
