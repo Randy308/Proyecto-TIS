@@ -51,7 +51,7 @@ $(function () {
         }
         if (s.length < 4) {
             $("#nombreEventoCheck").show();
-            $("#nombreEventoCheck").html("nombre del evento incorrecto");
+            $("#nombreEventoCheck").html("nombre del evento incorrecto, el titulo es demasiado corto");
             $('#nextBtn').prop("disabled", true);
 
         }
