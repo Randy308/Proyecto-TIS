@@ -15,10 +15,11 @@
                 </div>
                 <div class="card-footer">
                     <p class="h6">Configuración de usuario</p>
-                    <div class="d-flex flex-column wrap-4 justify-content-start align-items-start" id="contenedorBotonesUsuario">
+                    <div class="d-flex flex-column wrap-4 justify-content-start align-items-start"
+                        id="contenedorBotonesUsuario">
 
                         <a href="{{ route('editUser', $user->id) }}" class="btn btn-link">Editar cuenta</a>
-                        <a href="{{ route('editPassword',  $user->id) }}" class="btn btn-link">Cambiar contraseña</a>
+                        <a href="{{ route('editPassword', $user->id) }}" class="btn btn-link">Cambiar contraseña</a>
                         <a href="{{ route('index') }}" class="btn btn-link">Regresar</a>
                     </div>
                 </div>
@@ -68,6 +69,10 @@
                         <li class="list-group-item"><strong>Fecha de Nacimiento:</strong> {{ $user->fecha_nac }}</li>
                         <li class="list-group-item"><strong>Historial Academico:</strong>
                             {{ $user->historial_academico }}</li>
+                        @if (auth()->user()->hasRole('usuario común'))
+                            <li class="list-group-item"><strong>Codigo de estudiante:</strong>
+                                {{ $user->cod_estudiante }}</li>
+                        @endif
                     </ul>
 
 

@@ -62,7 +62,12 @@ class AsistenciaEventosController extends Controller
                 if ($evento->nombre_institucion) {
                     $user = User::find($id);
                     if ($user->institucion->nombre_institucion == $evento->nombre_institucion) {
-                        $bandera2 = true;
+
+                        if ($user->cod_estudiante) {
+                            $bandera2 = true;
+                        } else {
+                            return redirect()->back()->with('error', '¡No se pudo vincular al evento, no tiene su codigo sis vinculado, actualize sus datos en el apartado editar perfil.');
+                        }
                     } else {
                         return redirect()->back()->with('error', '¡No se pudo vincular al evento, no pertenece a la institución requerida.');
                     }
