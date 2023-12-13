@@ -28,9 +28,7 @@
                 <label for="">Filtrar por Estado:</label>
                 <select wire:model="filtroEstado" class="form-control">
                     <option value="activo">Activo</option>
-                    <option value="borrador">Borrador</option>
                     <option value="finalizado">Finalizado</option>
-                    <option value="cancelado">Cancelado</option>
                     <option value="">Todos</option>
                 </select>
             </div>
