@@ -4,7 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\FaseEvento;
-
+use Carbon\Carbon;
 class ValidarSuperposicionFechasFases implements Rule
 {
     /**
@@ -35,17 +35,17 @@ class ValidarSuperposicionFechasFases implements Rule
         foreach ($fasesEvento as $fase) {
             if($fase->id != $this->faseId){
                 if( $fase->fechaInicio == $fase->fechaFin){
-                    if($value['fechaInicio'] < $fase->fechaInicio && $value['fechaFin'] > $fase->fechaFin ){
+                    if(Carbon::parse($value['fechaInicio']) < Carbon::parse($fase->fechaInicio) && Carbon::parse($value['fechaFin']) > Carbon::parse($fase->fechaFin) ){
                         return false;
                     }
-                }else if($value['fechaInicio'] == $value['fechaFin']){
-                    if($fase->fechaInicio < $value['fechaInicio']  && $fase->fechaFin  > $value['fechaFin'] ){
+                }else if(Carbon::parse($value['fechaInicio']) == Carbon::parse($value['fechaFin'])){
+                    if(Carbon::parse($fase->fechaInicio) < Carbon::parse($value['fechaInicio'])  && Carbon::parse($fase->fechaFin)  > Carbon::parse($value['fechaFin']) ){
                         return false;
                     }
                 }else{
-                    if($value['fechaInicio'] <= $fase->fechaInicio && $value['fechaFin'] > $fase->fechaInicio){//
+                    if(Carbon::parse($value['fechaInicio']) <= Carbon::parse($fase->fechaInicio) && Carbon::parse($value['fechaFin']) > Carbon::parse($fase->fechaInicio)){//
                         return false;
-                    }else if($value['fechaInicio'] > $fase->fechaInicio && $value['fechaInicio'] < $fase->fechaFin ){
+                    }else if(Carbon::parse($value['fechaInicio']) > Carbon::parse($fase->fechaInicio) && Carbon::parse($value['fechaInicio']) < Carbon::parse($fase->fechaFin) ){
                         return false;
                     }    
                 }
