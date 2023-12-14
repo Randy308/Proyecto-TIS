@@ -70,19 +70,27 @@
                                     $message = 'Solicitud enviada';
                                 }
                             @endphp
-                            <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button"
-                                id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Grupo:{{ $nombreGrupo . ',' }} <br>{{ $message }}
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <button type="button" class="dropdown-item" data-toggle="modal"
-                                    data-target="#modalEliminarGrupo">
-                                    Abandonar evento
-                                </button>
+                            @if (auth()->user()->can('coach.registrar-equipo'))
+                                <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button"
+                                    id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Grupo:{{ $nombreGrupo . ',' }} <br>{{ $message }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <button type="button" class="dropdown-item" data-toggle="modal"
+                                        data-target="#modalEliminarGrupo">
+                                        Abandonar evento
+                                    </button>
 
-                            </div>
-                            @include('layouts.modal-eliminar-grupo', ['evento' => $evento , 'grupo_id' => $grupo->id])
+                                </div>
+                                @include('layouts.modal-eliminar-grupo', [
+                                    'evento' => $evento,
+                                    'grupo_id' => $grupo->id,
+                                ])
+                            @else
+                                <button disabled class="btn btn-success btn-sm"> Grupo:{{ $nombreGrupo . ',' }}
+                                    <br>{{ $message }}</button>
+                            @endif
                         @endif
                     @else
                         @if (strtoupper($evento->estado) == 'CANCELADO')
