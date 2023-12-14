@@ -237,6 +237,8 @@ Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::cla
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
 
 Route::get('/registro-equipo/{evento_id}', [RegistroEquipoController::class, 'view'])->name('registroEquipo.view');
+Route::get('/abandonar-equipo/{evento_id}/{grupo_id}', [RegistroEquipoController::class, 'destroy'])->name('abandonar.grupo');
+
 
 
 

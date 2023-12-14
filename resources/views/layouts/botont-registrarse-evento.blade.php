@@ -70,8 +70,19 @@
                                     $message = 'Solicitud enviada';
                                 }
                             @endphp
-                            <span class="text-center alert alert-success">Grupo:
-                                {{ $nombreGrupo . ',' }} <br>{{ $message }} </span>
+                            <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button"
+                                id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Grupo:{{ $nombreGrupo . ',' }} <br>{{ $message }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <button type="button" class="dropdown-item" data-toggle="modal"
+                                    data-target="#modalEliminarGrupo">
+                                    Abandonar evento
+                                </button>
+
+                            </div>
+                            @include('layouts.modal-eliminar-grupo', ['evento' => $evento , 'grupo_id' => $grupo->id])
                         @endif
                     @else
                         @if (strtoupper($evento->estado) == 'CANCELADO')

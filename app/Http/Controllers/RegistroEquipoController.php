@@ -36,4 +36,11 @@ class RegistroEquipoController extends Controller
         }
 
     }
+    public function destroy($evento_id,$grupo_id){
+        $grupo = Grupo::where('id',$grupo_id)->first();
+        //return $calificacion;
+        $grupo->delete();
+        return redirect()->back()->with('success', 'Grupo eliminado con éxito');
+
+    }
 }
