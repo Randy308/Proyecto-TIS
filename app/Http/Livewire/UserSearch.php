@@ -141,15 +141,28 @@ class UserSearch extends Component
                 'regex:/^[a-zA-Z0-9\s\.\-]+$/',
             ],
         ]);
+        $evento = Evento::find($this->evento_id);
 
 
         if ($this->users->count() == 4) {
-            $nuevoGrupo = Grupo::create([
-                'nombre' => $this->nombreEquipo,
-                'user_id' => auth()->user()->id,
-                'evento_id' => $this->evento_id,
-                'estado' => "Pendiente"
-            ]);
+
+            if ($evento->privacidad == 'libre') {
+                $nuevoGrupo = Grupo::create([
+                    'nombre' => $this->nombreEquipo,
+                    'user_id' => auth()->user()->id,
+                    'evento_id' => $this->evento_id,
+                    'estado' => "Habilitado"
+                ]);
+            } else {
+
+                $nuevoGrupo = Grupo::create([
+                    'nombre' => $this->nombreEquipo,
+                    'user_id' => auth()->user()->id,
+                    'evento_id' => $this->evento_id,
+                    'estado' => "Pendiente"
+                ]);
+            }
+
             foreach ($this->users as $user) {
                 PertenecenGrupo::create([
                     'user_id' => $user->id,
@@ -158,8 +171,8 @@ class UserSearch extends Component
                 ]);
             }
             //$this->error = 'Los datos del evento se han actualizado con éxito.';
-            return redirect()->route('verEvento', ['id' => $this->evento_id ])->with('status', 'Se ha registrado el grupo al evento con éxito.');
-        }else{
+            return redirect()->route('verEvento', ['id' => $this->evento_id])->with('status', 'Se ha registrado el grupo al evento con éxito.');
+        } else {
             $this->error = 'Cantidad de participantes incorrecta.';
         }
     }
