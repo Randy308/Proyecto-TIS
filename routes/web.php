@@ -257,11 +257,15 @@ Route::get('/calificar-participantes/{evento_id}/{calificacion_id}', [Calificaci
 
 Route::get('/calificar-grupos/{evento_id}/{calificacion_id}', [CalificacionParticipanteController::class, 'showGrupos'])->name('calificar.grupos');
 
+Route::delete('/eliminar-calificacion/{calificacion_id}', [CalificacionParticipanteController::class, 'destroy'])->name('borrar.calificacion');
+
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
 
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
 Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
+
+
 
 Route::put('/incluir-participantes/{evento_id}', [AsistenciaEventosController::class, 'incluirParticipantes'])->name('aceptar.all.participantes');
 Route::put('/incluir-grupos/{evento_id}', [AsistenciaEventosController::class, 'incluirGrupos'])->name('aceptar.all.grupos');

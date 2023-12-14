@@ -16,12 +16,13 @@ class ListaCalificaciones extends Component
 
     public $evento_id;
     public $anterior;
+    public $existe;
     public function render()
     {
         $evento = Evento::find($this->evento_id);
 
         if ($evento) {
-            $calificaciones = $evento->calificacions;
+            $calificaciones = $evento->calificacions()->orderBy('orden_secuencia', 'ASC')->get();
             // Ahora, $combinedData contendrá la información combinada de asistencias y usuarios
         }
         return view('livewire.lista-calificaciones',compact('evento','calificaciones'));

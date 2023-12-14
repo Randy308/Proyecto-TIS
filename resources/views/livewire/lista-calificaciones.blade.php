@@ -7,20 +7,23 @@
     <p class="h6">Lista de calificaciones</p>
     <div class="py-4">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
-            Crear calificación
-        </button>
-        @if (strtoupper($evento->modalidad) == 'GRUPAL')
-            @include('layouts.modal-crear-calificacion-grupal', [
-                'evento_id' => $evento_id,
-                'anterior' => $anterior,
-            ])
-        @else
-            @include('layouts.modal-crear-calificacion', [
-                'evento_id' => $evento_id,
-                'anterior' => $anterior,
-            ])
+        @if ($existe == 0)
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModal">
+                Crear calificación
+            </button>
+            @if (strtoupper($evento->modalidad) == 'GRUPAL')
+                @include('layouts.modal-crear-calificacion-grupal', [
+                    'evento_id' => $evento_id,
+                    'anterior' => $anterior,
+                ])
+            @else
+                @include('layouts.modal-crear-calificacion', [
+                    'evento_id' => $evento_id,
+                    'anterior' => $anterior,
+                ])
+            @endif
         @endif
+
 
 
     </div>
@@ -44,13 +47,13 @@
                         <td>
                             {{ $calificacion->nota_minima_aprobacion }}</a>
                         </td>
-                        <td>
+                        <td >
                             {{ $calificacion->nota_maxima }}</a>
                         </td>
 
 
 
-                        <td>
+                        <td class="d-flex justify-content-between">
                             @if (strtoupper($evento->modalidad) == 'GRUPAL')
                                 <a href="{{ route('calificar.grupos', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
                                     class="btn btn-link btn-sm" type="button">Visualizar grupos</a>
@@ -58,22 +61,45 @@
                                 <a href="{{ route('calificar.participantes', ['evento_id' => $evento->id, 'calificacion_id' => $calificacion->id]) }}"
                                     class="btn btn-link btn-sm" type="button">Visualizar</a>
                             @endif
+                            @if ($loop->last)
+                                <form  action="{{ route('borrar.calificacion', ['calificacion_id' => $calificacion->id]) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger boton-eliminar"><i
+                                            class="bi bi-trash"></i></button>
+                                </form>
+                            @endif
+
                         </td>
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
+        <script>
+            $(".boton-eliminar").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que deseas eliminar la calificacion?")) {
+                    var form = $(this).parents('form:first');
+                    console.log('enviando form')
+                    form.submit();
+                }
+            });
+        </script>
     </div>
-    <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#promedioModal">
-            Finalizar calificaciones
-        </button>
-        @if (strtoupper($evento->modalidad) == 'GRUPAL')
-            @include('layouts.modal-crear-promedio-grupos', ['evento_id' => $evento_id])
-        @else
-            @include('layouts.modal-crear-promedio', ['evento_id' => $evento_id])
-        @endif
+    @if ($existe == 0)
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#promedioModal">
+                Finalizar calificaciones
+            </button>
+            @if (strtoupper($evento->modalidad) == 'GRUPAL')
+                @include('layouts.modal-crear-promedio-grupos', ['evento_id' => $evento_id])
+            @else
+                @include('layouts.modal-crear-promedio', ['evento_id' => $evento_id])
+            @endif
 
 
-    </div>
+        </div>
+    @endif
+
 </div>
