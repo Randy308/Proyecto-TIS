@@ -14,9 +14,14 @@
         @if ($desplegado)
             
                 <div  class="notificaciones-container" >
+                    
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Notificaciones</h5>
-                        <button type="button" class="btn btn-primary" wire:click="irNotificaciones">Ver todo</button>
+                        <div>
+                            <button style="max-height:37px" type="button" class="btn btn-secondary" wire:click="marcarLeido">Marcar todo como leido</button>
+                                <button type="button" class="btn btn-primary" wire:click="irNotificaciones">Ver todo</button>
+                        </div>
+                        
                     </div>
                     <div class="notificaciones-scroll-container">
                         @foreach ($notificaciones as $index =>$notificacion)

@@ -1,4 +1,12 @@
-<div >
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h3>Notificaciones</h3>
+        <div>
+            <button style="max-height:37px" type="button" class="btn btn-secondary" wire:click="marcarLeido">Marcar todo como leido</button>
+                
+        </div>
+        
+    </div>
             <div  class="notificaciones-containerList" >
                 <div class="d-flex justify-content-center align-items-center">
                 </div>
