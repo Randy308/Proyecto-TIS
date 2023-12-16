@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotificacionEventoEmail extends Mailable
+class NotificacionEventoEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -38,6 +38,11 @@ class NotificacionEventoEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.notificacion-evento-email');
+        return $this->view('mails.notificacion-evento-email')->with(['asunto'=>$this->asunto,
+                                                             'detalle'=>$this->detalle,
+                                                             'user_name'=>$this->user_name,
+                                                             'nombre_evento'=>$this->nombre_evento]);
     }
+
+
 }
