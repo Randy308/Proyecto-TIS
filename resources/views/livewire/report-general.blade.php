@@ -108,7 +108,7 @@
         </thead>
         <tbody>
             @foreach ($eventos as $evento)
-                <tr>
+                <tr wire:click="redirectToView({{ $evento->id }})">
                     <td scope="row">{{ $evento->nombre_evento }}</td>
                     <td>{{ $evento->tipo_evento }}</td>
                     <td>{{ $evento->estado}}</td>
