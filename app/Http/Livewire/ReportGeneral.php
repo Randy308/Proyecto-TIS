@@ -22,6 +22,9 @@ class ReportGeneral extends Component
     public $checkboxopacidad = "opacity:0.5;";
 
 
+    public function redirectToView($eventoId){
+        return redirect()->route('reportes-generales-mas', ['eventoId' => $eventoId]);
+    }
     public function render()
     {
 
