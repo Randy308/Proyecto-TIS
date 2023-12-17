@@ -1,59 +1,53 @@
-<div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="nombre_evento">Nombre Evento:</label>
-                <span>{{$evento->nombre_evento}}</span>
+<div class="mx-4">
+    <div class="container bg-white pt-4 my-3 border rounded">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="nombre_evento" class="fw-bold">Nombre Evento:</label>
+                    <span>{{$evento->nombre_evento}}</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="fecha_inicio" class="fw-bold">Fecha Inicio:</label>
+                    <span>{{$evento->fecha_inicio}}</span>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="fecha_fin" class="fw-bold">Fecha Fin:</label>
+                    <span>{{$evento->fecha_fin}}</span>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="fecha_inicio">Fecha Inicio:</label>
-                <span>{{$evento->fecha_inicio}}</span>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="tipo" class="fw-bold">Tipo Evento: </label>
+                    <span>{{$evento->tipo_evento}}</span>
+                </div>
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="fecha_fin">Fecha Fin:</label>
-                <span>{{$evento->fecha_fin}}</span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="estado" class="fw-bold">Estado:</label>
+                    <span>{{$evento->estado}}</span>
+                </div>
             </div>
-        </div>
-        {{-- <div class="col-md-3">
-            <div class="form-group">
-                <label>
-                    <input type="checkbox" id="miCheckbox" wire:model="mostrarEventosComprendidos" {{$checkboxdesabled}}><span style="{{$checkboxopacidad}}">Mostrar Eventos Comprendidos</span>
-                    
-                </label>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="privacidad" class="fw-bold">Privacidad:</label>
+                    <span>{{$evento->privacidad}}</span>
+                </div>
             </div>
-        </div> --}}
-    </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-
-                <label for="tipo">Tipo Evento: </label>
-                <span>{{$evento->tipo_evento}}</span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="estado">Estado:</label>
-                <span>{{$evento->estado}}</span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="privacidad">Privacidad:</label>
-                <span>{{$evento->privacidad}}</span>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <label for="modalidad">Modalidad:</label>
-                <span>{{$evento->modalidad}}</span>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="modalidad" class="fw-bold">Modalidad:</label>
+                    <span>{{$evento->modalidad}}</span>
+                </div>
             </div>
         </div>
     </div>
+    
     {{--  --}}
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         {{-- <li class="nav-item dropdown" role="presentation" aria-expanded="true">
@@ -100,7 +94,7 @@
             @livewire('report-fase-evento',['eventoId' => $evento->id])
         </div>
         <div class="tab-pane fade" id="clasificacion-tab-pane" role="tabpanel" aria-labelledby="clasificacion-tab" tabindex="0">
-            Clasificacion
+            @livewire('report-clasificacion-evento',['eventoId' => $evento->id])
         </div>
     </div>
     {{--  --}}

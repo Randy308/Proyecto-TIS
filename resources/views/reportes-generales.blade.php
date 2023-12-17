@@ -29,7 +29,7 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            <div class="container mt-5">
+            <div class="container mt-4">
                 <div class="d-flex  justify-content-center">
                     <h3>Reportes Generales</h2>
                 </div>
