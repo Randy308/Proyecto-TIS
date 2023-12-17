@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\FaseEvento;
+use Carbon\Carbon;
 class FechaMaximaFase implements Rule
 {
     /**
@@ -16,7 +17,7 @@ class FechaMaximaFase implements Rule
     public function __construct($eventoId)
     {
         $faseInsc = FaseEvento::where('evento_id', $eventoId)->where('tipo','Finalizacion')->first();
-        $this->fechaMaxima = $faseInsc->fechaInicio;
+        $this->fechaMaxima = Carbon::parse($faseInsc->fechaInicio);
     }
 
     /**
@@ -28,7 +29,13 @@ class FechaMaximaFase implements Rule
      */
     public function passes($attribute, $value)
     {
-        return $value <= $this->fechaMaxima;
+
+        $fechavalor = Carbon::parse($value);
+
+
+
+
+        return $fechavalor <= $this->fechaMaxima;
     }
 
     /**

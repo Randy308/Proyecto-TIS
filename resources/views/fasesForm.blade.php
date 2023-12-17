@@ -1,5 +1,8 @@
-<form  action="{{ route('faseStore',  $evento->id) }}" method="POST">
+<form action="{{ route('faseStore', $evento->id) }}" method="POST">
     @csrf
+    @php
+
+    @endphp
     <div class="modal fade" id="fasesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -33,17 +36,34 @@
                     </div>
 
 
-                    <div class="form-group">
-                        <label for="fechaInicio">Fecha de inicio:</label>
-                        <input type="datetime-local" class="form-control" id="fechaInicio" name="fechaInicio" required>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="fechaFin">Fecha de fin:</label>
-                        <input type="datetime-local" class="form-control" id="fechaFin" name="fechaFin" required>
-                    </div>
+                        @if ($mifaseUltima)
+                            <div class="form-group">
+                                <label for="fechaInicio">Fecha de inicio:</label>
+                                <input type="datetime-local" class="form-control" id="fechaInicio" name="fechaInicio"
+                                    min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(5) }}"
+                                    max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(5) }}"
+                                    value="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->addMinutes(15) }}" required>
+                            </div>
+                        @endif
+
+
+                        @if ($mifaseFinal)
+                            <div class="form-group">
+                                <label for="fechaFin">Fecha de fin:</label>
+                                <input type="datetime-local" class="form-control" id="fechaFin" name="fechaFin"
+                                min="{{ \Carbon\Carbon::parse($mifaseUltima->fechaFin)->subMinutes(5) }}"
+                                max="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(5) }}"
+                                    value="{{ \Carbon\Carbon::parse($mifaseFinal->fechaInicio)->subMinutes(15) }}" required>
+                            </div>
+                        @endif
+
+
+
+
+
                     <div class="d-flex flex-column">
-                        <button type="submit" id="botonfases" class="btn btn-primary" >Crear</button>
+                        <button type="submit" id="botonfases" class="btn btn-primary">Crear</button>
 
                     </div>
 

@@ -8,6 +8,15 @@
     <title>Fases del evento</title>
     @include('layouts/estilos')
     @livewireStyles
+    <style>
+        body{
+            background-color: whitesmoke;
+        }
+        #contenedor{
+            border-radius: 20px;
+            background-color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,35 +25,21 @@
         <div id="content">
 
             @include('layouts/navbar')
-            <div class="container mt-4">
 
-                <div>
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            <strong>{{ session('status') }}</strong>
-                        </div>
-                    @endif
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                </div>
-                
-                @livewire('registrar-grupo',['evento_id'=>$evento->id])
-                
+            <div class="container my-4 py-4" id="contenedor">
+                <div class="d-flex justify-content-end"><a href="{{ route('verEvento', $evento->id) }}" class="btn btn-danger btn-sm"><i class="bi bi-x-lg"></i></a></div>
+                @livewire('user-search', ['evento_id' => $evento->id])
+
             </div>
-
 
         </div>
 
     </div>
+
     @include('layouts/sidebar-scripts')
+    @include('layouts.mensajes-alerta')
     @livewireScripts
+
 </body>
 
 </html>

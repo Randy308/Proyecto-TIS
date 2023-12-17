@@ -16,6 +16,7 @@ class CreateFaseEventosTable extends Migration
         Schema::create('fase_eventos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('evento_id');
+            $table->integer('secuencia');
             $table->string('nombre_fase');
             $table->string('descripcion_fase');
             $table->dateTimeTz('fechaInicio');

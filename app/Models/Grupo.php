@@ -13,6 +13,7 @@ class Grupo extends Model
         'nombre',
         'user_id',
         'evento_id',
+        'estado',
     ];
 
     public function user()
@@ -26,5 +27,9 @@ class Grupo extends Model
     public function users_pertenecen_grupos()
     {
         return $this->belongsToMany(User::class, 'pertenecen_grupos');
+    }
+    public function calificacions()
+    {
+        return $this->belongsToMany(Calificacion::class, 'calificacion_grupos');
     }
 }

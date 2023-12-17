@@ -38,6 +38,7 @@ class ParticipanteController extends Controller
             'institucion' => 'required',
             'pais' => 'required',
             'historial' => '',
+            'codsis' => ['nullable','unique:users,cod_estudiante'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
 
         ]);
@@ -51,6 +52,11 @@ class ParticipanteController extends Controller
         $user->password = Hash::make($request['password']);
         $user->email = $request['email'];
         $user->fecha_nac = $request['fecha_nac'];
+        if ($request->has('codsis')) {
+            $user->cod_estudiante = $request['codsis'];
+        }
+
+        $user->cod_estudiante = $request['codsis'];
         $user->email_verified_at = now();
         $user->remember_token = Str::random(10);
         $user->estado = "Habilitado";

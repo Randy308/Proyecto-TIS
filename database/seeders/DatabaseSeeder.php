@@ -60,14 +60,9 @@ class DatabaseSeeder extends Seeder
         $usuario->remember_token = Str::random(10);
         $usuario->assignRole('administrador');
         $usuario->save();
-        $us = User::factory(4)->create();
 
-        foreach($us as $u){
 
-                $u->assignRole('usuario común');
-        }
-
-        $ev = Evento::factory(20)->create();
+        $ev = Evento::factory(10)->create();
         foreach($ev as $e){
 
             $faseInscripcion = new FaseEvento([
@@ -78,23 +73,38 @@ class DatabaseSeeder extends Seeder
                 'fechaFin' => $e->fecha_inicio->format('Y-m-d').' 00:00:00',
                 'tipo' => 'Inscripcion',
                 'actual'=> true,
+                'secuencia'=> 1,
             ]);
 
             $faseInscripcion->save();
             $faseFinalizacion = new FaseEvento([
                 'evento_id' => $e->id,
-                'nombre_fase'=> 'Evento Finalizado',
+                'nombre_fase'=> 'Fase de  Cierre',
                 'descripcion_fase' => 'El evento ya finalizo, pero aun puedes ver la información del evento',
                 'fechaInicio' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
                 'fechaFin' => $e->fecha_fin->format('Y-m-d').' 00:00:00',
                 'tipo' => 'Finalizacion',
                 'actual'=> false,
+                'secuencia'=> 1000,
             ]);
 
             $faseFinalizacion->save();
         }
+        $us = User::factory(15)->create();
 
-        $this->call(FaseSeeder::class);
+        $arrayValues = ['Pendiente', 'Habilitado', 'Denegado'];
+        foreach($us as $u){
+
+                $u->assignRole('usuario común');
+                $asistencia = new AsistenciaEvento();
+                $asistencia->user_id = $u->id;
+                $asistencia->evento_id = 1;
+                $asistencia->rol = "participante";
+                $asistencia->fechaInscripcion = now();
+                $asistencia->estado = $arrayValues[rand(0,2)];
+                $asistencia->save();
+        }
+
         $this->call(EstudiantesUmssSeeder::class);
 
         //usuarios para probar con mis tabla umss
@@ -108,6 +118,7 @@ class DatabaseSeeder extends Seeder
         $usuario2->foto_perfil = "/storage/image/default_user_image.png";
         $usuario2->historial_Academico = '';
         $usuario2->fecha_nac = now();
+        $usuario2->cod_estudiante = rand ( 201010000 , 202312012 );
         $usuario2->estado = "Habilitado";
         $usuario2->remember_token =  Str::random(10);
         $usuario2->institucion_id = $inst->id;
@@ -124,6 +135,7 @@ class DatabaseSeeder extends Seeder
         $usuario3->direccion= 'Av. Sucre';
         $usuario3->foto_perfil = "/storage/image/default_user_image.png";
         $usuario3->historial_Academico = '';
+        $usuario3->cod_estudiante = rand ( 201010000 , 202312012 );
         $usuario3->fecha_nac = now();
         $usuario3->estado = "Habilitado";
         $usuario3->remember_token =  Str::random(10);
@@ -139,6 +151,7 @@ class DatabaseSeeder extends Seeder
         $usuario4->password = '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi';
         $usuario4->telefono = '77777777';
         $usuario4->direccion= 'Av. Sucre';
+        $usuario4->cod_estudiante = rand ( 201010000 , 202312012 );
         $usuario4->foto_perfil = "/storage/image/default_user_image.png";
         $usuario4->historial_Academico = '';
         $usuario4->fecha_nac = now();

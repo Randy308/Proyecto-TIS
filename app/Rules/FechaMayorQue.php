@@ -3,7 +3,7 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-
+use Carbon\Carbon;
 class FechaMayorQue implements Rule
 {
     /**
@@ -15,7 +15,7 @@ class FechaMayorQue implements Rule
 
     public function __construct($fechaMinima)
     {
-        $this->fechaMinima = $fechaMinima;
+        $this->fechaMinima = Carbon::parse($fechaMinima);
     }
 
     /**
@@ -27,7 +27,7 @@ class FechaMayorQue implements Rule
      */
     public function passes($attribute, $value)
     {
-         return $value >= $this->fechaMinima;
+         return Carbon::parse($value) >= $this->fechaMinima;
     }
 
     /**

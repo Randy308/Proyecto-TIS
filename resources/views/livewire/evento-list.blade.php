@@ -28,9 +28,7 @@
                 <label for="">Filtrar por Estado:</label>
                 <select wire:model="filtroEstado" class="form-control">
                     <option value="activo">Activo</option>
-                    <option value="borrador">Borrador</option>
                     <option value="finalizado">Finalizado</option>
-                    <option value="cancelado">Cancelado</option>
                     <option value="">Todos</option>
                 </select>
             </div>
@@ -95,7 +93,7 @@
         @foreach ($eventos as $evento)
             <div class="col-md-4 mb-3">
                 <a href="{{ route('verEvento', $evento->id) }}">
-                    <div class="card position-relative {{ $evento->estado }}">
+                    <div class="contenedor card position-relative {{ $evento->estado }}">
                         <div class="card-header">
                             <div class="cintaCategoria">{{ $evento->tipo_eventoo }}</div>
                         </div>
@@ -124,6 +122,8 @@
                                         <p class="card-text"><b class=" font-weight-bold">Descripción:
                                             </b>{{ $evento->descripcion_evento }}</p>
                                     @endif
+                                    <p class="card-text"><b class=" font-weight-bold">Tipo de evento:
+                                    </b>{{ucwords( $evento->tipo_evento." ".$evento->modalidad) }}</p>
                                 </div>
                             </div>
                             <div class="row">

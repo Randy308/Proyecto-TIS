@@ -1,7 +1,13 @@
 body {
     height: 100%;
     width: 100%;
+    background-color: whitesmoke;
+}
+.miCard{
     background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-radius: 30px;
+    margin: 10px;
 }
 #contenedorDeImagenAuspiciadores {
     display: grid;
@@ -18,7 +24,6 @@ body {
 }
 
 .container {
-    background-color: white;
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
@@ -31,7 +36,6 @@ body {
     height: auto;
     padding: 10px;
     margin: 10px;
-    background-color: whitesmoke;
 }
 
 .c2 {
@@ -125,9 +129,8 @@ body {
     padding: 15px;
 }
 
-.c2 .card {
-    padding: 10px;
-    margin: 10px;
+.c2{
+    padding-top: 10px;
 }
 
 #card-principal .card {
@@ -172,12 +175,16 @@ a#boton-registro {
 }
 #participantesContainer {
     max-height: 700px;
+    height: 400px;
+    width: 400px;
+    max-width: 500px;
     align-items: center;
+    border: 2px solid lightgray;
+    border-radius: 20px;
 }
 #participantes {
     height: 100%;
     width: 90%;
-    overflow: scroll;
 }
 p {
     font-size: 0.9em;
@@ -204,10 +211,73 @@ p {
     color: #345d8d; /* Tono más oscuro de azul */
 }
 
+.container_podium {
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .podium__item {
+    width: 200px;
+  }
+
+  .podium__rank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 35px;
+    color: #fff;
+  }
+
+  .podium__city {
+    text-align: center;
+    padding: 0 .5rem;
+  }
+
+  .podium .first {
+    min-height: 300px;
+    background: rgb(255,172,37);
+  background:
+    linear-gradient(333deg,
+    rgba(255,172,37,1) 0%,
+    rgba(254,207,51,1) 13%,
+    rgba(254,224,51,1) 53%,
+    rgba(255,172,37,1) 100%);
+  }
+
+  .podium .second {
+    min-height: 200px;
+    background: blue;
+  }
+
+  .podium .third {
+    min-height: 100px;
+    background: green;
+  }
+
+  .podium .podium1 {
+    min-height: 300px;
+    background: rgb(255, 172, 37);
+    background: linear-gradient(333deg, rgba(255, 172, 37, 1) 0%, rgba(254, 207, 51, 1) 13%, rgba(254, 224, 51, 1) 53%, rgba(255, 172, 37, 1) 100%);
+
+  }
+
+  .podium .podium2 {
+    min-height: 200px;
+    background: rgb(192, 192, 192);
+background: linear-gradient(333deg, rgba(192, 192, 192, 1) 0%, rgba(204, 204, 204, 1) 13%, rgba(217, 217, 217, 1) 53%, rgba(192, 192, 192, 1) 100%);
+
+  }
+
+  .podium .podium3 {
+    min-height: 100px;
+    background: rgb(205, 127, 50);
+    background: linear-gradient(333deg, rgba(205, 127, 50, 1) 0%, rgba(219, 155, 80, 1) 13%, rgba(204, 142, 68, 1) 53%, rgba(205, 127, 50, 1) 100%);
+
+  }
+
 @media screen and (max-width: 880px) {
     .c2 {
-        background-color: gainsboro;
-        display: grid;
+       display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr;
         font-size: smaller;
@@ -256,6 +326,11 @@ p {
         padding-top: 0;
         padding-right: 0;
         padding-bottom: 0;
+    }
+    #participantesContainer {
+        width: 250px;
+        height: 250px;
+        align-items: center;
     }
 }
 

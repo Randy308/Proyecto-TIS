@@ -23,7 +23,7 @@
                             <td>{{ $evento->estado }}</td>
                             <td><img src="{{ $evento->direccion_banner }}" width="170px" alt="{{ $evento->Titulo }}"></td>
                             @if (strtoupper($evento->estado) == 'BORRADOR')
-                                <td class="d-flex">
+                                <td >
 
                                     <div class="btn-group btn-group-sm" role="group">
                                         <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
@@ -56,7 +56,7 @@
                                                     method="post">
                                                     @csrf
                                                     @method('PUT')
-                                                    <button class="dropdown-item"
+                                                    <button class="dropdown-item boton-publicar"
                                                         type="button">Publicar</button>
                                                 </form>
                                             </li>
@@ -66,6 +66,9 @@
                                                     method="get">
                                                     <button type="submit" class="dropdown-item">Editar</button>
                                                 </form>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('crear.cronograma', ['evento'=>$evento]) }}" class="dropdown-item">Cronograma</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -79,32 +82,7 @@
 
 
                             </td>
-                            <td width="10px">
-                                @if ($evento->estado == 'Borrador')
-                                
-                                <form id="FormPublicar"
-                                        action="{{ route('evento.state.update', ['user' => auth()->user(), 'evento' => $evento]) }}"
-                                        method="post">
-                                        @csrf
-                                        @method('PUT')
 
-                                    </form>
-                                    <button id="BotonPublicarEvento" class="btn btn-warning"
-                                        type="button">Publicar</button>
-                                @else
-                                    <button class="btn btn-secondary" disabled>Publicado</button>
-                                @endif
-
-
-                            </td>
-                            <td width="10px">
-                                <form
-                                    action="{{ route('evento.edit', ['user' => auth()->user(), 'evento' => $evento]) }}"
-                                    method="get">
-                                    <button type="submit" class="btn btn-success">Editar</button>
-                                </form>
-
-                            </td>
 
                         </tr>
                     @endforeach

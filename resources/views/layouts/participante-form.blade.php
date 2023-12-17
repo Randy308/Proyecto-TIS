@@ -57,16 +57,37 @@
                         </select>
                     </div>
                 </div>
-                <div class="form-outline mb-2">
-                    <label for="formEmail" class="form-label">Correo electronico<span
-                        class="text-danger font-weight-bold "> *</span></label>
-                    <input type="email" id="formEmail" class="form-control" name="email"
-                        class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
-                    @error('email')
-                        <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                    @enderror
+                <div class="row">
+                    <div class="col-md-6 mb-2">
 
+                        <div class="form-outline mb-2">
+                            <label for="formEmail" class="form-label">Correo electronico<span
+                                class="text-danger font-weight-bold "> *</span></label>
+                            <input type="email" id="formEmail" class="form-control" name="email"
+                                class="@error('email') is-invalid @enderror"  value="{{ old('email') }}" />
+                            @error('email')
+                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                            @enderror
+
+                        </div>
+
+                    </div><div class="col-md-6 mb-2">
+
+                        <div class="form-outline datepicker">
+                            <label for="formPhoneNumber" class="form-label">Codigo de estudiante</label>
+                            <input type="tel" id="formPhoneNumber" name="codsis" class="form-control"
+                                class="@error('codsis') is-invalid @enderror" value="{{ old('codsis') }}" />
+
+
+                            @error('codsis')
+                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
+                            @enderror
+
+                        </div>
+
+                    </div>
                 </div>
+
                 <div class="row">
                     <div class="col-md-6 mb-2">
 

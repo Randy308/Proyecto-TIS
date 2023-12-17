@@ -24,6 +24,8 @@ class RolesTableSeeder extends Seeder
         $colaborador->save();
         $usuario_comun = Role::create(['name' => 'usuario común']);
         $usuario_comun->save();
+        $coach = Role::create(['name' => 'coach']);
+        $coach->save();
         Permission::create(['name' => 'organizador.ver-mis-eventos'])->syncRoles([$administrador, $organizador, $colaborador]);
         Permission::create(['name' => 'organizador.crear-evento'])->syncRoles([$administrador, $organizador]);
         Permission::create(['name' => 'admin.crear-usuario'])->assignRole($administrador);
@@ -41,41 +43,22 @@ class RolesTableSeeder extends Seeder
         Permission::create(['name' => 'admin.eliminar-rol'])->assignRole($administrador);
         Permission::create(['name' => 'admin.editar-rol'])->assignRole($administrador);
         Permission::create(['name' => 'admin.vincular-rol-usuario'])->assignRole($administrador);
-        Permission::create(['name' => 'admin.editar-banner'])->assignRole($administrador);
-        Permission::create(['name' => 'admin.editar-evento'])->assignRole($administrador);
-        Permission::create(['name' => 'admin.eliminar-evento'])->assignRole($administrador);
-        Permission::create(['name' => 'admin.publicar-evento'])->assignRole($administrador);
-        Permission::create(['name' => 'admin.cancelar-evento'])->assignRole($administrador);
+        //eventos
+        Permission::create(['name' => 'admin.editar-banner'])->syncRoles([$administrador, $organizador]);
+        Permission::create(['name' => 'admin.editar-evento'])->syncRoles([$administrador, $organizador]);
+        Permission::create(['name' => 'admin.eliminar-evento'])->syncRoles([$administrador, $organizador]);
+        Permission::create(['name' => 'admin.publicar-evento'])->syncRoles([$administrador, $organizador]);
+        Permission::create(['name' => 'admin.cancelar-evento'])->syncRoles([$administrador, $organizador]);
+        Permission::create(['name' => 'admin.ver-reportes'])->syncRoles([$administrador, $organizador]);
+        //perfil
         Permission::create(['name' => 'admin.ver-perfil'])->assignRole($administrador);
         Permission::create(['name' => 'admin.editar-perfil'])->assignRole($administrador);
-        $admin = User::create([
-            'name' => 'Administrador',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('password'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $admin->assignRole('administrador');
-
-        $organizador = User::create([
-            'name' => 'Organizador',
-            'email' => 'organizador@example.com',
-            'password' => bcrypt('contraseña'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $organizador->assignRole('organizador');
-
-        $colaborador = User::create([
-            'name' => 'Colaborador',
-            'email' => 'colaborador@example.com',
-            'password' => bcrypt('contraseña'),
-            'institucion_id' => 1,
-            'estado' => "Habilitado",
-            'foto_perfil' => "/storage/image/default_user_image.png",
-        ]);
-        $colaborador->assignRole('colaborador');
+        Permission::create(['name' => 'coach.registrar-equipo'])->assignRole($coach);
+        Permission::create(['name' => 'colaborador.ver-mis-eventos'])->assignRole([$colaborador]);
+        Permission::create(['name' => 'admin.ver-reportes-especificos'])->assignRole($administrador);
+        Permission::create(['name' => 'admin.ver-reportes-generales'])->assignRole($administrador);
+        //inscirbir
+        Permission::create(['name' => 'participar.evento'])->syncRoles([$coach, $usuario_comun]);
+        Permission::create(['name' => 'usuario.inscripcion'])->assignRole([$colaborador]);
     }
 }

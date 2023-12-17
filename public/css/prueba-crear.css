@@ -1,0 +1,112 @@
+
+:root {
+    --main-sidebar-color: #00446a;
+    --second-sidebar-color: #1c2a3a;
+    --text-sidebar-color: #fafafa;
+    --main-sidebar-colors: #323268;
+    --second-sidebar-colors: #2d2d5e;
+    --text-sidebar-colors: #fafafa;
+    --icon-size: 1.1em;
+    --icon-size-phone: 0.65em;
+    --text-size: 0.75em;
+}
+
+#FormCrearEvento {
+    background-color: #ffffff;
+    margin: 0px auto;
+    /* font-family: Raleway; */
+    padding: 40px;
+    border-radius: 30px
+}
+
+#register{
+
+  color:  var(--main-sidebar-color);
+}
+
+h1 {
+    text-align: center
+}
+.form-control {
+    border-radius: 1rem;
+}
+
+.tab input:focus{
+
+  border:1px solid  var(--main-sidebar-color) !important;
+  outline: none;
+}
+
+input.invalid {
+
+    border:1px solid #e03a0666;
+}
+
+.tab {
+    display: none;
+}
+
+
+
+button:hover {
+    opacity: 0.8
+}
+
+button:focus{
+
+  outline: none !important;
+}
+
+
+.all-steps{
+      text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    display: inline-flex;
+    justify-content: center;
+}
+.icono-creacion{
+    color:  var(--main-sidebar-color);
+}
+
+.step {
+    height: 40px;
+    width: 40px;
+    margin: 0 2px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    background-color: whitesmoke;
+    color:  var(--main-sidebar-color);
+    opacity: 0.5;
+}
+
+.step.active {
+    opacity: 1;
+    color: whitesmoke;
+    background-color:  var(--main-sidebar-color);
+}
+
+
+.step.finish {
+   color: #fff;
+   background:  var(--main-sidebar-color);
+   opacity: 1;
+
+}
+
+
+
+.all-steps {
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px
+}
+
+.thanks-message {
+    display: none
+}

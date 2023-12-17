@@ -146,7 +146,7 @@ class UsuarioController extends Controller
         if (Hash::check($request['old_password'], $user->password)) {
             $user->password = $my_new_password;
             $user->save();
-            return redirect()->route('editUser',['id' => $id])->with('status', 'Se ha cambiado exitosamente su contraseña.');
+            return redirect()->route('editarPerfil')->with('status', 'Se ha cambiado la contraseña exitosamente.');
         } else {
             return redirect()->back()->with('error', 'La contraseña actual no coincide con la del sistema .');
         }
@@ -158,6 +158,15 @@ class UsuarioController extends Controller
         $user = User::findOrFail($id);
         $institucion = Institucion::findOrFail($user->institucion_id);
         return view('visualizar-usuario', [
+            'usuario' => $user,
+            'institucion' => $institucion->nombre_institucion
+        ]);
+    }
+    public function showParticipante($id)
+    {
+        $user = User::findOrFail($id);
+        $institucion = Institucion::findOrFail($user->institucion_id);
+        return view('layouts.ver-perfil-participante', [
             'usuario' => $user,
             'institucion' => $institucion->nombre_institucion
         ]);
@@ -240,6 +249,7 @@ class UsuarioController extends Controller
             'pais' => 'required',
             'historial' => 'string',
             'foto_perfil' => 'image|max:2048',
+            'codsis' => ['nullable',Rule::unique('users', 'cod_estudiante')->ignore($id)],
         ]);
         $user = User::findOrFail($id);
         $user->name = $request['nombre'];
@@ -247,7 +257,9 @@ class UsuarioController extends Controller
         $user->direccion = $request['direccion'];
         $user->email = $request['email'];
         $user->fecha_nac = $request['fecha_nac'];
-
+        if ($request->has('codsis')) {
+            $user->cod_estudiante = $request['codsis'];
+        }
         $user->institucion_id = $request['institucion'];
         $user->pais = $request['pais'];
         $user->historial_academico = $request['historial'];
@@ -260,6 +272,6 @@ class UsuarioController extends Controller
         $user->foto_perfil = $url;
         $user->update();
 
-        return view('editar-perfil');
+        return redirect()->route('editarPerfil')->with('status', 'Perfil actualizado exitosamente!.');
     }
 }

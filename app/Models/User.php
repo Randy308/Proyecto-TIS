@@ -79,4 +79,18 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Evento::class, 'colaboradors');
     }
+
+    public function calificacions()
+    {
+        return $this->belongsToMany(Calificacion::class, 'calificacion_usuarios');
+    }
+
+    public function asistencias() {
+        return $this->hasMany(AsistenciaEvento::class, 'user_id');
+    }
+
+    public function notificaciones()
+    {
+        return $this->hasMany(Notificacion::class);
+    }
 }
