@@ -22,7 +22,7 @@
                                 </h6>
                                 <h6 class="card-title">{{$notificacion->asunto}}</h6>
                                 <p class="card-text">
-                                    {{ Str::limit($notificacion->detalle, 50, '...') }}
+                                    {{$notificacion->detalle }}
                                 </p>
                                 <small>{{$tiempTrans[$index]}}</small>
                             </div>

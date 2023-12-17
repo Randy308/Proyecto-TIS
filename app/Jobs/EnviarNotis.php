@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotificacionEventoEmail;
+use App\Models\Evento;
 use App\Models\Notificacion;
 use App\Models\Grupo;
 use App\Models\User;
@@ -56,13 +57,13 @@ class EnviarNotis implements ShouldQueue
 
 
                         $asistencias = AsistenciaEvento::where('evento_id',$this->evento->id)->get();
-    
+                        $organizador = User::find($this->evento->user_id);
                         $colaboradores = Colaborador::where('evento_id',$this->evento->id)->get();
                       
     
                         $perteneceGrupos = PertenecenGrupo::where('evento_id',$this->evento->id)->get();
                         
-    
+                        $org = $organizador->id;
                         $userIdsGrupos = $grupos->pluck('user_id')->toArray();
                         $userIdsAsistencias = $asistencias->pluck('user_id')->toArray();
                         $userIdsColaboradores = $colaboradores->pluck('user_id')->toArray();
@@ -72,7 +73,8 @@ class EnviarNotis implements ShouldQueue
                             $userIdsGrupos,
                             $userIdsAsistencias,
                             $userIdsColaboradores,
-                            $userIdsPerteneceGrupos
+                            $userIdsPerteneceGrupos,
+                            [$org]
                         ));
                         foreach( $this->seleccionados as $index =>$selec){
                             if($selec){
