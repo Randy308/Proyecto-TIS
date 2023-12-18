@@ -37,6 +37,6 @@ class FechaMayorQue implements Rule
      */
     public function message()
     {
-        return 'La fecha de inicio debe ser menor a la fecha final';
+        return 'La fecha de inicio debe ser menor a la fecha final, y mayor a la fecha actual';
     }
 }
