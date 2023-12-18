@@ -17,7 +17,7 @@ class ReportEquipoEvento extends Component
                         ->join('users','users.id','=','grupos.user_id')
                         ->select('eventos.id AS evento_id','eventos.user_id AS creadorEvento_id',
                                 'grupos.id AS grupo_id','grupos.nombre AS nombreGrupo',
-                                'users.id AS user_id','users.name AS nombreCreadorGrupo')
+                                'users.id AS user_id','users.name AS nombreCreadorGrupo','users.institucion_id')
                         ->where('grupos.evento_id',$this->eventoId)
                         ->get();
 

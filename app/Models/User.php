@@ -65,7 +65,7 @@ class User extends Authenticatable
 
     public function institucion()
     {
-        return $this->belongsTo(Institucion::class);
+        return $this->belongsTo(Institucion::class,'institucion_id');
     }
     public function grupos()
     {

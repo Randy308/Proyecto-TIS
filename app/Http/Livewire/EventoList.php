@@ -62,8 +62,9 @@ class EventoList extends Component
             // }
 
 
-        }else{
-            $eventos->whereNotIn('estado', ['Borrador', 'Cancelado'])->get();
+        }else
+        {
+            $eventos::whereNotIn('estado', ['Borrador', 'Cancelado']);
         }
 
 
