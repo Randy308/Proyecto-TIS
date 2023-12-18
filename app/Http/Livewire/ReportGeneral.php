@@ -23,6 +23,13 @@ class ReportGeneral extends Component
 
 
     public function redirectToView($eventoId){
+        $this->reset(['nombre_evento',
+        'tipoSeleccionado',
+        'estadoSeleccionado',
+        'privacidadSeleccionado',
+        'modalidadSeleccionado',
+        'fecha_desde',
+        'fecha_hasta']);
         return redirect()->route('reportes-generales-mas', ['eventoId' => $eventoId]);
     }
     public function render()

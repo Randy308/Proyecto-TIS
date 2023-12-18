@@ -31,7 +31,7 @@
             @include('layouts/navbar')
             <div class="container mt-4">
                 <div class="d-flex  justify-content-center">
-                    <h3>Reportes Generales</h2>
+                    <h3>Reportes de Eventos</h2>
                 </div>
 
                 @livewire('report-general')

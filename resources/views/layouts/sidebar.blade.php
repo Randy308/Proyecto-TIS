@@ -92,6 +92,14 @@
             {{--reportes--}}            
             @can('admin.ver-reportes')
             <li>
+                <a href="{{ route('reportes-generales') }}">
+                    <i class="bi bi-file-text-fill"></i>
+                    <span>
+                        Reportes    
+                    </span>    
+                </a>
+            </li> 
+            {{-- <li>
                 <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <i class="bi bi-people-fill"></i>
                     <span>Reportes</span>
@@ -110,7 +118,7 @@
                     @endcan
 
                 </ul>
-            </li>    
+            </li>     --}}
             @endcan
                 
             {{--  --}}

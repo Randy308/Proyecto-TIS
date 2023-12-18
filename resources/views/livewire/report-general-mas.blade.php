@@ -1,7 +1,7 @@
 <div class="mx-4">
     <div class="container bg-white pt-4 my-3 border rounded">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label for="nombre_evento" class="fw-bold">Nombre Evento:</label>
                     <span>{{$evento->nombre_evento}}</span>
@@ -62,7 +62,13 @@
             </ul>
         </li> --}}
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="equipos-tab" data-bs-toggle="tab" data-bs-target="#equipos-tab-pane" type="button" role="tab" aria-controls="equipos-tab-pane" aria-selected="true">Equipos</button>
+            <button class="nav-link active" id="equipos-tab" data-bs-toggle="tab" data-bs-target="#equipos-tab-pane" type="button" role="tab" aria-controls="equipos-tab-pane" aria-selected="true">
+                @if ($evento->modalidad == 'individual')
+                    Participantes
+                @else
+                    Equipos
+                @endif
+            </button>
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="fases-tab" data-bs-toggle="tab" data-bs-target="#fases-tab-pane" type="button" role="tab" aria-controls="fases-tab-pane" aria-selected="false">Fases</button>
