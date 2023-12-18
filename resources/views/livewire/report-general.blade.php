@@ -11,13 +11,13 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="fecha_desde" class="form-label">Fecha Desde:</label>
-                    <input type="date" wire:model="fecha_desde" class="form-control" placeholder="dd/mm/aaaa">
+                    <input type="date" wire:model="fecha_desde" class="form-control" max="9999-12-31" placeholder="dd/mm/aaaa">
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label for="fecha_hasta" class="form-label">Fecha Hasta:</label>
-                    <input type="date" wire:model="fecha_hasta" class="form-control" placeholder="dd/mm/aaaa">
+                    <input type="date" wire:model="fecha_hasta" class="form-control" max="9999-12-31" placeholder="dd/mm/aaaa">
                 </div>
             </div>
             <div class="col-md-3">
@@ -86,7 +86,12 @@
         <button class="btn btn-success" type="button">Descargar PDF</button>
     </div> --}}
     <br>
-    <table class="table">
+    @if (count($eventos) == 0)
+    <div class="alert alert-secondary">
+         No existen eventos.
+      </div>
+    @else
+    <table class="table table-striped table-hover table-responsive-sm">
         <thead>
             <tr>
                 <th>Evento</th>
@@ -98,9 +103,10 @@
                 <th>Fecha Fin</th>
             </tr>
         </thead>
+        
         <tbody>
             @foreach ($eventos as $evento)
-                <tr wire:click="redirectToView({{ $evento->id }})">
+                <tr wire:click="redirectToView({{ $evento->id }})" style="cursor:pointer;">
                     <td scope="row">{{ $evento->nombre_evento }}</td>
                     <td>{{ $evento->tipo_evento }}</td>
                     <td>{{ $evento->estado }}</td>
@@ -113,4 +119,5 @@
 
         </tbody>
     </table>
+    @endif
 </div>

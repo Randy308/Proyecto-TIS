@@ -34,7 +34,7 @@
             @include('layouts/navbar')
             <div class="container mt-5">
                 <div class="d-flex  justify-content-center">
-                    <h3>Reportes Generales Mas</h2>
+                    <h3>Reporte de Evento</h2>
                 </div>
             
                 @livewire('report-general-mas',['eventoId' => $eventoId])

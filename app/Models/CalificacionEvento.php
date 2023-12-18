@@ -14,4 +14,8 @@ class CalificacionEvento extends Model
         'orden_secuencia',
         'es_promedio',
     ];
+
+    public function calificacion(){
+        return $this->belongsTo(Calificacion::class);
+    }
 }
