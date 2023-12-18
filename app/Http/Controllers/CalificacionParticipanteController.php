@@ -32,14 +32,28 @@ class CalificacionParticipanteController extends Controller
     {   //$users = User::paginate(20);
         $evento = Evento::find($evento_id);
         $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
-        return view('lista-de-calificaciones', compact('evento_id','anterior'));
+        $existePromedio = CalificacionEvento::where('es_promedio', true)
+            ->where('evento_id', $evento_id)->exists();
+        if ($existePromedio) {
+            $existe = 1;
+        } else {
+            $existe = 0;
+        }
+        return view('lista-de-calificaciones', compact('evento_id', 'anterior', 'existe'));
     }
 
     public function indexCalificacionesGrupo($evento_id)
     {   //$users = User::paginate(20);
         $evento = Evento::find($evento_id);
         $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
-        return view('lista-de-calificaciones', compact('evento_id','anterior'));
+        $existePromedio = CalificacionEvento::where('es_promedio', true)
+            ->where('evento_id', $evento_id)->exists();
+        if ($existePromedio) {
+            $existe = 1;
+        } else {
+            $existe = 0;
+        }
+        return view('lista-de-calificaciones', compact('evento_id', 'anterior', 'existe'));
     }
 
 
@@ -151,7 +165,7 @@ class CalificacionParticipanteController extends Controller
             $calificacion_user = new CalificacionGrupo([
                 'calificacion_id' => $calificacion->id,
                 'grupo_id' => $grupo->id,
-                'evento_id' =>  $evento->id,
+                'evento_id' => $evento->id,
                 'puntaje' => $promedio,
             ]);
             $calificacion_user->save();
@@ -219,7 +233,7 @@ class CalificacionParticipanteController extends Controller
             $calificacion_user = new CalificacionUsuario([
                 'calificacion_id' => $calificacion->id,
                 'user_id' => $usuario->id,
-                'evento_id' =>  $evento->id,
+                'evento_id' => $evento->id,
                 'puntaje' => $promedio,
             ]);
             $calificacion_user->save();
@@ -287,7 +301,7 @@ class CalificacionParticipanteController extends Controller
             $calificacion_user = new CalificacionUsuario([
                 'calificacion_id' => $calificacion->id,
                 'user_id' => $user->id,
-                'evento_id' =>  $evento->id,
+                'evento_id' => $evento->id,
                 'puntaje' => 0,
             ]);
             $calificacion_user->save();
@@ -497,8 +511,12 @@ class CalificacionParticipanteController extends Controller
         }
     }
 
-    public function destroy($calificacionParticipante)
+    public function destroy($calificacion_id)
     {
         //
+        $calificacion = Calificacion::where('id',$calificacion_id)->first();
+        //return $calificacion;
+        $calificacion->delete();
+        return redirect()->back()->with('success', 'Calificación eliminada con éxito');
     }
 }

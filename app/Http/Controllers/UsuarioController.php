@@ -249,6 +249,7 @@ class UsuarioController extends Controller
             'pais' => 'required',
             'historial' => 'string',
             'foto_perfil' => 'image|max:2048',
+            'codsis' => ['nullable',Rule::unique('users', 'cod_estudiante')->ignore($id)],
         ]);
         $user = User::findOrFail($id);
         $user->name = $request['nombre'];
@@ -256,7 +257,9 @@ class UsuarioController extends Controller
         $user->direccion = $request['direccion'];
         $user->email = $request['email'];
         $user->fecha_nac = $request['fecha_nac'];
-
+        if ($request->has('codsis')) {
+            $user->cod_estudiante = $request['codsis'];
+        }
         $user->institucion_id = $request['institucion'];
         $user->pais = $request['pais'];
         $user->historial_academico = $request['historial'];

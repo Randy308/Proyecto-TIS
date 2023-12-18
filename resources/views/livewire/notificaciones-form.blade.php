@@ -1,13 +1,16 @@
 <div>
 
     
-    <form wire:submit.prevent="crearNotificaciones">
+    <form wire:submit.prevent="espere">
         @csrf
-
+        
         <div class="modal fade" wire:ignore.self id="notificarModal{{$evento->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
             aria-hidden="false  ">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+
+
+
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
                             <center>Notificar a los usuario asociados al evento</center>
@@ -16,7 +19,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-    
+                    
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="asunto">Asunto:</label>
@@ -52,8 +55,12 @@
     
                     </div>
                     <div class="modal-footer">
+                        <p>Espere a que termine el proceso por favor</p>
                         <button type="submit" id="botonNotificacionesEnviar{{$evento->id}}" class="btn btn-primary">Enviar</button>
                     </div>
+
+
+                    
     
                 </div>
             </div>

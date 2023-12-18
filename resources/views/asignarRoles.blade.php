@@ -99,7 +99,7 @@
                                             @endforeach
                                             </div>
                                             <div class="d-flex flex-wrap  gap-3 justify-content-around">
-                                                <button type="submit" id="btnAssignRole" class="btn btn-primary">Asignar roles</button>
+                                                <button type="submit" id="btnAssignRole" class="btn btn-primary">Asignar rol</button>
                                                 <input type="button" value="Regresar" class="btn btn-secondary"
                                                     onclick="history.back()">
                                             </div>

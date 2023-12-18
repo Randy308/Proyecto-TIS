@@ -19,8 +19,8 @@ class CreateFaseEventosTable extends Migration
             $table->integer('secuencia');
             $table->string('nombre_fase');
             $table->string('descripcion_fase');
-            $table->dateTime('fechaInicio');
-            $table->dateTime('fechaFin');
+            $table->dateTimeTz('fechaInicio');
+            $table->dateTimeTz('fechaFin');
             $table->enum('tipo', ['Inscripcion','General','Calificacion', 'Finalizacion']);
             $table->boolean('actual');
             $table->foreign('evento_id')->references('id')->on('eventos')->onDelete('cascade')->onUpdate('cascade');

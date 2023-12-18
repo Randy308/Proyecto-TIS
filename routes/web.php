@@ -237,6 +237,8 @@ Route::get('/misColaboradores/{user}/{colaborador}', [ColaboradorController::cla
 Route::post('/agregarColaboradores/{user}/{colaborador}', [ColaboradorController::class, 'store'])->name('colaboradores.store');
 
 Route::get('/registro-equipo/{evento_id}', [RegistroEquipoController::class, 'view'])->name('registroEquipo.view');
+Route::get('/abandonar-equipo/{evento_id}/{grupo_id}', [RegistroEquipoController::class, 'destroy'])->name('abandonar.grupo');
+
 
 
 
@@ -257,11 +259,15 @@ Route::get('/calificar-participantes/{evento_id}/{calificacion_id}', [Calificaci
 
 Route::get('/calificar-grupos/{evento_id}/{calificacion_id}', [CalificacionParticipanteController::class, 'showGrupos'])->name('calificar.grupos');
 
+Route::delete('/eliminar-calificacion/{calificacion_id}', [CalificacionParticipanteController::class, 'destroy'])->name('borrar.calificacion');
+
 Route::get('/lista-participantes/{evento_id}', [CalificacionParticipanteController::class, 'list'])->name('ver.participantes');
 
 Route::put('/habilitar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'habilitarEstado'])->name('habilitar.participacion');
 Route::put('/rechazar-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'rechazarEstado'])->name('rechazar.participacion');
 Route::put('/posponer-participante/{evento_id}/{asistencia_id}', [CalificacionParticipanteController::class, 'posponerEstado'])->name('posponer.participacion');
+
+
 
 Route::put('/incluir-participantes/{evento_id}', [AsistenciaEventosController::class, 'incluirParticipantes'])->name('aceptar.all.participantes');
 Route::put('/incluir-grupos/{evento_id}', [AsistenciaEventosController::class, 'incluirGrupos'])->name('aceptar.all.grupos');
@@ -278,6 +284,7 @@ Route::get('/lista-integrantes-grupo/{evento_id}/{grupo_id}', [GrupoController::
 
 //Eventos:reportes
 Route::get('/reportes-generales', [ReporteController::class, 'verReportesGenerales'])->name('reportes-generales');
+Route::get('/reportes-generales-mas/{eventoId}', [ReporteController::class, 'verReportesGeneralesMas'])->name('reportes-generales-mas');
 Route::get('/reportes-especificos', [ReporteController::class, 'verReportesEspecificos'])->name('reportes-especificos');
 
 //route pdf

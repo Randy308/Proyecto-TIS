@@ -1,4 +1,12 @@
-<div >
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h3>Notificaciones</h3>
+        <div>
+            <button style="max-height:37px" type="button" class="btn btn-secondary" wire:click="marcarLeido">Marcar todo como leido</button>
+                
+        </div>
+        
+    </div>
             <div  class="notificaciones-containerList" >
                 <div class="d-flex justify-content-center align-items-center">
                 </div>
@@ -14,7 +22,7 @@
                                 </h6>
                                 <h6 class="card-title">{{$notificacion->asunto}}</h6>
                                 <p class="card-text">
-                                    {{ Str::limit($notificacion->detalle, 50, '...') }}
+                                    {{$notificacion->detalle }}
                                 </p>
                                 <small>{{$tiempTrans[$index]}}</small>
                             </div>

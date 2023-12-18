@@ -73,7 +73,15 @@ class ListaNotificaciones extends Component
         $this->actualizarDatos();
     }
 
+    public function marcarLeido(){
+        $nots = Notificacion::where('user_id',auth()->user()->id)->where('visto',false)->orderBy('fechaHora','desc')->get();
+        foreach($nots as $n){
+            $n->visto = true;
+            $n->save();
+        }
 
+        $this->notificaciones = Notificacion::where('user_id',auth()->user()->id)->orderBy('fechaHora','desc')->get();
+    }
 
 
 

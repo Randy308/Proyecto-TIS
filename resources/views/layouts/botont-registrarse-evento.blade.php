@@ -36,14 +36,24 @@
                             $grupo = App\Models\Grupo::find($id);
                             $nombreGrupo = $grupo->nombre;
                         }
+
                     @endphp
                     @if ($registroExistente || $participanteEngrupodelEvento)
                         @if ($evento->modalidad == 'individual')
                             <div class="dropdown" id="lista-registro">
+                                @php
+                                    if ($evento->privacidad == 'libre') {
+                                        $message = 'Ya se encuentra';
+                                        $message2 = 'registrado en el evento';
+                                    } else {
+                                        $message = 'Solicitud enviada';
+                                        $message2 = ' ';
+                                    }
+                                @endphp
                                 <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button"
                                     id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
                                     aria-expanded="false">
-                                    Ya se encuentra <br>registrado en el evento
+                                    {{ $message }}<br>{{ $message2 }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                                     <a class="dropdown-item" href="#" data-toggle="modal"
@@ -53,8 +63,34 @@
                             </div>
                             @include('abandonar-evento', ['evento' => $evento])
                         @else
-                            <span class="text-center alert alert-success">Grupo:
-                                {{ $nombreGrupo }}</span>
+                            @php
+                                if ($evento->privacidad == 'libre') {
+                                    $message = 'registrado en el evento';
+                                } else {
+                                    $message = 'Solicitud enviada';
+                                }
+                            @endphp
+                            @if (auth()->user()->can('coach.registrar-equipo'))
+                                <a class="btn btn-sm btn-secondary dropdown-toggle" href="#" role="button"
+                                    id="dropdownMenuLink boton-registro" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    Grupo:{{ $nombreGrupo . ',' }} <br>{{ $message }}
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <button type="button" class="dropdown-item" data-toggle="modal"
+                                        data-target="#modalEliminarGrupo">
+                                        Abandonar evento
+                                    </button>
+
+                                </div>
+                                @include('layouts.modal-eliminar-grupo', [
+                                    'evento' => $evento,
+                                    'grupo_id' => $grupo->id,
+                                ])
+                            @else
+                                <button disabled class="btn btn-success btn-sm"> Grupo:{{ $nombreGrupo . ',' }}
+                                    <br>{{ $message }}</button>
+                            @endif
                         @endif
                     @else
                         @if (strtoupper($evento->estado) == 'CANCELADO')
@@ -120,10 +156,6 @@
                 @endphp
                 @if ($registroExistente)
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <a class="btn btn-sm btn-secondary"
-                            href="{{ route('fases.fasesdeEvento', ['evento' => $evento->id]) }}">
-                            Fases
-                        </a>
                         <button type="button" class="btn btn-sm btn-info" disabled> Ya esta <br>registrado
                             en el evento</button>
 

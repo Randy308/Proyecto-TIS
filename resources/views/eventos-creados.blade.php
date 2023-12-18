@@ -35,11 +35,11 @@
                     @endcan
 
 
-                    <li class="nav-item" role="presentation">
+                    {{-- <li class="nav-item" role="presentation">
                         <button class="nav-link {{ $tab == 3 ? 'active' : '' }}" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
                             type="button" role="tab" aria-controls="contact" aria-selected="false">Todos mis
                             eventos</button>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade {{ $tab == 1 ? 'show active' : '' }}" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -52,7 +52,7 @@
                     @endcan
 
 
-                    <div class="tab-pane fade {{ $tab == 3 ? 'show active' : '' }}" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+                    {{-- <div class="tab-pane fade {{ $tab == 3 ? 'show active' : '' }}" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div> --}}
                 </div>
 
             </div>

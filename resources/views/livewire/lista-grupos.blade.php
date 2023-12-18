@@ -12,7 +12,7 @@
 
                 @csrf
                 @method('PUT')
-                <button class="btn btn-sm btn-success" type="submit">Aceptar a todos los participantes</button>
+                <button class="btn btn-sm btn-success boton-habilitar-todos" type="button">Aceptar a todos los grupos</button>
             </form>
 
         </div>
@@ -121,6 +121,14 @@
                 e.preventDefault();
                 if (confirm("¿Está seguro de aceptar la participacion este usuario?")) {
                     var form = $(this).parents('form:first');
+                    form.submit();
+                }
+            });
+            $(".boton-habilitar-todos").on("click", function(e) {
+                e.preventDefault();
+                if (confirm("¿Está seguro de que deseas habilitar a todos los participantes en el evento?")) {
+                    var form = $(this).parents('form:first');
+                    console.log('enviando form')
                     form.submit();
                 }
             });
