@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
         $usuario->save();
 
 
-        $ev = Evento::factory(10)->create();
+        $ev = Evento::factory(2)->create();
         foreach($ev as $e){
 
             $faseInscripcion = new FaseEvento([
