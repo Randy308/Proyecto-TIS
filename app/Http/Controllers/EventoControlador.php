@@ -215,9 +215,9 @@ class EventoControlador extends Controller
                 'string' => 'El nombre del evento debe ser una cadena de texto.',
                 'max' => 'El nombre del evento no puede tener más de :max caracteres.',
                 'unique' => 'El nombre del evento ya ha sido tomado. Por favor, elige un nombre único.',
-                'regex' => 'El nombre del evento solo puede contener caracteres alfanuméricos, espacios, guiones y puntos.',
                 'not_regex' => 'Evita el uso de ciertas palabras en el nombre del evento.',
                 'not_in' => 'Evita el uso de ciertas palabras o frases comunes en el nombre del evento.',
+                'regex' => 'El nombre del evento no puede contener demasiados numéricos consecutivos',
             ],
 
 
