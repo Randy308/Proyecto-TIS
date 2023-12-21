@@ -34,7 +34,7 @@
                             @if ($editable)
                                 <th>
                                     <div class="form-check form-switch m-4">
-                                        <input class="form-check-input" type="radio" name="exampleRadios"
+                                        <input class="form-check-input {{ $loop->last ? 'ultimo-checkbox' : '' }}" type="radio" name="exampleRadios"
                                             id="exampleRadios{{ $fase->id }}" value="{{ $fase->id }}"
                                             {{ $fase->actual == 1 ? 'checked' : '' }}
                                             {{ $miFaseActual->secuencia > $fase->secuencia ? 'disabled' : '' }}>
@@ -54,10 +54,30 @@
     <script>
         $("#btn-actualizar").on("click", function(e) {
             e.preventDefault();
-            if (confirm("¿Está seguro de actualizar las fases?, las fases anteriores a esta seran desactivadas.")) {
-                var form = $(this).parents('form:first');
-                form.submit();
+    
+            // Identificar el último radiobutton marcado
+            var ultimoRadiobutton = $(".form-check-input:checked.ultimo-checkbox");
+    
+            if (ultimoRadiobutton.length > 0) {
+                // El último radiobutton está marcado
+                var mensaje = "¿Está seguro de actualizar las fases?";
+                
+                if (ultimoRadiobutton.is(":last-of-type")) {
+                    // Es el último radiobutton y es marcado como "final"
+                    
+                    mensaje += "\nHa selecciona la ultima fase esto procedera a finalizar el evento\nAl finalizar el evento, este no estará disponible para ninguna edición y solo estará disponible en la lista general de eventos.";
+                }
+    
+                if (confirm(mensaje)) {
+                    var form = $(this).parents('form:first');
+                    form.submit();
+                }
+            } else {
+                // Ningún radiobutton marcado, muestra un mensaje diferente
+                alert("Por favor, seleccione una fase antes de actualizar las fases.");
             }
         });
     </script>
+    
+    
 </div>

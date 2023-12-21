@@ -37,7 +37,7 @@
                             $misValores = session()->getOldInput();
                             $miAuspiciadores = isset($misValores['Auspiciadores']) ? $misValores['Auspiciadores'] : [];
                         @endphp
-                        <div class="row pb-4">
+                        <div class="row py-4">
                             <div class="col-md">
                                 <div class="form-group">
                                     <label for="nombre_evento">Nombre del Evento <span
@@ -68,6 +68,8 @@
                                                     Competencia</option>
                                                 <option value="Taller">
                                                     Taller</option>
+                                                <option value="Otro">
+                                                    Otro</option>
 
                                             </select>
                                         </div>
@@ -75,7 +77,7 @@
                                             <input type="text" name="tipo_evento"
                                                 class="form-control @error('tipo_evento') is-invalid @enderror"
                                                 id="tipo_evento" value="{{ old('tipo_evento', 'Reclutamiento') }}"
-                                                placeholder="Ingrese el nombre del evento" required
+                                                placeholder="Ingrese el tipo de evento" required
                                                 aria-describedby="tipo_evento_help">
                                             @error('tipo_evento')
                                                 <span id="tipo_evento_help" class="text-danger">{{ $message }}</span>
@@ -209,51 +211,62 @@
 
                                     <div class="form-group">
                                         <input type="checkbox" name="mostrarCosto" id="mostrarCosto"> Costo del
-                                        Evento
-                                        <input type="text" name="costo"
-                                            class="form-control @error('costo') is-invalid @enderror" id="costo"
-                                            placeholder="Ingrese el costo del evento" value="{{ old('costo') }}">
-                                        @error('costo')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        Evento (Bs)
+                                        <div class="slider">
+
+                                            <input type="range" name="costo" id="formCosto" min="0"
+                                                max="1000" value="{{ old('costo', 0) }}"
+                                                oninput="updateRangeValue('rangeValue3', 'formCosto')">
+                                            <p id="rangeValue3">0</p>
+                                            @error('costo')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                     </div>
 
-
-                                    <div class="form-group">
-                                        <input type="checkbox" name="mostrarCantidadMinima"
-                                            id="mostrarCantidadMinima">
-                                        <label class="form-check-label" id="mostrarCantidadMinimaL"
-                                            for="mostrarCantidadMinima">
-                                            Cantidad mínima de participantes
-                                        </label>
-                                        <input type="text" name="cantidad_minima"
-                                            class="form-control @error('cantidad_minima') is-invalid @enderror"
-                                            id="cantidad_minima"
-                                            placeholder="Ingrese la cantidad mínima de participantes"
-                                            value="{{ old('cantidad_minima') }}">
-                                        @error('cantidad_minima')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
-                                    </div>
-
-
-                                    <div class="form-group">
+                                    <div class="form-outline mb-4">
                                         <input type="checkbox" name="mostrarCantidadMaxima"
                                             id="mostrarCantidadMaxima">
                                         <label class="form-check-label" id="mostrarCantidadMaximaL"
                                             for="mostrarCantidadMaxima">
                                             Cantidad máxima de participantes
                                         </label>
-                                        <input type="text" name="cantidad_maxima"
-                                            class="form-control @error('cantidad_maxima') is-invalid @enderror"
-                                            id="cantidad_maxima"
-                                            placeholder="Ingrese la cantidad máxima de participantes"
-                                            value="{{ old('cantidad_maxima') }}">
-                                        @error('cantidad_maxima')
+                                        <div class="slider">
+
+                                            <input name="cantidad_maxima" type="range" id="formMaximo"
+                                                min="10" max="300"
+                                                value="{{ old('cantidad_maxima', 100) }}"
+                                                oninput="updateRangeValue('rangeMax', 'formMaximo', 'formMinimo')">
+                                            <p id="rangeMax">100</p>
+                                            @error('cantidad_maxima')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror
+                                        </div>
                                     </div>
-                                    <div>
+
+                                    <div class="form-outline mb-4">
+                                        <input type="checkbox" name="mostrarCantidadMinima"
+                                            id="mostrarCantidadMinima">
+                                        <label class="form-check-label" id="mostrarCantidadMinimaL"
+                                            for="mostrarCantidadMinima">
+                                            Cantidad mínima de participantes
+                                        </label>
+                                        <div class="slider">
+
+                                            <input type="range" name="cantidad_minima" id="formMinimo"
+                                                min="0" max="200"
+                                                value="{{ old('cantidad_minima', 10) }}"
+                                                oninput="updateRangeValue('rangeValue1', 'formMinimo')">
+                                            <p id="rangeValue1">10</p>
+                                            @error('cantidad_minima')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div  class="pb-4">
                                         @livewire('eventos-dropdown')
                                     </div>
 
@@ -265,7 +278,7 @@
                             </div>
 
                         </div>
-                        <div class="row pt-4">
+                        <div class="row py-4">
                             <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo
                                     es obligatorio</span></div>
                             <div class="col d-flex justify-content-end">
@@ -312,10 +325,11 @@
         $(document).ready(function() {
 
             $('#campos-adicionales input[type="text"]').hide();
+            $('#campos-adicionales .slider').hide();
 
 
             $('input[type="checkbox"]').change(function() {
-                var campoAsociado = $(this).siblings('input[type="text"]');
+                var campoAsociado = $(this).siblings('.slider');
                 campoAsociado.toggle(); // Muestra u oculta el campo según el estado del checkbox
             });
 
@@ -333,6 +347,7 @@
     <script>
         $(document).ready(function() {
             $('#campos-adicionales').hide();
+            $('#tipo_evento').hide();
             $('#privacidad').change(function() {
                 if ($(this).val() === 'con-restriccion') {
                     $('#campos-adicionales').show();
@@ -342,7 +357,16 @@
             });
             $("#selectorTipo").selectmenu({
                 change: function(event, data) {
-                    $("#tipo_evento").val(data.item.value);
+                    if (data.item.value == "Otro") {
+                        console.log('Visible');
+                        $("#tipo_evento").val("");
+                        $('#tipo_evento').show();
+                    } else {
+                        $("#tipo_evento").val(data.item.value);
+                        $('#tipo_evento').hide();
+                        console.log('Invisible');
+                    }
+
                 },
             });
         });
@@ -378,16 +402,30 @@
                 if (this.checked) {
                     console.log(this.value)
                     if (this.value == 'individual') {
-                        $('#mostrarCantidadMinimaL').text("Cantidad máxima de participantes");
-                        $('#mostrarCantidadMaximaL').text("Cantidad minima de participantes");
+                        $('#mostrarCantidadMinimaL').text("Cantidad minima de participantes");
+                        $('#mostrarCantidadMaximaL').text("Cantidad máxima de participantes");
                     } else {
-                        $('#mostrarCantidadMinimaL').text("Cantidad máxima de grupos");
-                        $('#mostrarCantidadMaximaL').text("Cantidad minima de grupos");
+                        $('#mostrarCantidadMinimaL').text("Cantidad minima de grupos");
+                        $('#mostrarCantidadMaximaL').text("Cantidad máxima de grupos");
                     }
 
                 }
             });
     </script>
+
+    <script>
+        function updateRangeValue(elementId, inputId, linkedInputId) {
+            const rangeValueElement = document.getElementById(elementId);
+            const inputValue = document.getElementById(inputId).value;
+            rangeValueElement.innerText = inputValue;
+
+            if (linkedInputId) {
+                const linkedInput = document.getElementById(linkedInputId);
+                linkedInput.max = inputValue;
+            }
+        }
+    </script>
+
     @include('layouts.mensajes-alerta')
     @livewireScripts
 </body>

@@ -17,7 +17,9 @@
         <div id="content">
             @include('layouts/navbar')
             <div class="container contact-form">
-                <br>
+                
+                <div class="d-flex justify-content-end my-4 py-4"><a href="#" class="btn btn-danger btn-sm"
+                    onclick="confirmarCancelacion()"><i class="bi bi-x-lg"></i></a></div>
                 <div class="row">
                     <div class="col-md-6 text-center text-md-left">
                         <H3>Gestion de fases</H3>
@@ -43,6 +45,13 @@
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
 
+    <script>
+        function confirmarCancelacion() {
+            if (confirm("¿Estás seguro de que deseas salir? Todos los cambios no guardados se perderán.")) {
+                window.location.href = "{{ route('misEventos',['tab' => 2]) }}";
+            }
+        }
+    </script>
 </body>
 
 </html>

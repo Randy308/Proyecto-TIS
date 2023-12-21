@@ -47,8 +47,14 @@ class FaseController extends Controller
         $fases = FaseEvento::where('evento_id', $eventoId)->orderBy('secuencia', 'asc')->get();
 
         foreach($fases as $fase){
+            if($fase->secuencia == 1000){
+                $evento = Evento::find($eventoId);
+                $evento->estado = "Finalizado";
+                $evento->save();
+            }
             if($fase->id == $request['exampleRadios']){
                 $fase->actual = 1;
+                
             }else{
                 $fase->actual = 0;
             }
