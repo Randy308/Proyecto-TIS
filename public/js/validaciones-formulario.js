@@ -92,7 +92,28 @@ $(function () {
             $("#descripcionEventoCheck").html("descripcion del evento incorrecto");
             $('#nextBtn').prop("disabled", true);
         }
+    });//telefonoCheck     id="formPhoneNumber"
+
+    $('#telefonoCheck').hide();
+    $("#formPhoneNumber").on("input", function () {
+        let regex = /^[0-9]*$/;
+        let s = $(this).val();
+        if (regex.test(s)) {
+            $("#telefonoCheck").hide();
+            $("#telefonoCheck").html("");
+            $('#crearUsuarioBoton').prop("disabled", false);
+        } else {
+            $("#telefonoCheck").show();
+            $("#telefonoCheck").html("numero de telefono invalido");
+            $('#crearUsuarioBoton').prop("disabled", true);
+        }
+        if (s.length <8) {
+            $("#telefonoCheck").show();
+            $("#telefonoCheck").html("numero de telefono invalido");
+            $('#crearUsuarioBoton').prop("disabled", true);
+        }
     });
+
     $('#nameCheck').hide();
     $("#formName").on("input", function () {
         let regex = /^[a-zA-Z0-9 ]*$/;
@@ -103,8 +124,14 @@ $(function () {
             $('#crearUsuarioBoton').prop("disabled", false);
         } else {
             $("#nameCheck").show();
-            $("#nameCheck").html("nombre incorrecto");
+            $("#nameCheck").html("El nombre no permite caracteres especiales");
             $('#crearUsuarioBoton').prop("disabled", true);
+        }
+        if (s.length ==0) {
+            $("#nameCheck").show();
+            $("#nameCheck").html("Este es un campo obligatorio");
+            $('#crearUsuarioBoton').prop("disabled", true);
+
         }
     });
 
@@ -119,7 +146,7 @@ $(function () {
             $('#crearUsuarioBoton').prop("disabled", false);
         } else {
             $("#emailUserCheck").show();
-            $("#emailUserCheck").html("nombre incorrecto");
+            $("#emailUserCheck").html("No es un email valido");
             $('#crearUsuarioBoton').prop("disabled", true);
         }
     });

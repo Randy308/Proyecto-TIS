@@ -111,7 +111,9 @@
                                             @error('telefono')
                                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                             @enderror
+                                            <div class="alert alert-danger" role="alert" id="telefonoCheck">
 
+                                            </div>
                                         </div>
 
                                     </div>

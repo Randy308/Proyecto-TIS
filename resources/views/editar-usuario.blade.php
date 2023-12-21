@@ -34,12 +34,16 @@
                                 <br>
 
                                 <div class="form-outline mb-4">
-                                    <label class="form-label" for="formName">Nombre completo</label>
+                                    <label class="form-label" for="formName">Nombre completo<span
+                                        class="text-danger font-weight-bold ">*</span></label>
                                     <input type="text" id="formName" class="form-control" name="nombre"
                                         class="@error('nombre') is-invalid @enderror" value="{{ old('nombre', $usuario->name) }}" />
                                     @error('nombre')
                                         <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                     @enderror
+                                    <div class="alert alert-danger" role="alert" id="nameCheck">
+
+                                    </div>
                                 </div>
 
                                 <div class="row">
@@ -100,12 +104,16 @@
                                     <div class="col-md-6">
                                         <div class="mb-2">
 
-                                            <label for="formEmail" class="form-label">Correo electronico</label>
+                                            <label for="formEmail" class="form-label">Correo electronico<span
+                                                class="text-danger font-weight-bold ">*</span></label>
                                             <input type="email" id="formEmail" class="form-control" name="email"
                                                 class="@error('email') is-invalid @enderror"  value="{{ old('email', $usuario->email)}}" />
                                             @error('email')
                                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                             @enderror
+                                            <div class="alert alert-danger" role="alert" id="emailUserCheck">
+
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-2">
@@ -132,7 +140,8 @@
                                     <div class="col-md-6 mb-2">
 
                                         <div class="form-outline datepicker">
-                                            <label for="formPhoneNumber" class="form-label">Telefono</label>
+                                            <label for="formPhoneNumber" class="form-label">Telefono<span
+                                                class="text-danger font-weight-bold ">*</span></label>
                                             <input type="tel" id="formPhoneNumber" name="telefono" class="form-control"
                                                 class="@error('telefono') is-invalid @enderror" value="{{ old('telefono', $usuario->telefono) }}" />
 
@@ -140,7 +149,9 @@
                                             @error('telefono')
                                                 <div class="alert alert-danger"><small>{{ $message }}</small></div>
                                             @enderror
+                                            <div class="alert alert-danger" role="alert" id="telefonoCheck">
 
+                                            </div>
                                         </div>
 
                                     </div>
@@ -188,7 +199,8 @@
                                 </div>
                                 <div id="contrasena-fields" style="display: none;">
                                     <div class="form-outline">
-                                        <label class="form-label" for="password">Contraseña</label>
+                                        <label class="form-label" for="password">Contraseña<span
+                                            class="text-danger font-weight-bold ">*</span></label>
                                         <div class="input-group mb-2">
                                             <input type="password" name="password" id="password" class="form-control form-control"
                                                 class="@error('password') is-invalid @enderror" />
@@ -203,7 +215,8 @@
                                     </div>
 
                                     <div class="form-outline">
-                                        <label class="form-label" for="password_confirmation">Confirmar Contraseña</label>
+                                        <label class="form-label" for="password_confirmation">Confirmar Contraseña<span
+                                            class="text-danger font-weight-bold ">*</span></label>
                                         <div class="input-group mb-2">
 
                                             <input type="password" name="password_confirmation" id="password_confirmation"
@@ -219,10 +232,17 @@
                                     </div>
 
                                 </div>
+                                <div class="row">
+
+                                    <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que
+                                            el
+                                            campo
+                                            es obligatorio</span></div>
+                                </div>
 
                                 <div class="pt-4 d-flex justify-content-around">
                                     <a type="button" href="{{ route('verUsuario', $usuario->id) }}" class="btn btn-secondary">Regresar</a>
-                                    <button type="submit" class="btn btn-primary">Editar usuario</button>
+                                    <button type="submit" id="crearUsuarioBoton" class="btn btn-primary">Editar usuario</button>
                                 </div>
 
 
@@ -299,6 +319,7 @@
         </div>
 
     </div>
+    <script src="{{ asset('js/validaciones-formulario.js') }}"></script> 
     @include('layouts/sidebar-scripts')
 </body>
 

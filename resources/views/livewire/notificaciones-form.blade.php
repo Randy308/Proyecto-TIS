@@ -22,7 +22,8 @@
                     
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="asunto">Asunto:</label>
+                            <label for="asunto">Asunto <span
+                                class="text-danger font-weight-bold ">*</span>:</label>
                             <input type="text" class="form-control" wire:model="asunto">
                             @error('asunto')
                                 <span class="text-danger">{{ $message }}</span>
@@ -30,7 +31,8 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="descripcion_fase">Detalle:</label>
+                            <label for="descripcion_fase">Detalle <span
+                                class="text-danger font-weight-bold ">*</span>:</label>
                             <textarea class="form-control" id="detalle" wire:model="detalle" rows="4" ></textarea>
                             @error('detalle')
                                 <span class="text-danger">{{ $message }}</span>
