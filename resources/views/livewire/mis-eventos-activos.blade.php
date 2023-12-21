@@ -55,6 +55,13 @@
                                             <li><a class="dropdown-item"
                                                     href="{{ route('ver.cronograma', ['evento' => $evento->id]) }}">Ver
                                                     Cronograma</a></li>
+
+                                            {{-- <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('ver.problemas', ['evento' => $evento->id]) }}">Ver Problemas
+                                                </a>
+                                            </li> --}}
+                                            
                                             <li>
 
                                                 <form action="{{ route('finalizar.evento', ['id' => $evento->id]) }}"

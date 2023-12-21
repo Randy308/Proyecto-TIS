@@ -24,6 +24,33 @@
 
             @include('layouts/navbar')
             <div class="container mt-4">
+                @php
+                $seraFaseAct = \App\Models\FaseEvento::where('evento_id', $evento->id)
+                    ->where('actual', 1)
+                    ->first();
+
+                date_default_timezone_set('America/La_Paz');
+                $fechaHoraActual = date('Y-m-d H:i:s');
+
+                if ($seraFaseAct) {
+                    if ($seraFaseAct->fechaFin < $fechaHoraActual) {
+                        if ($seraFaseAct->secuencia == 1000) {
+                            $eventoEste = \App\Models\Evento::find($evento->id);
+                            $eventoEste->estado = 'Finalizado';
+                            $eventoEste->save();
+                        } else {
+                            $seraFaseSig = \App\Models\FaseEvento::where('evento_id', $evento->id)
+                                ->where('secuencia', '>', $seraFaseAct->secuencia)
+                                ->orderBy('secuencia')
+                                ->first();
+                            $seraFaseAct->actual = 0;
+                            $seraFaseAct->save();
+                            $seraFaseSig->actual = 1;
+                            $seraFaseSig->save();
+                        }
+                    }
+                }
+            @endphp
                 @include('plantilla-uno')
 
             </div>
