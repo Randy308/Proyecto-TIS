@@ -47,16 +47,13 @@ class EventoControlador extends Controller
             $font->align('center');
         });
 
-        $folderPath = public_path('storage/banners');
-
-        if (!file_exists($folderPath)) {
-            mkdir($folderPath, 0755, true);
-        }
+        $nombreEvento  = str_replace(' ', '_', $nombreEvento );
 
         $nombreArchivo = "banner_" . $nombreEvento . ".png";
-        $rutaBanner = public_path('storage/banners/' . $nombreArchivo);
-        $banner->save($rutaBanner);
-        return $rutaBanner;
+
+        Storage::disk('public')->put($nombreArchivo, $banner->encode());
+        $rutaBanner = $banner->save(storage_path("app/public_html/banners/" . $nombreArchivo));
+        return $nombreArchivo;
     }
 
     public function show($id) //id de evento
@@ -106,7 +103,7 @@ class EventoControlador extends Controller
                     ->orderBy('calificacion_grupos.puntaje', 'desc')
                     ->get();
             } else {
-                
+
 
                 $calificaciones_final = DB::table('calificacion_usuarios')
                     ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
@@ -272,7 +269,7 @@ class EventoControlador extends Controller
         $evento->modalidad = $request->input('modalidad');
         $evento->tiempo_inicio = $timeInicio;
         $evento->tiempo_fin = $timeFinal;
-        $evento->direccion_banner = '/storage/banners/' . $nombreDelArchivo;
+        $evento->direccion_banner = '/' . $nombreDelArchivo;
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
         $evento->background_color = '#21618C';
@@ -511,11 +508,11 @@ class EventoControlador extends Controller
         $eventoActual = Evento::FindOrFail($evento);
 
         $png_url = "banner-" . time() . ".png";
-        $path = public_path() . '/storage/banners/' . $png_url;
+        $file_content = file_get_contents($request->input('imagen-banner'));
 
-        Image::make(file_get_contents($request->input('imagen-banner')))->save($path);
+        Storage::disk('public')->put($png_url, $file_content);
 
-        $eventoActual->direccion_banner = '/storage/banners/' . $png_url;
+        $eventoActual->direccion_banner = '/' . $png_url;
         $eventoActual->update();
         return redirect()->route('misEventos', ['tab' => 2])->with('status', '¡Banner actualizado exitosamente!.');
     }

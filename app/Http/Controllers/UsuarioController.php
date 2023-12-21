@@ -66,8 +66,12 @@ class UsuarioController extends Controller
         $user->remember_token = Str::random(10);
         $user->estado = $request['estado'];
         if ($request->hasFile('foto_perfil')) {
-            $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
-            $url = Storage::url($imagen);
+            $image = $request->file('foto_perfil');
+
+            $filename = Str::uuid()->toString() . "_" . preg_replace('/\s+/', '_', strtolower($image->getClientOriginalName()));
+            $file_content = file_get_contents($image->getRealPath());
+            Storage::disk('public')->put($filename, $file_content);
+            $url = '/' . $filename;
         } else {
             $url = "/storage/image/default_user_image.png";
         }
@@ -264,8 +268,12 @@ class UsuarioController extends Controller
         $user->pais = $request['pais'];
         $user->historial_academico = $request['historial'];
         if ($request->hasFile('foto_perfil')) {
-            $imagen = $request->file('foto_perfil')->store('public/fotos_usuarios');
-            $url = Storage::url($imagen);
+            $image = $request->file('foto_perfil');
+
+            $filename = Str::uuid()->toString() . "_" . preg_replace('/\s+/', '_', strtolower($image->getClientOriginalName()));
+            $file_content = file_get_contents($image->getRealPath());
+            Storage::disk('public')->put($filename, $file_content);
+            $url = '/' . $filename;
         } else {
             $url = "/storage/image/default_user_image.png";
         }

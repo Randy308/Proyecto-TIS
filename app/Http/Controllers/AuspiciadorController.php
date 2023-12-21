@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Auspiciador;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Str;
 class AuspiciadorController extends Controller
 {
     /**
@@ -41,9 +41,15 @@ class AuspiciadorController extends Controller
         ]);
         $auspiciador = new Auspiciador();
         $auspiciador->nombre = $request->input('nombre');
-        $imagen = $request->file('url')->store('public/fotos_usuarios');
-        $url = Storage::url($imagen);
+        $image = $request->file('url');
+
+        $filename = Str::uuid()->toString() . "_" . preg_replace('/\s+/', '_', strtolower($image->getClientOriginalName()));
+        $file_content = file_get_contents($image->getRealPath());
+        Storage::disk('public')->put($filename, $file_content);
+        $url = '/' . $filename;
         $auspiciador->url = $url;
+
+
         $auspiciador->save();
         return redirect()->route('auspiciadores-index')->with('status', 'Se agrego un auspiciador exitosamente!.');
         //return $request;
