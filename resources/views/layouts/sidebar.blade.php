@@ -89,39 +89,19 @@
                 </li>
             @endhasanyrole
 
-            {{--reportes--}}            
+            {{--reportes--}}
             @can('admin.ver-reportes')
             <li>
                 <a href="{{ route('reportes-generales') }}">
                     <i class="bi bi-file-text-fill"></i>
                     <span>
-                        Reportes    
-                    </span>    
+                        Reportes
+                    </span>
                 </a>
-            </li> 
-            {{-- <li>
-                <a href="#homeSubmenu3" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                    <i class="bi bi-people-fill"></i>
-                    <span>Reportes</span>
-                </a>
-                <ul class="collapse list-unstyled" id="homeSubmenu3">
+            </li>
 
-                    @can('admin.ver-reportes-generales')
-                    <li>
-                        <a href="{{ route('reportes-generales') }}">Reportes Generales</a>
-                    </li>    
-                    @endcan
-                    @can('admin.ver-reportes-especificos')
-                    <li>
-                        <a href="{{ route('reportes-especificos') }}">Reportes Especificos</a>
-                    </li>    
-                    @endcan
-
-                </ul>
-            </li>     --}}
             @endcan
-                
-            {{--  --}}
+
 
         @endauth
 
