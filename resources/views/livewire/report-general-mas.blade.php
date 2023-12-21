@@ -1,8 +1,4 @@
 <div class="mx-4">
-    <div class="d-flex justify-content-end">
-        <a class="btn btn-danger" href="{{ route('reportes-generales') }}" type="submit"><i
-                class="bi bi-x-lg"></i></a>
-    </div>
     <div class="container bg-white pt-4 my-3 border rounded">
         <div class="row">
             <div class="col-md-6">
