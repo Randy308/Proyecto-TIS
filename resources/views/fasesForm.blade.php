@@ -18,12 +18,14 @@
 
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="nombre_fase">Nombre de la fase:</label>
+                        <label for="nombre_fase">Nombre de la fase:<span
+                            class="text-danger font-weight-bold ">*</span></label>
                         <input type="text" class="form-control" id="nombre_fase" name="nombre_fase" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="descripcion_fase">Descripción de la fase:</label>
+                        <label for="descripcion_fase">Descripción de la fase:<span
+                            class="text-danger font-weight-bold ">*</span></label>
                         <textarea class="form-control" id="descripcion_fase" name="descripcion_fase" rows="4" required></textarea>
                     </div>
                     <div class="form-group">
@@ -61,8 +63,10 @@
 
 
 
-
+                    <div class="col d-flex"> <span class="text-danger font-weight-bold ">* Indica que el campo
+                            es obligatorio</span></div>        
                     <div class="d-flex flex-column">
+                        
                         <button type="submit" id="botonfases" class="btn btn-primary">Crear</button>
 
                     </div>
