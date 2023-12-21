@@ -125,11 +125,21 @@ class CalificacionParticipanteController extends Controller
 
             return redirect()->back()->with('warning', 'Ya se ha asignado una calificacion final al evento');
         }
-        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
-        if (!$anterior) {
+        $anteriores = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->get();
+        if (!$anteriores) {
 
             return redirect()->back()->with('warning', 'No se pudo realizar la accion porque no existen calificaciones asociadas a este evento');
         }
+        if ($anteriores->count() == 1) {
+            foreach ($anteriores as $anterior) {
+                $miCalificacion = CalificacionEvento::where('calificacion_id', $anterior->id)
+                    ->where('evento_id', $evento_id)->first();
+                $miCalificacion->es_promedio = true;
+                $miCalificacion->save();
+                return redirect()->back()->with('success', 'Promedio creado con éxito');
+            }
+        }
+        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
         $calificacion = new Calificacion([
             'nombre' => "Resultado Final",
             'nota_minima_aprobacion' => $anterior->nota_minima_aprobacion,
@@ -193,11 +203,21 @@ class CalificacionParticipanteController extends Controller
 
             return redirect()->back()->with('warning', 'Ya se ha asignado una calificacion final al evento');
         }
-        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
-        if (!$anterior) {
+        $anteriores = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->get();
+        if (!$anteriores) {
 
             return redirect()->back()->with('warning', 'No se pudo realizar la accion porque no existen calificaciones asociadas a este evento');
         }
+        if ($anteriores->count() == 1) {
+            foreach ($anteriores as $anterior) {
+                $miCalificacion = CalificacionEvento::where('calificacion_id', $anterior->id)
+                    ->where('evento_id', $evento_id)->first();
+                $miCalificacion->es_promedio = true;
+                $miCalificacion->save();
+                return redirect()->back()->with('success', 'Promedio creado con éxito');
+            }
+        }
+        $anterior = $evento->calificacions()->where('calificacion_eventos.evento_id', $evento_id)->first();
         $calificacion = new Calificacion([
             'nombre' => "Resultado Final",
             'nota_minima_aprobacion' => $anterior->nota_minima_aprobacion,
@@ -466,7 +486,7 @@ class CalificacionParticipanteController extends Controller
             ]);
 
             // Puedes devolver una respuesta adecuada si es necesario
-            return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'puntaje' => $request->input('value')]);
+            return response()->json(['success' => true, 'message' => 'Se asigno el puntaje exitosamente', 'puntaje' => $request->input('value')]);
         } else {
             // Puedes devolver un error si no se encuentra el registro
             return response()->json(['error' => 'Registro no encontrado'], 404);
@@ -504,7 +524,7 @@ class CalificacionParticipanteController extends Controller
             ]);
 
             // Puedes devolver una respuesta adecuada si es necesario
-            return response()->json(['success' => true, 'message' => 'Actualización exitosa', 'puntaje' => $request->input('value')]);
+            return response()->json(['success' => true, 'message' => 'Se asigno el puntaje exitosamente', 'puntaje' => $request->input('value')]);
         } else {
             // Puedes devolver un error si no se encuentra el registro
             return response()->json(['error' => 'Registro no encontrado'], 404);
@@ -514,7 +534,7 @@ class CalificacionParticipanteController extends Controller
     public function destroy($calificacion_id)
     {
         //
-        $calificacion = Calificacion::where('id',$calificacion_id)->first();
+        $calificacion = Calificacion::where('id', $calificacion_id)->first();
         //return $calificacion;
         $calificacion->delete();
         return redirect()->back()->with('success', 'Calificación eliminada con éxito');

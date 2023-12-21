@@ -4,7 +4,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.success("{{ session('message') }}");
     @endif
@@ -13,7 +13,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.info("{{ session('inf') }}");
     @endif
@@ -23,7 +23,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.success("{{ session('success') }}");
     @endif
@@ -31,7 +31,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.error("{{ session('error') }}");
     @endif
@@ -40,7 +40,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.info("{{ session('info') }}");
     @endif
@@ -49,7 +49,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.warning("{{ session('warning') }}");
     @endif
@@ -57,7 +57,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.success("{{ session('status') }}");
     @endif
@@ -66,7 +66,7 @@
         toastr.options = {
             "closeButton": true,
             "progressBar": true,
-            "positionClass": "toast-bottom-right"
+            "positionClass": "toast-top-center"
         }
         toastr.error("{{ $error }}");
         @endforeach
@@ -79,7 +79,7 @@
 "toast-top-center"
 "toast-top-full-width"
 "toast-bottom-left"
-"toast-bottom-right"
+"toast-top-center"
 "toast-bottom-center"
 "toast-bottom-full-width"
 --}}

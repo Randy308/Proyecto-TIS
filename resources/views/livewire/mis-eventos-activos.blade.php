@@ -55,17 +55,7 @@
                                             <li><a class="dropdown-item"
                                                     href="{{ route('ver.cronograma', ['evento' => $evento->id]) }}">Ver
                                                     Cronograma</a></li>
-                                            <li>
-
-                                                <form action="{{ route('finalizar.evento', ['id' => $evento->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button class="dropdown-item boton-finalizar" type="button">Finalizar
-                                                        Evento</button>
-                                                </form>
-
-                                            </li>
+                                            
 
                                             @if (strtoupper($evento->estado) == 'ACTIVO')
                                                 <li>

@@ -103,6 +103,25 @@
 
 
             </div>
+        @else
+            <div class="d-flex justify-content-end">
+                <form action="{{ route('finalizar.evento', ['id' => $evento->id]) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <button class="btn btn-success btn-sm boton-finalizar" type="button">Finalizar
+                        Evento</button>
+                </form>
+            </div>
+            <script>
+                $(".boton-finalizar").on("click", function(e) {
+                    e.preventDefault();
+                    if (confirm("¿Está seguro de que deseas finalizar el evento?,Al finalizar el evento este no estara disponible para ninguna edicion y solo estara disponible en la lista general de eventos ")) {
+                        var form = $(this).parents('form:first');
+                        console.log('enviando form')
+                        form.submit();
+                    }
+                });
+            </script>
         @endif
     @else
         <div class="card-body">

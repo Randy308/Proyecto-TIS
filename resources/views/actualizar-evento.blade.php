@@ -44,7 +44,8 @@
                             id="FormCrearEvento">
                             @csrf
                             @method('PUT')
-                            <div class="d-flex justify-content-end"><a href="#" class="btn btn-danger btn-sm" onclick="confirmarCancelacion()"><i class="bi bi-x-lg"></i></a></div>
+                            <div class="d-flex justify-content-end"><a href="#" class="btn btn-danger btn-sm"
+                                    onclick="confirmarCancelacion()"><i class="bi bi-x-lg"></i></a></div>
                             <div class="d-flex justify-content-center"><span class="icono-creacion"><i
                                         class="bi bi-calendar2-plus-fill display-1"></i></span></div>
 
@@ -178,17 +179,21 @@
                                                     Competencia</option>
                                                 <option value="Taller">
                                                     Taller</option>
+                                                <option value="Otro">
+                                                    Otro</option>
 
                                             </select>
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" name="tipo_evento"
                                                 class="form-control @error('tipo_evento') is-invalid @enderror"
-                                                id="tipo_evento" value="{{ old('tipo_evento', $miEvento->tipo_evento) }}"
+                                                id="tipo_evento"
+                                                value="{{ old('tipo_evento', $miEvento->tipo_evento) }}"
                                                 placeholder="Ingrese el nombre del evento" required
                                                 aria-describedby="tipo_evento_help">
                                             @error('tipo_evento')
-                                                <span id="tipo_evento_help" class="text-danger">{{ $message }}</span>
+                                                <span id="tipo_evento_help"
+                                                    class="text-danger">{{ $message }}</span>
                                             @enderror
                                             <div class="alert alert-danger" role="alert" id="tipo_eventoCheck">
 
@@ -207,27 +212,32 @@
                                 <div class="form-group">
                                     <p class="h5">Modalidad del evento</p>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad1" value="individual"
-                                        {{ $miEvento->modalidad == "individual" ? 'checked' : '' }} >
+                                        <input class="form-check-input" type="radio" name="modalidad"
+                                            id="modalidad1" value="individual"
+                                            {{ $miEvento->modalidad == 'individual' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="modalidad1">
-                                         Evento individual
+                                            Evento individual
                                         </label>
-                                      </div>
-                                      <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="modalidad" id="modalidad2" value="grupal"
-                                        {{ $miEvento->modalidad == "grupal" ? 'checked' : '' }} >
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="modalidad"
+                                            id="modalidad2" value="grupal"
+                                            {{ $miEvento->modalidad == 'grupal' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="modalidad2">
                                             Evento grupal
                                         </label>
-                                      </div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="privacidad">Privacidad del Evento</label>
                                     <select name="privacidad"
                                         class="form-control @error('privacidad') is-invalid @enderror" id="privacidad"
                                         required>
-                                        <option value="libre"  {{ $miEvento->privacidad == "libre" ? 'selected' : '' }}>Libre</option>
-                                        <option value="con-restriccion"  {{ $miEvento->privacidad == "con-restriccion" ? 'selected' : '' }} >Con Restriccion</option>
+                                        <option value="libre"
+                                            {{ $miEvento->privacidad == 'libre' ? 'selected' : '' }}>Libre</option>
+                                        <option value="con-restriccion"
+                                            {{ $miEvento->privacidad == 'con-restriccion' ? 'selected' : '' }}>Con
+                                            Restriccion</option>
                                     </select>
                                     @error('privacidad')
                                         <span class="invalid-feedback" role="alert">
@@ -236,43 +246,72 @@
                                     @enderror
                                 </div>
 
-                                <div id="campos-adicionales" class="{{ $miEvento->privacidad == "libre" ? 'sin-restriccion' : '' }}  ">
+                                <div id="campos-adicionales"
+                                    class="{{ $miEvento->privacidad == 'libre' ? 'sin-restriccion' : '' }}  ">
 
                                     <div class="form-group">
-                                        Costo del Evento
-                                        <input type="text" name="costo"
-                                            class="form-control @error('costo') is-invalid @enderror" id="costo"
-                                            placeholder="Ingrese el costo del evento"
-                                            value="{{ old('costo', $miEvento->costo) }}">
-                                        @error('costo')
-                                            <span class="text-danger">{{ $message }}</span>
-                                        @enderror
+                                        <label>
+                                            <input type="checkbox"name="selectedCosto"  {{ $miEvento->costo ? 'checked' : '' }}> Activar restriccion de costo
+                                        </label>
+                                        <label>Costo del Evento (Bs)</label>
+                                        <div class="slider">
+
+                                            <input type="range" name="costo" id="formCosto" min="0"
+                                                max="1000" value="{{ old('costo', $miEvento->costo) }}"
+                                                oninput="updateRangeValue('rangeValue3', 'formCosto')">
+                                            <p id="rangeValue3">{{ $miEvento->costo }}</p>
+                                            @error('costo')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                Cantidad mínima de participantes
-                                                <input type="text" name="cantidad_minima"
-                                                    class="form-control @error('cantidad_minima') is-invalid @enderror"
-                                                    id="cantidad_minima"
-                                                    placeholder="Ingrese la cantidad mínima de participantes"
-                                                    value="{{ old('cantidad_minima', $miEvento->cantidad_minima) }}">
-                                                @error('cantidad_minima')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                                <label>
+                                                    <input type="checkbox"name="selectedMaximo" 
+                                                    {{ $miEvento->cantidad_maxima ? 'checked' : '' }}
+                                                    > Activar restriccion de cantidad maxima
+                                                </label>
+                                                <label class="form-check-label" id="mostrarCantidadMaximaL"
+                                                    for="mostrarCantidadMaxima">
+                                                    Cantidad máxima de participantes
+                                                </label>
+                                                <div class="slider">
+
+                                                    <input name="cantidad_maxima" type="range" id="formMaximo"
+                                                        min="10" max="300"
+                                                        value="{{ old('cantidad_maxima', $miEvento->cantidad_maxima) }}"
+                                                        oninput="updateRangeValue('rangeMax', 'formMaximo', 'formMinimo')">
+                                                    <p id="rangeMax">{{ $miEvento->cantidad_maxima }}</p>
+                                                    @error('cantidad_maxima')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                Cantidad máxima de participantes
-                                                <input type="text" name="cantidad_maxima"
-                                                    class="form-control @error('cantidad_maxima') is-invalid @enderror"
-                                                    id="cantidad_maxima"
-                                                    placeholder="Ingrese la cantidad máxima de participantes"
-                                                    value="{{ old('cantidad_maxima', $miEvento->cantidad_maxima) }}">
-                                                @error('cantidad_maxima')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
+                                                <label>
+                                                    <input type="checkbox" 
+                                                    {{ $miEvento->cantidad_minima ? 'checked' : '' }} name="selectedMinimo"> Activar restriccion de cantidad minima
+                                                </label>
+                                                <label class="form-check-label" id="mostrarCantidadMinimaL"
+                                                    for="mostrarCantidadMinima">
+                                                    Cantidad mínima de participantes
+                                                </label>
+                                                <div class="slider">
+
+                                                    <input type="range" name="cantidad_minima" id="formMinimo"
+                                                        min="0" max="200"
+                                                        value="{{ old('cantidad_minima', $miEvento->cantidad_minima) }}"
+                                                        oninput="updateRangeValue('rangeValue1', 'formMinimo')">
+                                                    <p id="rangeValue1">{{ $miEvento->cantidad_minima }}</p>
+                                                    @error('cantidad_minima')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -283,7 +322,10 @@
 
                                     <div class="form-group">
                                         <label>
-                                            <input type="checkbox"name="selectedInstitucion"> Activar restriccion por instituciones
+                                            <input type="checkbox"
+                                            {{ $miEvento->nombre_institucion ? 'checked' : '' }} 
+                                            name="selectedInstitucion"> Activar restriccion por
+                                            instituciones
                                         </label>
 
                                         <label class="form-label" for="formInstitucion">Seleccione su
@@ -312,8 +354,8 @@
                             </div>
                             <div class="d-flex gap-4 justify-content-end " style="gap:10px;">
 
-                                <button type="button" class="btn btn-info btn-sm" id="prevBtn" onclick="prev(1)"> <i
-                                        class="fa fa-angle-double-left "></i> Anterior</button>
+                                <button type="button" class="btn btn-info btn-sm" id="prevBtn" onclick="prev(1)">
+                                    <i class="fa fa-angle-double-left "></i> Anterior</button>
                                 <button type="button" class="btn btn-primary btn-sm" id="nextBtn"
                                     onclick="next(1)">Siguiente <i class="fa fa-angle-double-right"></i></button>
                             </div>
@@ -345,26 +387,34 @@
 
             $('#privacidad').change(function() {
                 if ($(this).val() === 'con-restriccion') {
-                    $( "#campos-adicionales" ).removeClass( "sin-restriccion" )
+                    $("#campos-adicionales").removeClass("sin-restriccion")
 
-                   // $('#campos-adicionales').show();
+                    // $('#campos-adicionales').show();
                 } else {
-                    $( "#campos-adicionales" ).addClass( "sin-restriccion" )
-                   // $('#campos-adicionales').hide();
+                    $("#campos-adicionales").addClass("sin-restriccion")
+                    // $('#campos-adicionales').hide();
                 }
             });
 
         });
     </script>
-        <script>
-            $(document).ready(function() {
-                $("#selectorTipo").selectmenu({
-                    change: function(event, data) {
+    <script>
+        $(document).ready(function() {
+            $("#selectorTipo").selectmenu({
+                change: function(event, data) {
+                    if (data.item.value == "Otro") {
+                        console.log('Visible');
+                        $("#tipo_evento").val("");
+                        $('#tipo_evento').show();
+                    } else {
                         $("#tipo_evento").val(data.item.value);
-                    },
-                });
+                        console.log('Invisible');
+                    }
+
+                },
             });
-        </script>
+        });
+    </script>
     <script>
         var currentTab = 0;
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -447,7 +497,19 @@
     <script>
         function confirmarCancelacion() {
             if (confirm("¿Estás seguro de que deseas salir? Todos los cambios no guardados se perderán.")) {
-                window.location.href = "{{ route('misEventos',['tab' => 2]) }}";
+                window.location.href = "{{ route('misEventos', ['tab' => 2]) }}";
+            }
+        }
+    </script>
+    <script>
+        function updateRangeValue(elementId, inputId, linkedInputId) {
+            const rangeValueElement = document.getElementById(elementId);
+            const inputValue = document.getElementById(inputId).value;
+            rangeValueElement.innerText = inputValue;
+
+            if (linkedInputId) {
+                const linkedInput = document.getElementById(linkedInputId);
+                linkedInput.max = inputValue;
             }
         }
     </script>

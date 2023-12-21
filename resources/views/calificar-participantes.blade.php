@@ -127,9 +127,17 @@
             toastr.options = {
                 "closeButton": true,
                 "progressBar": true,
-                "positionClass": "toast-bottom-right"
+                "positionClass": "toast-top-center"
             }
             toastr.error(mensaje);
+        }
+        function crearToastExito(mensaje) {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true,
+                "positionClass": "toast-top-center"
+            }
+            toastr.success(mensaje);
         }
     </script>
     <script type="text/javascript">
@@ -173,6 +181,7 @@
             title: 'Enter name',
             success: function(data) {
                 console.log(data);
+                crearToastExito(data.message)
                 var cell = $('#Puntaje' + $(this).data('pk'));
                 console.log("Puntaje " + data.puntaje);
                 console.log("Medio " + $(this).data('medio'));
@@ -186,6 +195,7 @@
                 }
             },
             error: function(errors) {
+                crearToast(errors.error)
                 console.error(errors); // Muestra los errores en la consola si hay alguno
             }
         });
