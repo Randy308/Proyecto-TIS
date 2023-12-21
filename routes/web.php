@@ -20,6 +20,7 @@ use App\Http\Controllers\RegistroEquipoController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\NotificacionesControlador;
+use App\Http\Controllers\ProblemasController;
 use App\Http\Livewire\ListaNotificaciones;
 
 
@@ -296,3 +297,6 @@ Route::get('/actualizar-cronograma/{evento}', [FaseController::class, 'showCrono
 Route::put('/actualizar-cronograma/{evento_id}', [FaseController::class, 'actualizarFaseActual'])->name('actualizar.fase.actual');
 
 Route::put('/finalizar-evento/{id}', [EventoControlador::class, 'finalizarEvento'])->name('finalizar.evento');
+
+//crearcompetencia
+Route::get('/ver-problemas/{evento}', [ProblemasController::class, 'verProblemas'])->name('ver.problemas');
