@@ -41,26 +41,43 @@
                                 value="{{ $anterior->nota_maxima }}"  readonly/>
                         </div>
                     @else
-                        <div class="form-outline mb-4">
-                            <label class="form-label" for="formMinimo">Nota minima de aprobación<span
-                                    class="text-danger font-weight-bold ">*</span></label>
-                            <input type="number" min="1" id="formMinimo" class="form-control"
-                                name="nota_minima_aprobacion" value="{{ old('nota_minima_aprobacion') }}" />
-                            @error('nota_minima_aprobacion')
-                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                            @enderror
+                        
 
-                        </div>
                         <div class="form-outline mb-4">
-                            <label class="form-label" for="formMaximo">Nota maxima<span
-                                    class="text-danger font-weight-bold ">*</span></label>
-                            <input type="number" id="formMaximo" class="form-control" name="nota_maxima"
-                                class="@error('nota_maxima') is-invalid @enderror" value="{{ old('nota_maxima') }}" />
-                            @error('nota_maxima')
-                                <div class="alert alert-danger"><small>{{ $message }}</small></div>
-                            @enderror
-
+                            <label for="formMaximo">Nota maxima:</label>
+                            <div class="slider">
+                                
+                                <input name="nota_maxima" type="range" id="formMaximo" min="10" step="5" max="200" value="100" oninput="updateRangeValue('rangeMax', 'formMaximo', 'formMinimo')">
+                                <p id="rangeMax">100</p>
+                            </div>
                         </div>
+
+                        <div class="form-outline mb-4">
+                            <label for="formMinimo">Nota minima de aprobación</label>
+                            <div class="slider">
+                                
+                                <input type="range" name="nota_minima_aprobacion" id="formMinimo" min="0" max="200" value="51" oninput="updateRangeValue('rangeValue1', 'formMinimo')">
+                                <p id="rangeValue1">51</p>
+                            </div>
+                        </div>
+                        
+                        
+                        
+                        <script>
+                            function updateRangeValue(elementId, inputId, linkedInputId) {
+                                const rangeValueElement = document.getElementById(elementId);
+                                const inputValue = document.getElementById(inputId).value;
+                                rangeValueElement.innerText = inputValue;
+                        
+                                if (linkedInputId) {
+                                    const linkedInput = document.getElementById(linkedInputId);
+                                    linkedInput.max = inputValue;
+                                    linkedInput.value = 51;
+                                }
+                            }
+                        </script>
+                        
+                    
                         <div>
                             <p class="fs-6">Si crea una calificacion , se deshabilitara la opcion para aceptar la solicitud de mas participantes al evento</p>
                         </div>

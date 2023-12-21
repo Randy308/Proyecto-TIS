@@ -92,9 +92,9 @@
         <script>
             $(".boton-publicar").on("click", function(e) {
                 e.preventDefault();
-                if (confirm("¿Está seguro de que deseas publicar el evento?")) {
+                if (confirm("¿Estás seguro de que deseas publicar el evento? Una vez publicado, no podrás realizar ediciones en el banner ni en los datos del evento. Asegúrate de revisar y confirmar que toda la información sea correcta antes de proceder.")) {
                     var form = $(this).parents('form:first');
-                    console.log('enviando form')
+                    console.log('enviando form');
                     form.submit();
                 }
             });

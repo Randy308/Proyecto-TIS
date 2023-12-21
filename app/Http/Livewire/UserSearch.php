@@ -61,10 +61,43 @@ class UserSearch extends Component
                 if ($universidad) {
 
                     $newUsers = $universidad->users()->where('email', $this->email)->first();
+                    if ($newUsers) {
+                        if ($newUsers->hasRole('usuario común')) {
+                            if ($newUsers->email && $newUsers->cod_estudiante && $newUsers->name && $newUsers->telefono && $newUsers->institucion->nombre_institucion) {
+                                $grupoExists = Grupo::where('user_id', $newUsers->id)->where('evento_id', $this->evento_id)->exists();
+                                $integranteExists = PertenecenGrupo::where('user_id', $newUsers->id)->where('evento_id', $this->evento_id)->exists();
+                                if (!$grupoExists && !$integranteExists) {
+                                    if (!$this->users) {
+                                        $this->users = collect([$newUsers]);  // Convertir a una colección si aún no existe
+                                    } else {
+                                        $this->users = $this->users->merge([$newUsers])->unique('id');
+                                    }
+                                } else {
+                                    session()->flash('message', 'Estudiante ya se encuentra en un grupo.');
+                                }
+
+                                //$this->error = null;
+                            } else {
+                                session()->flash('message', 'Estudiante con datos incompletos.');
+                            }
+                        } else {
+                            session()->flash('message', 'Usuario no cuenta con los permisos para participar.');
+                        }
+                    } else {
+                        session()->flash('message', 'Usuario no pertenece a la institucion requerida.');
+                    }
 
 
 
-                    if ($newUsers && $newUsers->email && $newUsers->cod_estudiante && $newUsers->name && $newUsers->telefono && $newUsers->institucion->nombre_institucion) {
+                }
+            } else {
+
+                $newUsers = User::where('email', $this->email)->first();
+
+
+                if ($newUsers && $newUsers->hasRole('usuario común')) {
+
+                    if ($newUsers && $newUsers->email && $newUsers->name && $newUsers->telefono) {
                         $grupoExists = Grupo::where('user_id', $newUsers->id)->where('evento_id', $this->evento_id)->exists();
                         $integranteExists = PertenecenGrupo::where('user_id', $newUsers->id)->where('evento_id', $this->evento_id)->exists();
                         if (!$grupoExists && !$integranteExists) {
@@ -74,38 +107,18 @@ class UserSearch extends Component
                                 $this->users = $this->users->merge([$newUsers])->unique('id');
                             }
                         } else {
-                            $this->error = 'Estudiante ya se encuentra en un grupo.';
-                        }
-
-                        //$this->error = null;
-                    } else {
-                        $this->error = 'Estudiante no encontrado en la base de datos o datos incompletos.';
-                    }
-                }
-            } else {
-
-                $newUsers = User::where('email', $this->email)->first();
-
-
-
-                if ($newUsers && $newUsers->email && $newUsers->name && $newUsers->telefono) {
-                    $grupoExists = Grupo::where('user_id', $newUsers->id)->where('evento_id', $this->evento_id)->exists();
-                    $integranteExists = PertenecenGrupo::where('user_id', $newUsers->id)->where('evento_id', $this->evento_id)->exists();
-                    if (!$grupoExists && !$integranteExists) {
-                        if (!$this->users) {
-                            $this->users = collect([$newUsers]);  // Convertir a una colección si aún no existe
-                        } else {
-                            $this->users = $this->users->merge([$newUsers])->unique('id');
+                            session()->flash('message', 'Estudiante ya se encuentra en un grupo.');
                         }
                     } else {
-                        $this->error = 'Estudiante ya se encuentra en un grupo.';
+                        session()->flash('message', 'Estudiante con datos incompletos.');
                     }
                 } else {
-                    $this->error = 'Estudiante no encontrado en la base de datos o datos incompletos.';
+                    session()->flash('message', 'Usuario no cuenta con los permisos para participar.');
                 }
+
             }
         } else {
-            $this->error = 'Usuario superan el limite de cantidad.';
+            session()->flash('message', 'No se puede  agregar mas usuarios,limite de cantidad alcanzado');
         }
     }
 
@@ -173,7 +186,7 @@ class UserSearch extends Component
             //$this->error = 'Los datos del evento se han actualizado con éxito.';
             return redirect()->route('verEvento', ['id' => $this->evento_id])->with('status', 'Se ha registrado el grupo al evento con éxito.');
         } else {
-            $this->error = 'Cantidad de participantes incorrecta.';
+            session()->flash('message', 'Cantidad de participantes incorrecta');
         }
     }
 
@@ -182,6 +195,7 @@ class UserSearch extends Component
 
         if (isset($this->users[$index])) {
             $this->users->forget($index);
+            session()->flash('message', 'Usuario eliminado del grupo exitosamente');
         }
     }
 }

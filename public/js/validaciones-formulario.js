@@ -108,54 +108,6 @@ $(function () {
         }
     });
 
-    $('#costoCheck').hide();
-    $("#costo").on("input", function () {
-        let regex = /^[0-9]+$/; // Permitir solo números enteros
-        let s = $(this).val();
-
-        if (regex.test(s)) {
-            $("#costoCheck").hide();
-            $("#costoCheck").html("");
-            $('#nextBtn').prop("disabled", false);
-        } else {
-            $("#costoCheck").show();
-            $("#costoCheck").html("Costo del evento incorrecto. Ingrese solo números.");
-            $('#nextBtn').prop("disabled", true);
-        }
-    });
-    $('#cantidadMinimaCheck').hide();
-
-    $("#cantidad_minima").on("input", function () {
-        let regex = /^[0-9]+$/;
-        let s = $(this).val();
-
-        if (regex.test(s)) {
-            $("#cantidadMinimaCheck").hide();
-            $("#cantidadMinimaCheck").html("");
-            $('#nextBtn').prop("disabled", false);
-        } else {
-            $("#cantidadMinimaCheck").show();
-            $("#cantidadMinimaCheck").html("Cantidad mínima de participantes incorrecta");
-            $('#nextBtn').prop("disabled", true);
-        }
-    });
-    $('#cantidadMaximaCheck').hide();
-
-    $("#cantidad_maxima").on("input", function () {
-        let regex = /^[0-9]+$/;
-        let s = $(this).val();
-
-        if (regex.test(s)) {
-            $("#cantidadMaximaCheck").hide();
-            $("#cantidadMaximaCheck").html("");
-            $('#nextBtn').prop("disabled", false);
-        } else {
-            $("#cantidadMaximaCheck").show();
-            $("#cantidadMaximaCheck").html("Cantidad máxima de participantes incorrecta");
-            $('#nextBtn').prop("disabled", true);
-        }
-    });
-
 
     $('#emailUserCheck').hide();
     $("#formEmail").on("input", function () {

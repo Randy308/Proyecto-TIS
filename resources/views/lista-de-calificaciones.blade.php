@@ -16,13 +16,53 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     @livewireStyles
     <style>
-        body{
+        body {
             background-color: whitesmoke;
         }
-        #listaIntegrantesGrupos{
+
+        #listaIntegrantesGrupos {
             background-color: white;
             border-radius: 20px;
             border: solid whitesmoke;
+        }
+
+
+        .slider {
+
+            display: flex;
+            align-items: center;
+            
+        }
+
+        .slider p {
+            font-size: 16px;
+            font-weight: 600;
+            font-family: Open Sans;
+            padding-left: 30px;
+            color: black;
+        }
+
+        .slider input[type="range"] {
+            -webkit-appearance: none !important;
+            width: 420px;
+            height: 2px;
+            background: black;
+            border: none;
+            outline: none;
+        }
+
+        .slider input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none !important;
+            width: 10px;
+            height: 10px;
+            background: black;
+            border: 2px solid black;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .slider input[type="range"]::-webkit-slider-thumb:hover {
+            background: black;
         }
     </style>
 
@@ -33,7 +73,7 @@
         @include('layouts/sidebar')
         <div id="content">
             @include('layouts/navbar')
-            @livewire('lista-calificaciones', ['evento_id' => $evento_id , 'anterior' => $anterior , 'existe' => $existe])
+            @livewire('lista-calificaciones', ['evento_id' => $evento_id, 'anterior' => $anterior, 'existe' => $existe])
         </div>
 
     </div>

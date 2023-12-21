@@ -12,18 +12,10 @@
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('css/listEvent.css') }}">
     <link rel="stylesheet" href="{{ asset('css/styles-editar-evento.css') }}">
-    <style>
-        .navbar-custom {
-            background-color: #007BFF;
-            color: #fff;
-        }
-    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
         integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-    {{-- <link rel="stylesheet" href="{{ asset('css/jquery-ui.css') }}"> --}}
 
 </head>
 
@@ -37,11 +29,11 @@
         <div id="content">
             @include('layouts/navbar')
 
-
-
-
-            <div class="container pt-4">
+            <div class="container pt-4" id="miContainer">
+                <div class="d-flex justify-content-end mb-4"><a href="#" class="btn btn-danger btn-sm"
+                        onclick="confirmarCancelacion()"><i class="bi bi-x-lg"></i></a></div>
                 <div class="content ">
+
                     <div class="subcontent ">
                         <div class="c1 pb-4">
                             <div id="toolbar">
@@ -76,10 +68,13 @@
                                     <option style="font-family: 'Times New Roman'">Times New Roman</option>
                                     <option style="font-family: Verdana">Verdana</option>
                                     <!-- Fuentes adicionales -->
-                                    <option style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">Helvetica Neue</option>
+                                    <option style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+                                        Helvetica Neue</option>
                                     <option style="font-family: 'Trebuchet MS', Arial, sans-serif">Trebuchet MS</option>
-                                    <option style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif">Palatino Linotype</option>
-                                    <option style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe UI</option>
+                                    <option style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif">
+                                        Palatino Linotype</option>
+                                    <option style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif">Segoe
+                                        UI</option>
                                 </select>
 
                                 <select id="fontsize">
@@ -127,15 +122,15 @@
                                     <option value="purple">Morado</option>
                                     <option value="orange">Naranja</option>
                                 </select>
-                                <button  type="button" id="minuscula"><i class="bi bi-alphabet"></i></button>
-                                <button  type="button" id="mayuscula"><i class="bi bi-alphabet-uppercase"></i></button>
-                                <button  type="button" id="incrementarSize"><i class="bi bi-sort-up"></i></button>
-                                <button  type="button" id="disminuirSize"><i class="bi bi-sort-down"></i></button>
+                                <button type="button" id="minuscula"><i class="bi bi-alphabet"></i></button>
+                                <button type="button" id="mayuscula"><i class="bi bi-alphabet-uppercase"></i></button>
+                                <button type="button" id="incrementarSize"><i class="bi bi-sort-up"></i></button>
+                                <button type="button" id="disminuirSize"><i class="bi bi-sort-down"></i></button>
                                 <button type="button" id="Negrita">B</button>
                                 <button type="button" id="Italica">I</button>
                                 <button type="button" id="Underline">U</button>
                                 <button type="button" class=" btn btn-light" id="btnEditText"><i
-                                    class="bi bi-pencil-fill"></i> Modificar Texto</button>
+                                        class="bi bi-pencil-fill"></i> Modificar Texto</button>
                                 {{-- <div class="input-group">
                                     <select type="button" id="colorFondo" name="color" class="">
                                         <option selected disabled>Color de Fondo</option>
@@ -161,7 +156,8 @@
                                 <div class="input-group d-flex align-items-center">
                                     <label for="highlightColorPicker">Color de Fondo</label>
 
-                                    <input type="color"class="form-control" id="highlightColorPicker" value="#0000">
+                                    <input type="color"class="form-control" id="highlightColorPicker"
+                                        value="#0000">
                                 </div>
 
 
@@ -197,10 +193,12 @@
                                     <div id="draggable2" class="draggable" style="position: absolute;">Imagen</div>
                                     <div id="draggable3" class="draggable" style="position: absolute;">
                                         {{ $evento->nombre_evento }}</div>
-                                    <div id="draggable4" class="draggable " style="position: absolute;">
-                                        {{ $miFechaInicial }}</div>
-                                    <div id="draggable5" class="draggable" style="position: absolute;">
-                                        {{ $mifechaFinal }}</div>
+                                    @foreach ($fechasArray as $item)
+                                        <div id="draggable{{ $loop->index + 4 }}" class="draggable "
+                                            style="position: absolute;">
+                                            {{ $item }}</div>
+                                    @endforeach
+
                                 @endif
 
 
@@ -276,6 +274,13 @@
 
     @include('layouts/sidebar-scripts')
     @include('layouts.mensajes-alerta')
+    <script>
+        function confirmarCancelacion() {
+            if (confirm("¿Estás seguro de que deseas salir? Todos los cambios no guardados se perderán.")) {
+                window.location.href = "{{ route('misEventos', ['tab' => 2]) }}";
+            }
+        }
+    </script>
     <script src="{{ asset('js/jquery-ui.js') }}"></script>
     <script src="{{ asset('js/dom-to-image.min.js') }}"></script>
 
@@ -373,7 +378,7 @@
                 setTimeout(function() {
                     if (confirm(
                             '¿Estás seguro de querer guardar tu progreso de edición? Ten en cuenta que si has agregado imágenes, estas no se guardarán '
-                            )) {
+                        )) {
                         document.getElementById('GuardarElementos').submit();
                         generarImagenBanner();
 

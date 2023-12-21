@@ -68,13 +68,16 @@ class EventoControlador extends Controller
         $mes = $meses[($fecha->format('n')) - 1];
         $mes_inicial = $meses[($fecha_inicial->format('n')) - 1];
         //$miFechaInicial;
-        if ($mes == $mes_inicial) {
-            $miFechaInicial = $fecha_inicial->format('d') . ' y ';
+        if ($fecha == $fecha_inicial) {
+            $mifechaFinal = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' del ' . $fecha_inicial->format('Y');
         } else {
-            $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
+            if ($mes == $mes_inicial) {
+                $miFechaInicial = $fecha_inicial->format('d') . ' y ';
+            } else {
+                $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' hasta el ';
+            }
+            $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
         }
-        $mifechaFinal = $miFechaInicial . $fecha->format('d') . ' de ' . $mes . ' de ' . $fecha->format('Y');
-
 
         if (strtoupper($evento->modalidad) == 'GRUPAL') {
             $participantes = $evento->grupos()->where('estado', 'Habilitado')->count();
@@ -106,7 +109,7 @@ class EventoControlador extends Controller
                     ->orderBy('calificacion_grupos.puntaje', 'desc')
                     ->get();
             } else {
-                
+
 
                 $calificaciones_final = DB::table('calificacion_usuarios')
                     ->join('calificacions', 'calificacion_usuarios.calificacion_id', '=', 'calificacions.id')
@@ -180,8 +183,16 @@ class EventoControlador extends Controller
             'cantidad_maxima' => 'nullable|integer|min:' . $request->input('cantidad_minima'),
             'tipo_evento' => 'required|string|regex:/^[a-zA-Z0-9\s\.\-]+$/', // Añadida
             'descripcion_evento' => 'nullable|string',
-            'fecha_inicio' => 'required|date_format:Y-m-d\TH:i|after_or_equal:' . $todayDate,
-            'fecha_fin' => 'required|date_format:Y-m-d\TH:i|after_or_equal:fecha_inicio',
+            'fecha_inicio' => [
+                'required',
+                'date_format:Y-m-d\TH:i',
+                'after_or_equal:' . $todayDate,
+            ],
+            'fecha_fin' => [
+                'required',
+                'date_format:Y-m-d\TH:i',
+                'after_or_equal:fecha_inicio',
+            ],
             'modalidad' => 'required',
             "Auspiciadores" => "array",
             "Auspiciadores.*" => "string|distinct",
@@ -366,18 +377,29 @@ class EventoControlador extends Controller
         //
         $evento = Evento::findOrFail($evento);
         $meses = array("Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
-        $fecha = Carbon::parse($evento->fecha_fin);
+        $fecha_final = Carbon::parse($evento->fecha_fin);
         $fecha_inicial = Carbon::parse($evento->fecha_inicio);
-        $mes = $meses[($fecha->format('n')) - 1];
+        $fechasArray = [];
+        $mes_final = $meses[($fecha_final->format('n')) - 1];
         $mes_inicial = $meses[($fecha_inicial->format('n')) - 1];
-        //$miFechaInicial;
-        $miFechaInicial = 'Desde ' . $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' del ' . $fecha_inicial->format('Y');
-        $mifechaFinal = 'Hasta el ' . $fecha->format('d') . ' de ' . $mes . ' del ' . $fecha->format('Y');
-        return view('editar-evento', ['evento' => $evento, 'miFechaInicial' => $miFechaInicial, 'mifechaFinal' => $mifechaFinal]);
+        if ($fecha_final == $fecha_inicial) {
+            $miFechaInicial = $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' del ' . $fecha_inicial->format('Y');
+
+            $fechasArray[] = $miFechaInicial;
+        } else {
+
+
+            $miFechaInicial = 'Desde ' . $fecha_inicial->format('d') . ' de ' . $mes_inicial . ' del ' . $fecha_inicial->format('Y');
+            $mifechaFinal = 'Hasta el ' . $fecha_final->format('d') . ' de ' . $mes_final . ' del ' . $fecha_final->format('Y');
+            $fechasArray[] = $miFechaInicial;
+            $fechasArray[] = $mifechaFinal;
+        }
+        return view('editar-evento', ['evento' => $evento, 'fechasArray' => $fechasArray]);
     }
     public function update($user, $evento, Request $request)
     {
-        $request->validate([
+        
+        $validator = $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',
@@ -466,19 +488,28 @@ class EventoControlador extends Controller
 
         $evento->latitud = $request->input('latitud');
         $evento->longitud = $request->input('longitud');
-        $evento->costo = $request->input('costo');
+        if ($request->has('selectedCosto')) {
+            $evento->costo = $request->input('costo');
+        } else {
+            $evento->costo = null;
+        }
+        if ($request->has('selectedMinimo')) {
+            $evento->cantidad_minima = $request->input('cantidad_minima');
+        } else {
+            $evento->cantidad_minima = null;
+        }
+        if ($request->has('selectedMaximo')) {
+            $evento->cantidad_maxima = $request->input('cantidad_maxima');
+        } else {
+            $evento->cantidad_maxima = null;
+        }
         if ($request->has('selectedInstitucion')) {
             $nombreInstitucion = $request->input('institucion');
             $evento->nombre_institucion = $nombreInstitucion;
         } else {
             $evento->nombre_institucion = null;
         }
-        if ($request->filled('cantidad_minima')) {
-            $evento->cantidad_minima = $request->input('cantidad_minima');
-        }
-        if ($request->filled('cantidad_maxima')) {
-            $evento->cantidad_maxima = $request->input('cantidad_maxima');
-        }
+
         $evento->save();
 
         $inputArray = $request->input('Auspiciadores');

@@ -50,11 +50,6 @@ class ActualizarFases extends Command
      */
     public function handle()
     {
-
-        /*                              
-                                        
-                                        
-                                        */
         $eventos = Evento::where('estado', 'Activo')->get();
         $idsEventos = $eventos->pluck('id');
         $fases = FaseEvento::where('actual',true)->whereIn('evento_id',$idsEventos)->get(); 
@@ -64,31 +59,21 @@ class ActualizarFases extends Command
             if ($carbonDatetime->lessThanOrEqualTo(Carbon::now())) {
                 $evento = Evento::where('id',$fase->evento_id)->first();
                 $grupos = Grupo::where('evento_id',$evento->id)->get();
-
-
-                $asistencias = AsistenciaEvento::where('evento_id',$evento->id)->get();
-    
-                $colaboradores = Colaborador::where('evento_id',$evento->id)->get();
-                      
-    
+                $asistencias = AsistenciaEvento::where('evento_id',$evento->id)->get(); 
+                $colaboradores = Colaborador::where('evento_id',$evento->id)->get();   
                 $perteneceGrupos = PertenecenGrupo::where('evento_id',$evento->id)->get();
-                        
-    
                 $userIdsGrupos = $grupos->pluck('user_id')->toArray();
+                $organizador = User::find($fase->evento_id);
                 $userIdsAsistencias = $asistencias->pluck('user_id')->toArray();
                 $userIdsColaboradores = $colaboradores->pluck('user_id')->toArray();
                 $userIdsPerteneceGrupos = $perteneceGrupos->pluck('user_id')->toArray();
-    
                 $combinedUserIds = array_unique(array_merge(
                             $userIdsGrupos,
                             $userIdsAsistencias,
                             $userIdsColaboradores,
-                            $userIdsPerteneceGrupos
+                            $userIdsPerteneceGrupos,
+                            [$organizador->id]
                 ));
-
-
-
-
                 $fase->actual = false; 
                 $fase->save();
                 if($fase->tipo != 'Finalizacion'){
@@ -96,11 +81,8 @@ class ActualizarFases extends Command
                     ->where('secuencia', '>',  $fase->secuencia)
                     ->orderBy('secuencia')
                     ->first();
-
-
                         $proxFase->actual = true;
                         $proxFase->save();
-
                         foreach($combinedUserIds as $usid){
                             $user = User::find($usid);
                             $not = new Notificacion();//trim($request->input('nombre_evento'))

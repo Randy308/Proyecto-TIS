@@ -15,7 +15,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">
                             <center>Notificar a los usuario asociados al evento</center>
                         </h5>
-                        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
+                        <button type="button" class="close" aria-label="Close" wire:click="cerrar">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -54,9 +54,19 @@
                         </div>
     
                     </div>
-                    <div class="modal-footer">
-                        <p>Espere a que termine el proceso por favor</p>
-                        <button type="submit" id="botonNotificacionesEnviar{{$evento->id}}" class="btn btn-primary">Enviar</button>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <div class="text-center mb-3"> <!-- Centrar los elementos -->
+                            <div class="d-flex justify-content-between"> <!-- Utilizar flexbox para centrar y espaciar los botones -->
+                                <button type="button" class="btn btn-danger mr-2" aria-label="Close" wire:click="cerrar">
+                                    Cancelar
+                                </button>
+                                <button type="submit" id="botonNotificacionesEnviar{{$evento->id}}" class="btn btn-primary">
+                                    Enviar
+                                </button>
+                            </div>
+                            <p class="mt-3">Espere a que termine el proceso por favor</p> <!-- Texto debajo de los botones -->
+                        </div>
+                        
                     </div>
 
 

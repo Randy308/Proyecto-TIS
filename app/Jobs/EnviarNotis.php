@@ -76,6 +76,8 @@ class EnviarNotis implements ShouldQueue
                             $userIdsPerteneceGrupos,
                             [$org]
                         ));
+
+
                         foreach( $this->seleccionados as $index =>$selec){
                             if($selec){
                                 if($this->roles[$index]->name == 'administrador'){
@@ -129,100 +131,11 @@ class EnviarNotis implements ShouldQueue
                         }
 
 
-      /*                   // Paso 1: Obtener datos del evento
-        [$grupos, $asistencias, $colaboradores, $perteneceGrupos] = $this->obtenerDatosEvento();
 
-        // Paso 2: Combinar IDs de usuarios (asíncrono)
-        dispatch(function () use ($grupos, $asistencias, $colaboradores, $perteneceGrupos) {
-            $combinedUserIds = $this->combinarUsuarios($grupos, $asistencias, $colaboradores, $perteneceGrupos);
-
-            // Paso 3: Enviar notificaciones a administradores (asíncrono)
-            dispatch(function () {
-                $this->enviarNotificacionesAdministradores();
-            })->onQueue('notificaciones');
-
-            // Paso 4: Enviar notificaciones por rol (asíncrono)
-            foreach ($this->seleccionados as $index => $selec) {
-                if ($selec && $this->roles[$index]->name != 'administrador') {
-                    $rolname = $this->roles[$index]->name;
-                    dispatch(function () use ($combinedUserIds, $rolname) {
-                        $this->enviarNotificacionesPorRol($combinedUserIds, $rolname);
-                    })->onQueue('notificaciones');
-                }
-            }
-        })->onQueue('notificaciones');*/
 
         
     }
 
-
-
-
-
-/*   public function obtenerDatosEvento()
-    {
-        $grupos = Grupo::where('evento_id', $this->evento->id)->get();
-        $asistencias = AsistenciaEvento::where('evento_id', $this->evento->id)->get();
-        $colaboradores = Colaborador::where('evento_id', $this->evento->id)->get();
-        $perteneceGrupos = PertenecenGrupo::where('evento_id', $this->evento->id)->get();
-
-        return [$grupos, $asistencias, $colaboradores, $perteneceGrupos];
-    }
-    public function combinarUsuarios($grupos, $asistencias, $colaboradores, $perteneceGrupos)
-    {
-        $userIdsGrupos = $grupos->pluck('user_id')->toArray();
-        $userIdsAsistencias = $asistencias->pluck('user_id')->toArray();
-        $userIdsColaboradores = $colaboradores->pluck('user_id')->toArray();
-        $userIdsPerteneceGrupos = $perteneceGrupos->pluck('user_id')->toArray();
-    
-        return array_unique(array_merge(
-            $userIdsGrupos,
-            $userIdsAsistencias,
-            $userIdsColaboradores,
-            $userIdsPerteneceGrupos
-        ));
-        
-    }
-    public function enviarNotificacionesAdministradores()
-    {
-        $admins = User::role('administrador')->get();
-        foreach ($admins as $admin) {
-            $this->enviarNotificacion($admin);
-        }
-    }
-
-    public function enviarNotificacionesPorRol($combinedUserIds, $rolName)
-    {
-        $users = User::whereIn('id', $combinedUserIds)
-            ->whereHas('roles', function ($query) use ($rolName) {
-                $query->where('name', $rolName);
-            })->get();
-
-        foreach ($users as $user) {
-            $this->enviarNotificacion($user);
-        }
-    }
-    public function enviarNotificacion($user)
-    {
-        $not = new Notificacion();
-        $not->asunto = $this->asunto;
-        $not->detalle = $this->detalle;
-        $not->fechaHora = Carbon::now();
-        $not->visto = false;
-        $not->evento()->associate($this->evento);
-        $not->user()->associate($user);
-        $not->save();
-
-        $email = new NotificacionEventoEmail(
-            $this->asunto,
-            $this->detalle,
-            $user->name,
-            $this->nombre_evento
-        );
-
-        Mail::to($user->email)->send($email);
-    }
-*/
 
 
 }

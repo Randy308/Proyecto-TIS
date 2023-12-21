@@ -43,3 +43,4 @@
         @endguest
     </ul>
 </nav>
+@livewireScripts
