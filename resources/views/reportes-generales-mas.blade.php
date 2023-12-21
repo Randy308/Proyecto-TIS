@@ -33,6 +33,10 @@
         <div id="content">
             @include('layouts/navbar')
             <div class="container mt-5">
+                <div class="d-flex justify-content-end">
+                    <a class="btn btn-danger" href="{{ route('reportes-generales') }}" type="submit"><i
+                            class="bi bi-x-lg"></i></a>
+                </div>
                 <div class="d-flex  justify-content-center">
                     <h3>Reporte de Evento</h2>
                 </div>

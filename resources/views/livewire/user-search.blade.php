@@ -15,21 +15,34 @@
                     placeholder="Ingrese el nombre del equipo">
 
                 @error('nombreEquipo')
-                <script>
-                    toastr.options = {
-                        "closeButton": true,
-                        "progressBar": true,
-                        "positionClass": "toast-bottom-right"
-                    }
-                    toastr.error("{{ $message }}");
-                </script>
+                    <script>
+                        toastr.options = {
+                            "closeButton": true,
+                            "progressBar": true,
+                            "positionClass": "toast-top-center"
+                        }
+                        toastr.error("{{ $message }}");
+                    </script>
                 @enderror
             </div>
         </div>
 
 
     </div>
-
+    <div class="row">
+        <div>
+            @if (session()->has('message'))
+                <script>
+                    toastr.options = {
+                        "closeButton": true,
+                        "progressBar": true,
+                        "positionClass": "toast-top-center"
+                    }
+                    toastr.error("{{ session('message')  }}");
+                </script>
+            @endif
+        </div>
+    </div>
     <div class="row">
         <div class="col">
             <p class="h6">Buscar integrantes del equipo:</p>
@@ -121,9 +134,11 @@
         <div class="row py-4 ">
             <div class="col d-flex justify-content-end">
                 @if ($this->users->count() != 4)
-                    <button class="btn btn-success btn-sm" type="button" disabled><i class="bi bi-floppy2"></i> Registrar grupo</button>
+                    <button class="btn btn-success btn-sm" type="button" disabled><i class="bi bi-floppy2"></i>
+                        Registrar grupo</button>
                 @else
-                    <button class="btn btn-success btn-sm" wire:click="save"><i class="bi bi-floppy2"></i> Registrar grupo</button>
+                    <button class="btn btn-success btn-sm" wire:click="save"><i class="bi bi-floppy2"></i> Registrar
+                        grupo</button>
                 @endif
             </div>
 
