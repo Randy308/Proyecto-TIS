@@ -51,8 +51,7 @@
 
                             <h1 id="register">Modificar Evento</h1>
                             <div class="all-steps" id="all-steps">
-                                <span class="step"><i class="bi bi-newspaper"></i></span>
-                                <span class="step"><i class="bi bi-calendar3"></i>
+                  
                                 </span>
                             </div>
 
@@ -77,7 +76,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nombre_evento">Nombre del Evento</label>
+                                            <label for="nombre_evento">Nombre del Evento<span
+                                                class="text-danger font-weight-bold ">*</span></label>
                                             <input type="text" name="nombre_evento"
                                                 class="form-control @error('nombre_evento') is-invalid @enderror"
                                                 id="nombre_evento" value="{{ $miEvento->nombre_evento }}"
@@ -86,6 +86,9 @@
                                             @error('nombre_evento')
                                                 <span id="nombre_evento_help" class="text-danger">{{ $message }}</span>
                                             @enderror
+                                            <div class="alert alert-danger" role="alert" id="nombreEventoCheck">
+
+                                            </div>
                                         </div>
 
                                         <div class="form-group">
@@ -119,7 +122,8 @@
                                         <div class="form-group">
                                             <div class="row pb-4">
                                                 <div class="col-md-auto"> <label for="combined_start">Fecha de
-                                                        inicio</label>
+                                                        inicio<span
+                                                        class="text-danger font-weight-bold ">*</span></label>
                                                     <input type="datetime-local" name="combined_start"
                                                         class="form-control @error('combined_start') is-invalid @enderror"
                                                         id="combined_start"
@@ -127,7 +131,8 @@
                                                         readonly>
                                                 </div>
                                                 <div class="col-md-auto">
-                                                    <label for="combined_end">Fecha de finalización</label>
+                                                    <label for="combined_end">Fecha de finalización<span
+                                                        class="text-danger font-weight-bold ">*</span>  </label>
                                                     <input type="datetime-local" name="combined_end"
                                                         class="form-control @error('combined_end') is-invalid @enderror"
                                                         id="combined_end"
@@ -172,38 +177,35 @@
                                         <div class="col-md-6">
                                             <select id="selectorTipo"
                                                 class="form-control @error('tipo_evento') is-invalid @enderror">
-                                                <option value="Reclutamiento">
+                                                <option value="Reclutamiento" @if($miEvento->tipo_evento == 'Reclutamiento') selected @endif>
                                                     Reclutamiento
                                                 </option>
-                                                <option value="Competencia">
+                                                <option value="Competencia"  @if($miEvento->tipo_evento == 'Competencia') selected @endif>
                                                     Competencia</option>
-                                                <option value="Taller">
+                                                <option value="Taller"  @if($miEvento->tipo_evento == 'Taller') selected @endif>
                                                     Taller</option>
-                                                <option value="Otro">
+                                                <option value="Otro"  @if($miEvento->tipo_evento == 'Otro') selected @endif>
                                                     Otro</option>
 
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+
+                                        <div class="col-md-auto">
                                             <input type="text" name="tipo_evento"
                                                 class="form-control @error('tipo_evento') is-invalid @enderror"
-                                                id="tipo_evento"
-                                                value="{{ old('tipo_evento', $miEvento->tipo_evento) }}"
-                                                placeholder="Ingrese el nombre del evento" required
+                                                id="tipo_evento" value="{{ old('tipo_evento',$miEvento->tipo_evento) }}"
+                                                placeholder="Ingrese el tipo de evento" required
                                                 aria-describedby="tipo_evento_help">
                                             @error('tipo_evento')
-                                                <span id="tipo_evento_help"
-                                                    class="text-danger">{{ $message }}</span>
+                                                
                                             @enderror
                                             <div class="alert alert-danger" role="alert" id="tipo_eventoCheck">
 
                                             </div>
-                                            @error('tipo_evento')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                         </div>
+
+                                        
+
                                     </div>
 
 

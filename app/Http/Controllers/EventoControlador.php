@@ -398,7 +398,8 @@ class EventoControlador extends Controller
     }
     public function update($user, $evento, Request $request)
     {
-        $request->validate([
+        
+        $validator = $request->validate([
             'nombre_evento' => [
                 'required',
                 'string',

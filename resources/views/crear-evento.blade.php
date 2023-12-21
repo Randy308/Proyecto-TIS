@@ -80,16 +80,11 @@
                                                 placeholder="Ingrese el tipo de evento" required
                                                 aria-describedby="tipo_evento_help">
                                             @error('tipo_evento')
-                                                <span id="tipo_evento_help" class="text-danger">{{ $message }}</span>
+                                                
                                             @enderror
                                             <div class="alert alert-danger" role="alert" id="tipo_eventoCheck">
 
                                             </div>
-                                            @error('tipo_evento')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
                                         </div>
                                     </div>
 
